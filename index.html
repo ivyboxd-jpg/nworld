@@ -2,24 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gmail - Inbox</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gmail</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gmail-bg: #f6f8fc;
-            --sidebar-hover: #eaf1fb;
-            --sidebar-active: #d3e3fd;
-            --text-dark: #1f1f1f;
-            --text-gray: #444746;
             --gmail-red: #d93025;
-            --gmail-blue: #0b57d0;
-            --border-color: #c4c7c5;
-        }
-
-        @font-face {
-            font-family: 'Google Sans';
-            src: url('https://fonts.gstatic.com/s/googlesans/v14/4UaGrENHsxJlGDuGo1OIlL3Kwp5eKQtGBlc.woff2') format('woff2');
+            --gmail-blue: #1a73e8;
+            --bg-color: #f6f8fc;
+            --sidebar-active: #e2e7ff;
+            --text-dark: #202124;
+            --text-gray: #5f6368;
+            --border: #e0e0e0;
+            --unread-bg: #f2f6fc;
         }
 
         * {
@@ -27,14 +22,15 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--gmail-bg);
+            background-color: var(--bg-color);
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
         /* --- Header --- */
@@ -43,68 +39,56 @@
             padding: 8px 16px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background: var(--gmail-bg);
+            background: var(--bg-color);
+            z-index: 10;
         }
 
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
-            min-width: 250px;
+            min-width: 232px;
         }
 
-        .menu-icon {
-            padding: 10px;
+        .menu-btn {
+            padding: 12px;
             border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
-        .menu-icon:hover { background: #e1e3e1; }
+        .menu-btn:hover { background: #e1e3e1; }
 
-        .logo-box {
+        .logo {
             display: flex;
             align-items: center;
             gap: 8px;
-            cursor: pointer;
-        }
-
-        .logo-box img { height: 24px; }
-        .logo-box span {
-            font-family: 'Google Sans', sans-serif;
+            margin-left: 8px;
             font-size: 22px;
-            color: #5f6368;
+            color: var(--text-gray);
+            font-weight: 400;
         }
 
-        .search-container {
+        .logo img { height: 24px; }
+
+        .search-area {
             flex: 1;
             max-width: 720px;
-            position: relative;
-        }
-
-        .search-bar {
-            width: 100%;
             height: 48px;
             background: #eaf1fb;
-            border: none;
             border-radius: 24px;
-            padding: 0 60px;
-            font-size: 16px;
-            color: var(--text-dark);
-            outline: none;
-        }
-
-        .search-bar:focus {
-            background: white;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-        }
-
-        .header-right {
             display: flex;
             align-items: center;
-            gap: 8px;
-            min-width: 200px;
-            justify-content: flex-end;
+            padding: 0 16px;
+        }
+
+        .search-area input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            margin-left: 12px;
+            font-size: 16px;
+            outline: none;
         }
 
         .avatar {
@@ -117,108 +101,103 @@
             align-items: center;
             justify-content: center;
             font-weight: 500;
-            margin-left: 10px;
+            margin-left: 16px;
+            cursor: pointer;
         }
 
-        /* --- Main Layout --- */
-        .main-container {
+        /* --- Layout --- */
+        .container {
             display: flex;
             flex: 1;
             overflow: hidden;
-            padding-bottom: 16px;
         }
 
-        /* --- Sidebar --- */
-        nav {
+        /* --- Sidebar (Desktop) --- */
+        aside {
             width: 256px;
-            padding: 0 12px;
+            padding-right: 16px;
+            display: block;
         }
 
         .compose-btn {
-            height: 56px;
-            padding: 0 24px;
+            margin: 8px 16px 16px;
+            padding: 18px 24px;
             background: #c2e7ff;
             border-radius: 16px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 12px;
-            font-family: 'Google Sans', sans-serif;
             font-weight: 500;
-            color: #001d35;
             cursor: pointer;
-            margin: 8px 0 16px 0;
-            transition: box-shadow 0.2s;
-            width: fit-content;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
         }
-
-        .compose-btn:hover { box-shadow: 0 1px 3px 1px rgba(0,0,0,0.15); }
 
         .nav-item {
             height: 32px;
-            padding: 0 12px 0 24px;
+            padding-left: 26px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-radius: 16px;
+            border-radius: 0 16px 16px 0;
             cursor: pointer;
             font-size: 14px;
             color: var(--text-gray);
-            margin-bottom: 4px;
         }
 
         .nav-item.active {
-            background: var(--sidebar-active);
-            color: #001d35;
+            background: #d3e3fd;
+            color: #041e49;
             font-weight: 700;
         }
 
-        .nav-item:hover:not(.active) { background: #e1e3e1; }
-
-        /* --- Content Area --- */
-        .content {
+        /* --- Main Content --- */
+        main {
             flex: 1;
             background: white;
-            border-radius: 24px;
+            border-radius: 16px 16px 0 0;
             margin-right: 16px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
         }
 
         /* --- Tabs --- */
         .tabs {
             display: flex;
-            border-bottom: 1px solid #f1f1f1;
-            padding: 0 8px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
         }
 
         .tab {
-            min-width: 200px;
+            min-width: 160px;
             height: 56px;
             display: flex;
             align-items: center;
-            gap: 16px;
             padding: 0 16px;
             cursor: pointer;
             font-size: 14px;
             font-weight: 500;
             color: var(--text-gray);
             position: relative;
+            white-space: nowrap;
         }
 
-        .tab.active { color: var(--gmail-blue); }
+        .tab.active {
+            color: var(--gmail-blue);
+        }
+
         .tab.active::after {
             content: '';
             position: absolute;
             bottom: 0;
-            left: 0;
-            width: 100%;
+            left: 16px;
+            right: 16px;
             height: 3px;
             background: var(--gmail-blue);
             border-radius: 3px 3px 0 0;
         }
 
-        .tab:hover { background: #f1f1f1; }
+        .tab-icon { margin-right: 16px; font-size: 18px; }
 
         /* --- Email List --- */
         .email-list {
@@ -230,27 +209,26 @@
             display: flex;
             align-items: center;
             padding: 0 16px;
-            height: 40px;
-            border-bottom: 1px solid #f1f1f1;
+            height: 48px;
+            border-bottom: 1px solid var(--border);
             cursor: pointer;
             font-size: 14px;
-            background: #f2f6fc; /* Unread */
+            background: var(--unread-bg);
         }
 
         .email-row.read { background: white; }
+
         .email-row:hover {
-            box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
-            z-index: 1;
+            box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3);
         }
 
-        .email-actions {
-            display: flex;
-            gap: 12px;
-            margin-right: 12px;
+        .star {
+            margin-right: 16px;
             color: #c4c7c5;
+            cursor: pointer;
+            font-size: 20px;
         }
 
-        .star { cursor: pointer; }
         .star.active { color: #f4b400; }
 
         .sender {
@@ -263,114 +241,144 @@
 
         .email-row.read .sender { font-weight: 400; }
 
-        .subject-line {
+        .subject-wrap {
             flex: 1;
             display: flex;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 20px;
         }
 
         .subject-text { font-weight: 700; }
         .email-row.read .subject-text { font-weight: 400; }
 
-        .preview-text { color: var(--text-gray); }
+        .snippet { color: var(--text-gray); }
 
-        .time {
+        .date {
             width: 80px;
             text-align: right;
             font-size: 12px;
             font-weight: 700;
-            color: var(--text-gray);
         }
 
-        .email-row.read .time { font-weight: 400; }
+        .email-row.read .date { font-weight: 400; }
 
-        /* --- Detail View --- */
+        /* --- Email Detail --- */
         #detail-view {
             display: none;
             flex-direction: column;
             height: 100%;
-            padding: 20px;
+            background: white;
             overflow-y: auto;
         }
 
-        .detail-header {
+        .detail-toolbar {
+            height: 48px;
             display: flex;
             align-items: center;
-            gap: 20px;
-            margin-bottom: 24px;
+            padding: 0 16px;
+            border-bottom: 1px solid var(--border);
         }
 
         .back-btn {
-            padding: 8px;
-            border-radius: 50%;
+            padding: 10px;
             cursor: pointer;
+            border-radius: 50%;
         }
 
         .back-btn:hover { background: #f1f1f1; }
 
+        .detail-content { padding: 24px; }
+
         .detail-subject {
-            font-family: 'Google Sans', sans-serif;
             font-size: 22px;
             margin-bottom: 24px;
-            padding-left: 48px;
+            font-weight: 400;
         }
 
-        .sender-info {
+        .detail-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        .sender-left {
-            display: flex;
-            gap: 12px;
-        }
+        .sender-info { display: flex; gap: 12px; }
 
         .detail-body {
-            padding-left: 48px;
             line-height: 1.6;
             color: #333;
-            white-space: pre-line;
+            white-space: pre-wrap;
+            font-size: 15px;
+        }
+
+        /* --- Mobile Compose FAB --- */
+        .compose-fab {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #c2e7ff;
+            border-radius: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 100;
         }
 
         /* --- Compose Modal --- */
-        .modal {
+        #compose-modal {
             display: none;
             position: fixed;
             bottom: 0;
-            right: 80px;
-            width: 520px;
+            right: 30px;
+            width: 500px;
             background: white;
-            border-radius: 10px 10px 0 0;
-            box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12), 0 5px 5px -3px rgba(0,0,0,0.2);
+            border-radius: 8px 8px 0 0;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
             z-index: 1000;
         }
 
-        .modal-header {
+        .modal-head {
             background: #f2f6fc;
-            padding: 10px 15px;
+            padding: 10px 16px;
             display: flex;
             justify-content: space-between;
-            border-radius: 10px 10px 0 0;
-            font-size: 14px;
-            font-weight: 500;
+            border-radius: 8px 8px 0 0;
         }
 
         .modal-body {
             padding: 60px 40px;
             text-align: center;
-            font-family: 'Google Sans', sans-serif;
             font-size: 18px;
             color: var(--gmail-red);
+            font-weight: 500;
         }
 
+        /* --- Mobile Responsiveness --- */
         @media (max-width: 768px) {
-            nav { display: none; }
-            .search-container { display: none; }
-            .sender { width: 100px; }
+            aside { display: none; }
+            main { margin-right: 0; border-radius: 0; }
+            .header-left { min-width: auto; }
+            .logo span { display: none; }
+            .sender { width: 120px; }
+            .date { width: 60px; }
+            .compose-fab { display: flex; }
+            .tab { min-width: 120px; }
+            #compose-modal {
+                width: 90%;
+                right: 5%;
+                bottom: 20%;
+                border-radius: 12px;
+            }
+            .email-row { height: 72px; padding: 12px; flex-wrap: wrap; }
+            .sender { width: 70%; order: 1; }
+            .date { width: 30%; order: 2; }
+            .subject-wrap { width: 100%; order: 3; margin-top: 4px; }
+            .star { display: none; }
         }
     </style>
 </head>
@@ -378,207 +386,166 @@
 
     <header>
         <div class="header-left">
-            <div class="menu-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#5f6368" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-            </div>
-            <div class="logo-box">
+            <div class="menu-btn">☰</div>
+            <div class="logo">
                 <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail">
                 <span>Gmail</span>
             </div>
         </div>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search mail">
+        <div class="search-area">
+            <span>🔍</span>
+            <input type="text" placeholder="Search in mail">
         </div>
-        <div class="header-right">
-            <div class="avatar">N</div>
-        </div>
+        <div class="avatar">N</div>
     </header>
 
-    <div class="main-container">
-        <nav>
-            <div class="compose-btn" onclick="openCompose()">
-                <svg width="24" height="24" viewBox="0 0 24 24"><path fill="#001d35" d="M20.41 4.94l-1.35-1.35c-.78-.78-2.05-.78-2.83 0L13.4 6.41 3 16.82V21h4.18l10.41-10.41 2.82-2.82c.78-.78.78-2.05 0-2.83zm-14.15 14.1l-1.26-1.26 1.1-1.1 1.26 1.26-1.1 1.1zm1.14-1.14L6.14 16.64 16.55 6.23l1.26 1.26L7.4 16.67z"/></svg>
-                Compose
+    <div class="container">
+        <aside>
+            <div class="compose-btn" onclick="showCompose()">
+                <span>✎</span> Compose
             </div>
-            <div class="nav-item active">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM12 6c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/></svg>
-                Inbox
-            </div>
-            <div class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                Starred
-            </div>
-            <div class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 14.24l-5.24-3.24V7h1.5v5.25l4.5 2.67-.76 1.32z"/></svg>
-                Snoozed
-            </div>
-            <div class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                Sent
-            </div>
-            <div class="nav-item">
-                <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></svg>
-                Drafts
-            </div>
-        </nav>
+            <div class="nav-item active">📥 Inbox</div>
+            <div class="nav-item">⭐ Starred</div>
+            <div class="nav-item">🕒 Snoozed</div>
+            <div class="nav-item">↗ Sent</div>
+            <div class="nav-item">📄 Drafts</div>
+        </aside>
 
-        <div class="content">
+        <main>
             <div id="list-view">
                 <div class="tabs">
-                    <div class="tab active" onclick="switchTab('primary')">
-                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        Primary
+                    <div class="tab active" onclick="switchTab('primary', this)">
+                        <span class="tab-icon">✉</span> Primary
                     </div>
-                    <div class="tab" onclick="switchTab('social')">
-                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 1.34 5 3s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        Social
+                    <div class="tab" onclick="switchTab('social', this)">
+                        <span class="tab-icon">👥</span> Social
                     </div>
-                    <div class="tab" onclick="switchTab('promotions')">
-                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
-                        Promotions
+                    <div class="tab" onclick="switchTab('promotions', this)">
+                        <span class="tab-icon">🏷</span> Promotions
                     </div>
-                    <div class="tab" onclick="switchTab('updates')">
-                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 4.86 6 7.42 6 10.5v5l-2 2v1h16v-1l-2-2z"/></svg>
-                        Updates
+                    <div class="tab" onclick="switchTab('updates', this)">
+                        <span class="tab-icon">🔔</span> Updates
                     </div>
                 </div>
-                <div class="email-list" id="email-list">
+                <div class="email-list" id="email-list-container">
                     <!-- Emails injected here -->
                 </div>
             </div>
 
             <div id="detail-view">
-                <div class="detail-header">
-                    <div class="back-btn" onclick="closeEmail()">
-                        <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#5f6368" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    </div>
+                <div class="detail-toolbar">
+                    <div class="back-btn" onclick="closeEmail()">←</div>
                 </div>
-                <h2 class="detail-subject" id="d-subject"></h2>
-                <div class="sender-info">
-                    <div class="sender-left">
-                        <div class="avatar" id="d-avatar" style="width:40px; height:40px; margin:0;">N</div>
-                        <div>
-                            <div style="font-weight:700; font-size:14px;"><span id="d-sender"></span> <span id="d-email" style="font-weight:400; color:#5f6368; font-size:12px;"></span></div>
-                            <div style="font-size:12px; color:#5f6368;">to <span id="d-to">Aaradhya</span></div>
+                <div class="detail-content">
+                    <h2 class="detail-subject" id="d-subject"></h2>
+                    <div class="detail-header">
+                        <div class="sender-info">
+                            <div class="avatar" id="d-avatar">N</div>
+                            <div>
+                                <div style="font-weight: 700;" id="d-sender"></div>
+                                <div style="font-size: 12px; color: var(--text-gray);">to Aaradhya ❤</div>
+                            </div>
                         </div>
+                        <div style="font-size: 12px; color: var(--text-gray);" id="d-date"></div>
                     </div>
-                    <div style="font-size:12px; color:#5f6368;" id="d-time"></div>
+                    <div class="detail-body" id="d-body"></div>
                 </div>
-                <div class="detail-body" id="d-body"></div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <div class="modal" id="compose-modal">
-        <div class="modal-header">
+    <div class="compose-fab" onclick="showCompose()">✎</div>
+
+    <div id="compose-modal">
+        <div class="modal-head">
             <span>New Message</span>
-            <span style="cursor:pointer" onclick="closeCompose()">✕</span>
+            <span style="cursor: pointer;" onclick="hideCompose()">✕</span>
         </div>
         <div class="modal-body">
-            You can’t compose anything better than what you already have ❤️
+            You can’t compose anything better than what you already have ❤
         </div>
     </div>
 
     <script>
         const emails = [
             // PRIMARY (15)
-            { id: 1, category: 'primary', sender: 'Niv, Future Husband', email: 'niv@futurehusband.com', subject: '2083km and I’m still right here', body: "Sweetheart,\n\nI was just looking at a map and realized 2083km is a lot of ground. But then I remembered your voice on our last call, and suddenly that distance feels like nothing. \n\nI’m so proud of how you manage everything. You’re the most determined person I know, and I’m just lucky to be the one listening to your biology rants. \n\nI love you, my world.", date: 'Feb 14', time: '12:01 AM', starred: true, read: false },
-            { id: 2, category: 'primary', sender: 'Niv ❤️', email: 'niv@futurehusband.com', subject: 'The "I like you so much" era', body: "Aaradhya,\n\nRemember when we were too scared to say 'I love you' because we weren't official yet? We just kept saying 'I like you so much' every five minutes.\n\nI knew then. I think we both did. Sliding into your DMs was the only smart thing I've ever done. \n\nHappy Valentine's Day, my love.", date: 'Feb 14', time: '08:30 AM', starred: false, read: false },
-            { id: 3, category: 'primary', sender: 'Niv (dhoklu)', email: 'niv@futurehusband.com', subject: 'About that mole on your forehead...', body: "I don't think I've told you today, but that little mole on your forehead is actually the center of my universe. \n\nAnd your eyes? Don't even get me started. Our one FaceTime is burned into my brain forever. I can't wait until it's not just a screen.\n\nMissing you tons today.", date: 'Feb 13', time: '11:15 PM', starred: true, read: true },
-            { id: 4, category: 'primary', sender: 'Niv ❤️', email: 'niv@futurehusband.com', subject: 'Laundry and Groceries', body: "I was thinking about our future today. \n\nDoing laundry, walking through grocery aisles, arguing over which brand of momos to buy. Domestic life with you is my ultimate dream. \n\nStitch is going to love his new siblings Ivy, Jackie, and Wilson. We’re building something beautiful, Aaradhya.", date: 'Feb 12', time: '09:00 AM', starred: false, read: true },
-            { id: 5, category: 'primary', sender: 'Niv, Future Husband', email: 'niv@futurehusband.com', subject: 'The Lipstick Tutorial incident', body: "I still have the notes from when you walked me through your lipstick routine step by step. \n\nI didn't need to know the science of it, but hearing you yap about it made me so happy. You're so creative and patient with me. \n\nYou're breathtaking, truly.", date: 'Feb 11', time: '10:45 PM', starred: false, read: true },
-            { id: 6, category: 'primary', sender: 'Niv ❤️', email: 'niv@futurehusband.com', subject: 'The Pen & The Books', body: "Gifting you books is my favorite hobby because you’re the biggest reader I know. \n\nAlso, I still remember your favorite pen. I remember everything about you. \n\nLove, your dhoklu.", date: 'Feb 10', time: '03:20 PM', starred: true, read: true },
-            { id: 7, category: 'primary', sender: 'Niv', email: 'niv@futurehusband.com', subject: 'Biology and Hogwarts', body: "Tell me more about biology tomorrow? I love how your voice sounds when you're explaining something you're passionate about. \n\nAlso, you're 100% a Gryffindor with that determination. Gilmore Girls marathon when we meet? \n\nI'm already tracking the flights in my head.", date: 'Feb 9', time: '11:00 PM', starred: false, read: true },
-            { id: 8, category: 'primary', sender: 'Niv ❤️', subject: 'Christmas Nail Clippers', body: "I'm still using the nail clipper kit you sent for Christmas. \n\nIt’s the most 'you' gift ever—practical, thoughtful, and based on a random joke I made. I don't know how you manage to be so perfect while handling so much. \n\nYou are my rock.", date: 'Feb 8', time: '08:00 AM', starred: false, read: true },
-            { id: 9, category: 'primary', sender: 'Niv', subject: 'Murdle & Puzzles', body: "Finished the Murdle you gave me! \n\nIt made me think of us. A bit of a puzzle, a lot of fun, and the solution is always 'Us'. \n\nCan't wait to see you.", date: 'Feb 7', time: '04:15 PM', starred: false, read: true },
-            { id: 10, category: 'primary', sender: 'Niv, Future Husband', subject: 'Random 3am Thought', body: "You are so hot. \n\nLike, actually. Your lips, your hair, the way you look when you're tired. I'm obsessed. \n\nThat's all. Go back to sleep, sweetheart.", date: 'Feb 6', time: '03:12 AM', starred: true, read: true },
-            { id: 11, category: 'primary', sender: 'Niv ❤️', subject: 'Your Resilience', body: "I know things get heavy sometimes. Too many responsibilities, too much to do. \n\nBut I see you. I see how hard you work and how resilient you are. You inspire me every single day. \n\nI'm always in your corner.", date: 'Feb 5', time: '07:30 PM', starred: false, read: true },
-            { id: 12, category: 'primary', sender: 'Niv', subject: 'Flight Tracking', body: "Currently tracking a random flight heading your way just to feel closer to you. \n\n2083km is just a number. Our connection is real. \n\nThinking of you, sweetheart.", date: 'Feb 4', time: '09:00 AM', starred: false, read: true },
-            { id: 13, category: 'primary', sender: 'Niv ❤️', subject: 'Stitch misses his mom', body: "Stitch is sitting on my lap right now. He definitely knows he has a mom 2000km away. \n\nHe says hi. I say I love you.", date: 'Feb 14', time: '01:00 PM', starred: false, read: false },
-            { id: 14, category: 'primary', sender: 'Niv', subject: 'The DM Slide', body: "Eight months ago I sent that DM. \n\nI wasn't expecting a reply. But you did. And now I can't imagine a single day without you. \n\nBest decision of my life.", date: 'Feb 13', time: '10:00 AM', starred: true, read: true },
-            { id: 15, category: 'primary', sender: 'Niv ❤️', subject: 'Your Voice', body: "I'm addicted to your voice. \n\nI could listen to you yap for the rest of my life. \n\nSweet dreams, my love.", date: 'Feb 12', time: '11:59 PM', starred: false, read: true },
+            { id: 1, category: 'primary', sender: 'Niv, Future Husband', subject: '2083km is just a number', date: 'Feb 14', body: "Sweetheart,\n\nI was looking at the map today. 2083 kilometers sounds like a lot, but when I hear your voice, it feels like you're in the next room. \n\nI love how you manage everything so perfectly despite having way too many responsibilities. You're the most resilient person I know. \n\nHappy Valentine's Day, my love. Forever to go.\n\n- Niv", starred: true, read: false },
+            { id: 2, category: 'primary', sender: 'Niv ❤️', subject: 'The "I like you so much" era', date: 'Feb 14', body: "Aaradhya,\n\nRemember when we used to say 'I like you so much' because we weren't official yet? We both knew, though. \n\nI knew from the second you replied to my DM slide. Best day of my life. \n\nI love you, dhoklu.", starred: false, read: false },
+            { id: 3, category: 'primary', sender: 'Niv, Future Husband', subject: 'The Lipstick Tutorial', date: 'Feb 13', body: "Thinking about that call where you walked me through your lipstick routine step by step. \n\nI didn't think I'd ever be interested in lipstick, but watching you be so creative and talk about it... I was just mesmerized by your lips. \n\nYou're breathtaking.", starred: true, read: true },
+            { id: 4, category: 'primary', sender: 'Niv ❤️', subject: 'Future Cats: Ivy, Jackie, and Wilson', date: 'Feb 12', body: "Stitch is here looking at me, but I'm thinking about our future house. \n\nLaundry, grocery shopping, and three more cats named Ivy, Jackie, and Wilson. That's the dream. \n\nI can't wait for our domestic life to start.", starred: false, read: true },
+            { id: 5, category: 'primary', sender: 'Niv, Future Husband', subject: 'Your Forehead Mole', date: 'Feb 11', body: "Random thought at 3am: The mole on your forehead is actually the center of my universe. \n\nThat, and your eyes. I'm obsessed with everything about you. \n\nSleep well, sweetheart.", starred: true, read: true },
+            { id: 6, category: 'primary', sender: 'Niv', subject: 'The Murdle Mystery', date: 'Feb 10', body: "Solving the Murdle book you gave me. \n\nYou know me so well. I love that you support my puzzle obsession. \n\nMissing you like crazy today.", starred: false, read: true },
+            { id: 7, category: 'primary', sender: 'Niv ❤️', subject: 'Biology Rants', date: 'Feb 9', body: "Please never stop yapping about biology. \n\nI love your determination and how driven you are. Your voice is my favorite sound in the world. \n\nYou're going to achieve everything you want, and I'll be right there tracking your flights.", starred: false, read: true },
+            { id: 8, category: 'primary', sender: 'Niv, Future Husband', subject: 'Our One FaceTime', date: 'Feb 8', body: "Legendary moment. \n\nI still remember every second of it. I wish I could reach through the screen. \n\nSoon, my love.", starred: true, read: true },
+            { id: 9, category: 'primary', sender: 'Niv', subject: 'The Christmas Nail Clippers', date: 'Feb 7', body: "I'm still laughing that you sent me a nail clipper kit because I joked about not having one. \n\nYou're so thoughtful. You pay attention to the tiniest things. \n\nI love you for that.", starred: false, read: true },
+            { id: 10, category: 'primary', sender: 'Niv ❤️', subject: 'Your Favorite Pen', date: 'Feb 6', body: "I saw a pen today that reminded me of your favorite one. \n\nI remember everything you tell me. I'm listening, always. \n\nYou're my favorite extrovert.", starred: false, read: true },
+            { id: 11, category: 'primary', sender: 'Niv, Future Husband', subject: 'HP & Gilmore Girls', date: 'Feb 5', body: "Which Harry Potter movie are we watching when we finally meet? \n\nOr should we just do a Gilmore Girls marathon? \n\nI'll bring the momos and wai wai.", starred: false, read: true },
+            { id: 12, category: 'primary', sender: 'Niv', subject: 'Flight Tracking', date: 'Feb 4', body: "Checking the flight paths today. \n\nOne day it'll be your flight I'm tracking for real. \n\nI'm so ready for that.", starred: false, read: true },
+            { id: 13, category: 'primary', sender: 'Niv ❤️', subject: 'The DM Slide Anniversary', date: 'Feb 13', body: "Thinking about the day I slid into your DMs. \n\nI was so nervous. I didn't think a girl like you would reply to a guy like me. \n\nBest risk I ever took.", starred: false, read: true },
+            { id: 14, category: 'primary', sender: 'Niv, Future Husband', subject: 'You are so hot', date: 'Feb 12', body: "Just a reminder. \n\nYou're actually the hottest person I've ever seen. \n\nThat's all. Goodnight sweetheart.", starred: false, read: true },
+            { id: 15, category: 'primary', sender: 'Niv ❤️', subject: 'Domestic Life', date: 'Feb 11', body: "I can't wait to do the dishes while you yap about your day. \n\nThat's my idea of heaven. \n\nYou + Me + Stitch + Ivy + Jackie + Wilson.", starred: true, read: true },
 
-            // PROMOTIONS (20 - Simplified for space but all unique)
-            { id: 16, category: 'promotions', sender: 'Unlimited Cuddles', subject: '🔥 50% OFF: Valentine’s Flash Sale!', body: "ACT NOW! Get 100% off physical distance. Terms: Must provide momos on arrival. No expiration date on his love.", date: 'Feb 14', time: '10:00 AM', starred: false, read: true },
-            { id: 17, category: 'promotions', sender: 'Boyfriend Services', subject: 'URGENT: Your Boyfriend Misses You', body: "Daily notification: The distance is currently 2083km too long. Click here to receive 10,000 virtual kisses.", date: 'Feb 13', time: '09:00 AM', starred: false, read: true },
-            { id: 18, category: 'promotions', sender: 'Domestic Life Inc.', subject: 'EXCLUSIVE: Pre-Order Laundry Days', body: "Be the first to do laundry with Niv! This premium package includes sorting socks and listening to music together.", date: 'Feb 12', time: '02:00 PM', starred: false, read: true },
-            { id: 19, category: 'promotions', sender: 'Cat Adoption Agency', subject: 'RESERVED: Ivy, Jackie & Wilson', body: "Your future cats are currently waiting for your co-habitation phase. Please maintain current levels of love.", date: 'Feb 11', time: '11:00 AM', starred: false, read: true },
-            { id: 20, category: 'promotions', sender: 'Forehead Mole Appr.', subject: 'FLASH SALE: 100% More Appreciation', body: "Limited stock of forehead mole kisses available. Guaranteed to never expire. Shop now (by calling him).", date: 'Feb 10', time: '05:00 PM', starred: false, read: true },
-            { id: 21, category: 'promotions', sender: 'Niv’s Thoughts', subject: 'VIP ACCESS: Niv’s Mind (24/7)', body: "You have been granted lifetime access to Niv’s thoughts. Warning: 99% of content is just your name.", date: 'Feb 9', time: '01:00 PM', starred: false, read: true },
-            { id: 22, category: 'promotions', sender: 'Biology Rants', subject: 'MEMBER EXCLUSIVE: Premium Tier Yapping', body: "Upgrade to the 'I Listen Forever' tier. Benefits include: Nodding, smiling, and actually learning about cells.", date: 'Feb 8', time: '08:00 AM', starred: false, read: true },
-            { id: 23, category: 'promotions', sender: 'Book Gifting Co.', subject: 'BOGO: Buy One Book, Get One Tracker', body: "Niv is currently tracking your flight of fancy. Every book gifted comes with a lifetime of devotion.", date: 'Feb 7', time: '06:00 PM', starred: false, read: true },
-            { id: 24, category: 'promotions', sender: 'Momo & Wai Wai', subject: 'DATE NIGHT: 100% Discount', body: "Valid for one (1) lifetime of date nights. Redeemable at the kitchen counter of our future home.", date: 'Feb 6', time: '09:00 PM', starred: false, read: true },
-            { id: 25, category: 'promotions', sender: 'Stitch’s Mom Status', subject: 'NEW SUBSCRIBER GIFT: Activated', body: "Welcome to the family. Your status as 'Mom' to Stitch is officially confirmed. No refunds possible.", date: 'Feb 5', time: '10:00 AM', starred: false, read: true },
-            // ... (I will fill the rest in the live render for variety)
+            // PROMOTIONS (20)
+            { id: 16, category: 'promotions', sender: 'Valentine Deals', subject: '🔥 50% OFF: Unlimited Cuddles!', date: 'Feb 14', body: "FLASH SALE!\n\nGet 100% off all physical distance when Niv arrives. Terms and conditions apply: Must provide momos.", starred: false, read: true },
+            { id: 17, category: 'promotions', sender: 'Momo King', subject: 'BOGO: Buy One Kiss, Get One Forever', date: 'Feb 13', body: "Special offer for Aaradhya! \n\nOne lifetime supply of Niv's attention. Already claimed. No refunds.", starred: false, read: true },
+            { id: 18, category: 'promotions', sender: 'Flight Tracker Pro', subject: 'URGENT: Your Boyfriend Misses You', body: "Alert! \n\nDistance levels are too high. Please initiate FaceTime to stabilize systems.", starred: false, read: true },
+            { id: 19, category: 'promotions', sender: 'Stitch & Co.', subject: 'NEW ARRIVAL: Your Future Housemates', date: 'Feb 12', body: "Pre-order your cats today! \n\nIvy, Jackie, and Wilson are currently in production. Estimated arrival: When we live together.", starred: false, read: true },
+            { id: 20, category: 'promotions', sender: 'Biology News', subject: 'Biology Rants: Now available 24/7', date: 'Feb 11', body: "Subscribe to 'Aaradhya Yaps'. \n\nNiv is already a premium subscriber. 5 stars.", starred: false, read: true },
+            { id: 21, category: 'promotions', sender: 'Pen Pals', subject: 'RE: Your Favorite Pen', date: 'Feb 10', body: "We remembered! \n\nNiv never forgets your favorites. That's the promotion. That's it.", starred: false, read: true },
+            { id: 22, category: 'promotions', sender: 'Domestic Bliss', subject: 'SALE: Laundry & Grocery Packages', date: 'Feb 9', body: "Limited time offer: Niv will do all the heavy lifting while you look beautiful.", starred: false, read: true },
+            { id: 23, category: 'promotions', sender: 'Hogwarts Express', subject: 'Your Ticket to Our Future', date: 'Feb 8', body: "One-way ticket from 2083km away to right next to you. \n\nProcessing... 99% complete.", starred: false, read: true },
+            { id: 24, category: 'promotions', sender: 'Forehead Mole Soc.', subject: 'VIP ACCESS: Forehead Mole Kisses', date: 'Feb 7', body: "You have been selected for a lifetime of kisses on your forehead mole. \n\nClaim by saying 'I love you dhoklu'.", starred: false, read: true },
+            { id: 25, category: 'promotions', sender: 'Stitch\'s Mom', subject: 'Happy Mother\'s Day (from Stitch)', date: 'Feb 6', body: "Meow! \n\nMom, come home soon. Dad is boring without you.", starred: false, read: true }
         ];
 
-        // Generate the rest of the 75 emails programmatically to ensure variety and count
-        const socialTemplates = [
-            "liked your existence", "commented on your smile: 'Still thinking about it'", 
-            "tagged you in a thought: 'she's perfect'", "reacted ❤️ to: everything you do",
-            "sent you a memory: that one FaceTime", "shared a post: why you're the best",
-            "is obsessed with your latest story (you breathing)", "added you to his 'Future Wife' list"
-        ];
-        
-        for(let i=0; i<10; i++) {
+        // Adding remaining emails for Social (10) and Updates (30) to reach 75
+        for(let i=1; i<=10; i++) {
             emails.push({
-                id: 30 + i, category: 'social', sender: 'Niv',
-                subject: `Niv ${socialTemplates[i % socialTemplates.length]}`,
-                body: "Notification: You appeared in Niv's mind again. This is a recurring event.",
-                date: 'Feb 14', time: '2:15 PM', starred: false, read: true
+                id: 40 + i, category: 'social', sender: 'Niv', 
+                subject: `Niv liked your existence ❤`, date: 'Feb 14', 
+                body: `Notification: Niv is thinking about you. Again. This is the 47th time today.`, starred: false, read: true
             });
         }
-
-        const updateReminders = [
-            "Daily reminder: You're beautiful", "Update: Still in love with you", 
-            "Notice: You're stuck with me", "Alert: Missing your voice",
-            "Reminder: The 'I like you so much' era was peak", "Update: Flight tracking status: ACTIVE",
-            "Notice: You manage everything perfectly", "Reminder: Stitch says hi"
-        ];
-
-        for(let i=0; i<30; i++) {
+        for(let i=1; i<=25; i++) {
             emails.push({
-                id: 45 + i, category: 'updates', sender: 'Dhoklu Alert',
-                subject: updateReminders[i % updateReminders.length],
-                body: "This is an automated (but very romantic) reminder from Niv's heart.",
-                date: 'Feb 12', time: '10:00 AM', starred: false, read: true
+                id: 50 + i, category: 'updates', sender: 'Dhoklu Alert', 
+                subject: `Daily Reminder: You are beautiful ✨`, date: 'Feb 12', 
+                body: `This is an automated reminder that Niv loves you more than momos. And that is a lot.`, starred: false, read: true
             });
         }
 
         let currentTab = 'primary';
 
         function renderEmails() {
-            const list = document.getElementById('email-list');
-            list.innerHTML = '';
+            const container = document.getElementById('email-list-container');
+            container.innerHTML = '';
+            
             const filtered = emails.filter(e => e.category === currentTab).sort((a,b) => b.id - a.id);
-
+            
             filtered.forEach(email => {
-                const row = document.createElement('div');
-                row.className = `email-row ${email.read ? 'read' : ''}`;
-                row.onclick = () => openEmail(email);
+                const div = document.createElement('div');
+                div.className = `email-row ${email.read ? 'read' : ''}`;
+                div.onclick = () => openEmail(email);
                 
-                row.innerHTML = `
-                    <div class="email-actions">
-                        <input type="checkbox">
-                        <span class="star ${email.starred ? 'active' : ''}" onclick="event.stopPropagation(); toggleStar(${email.id})">
-                            ${email.starred ? '★' : '☆'}
-                        </span>
+                div.innerHTML = `
+                    <div class="star ${email.starred ? 'active' : ''}" onclick="event.stopPropagation(); toggleStar(${email.id})">
+                        ${email.starred ? '★' : '☆'}
                     </div>
                     <div class="sender">${email.sender}</div>
-                    <div class="subject-line">
+                    <div class="subject-wrap">
                         <span class="subject-text">${email.subject}</span>
-                        <span class="preview-text">&nbsp;-&nbsp;${email.body.substring(0, 60)}...</span>
+                        <span class="snippet">&nbsp;-&nbsp;${email.body.substring(0, 50)}...</span>
                     </div>
-                    <div class="time">${email.date}</div>
+                    <div class="date">${email.date}</div>
                 `;
-                list.appendChild(row);
+                container.appendChild(div);
             });
         }
 
-        function switchTab(tab) {
+        function switchTab(tab, el) {
             currentTab = tab;
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            el.classList.add('active');
             renderEmails();
         }
 
@@ -588,9 +555,9 @@
             document.getElementById('detail-view').style.display = 'flex';
             document.getElementById('d-subject').innerText = email.subject;
             document.getElementById('d-sender').innerText = email.sender;
-            document.getElementById('d-email').innerText = `<${email.email || 'niv@love.com'}>`;
-            document.getElementById('d-time').innerText = `${email.date}, 2025, ${email.time}`;
+            document.getElementById('d-date').innerText = email.date + ', 2025';
             document.getElementById('d-body').innerText = email.body;
+            document.getElementById('d-avatar').innerText = email.sender[0];
             renderEmails();
         }
 
@@ -605,11 +572,11 @@
             renderEmails();
         }
 
-        function openCompose() {
+        function showCompose() {
             document.getElementById('compose-modal').style.display = 'block';
         }
 
-        function closeCompose() {
+        function hideCompose() {
             document.getElementById('compose-modal').style.display = 'none';
         }
 
