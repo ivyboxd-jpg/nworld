@@ -4,47 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Gmail Mobile UI</title>
+    <title>Gmail</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #f6f8fc;
+            --bg: #ffffff;
             --surface: #ffffff;
             --on-surface: #1f1f1f;
             --on-variant: #444746;
             --google-blue: #0b57d0;
             --ai-bg: #f0f4f9;
-            --pill: #d3e3fd;
-            --g-red: #ea4335;
-            --g-blue: #4285f4;
-            --g-yellow: #fbbc05;
-            --g-green: #34a853;
+            --pill-active-red: #fce8e6;
+            --text-active-red: #d93025;
+            --icon-gray: #444746;
+            --divider: #e0e2e0;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-        body {
+        body, html {
             margin: 0; padding: 0;
-            font-family: -apple-system, 'Roboto', sans-serif;
-            background-color: #dadce0;
-            display: flex; justify-content: center;
+            width: 100%; height: 100%;
+            font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif;
+            background-color: var(--bg);
             color: var(--on-surface);
+            overflow: hidden;
             letter-spacing: 0.1px;
         }
 
-        .app-shell {
-            width: 100%; max-width: 375px; height: 100vh;
-            background: var(--bg);
-            position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
-        }
+        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
 
-        /* --- HEADER --- */
-        .header { padding: 8px 16px; z-index: 100; }
+        /* --- SEARCH HEADER --- */
+        .header { padding: 8px 16px; background: var(--bg); z-index: 100; }
         .search-box {
             height: 48px; background: var(--surface); border-radius: 24px;
             display: flex; align-items: center; padding: 0 8px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
         }
         .icon-btn {
             width: 40px; height: 40px; display: flex; align-items: center; 
@@ -52,54 +47,73 @@
         }
         .search-placeholder { flex: 1; font-size: 16px; color: var(--on-variant); padding-left: 8px; }
         .profile-btn {
-            width: 32px; height: 32px; background: var(--g-blue); color: white;
+            width: 32px; height: 32px; background: #1a73e8; color: white;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-weight: 500; font-size: 14px; margin-right: 4px; cursor: pointer;
         }
 
         /* --- SIDEBAR --- */
-        .overlay {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.4);
-            z-index: 200; opacity: 0; visibility: hidden; transition: 0.2s;
+        .sidebar-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+            z-index: 200; opacity: 0; visibility: hidden; transition: opacity 0.25s ease;
         }
-        .overlay.active { opacity: 1; visibility: visible; }
+        .sidebar-overlay.active { opacity: 1; visibility: visible; }
+        
         .sidebar {
-            position: absolute; inset: 0 auto 0 0; width: 280px; background: var(--surface);
-            z-index: 250; transform: translateX(-100%);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; border-radius: 0 16px 16px 0;
+            position: fixed; top: 0; bottom: 0; left: 0; width: 285px;
+            background: var(--surface); z-index: 250; transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+            border-radius: 0 16px 16px 0;
+            padding-top: env(safe-area-inset-top);
         }
         .sidebar.open { transform: translateX(0); }
-        .sb-header { padding: 22px 24px 12px; display: flex; align-items: center; gap: 12px; }
-        .sb-header span { font-size: 20px; color: #5f6368; font-weight: 400; }
+
+        .sb-header {
+            padding: 20px 24px 12px; display: flex; align-items: center; gap: 12px;
+        }
+        .sb-logo-text {
+            font-size: 22px; color: #5f6368; font-family: 'Roboto', sans-serif; font-weight: 400;
+        }
 
         .nav-items { overflow-y: auto; padding: 8px 12px 12px 0; }
         .nav-item {
-            height: 48px; display: flex; align-items: center; padding: 0 16px 0 24px; gap: 16px;
-            border-radius: 0 24px 24px 0; cursor: pointer; color: var(--on-variant);
+            height: 48px; display: flex; align-items: center; padding: 0 16px 0 24px; gap: 18px;
+            border-radius: 0 24px 24px 0; cursor: pointer; color: var(--icon-gray);
+            margin-bottom: 2px;
         }
-        .nav-item svg { fill: var(--on-variant); width: 22px; height: 22px; }
-        .nav-item.active { background: var(--pill); color: #001d35; font-weight: 500; }
-        .nav-item.active svg { fill: #001d35; }
-        .nav-text { flex: 1; font-size: 14px; }
-        .divider { height: 1px; background: #e0e2e0; margin: 8px 0 8px 24px; }
+        .nav-item svg { fill: var(--icon-gray); width: 22px; height: 22px; flex-shrink: 0; }
 
-        /* --- NI OVERVIEW (PIXEL PERFECT) --- */
-        .ai-banner {
-            margin: 8px 16px; border-radius: 16px; padding: 16px;
+        .nav-item.active {
+            background: var(--pill-active-red);
+            color: var(--text-active-red);
+            font-weight: 500;
+        }
+        .nav-item.active svg { fill: var(--text-active-red); }
+
+        .nav-text { flex: 1; font-size: 14px; }
+        .nav-badge { font-size: 12px; font-weight: 400; }
+        .divider { height: 1px; background: var(--divider); margin: 8px 0 8px 24px; opacity: 0.6; }
+
+        /* --- NI OVERVIEW BANNER --- */
+        .ni-banner {
+            margin: 12px 16px; border-radius: 16px; padding: 16px;
             background: var(--ai-bg); cursor: pointer;
         }
-        .ai-header { display: flex; align-items: center; margin-bottom: 8px; }
-        .ai-title { font-size: 15px; color: #1f1f1f; font-weight: 500; flex: 1; }
-        .ai-body { font-size: 13.5px; line-height: 1.45; color: #1f1f1f; display: none; }
-        .expanded .ai-body { display: block; }
-        .ai-spark { width: 20px; height: 20px; fill: var(--google-blue); margin-right: 10px; }
-        .ai-chevron { width: 18px; height: 18px; fill: #5f6368; transition: 0.2s; }
-        .expanded .ai-chevron { transform: rotate(180deg); }
+        .ni-header { display: flex; align-items: center; }
+        .ni-sparkle { width: 20px; height: 20px; fill: var(--google-blue); margin-right: 12px; flex-shrink: 0; }
+        .ni-title { font-size: 16px; color: #1f1f1f; font-weight: 400; flex: 1; }
+        .ni-chevron { width: 20px; height: 20px; fill: #5f6368; transition: transform 0.3s; flex-shrink: 0; }
+        .ni-body { 
+            font-size: 14px; line-height: 1.5; color: #1f1f1f; 
+            margin-top: 12px; display: none;
+        }
+        .expanded .ni-body { display: block; }
+        .expanded .ni-chevron { transform: rotate(180deg); }
 
         /* --- ACCOUNT MODAL --- */
         .modal-wrap {
-            position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
             z-index: 400; display: none; align-items: center; justify-content: center;
         }
         .modal {
@@ -107,97 +121,189 @@
             padding: 32px 24px; text-align: center;
         }
         .modal-email { font-size: 14px; color: #1f1f1f; margin-bottom: 24px; }
-        .ring-box {
+        .pfp-ring {
             width: 84px; height: 84px; margin: 0 auto 16px; position: relative;
             display: flex; align-items: center; justify-content: center;
         }
         .ring {
             position: absolute; inset: 0; border-radius: 50%; padding: 3px;
-            background: conic-gradient(var(--g-blue) 0 25%, var(--g-red) 25% 50%, var(--g-yellow) 50% 75%, var(--g-green) 75% 100%);
+            background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor; mask-composite: exclude;
         }
         .pfp {
-            width: 72px; height: 72px; border-radius: 50%; background: var(--g-blue);
+            width: 72px; height: 72px; border-radius: 50%; background: #1a73e8;
             color: white; display: flex; align-items: center; justify-content: center;
             font-size: 28px; font-weight: 500;
         }
-        .modal-hi { font-size: 26px; font-weight: 400; margin: 0; color: #1f1f1f; letter-spacing: -0.5px; }
+        .modal-hi { font-size: 26px; font-weight: 400; color: #1f1f1f; margin: 0; }
 
         /* --- FAB --- */
         .fab {
-            position: absolute; bottom: 16px; right: 16px;
+            position: fixed; bottom: 24px; right: 16px;
             width: 56px; height: 56px; background: #c2e7ff;
             border-radius: 16px; display: flex; align-items: center;
-            justify-content: center; border: none; box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: none; cursor: pointer;
         }
     </style>
 </head>
 <body>
 
     <div class="app-shell">
-        <div class="overlay" id="overlay"></div>
+        <div class="sidebar-overlay" id="overlay"></div>
 
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sb-header">
-                <svg width="28" height="22" viewBox="0 0 24 18">
-                    <path fill="#4285F4" d="M22.5 1h-1.6L12 9.5 3.1 1H1.5c-.8 0-1.5.7-1.5 1.5v14c0 .8.7 1.5 1.5 1.5h3.5V6.5L12 13.5l7-7V18h3.5c.8 0 1.5-.7 1.5-1.5v-14c0-.8-.7-1.5-1.5-1.5z"/>
-                    <path fill="#34A853" d="M1.5 18h3.5V6.5L1.5 4.1V18z"/>
-                    <path fill="#EA4335" d="M22.5 1h-1.6L12 9.5 3.1 1H1.5c-.3 0-.6.1-.8.3L12 11.5l11.3-10.2c-.2-.2-.5-.3-.8-.3z"/>
-                    <path fill="#FBBC05" d="M22.5 4.1l-3.5 2.4V18h3.5V4.1z"/>
+                <!-- CORRECT GMAIL LOGO -->
+                <svg width="32" height="24" viewBox="0 0 32 24" style="flex-shrink: 0;">
+                    <path fill="#4285F4" d="M1.6 0L16 11 30.4 0H32v24h-5.3V6L16 16 5.3 6v18H0V0z"/>
+                    <path fill="#34A853" d="M0 0v24h5.3V6z"/>
+                    <path fill="#FBBC05" d="M26.7 6v18H32V0z"/>
+                    <path fill="#EA4335" d="M30.4 0L16 11 1.6 0"/>
                 </svg>
-                <span>Gmail</span>
+                <span class="sb-logo-text">Gmail</span>
             </div>
+            
             <div class="nav-items">
-                <div class="nav-item active"><svg viewBox="0 0 24 24"><path d="M19 15v3H5v-3h14m1-2H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1zm-1-8l-7 5-7-5V5l7 5 7-5v2z"/></svg><span class="nav-text">All inboxes</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10z"/></svg><span class="nav-text">Primary</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span class="nav-text">Social</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7z"/></svg><span class="nav-text">Promotions</span></div>
+                <!-- All Inboxes -->
+                <div class="nav-item active">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                    </svg>
+                    <span class="nav-text">All inboxes</span>
+                    <span class="nav-badge">1</span>
+                </div>
                 <div class="divider"></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-text">Starred</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.5 13H11V7h1.5v8z"/></svg><span class="nav-text">Snoozed</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 12l-4.37 6.16c-.37.52-.98.84-1.63.84h-10c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h10c.65 0 1.26.31 1.63.84L21 12z"/></svg><span class="nav-text">Important</span></div>
+                
+                <!-- Primary -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                    </svg>
+                    <span class="nav-text">Primary</span>
+                    <span class="nav-badge">1</span>
+                </div>
+                
+                <!-- Social -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
+                    <span class="nav-text">Social</span>
+                </div>
+                
+                <!-- Promotions -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                    </svg>
+                    <span class="nav-text">Promotions</span>
+                </div>
+                
+                <!-- Updates -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span class="nav-text">Updates</span>
+                </div>
+                
                 <div class="divider"></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3z"/></svg><span class="nav-text">Spam</span></div>
-                <div class="nav-item"><svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span class="nav-text">Bin</span></div>
+                
+                <!-- Starred -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <span class="nav-text">Starred</span>
+                </div>
+                
+                <!-- Snoozed -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm1-11h-2v6l5.25 3.15.75-1.23-4-2.42V9z"/>
+                    </svg>
+                    <span class="nav-text">Snoozed</span>
+                </div>
+                
+                <!-- Important -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        <path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/>
+                    </svg>
+                    <span class="nav-text">Important</span>
+                    <span class="nav-badge">1</span>
+                </div>
+                
+                <!-- Spam -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                    </svg>
+                    <span class="nav-text">Spam</span>
+                </div>
+                
+                <!-- Bin -->
+                <div class="nav-item">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                    <span class="nav-text">Bin</span>
+                </div>
             </div>
         </aside>
 
-        <!-- Search Bar -->
-        <div class="header">
+        <!-- Search Header -->
+        <header class="header">
             <div class="search-box">
-                <div class="icon-btn" id="menuBtn"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></div>
+                <div class="icon-btn" id="menuBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </div>
                 <div class="search-placeholder">Search in mail</div>
                 <div class="profile-btn" id="pBtn">N</div>
             </div>
-        </div>
+        </header>
 
         <!-- Main Content -->
         <main style="flex: 1; overflow-y: auto;">
-            <div class="ai-banner" id="aiBanner">
-                <div class="ai-header">
-                    <svg class="ai-spark" viewBox="0 0 24 24">
-                        <path d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z M19 3L19.7 4.7L21.4 5.4L19.7 6.1L19 7.8L18.3 6.1L16.6 5.4L18.3 4.7L19 3Z M5 16L5.7 17.7L7.4 18.4L5.7 19.1L5 20.8L4.3 19.1L2.6 18.4L4.3 17.7L5 16Z"/>
+            <div class="ni-banner" id="niBanner">
+                <div class="ni-header">
+                    <svg class="ni-sparkle" viewBox="0 0 24 24">
+                        <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/>
                     </svg>
-                    <span class="ai-title">NI Overview</span>
-                    <svg class="ai-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    <span class="ni-title">Niv Intelligence Overview</span>
+                    <svg class="ni-chevron" viewBox="0 0 24 24">
+                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+                    </svg>
                 </div>
-                <div class="ai-body">
-                    You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.
+                <div class="ni-body">
+                    <strong>Analysis:</strong> Your boyfriend has sent you 90 emails ranging from deeply romantic to concerningly obsessed. Topics include: your nail clipper gifting skills (iconic), his phone storage being 60% your voice (normal?), extensive grocery store fantasies, a 4-cat adoption plan with named cats, and multiple promotional offers for his love (all free, no returns accepted).
+                    <br><br>
+                    <strong>Conclusion:</strong> He's deeply in love and slightly unhinged. Distance: 2083km. Obsession level: Maximum. Threat assessment: Only to your heart.
+                    <br><br>
+                    <strong>Recommendation:</strong> Keep him. He's already tracked your flights anyway.
                 </div>
             </div>
         </main>
 
-        <button class="fab" onclick="alert('You can\'t compose anything better than what you already have ❤️')">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#001d35"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+        <!-- FAB -->
+        <button class="fab" id="fabBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#001d35">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
         </button>
 
         <!-- Account Modal -->
         <div class="modal-wrap" id="modal">
             <div class="modal">
                 <div class="modal-email">niv@futurehusband.com</div>
-                <div class="ring-box">
+                <div class="pfp-ring">
                     <div class="ring"></div>
                     <div class="pfp">N</div>
                 </div>
@@ -210,7 +316,7 @@
         const sb = document.getElementById('sidebar');
         const ov = document.getElementById('overlay');
         const m = document.getElementById('modal');
-        const bn = document.getElementById('aiBanner');
+        const ni = document.getElementById('niBanner');
 
         document.getElementById('menuBtn').onclick = () => { sb.classList.add('open'); ov.classList.add('active'); };
         ov.onclick = () => { sb.classList.remove('open'); ov.classList.remove('active'); };
@@ -218,7 +324,9 @@
         document.getElementById('pBtn').onclick = () => m.style.display = 'flex';
         m.onclick = (e) => { if(e.target === m) m.style.display = 'none'; };
 
-        bn.onclick = () => bn.classList.toggle('expanded');
+        ni.onclick = () => ni.classList.toggle('expanded');
+        
+        document.getElementById('fabBtn').onclick = () => alert("You can't compose anything better than what you already have ❤️");
     </script>
 </body>
 </html>
