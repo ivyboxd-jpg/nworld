@@ -17,6 +17,7 @@
             --app-bg: #ffffff;
             --ai-banner-bg: #f0f4f9;
             --google-blue: #1a73e8;
+            --icon-gray: #8a8a8a;
         }
 
         /* Reset & Full Screen */
@@ -67,7 +68,7 @@
         /* All Inboxes - Active State from your screenshot */
         .nav-item.active { background: var(--active-pill-bg); color: var(--gmail-red); font-weight: 500; }
         .nav-item.active .icon-svg { fill: var(--gmail-red); }
-        .icon-svg { width: 22px; height: 22px; fill: var(--text-secondary); }
+        .icon-svg { width: 22px; height: 22px; fill: var(--icon-gray); }
 
         .nav-text { flex: 1; font-size: 14px; letter-spacing: 0.2px; }
         .nav-badge { font-size: 12px; font-weight: 400; }
@@ -82,6 +83,33 @@
         .ni-content { font-size: 14px; line-height: 1.5; color: #1f1f1f; margin-top: 12px; display: none; }
         .expanded .ni-content { display: block; }
         .expanded .ni-chevron { transform: rotate(180deg); }
+
+        /* --- PURCHASES SECTION --- */
+        .purchases-section {
+            margin: 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .purchases-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .purchases-icon {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-secondary);
+        }
+
+        .purchases-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
 
         /* --- PROFILE DROPDOWN --- */
         .profile-dropdown {
@@ -244,6 +272,16 @@
                 </div>
                 <div class="ni-content">
                     You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.
+                </div>
+            </div>
+
+            <!-- Purchases Section -->
+            <div class="purchases-section">
+                <div class="purchases-header">
+                    <svg class="purchases-icon" viewBox="0 0 24 24">
+                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
+                    </svg>
+                    <span class="purchases-title">Purchases</span>
                 </div>
             </div>
         </main>
