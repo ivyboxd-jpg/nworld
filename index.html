@@ -4,155 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Gmail</title>
+    <title>Gmail Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #ffffff;
-            --surface: #ffffff;
-            --on-surface: #1f1f1f;
-            --on-variant: #444746;
-            --google-blue: #0b57d0;
-            --ai-bg: #f0f4f9;
-            --pill-active-red: #fce8e6;
-            --text-active-red: #d93025;
-            --icon-gray: #444746;
-            --divider: #e0e2e0;
+            --gmail-red: #d93025;
+            --active-pill-bg: #fce8e6;
+            --text-primary: #1f1f1f;
+            --text-secondary: #444746;
+            --sidebar-bg: #ffffff;
+            --search-bg: #ffffff;
+            --app-bg: #ffffff;
+            --ai-banner-bg: #f0f4f9;
+            --google-blue: #1a73e8;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        /* Reset & Full Screen */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: 'Roboto', -apple-system, sans-serif; }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            font-family: 'Google Sans', 'Roboto', -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--on-surface);
-            overflow: hidden;
-            letter-spacing: 0.1px;
-        }
+        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; }
 
-        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
-
-        /* --- SEARCH HEADER --- */
-        .header { padding: 8px 16px; background: var(--bg); z-index: 100; }
-        .search-box {
-            height: 48px; background: var(--surface); border-radius: 24px;
+        /* --- HEADER (Floating Pill) --- */
+        .header { padding: 8px 16px; background: transparent; z-index: 100; }
+        .search-container {
+            height: 48px; background: var(--search-bg); border-radius: 24px;
             display: flex; align-items: center; padding: 0 8px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
         }
-        .icon-btn {
-            width: 40px; height: 40px; display: flex; align-items: center; 
-            justify-content: center; cursor: pointer; color: var(--on-variant);
-        }
-        .search-placeholder { flex: 1; font-size: 16px; color: var(--on-variant); padding-left: 8px; }
-        .profile-btn {
-            width: 32px; height: 32px; background: #1a73e8; color: white;
+        .menu-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-secondary); }
+        .search-text { flex: 1; font-size: 16px; color: var(--text-secondary); padding-left: 8px; font-weight: 400; }
+        .pfp-btn {
+            width: 32px; height: 32px; background: var(--google-blue); color: white;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             font-weight: 500; font-size: 14px; margin-right: 4px; cursor: pointer;
         }
 
-        /* --- SIDEBAR --- */
-        .sidebar-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.4);
-            z-index: 200; opacity: 0; visibility: hidden; transition: opacity 0.25s ease;
-        }
+        /* --- SIDEBAR (PIXEL PERFECT RECONSTRUCTION) --- */
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        
+
         .sidebar {
-            position: fixed; top: 0; bottom: 0; left: 0; width: 285px;
-            background: var(--surface); z-index: 250; transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column;
-            border-radius: 0 16px 16px 0;
+            position: fixed; top: 0; bottom: 0; left: 0; width: 300px;
+            background: var(--sidebar-bg); z-index: 250; transform: translateX(-100%);
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; border-radius: 0 16px 16px 0;
             padding-top: env(safe-area-inset-top);
         }
         .sidebar.open { transform: translateX(0); }
 
-        .sb-header {
-            padding: 20px 24px 12px; display: flex; align-items: center; gap: 12px;
-        }
-        .sb-logo-text {
-            font-size: 22px; color: #5f6368; font-family: 'Roboto', sans-serif; font-weight: 400;
-        }
+        .sidebar-header { padding: 18px 24px; display: flex; align-items: center; gap: 14px; border-bottom: 0.5px solid transparent; }
+        .sidebar-logo { height: 24px; width: auto; }
+        .sidebar-logo-text { font-size: 22px; color: #5f6368; font-weight: 400; }
 
-        /* Gmail Logo Icon */
-        .gmail-logo-icon {
-            width: 28px;
-            height: 22px;
-            flex-shrink: 0;
-        }
-
-        .nav-items { overflow-y: auto; padding: 8px 12px 12px 0; }
+        .nav-list { overflow-y: auto; padding: 8px 12px 12px 0; }
+        
         .nav-item {
             height: 48px; display: flex; align-items: center; padding: 0 16px 0 24px; gap: 18px;
-            border-radius: 0 24px 24px 0; cursor: pointer; color: var(--icon-gray);
-            margin-bottom: 2px;
+            border-radius: 0 24px 24px 0; cursor: pointer; color: var(--text-secondary); margin-bottom: 2px;
         }
-        .nav-item svg { fill: var(--icon-gray); width: 22px; height: 22px; flex-shrink: 0; }
 
-        .nav-item.active {
-            background: var(--pill-active-red);
-            color: var(--text-active-red);
-            font-weight: 500;
-        }
-        .nav-item.active svg { fill: var(--text-active-red); }
+        /* All Inboxes - Active State from your screenshot */
+        .nav-item.active { background: var(--active-pill-bg); color: var(--gmail-red); font-weight: 500; }
+        .nav-item.active .icon-svg { fill: var(--gmail-red); }
+        .icon-svg { width: 22px; height: 22px; fill: var(--text-secondary); }
 
-        .nav-text { flex: 1; font-size: 14px; }
+        .nav-text { flex: 1; font-size: 14px; letter-spacing: 0.2px; }
         .nav-badge { font-size: 12px; font-weight: 400; }
-        .divider { height: 1px; background: var(--divider); margin: 8px 0 8px 24px; opacity: 0.6; }
+        .divider { height: 1px; background: #e0e2e0; margin: 8px 0 8px 24px; }
 
-        /* --- NI OVERVIEW BANNER --- */
-        .ni-banner {
-            margin: 12px 16px; border-radius: 16px; padding: 16px;
-            background: var(--ai-bg); cursor: pointer;
-        }
+        /* --- NI OVERVIEW (EXACT UI) --- */
+        .ni-banner { margin: 8px 16px; border-radius: 16px; padding: 16px; background: var(--ai-banner-bg); cursor: pointer; }
         .ni-header { display: flex; align-items: center; }
-        .ni-sparkle { width: 20px; height: 20px; fill: var(--google-blue); margin-right: 12px; flex-shrink: 0; }
-        .ni-title { font-size: 16px; color: #1f1f1f; font-weight: 400; flex: 1; }
-        .ni-chevron { width: 20px; height: 20px; fill: #5f6368; transition: transform 0.3s; flex-shrink: 0; }
-        .ni-body { 
-            font-size: 14px; line-height: 1.5; color: #1f1f1f; 
-            margin-top: 12px; display: none;
-        }
-        .expanded .ni-body { display: block; }
+        .ni-sparkle { width: 20px; height: 20px; fill: var(--google-blue); margin-right: 12px; }
+        .ni-title { font-size: 15px; color: #1f1f1f; font-weight: 500; flex: 1; }
+        .ni-chevron { width: 18px; height: 18px; fill: #5f6368; transition: 0.2s; }
+        .ni-content { font-size: 14px; line-height: 1.5; color: #1f1f1f; margin-top: 12px; display: none; }
+        .expanded .ni-content { display: block; }
         .expanded .ni-chevron { transform: rotate(180deg); }
 
         /* --- ACCOUNT MODAL --- */
-        .modal-wrap {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-            z-index: 400; display: none; align-items: center; justify-content: center;
-        }
-        .modal {
-            background: #e9eef6; border-radius: 28px; width: 312px;
-            padding: 32px 24px; text-align: center;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 400; display: none; align-items: center; justify-content: center; }
+        .modal { background: #e9eef6; border-radius: 28px; width: 312px; padding: 32px 24px; text-align: center; }
         .modal-email { font-size: 14px; color: #1f1f1f; margin-bottom: 24px; }
-        .pfp-ring {
-            width: 84px; height: 84px; margin: 0 auto 16px; position: relative;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .ring {
-            position: absolute; inset: 0; border-radius: 50%; padding: 3px;
-            background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor; mask-composite: exclude;
-        }
-        .pfp {
-            width: 72px; height: 72px; border-radius: 50%; background: #1a73e8;
-            color: white; display: flex; align-items: center; justify-content: center;
-            font-size: 28px; font-weight: 500;
-        }
+        .ring-box { width: 84px; height: 84px; margin: 0 auto 16px; position: relative; display: flex; align-items: center; justify-content: center; }
+        .ring { position: absolute; inset: 0; border-radius: 50%; padding: 3.5px; background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
+        .pfp-inner { width: 72px; height: 72px; border-radius: 50%; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 500; }
         .modal-hi { font-size: 26px; font-weight: 400; color: #1f1f1f; margin: 0; }
 
         /* --- FAB --- */
-        .fab {
-            position: fixed; bottom: 24px; right: 16px;
-            width: 56px; height: 56px; background: #c2e7ff;
-            border-radius: 16px; display: flex; align-items: center;
-            justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border: none; cursor: pointer;
-        }
+        .fab { position: fixed; bottom: 24px; right: 16px; width: 56px; height: 56px; background: #c2e7ff; border-radius: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: none; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -162,217 +103,102 @@
 
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <div class="sb-header">
-                <!-- EXACT GMAIL LOGO (Multi-color M) -->
-                <svg class="gmail-logo-icon" viewBox="0 0 24 24">
-                    <path fill="#EA4335" d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
-                    <path fill="#FBBC05" d="M7.364 7.82L0 3.273v16.093h1.636V7.82l5.728 4.728z"/>
-                    <path fill="#34A853" d="M24 3.273l-7.364 4.547 7.364 4.91z"/>
-                    <path fill="#C5221F" d="M16.636 7.82l-4.636 3.637-4.636-3.637V3.273L12 6.91l4.636-3.637z"/>
-                </svg>
-                <span class="sb-logo-text">Gmail</span>
+            <div class="sidebar-header">
+                <!-- USING THE SAME METHOD THAT WORKED: Google's official Gmail logo -->
+                <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="sidebar-logo">
+                <span class="sidebar-logo-text">Gmail</span>
             </div>
             
-            <div class="nav-items">
-                <!-- All Inboxes -->
+            <div class="nav-list">
                 <div class="nav-item active">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V7h14v12zm-7-6h5v2h-5zm0-4h5v2h-5z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v3H5v-3h14m1-2H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1zm-1-8l-7 5-7-5V5l7 5 7-5v2z"/></svg>
                     <span class="nav-text">All inboxes</span>
                     <span class="nav-badge">1</span>
                 </div>
                 <div class="divider"></div>
-                
-                <!-- Primary -->
                 <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10z"/></svg>
                     <span class="nav-text">Primary</span>
                     <span class="nav-badge">1</span>
                 </div>
-                
-                <!-- Social -->
                 <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     <span class="nav-text">Social</span>
                 </div>
-                
-                <!-- Promotions -->
                 <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7z"/></svg>
                     <span class="nav-text">Promotions</span>
                 </div>
-                
-                <!-- Updates -->
                 <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
                     <span class="nav-text">Updates</span>
                 </div>
-                
                 <div class="divider"></div>
-                
-                <!-- Starred -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"/>
-                    </svg>
-                    <span class="nav-text">Starred</span>
-                </div>
-                
-                <!-- Snoozed -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm1-11h-2v6l5.25 3.15.75-1.23-4-2.42V9z"/>
-                    </svg>
-                    <span class="nav-text">Snoozed</span>
-                </div>
-                
-                <!-- Important -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
-                    </svg>
-                    <span class="nav-text">Important</span>
-                    <span class="nav-badge">1</span>
-                </div>
-                
-                <!-- Purchases -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
-                    </svg>
-                    <span class="nav-text">Purchases</span>
-                </div>
-                
-                <!-- Sent -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                    </svg>
-                    <span class="nav-text">Sent</span>
-                </div>
-                
-                <!-- Scheduled -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" opacity="0.3"/>
-                    </svg>
-                    <span class="nav-text">Scheduled</span>
-                </div>
-                
-                <!-- Outbox -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.09-.16-.26-.25-.44-.25-.06 0-.12.01-.17.03l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.06-.02-.12-.03-.18-.03-.17 0-.34.09-.43.25l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.09.16.26.25.44.25.06 0 .12-.01.17-.03l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.06.02.12.03.18.03.17 0 .34-.09.43-.25l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM17.45 11c.04.31.05.64.05.98 0 .34-.01.67-.05.98l-.18 1.45 1.32 1.03-.8 1.39-1.64-.66-1.2.93c-.38.3-.79.56-1.23.78l-1.39.57-.3 1.66h-1.6l-.3-1.66-1.39-.57c-.44-.22-.85-.48-1.23-.78l-1.2-.93-1.64.66-.8-1.39 1.32-1.03-.18-1.45c-.04-.31-.05-.64-.05-.98 0-.34.01-.67.05-.98l.18-1.45-1.32-1.03.8-1.39 1.64.66 1.2-.93c.38-.3.79-.56 1.23-.78l1.39-.57.3-1.66h1.6l.3 1.66 1.39.57c.44.22.85.48 1.23.78l1.2.93 1.64-.66.8 1.39-1.32 1.03.18 1.45z"/>
-                    </svg>
-                    <span class="nav-text">Outbox</span>
-                </div>
-                
-                <!-- Drafts -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
-                    </svg>
-                    <span class="nav-text">Drafts</span>
-                </div>
-                
-                <!-- All emails -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
-                    </svg>
-                    <span class="nav-text">All emails</span>
-                </div>
-                
-                <!-- Spam -->
-                <div class="nav-item">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                    </svg>
-                    <span class="nav-text">Spam</span>
-                </div>
+                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-text">Starred</span></div>
+                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm.5 13H11V7h1.5v8z"/></svg><span class="nav-text">Snoozed</span></div>
+                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12l-4.37 6.16c-.37.52-.98.84-1.63.84h-10c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h10c.65 0 1.26.31 1.63.84L21 12z"/></svg><span class="nav-text">Important</span><span class="nav-badge">1</span></div>
+                <div class="divider"></div>
+                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3z"/></svg><span class="nav-text">Spam</span></div>
+                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span class="nav-text">Bin</span></div>
             </div>
         </aside>
 
         <!-- Search Header -->
         <header class="header">
-            <div class="search-box">
-                <div class="icon-btn" id="menuBtn">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
+            <div class="search-container">
+                <div class="menu-icon" id="openMenu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
                 </div>
-                <div class="search-placeholder">Search in mail</div>
-                <div class="profile-btn" id="pBtn">N</div>
+                <div class="search-text">Search in mail</div>
+                <div class="pfp-btn" id="openModal">N</div>
             </div>
         </header>
 
-        <!-- Main Content -->
+        <!-- Content -->
         <main style="flex: 1; overflow-y: auto;">
             <div class="ni-banner" id="niBanner">
                 <div class="ni-header">
-                    <svg class="ni-sparkle" viewBox="0 0 24 24">
-                        <path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5L12 2z"/>
-                    </svg>
-                    <span class="ni-title">Niv Intelligence Overview</span>
-                    <svg class="ni-chevron" viewBox="0 0 24 24">
-                        <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                    </svg>
+                    <svg class="ni-sparkle" viewBox="0 0 24 24"><path d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z M19 3L19.7 4.7L21.4 5.4L19.7 6.1L19 7.8L18.3 6.1L16.6 5.4L18.3 4.7L19 3Z"/></svg>
+                    <span class="ni-title">NI Overview</span>
+                    <svg class="ni-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                 </div>
-                <div class="ni-body">
-                    <strong>Analysis:</strong> Your boyfriend has sent you 90 emails ranging from deeply romantic to concerningly obsessed. Topics include: your nail clipper gifting skills (iconic), his phone storage being 60% your voice (normal?), extensive grocery store fantasies, a 4-cat adoption plan with named cats, and multiple promotional offers for his love (all free, no returns accepted).
-                    <br><br>
-                    <strong>Conclusion:</strong> He's deeply in love and slightly unhinged. Distance: 2083km. Obsession level: Maximum. Threat assessment: Only to your heart.
-                    <br><br>
-                    <strong>Recommendation:</strong> Keep him. He's already tracked your flights anyway.
+                <div class="ni-content">
+                    You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.
                 </div>
             </div>
         </main>
 
         <!-- FAB -->
-        <button class="fab" id="fabBtn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#001d35">
-                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-            </svg>
+        <button class="fab" onclick="alert('You can\'t compose anything better than what you already have ❤️')">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#001d35"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
         </button>
 
         <!-- Account Modal -->
-        <div class="modal-wrap" id="modal">
+        <div class="modal-overlay" id="modal">
             <div class="modal">
-                <div class="modal-email">niv@futurehusband.com</div>
-                <div class="pfp-ring">
-                    <div class="ring"></div>
-                    <div class="pfp">N</div>
-                </div>
+                <p class="modal-email">niv@futurehusband.com</p>
+                <div class="ring-box"><div class="ring"></div><div class="pfp-inner">N</div></div>
                 <h1 class="modal-hi">Hi, Niv!</h1>
             </div>
         </div>
     </div>
 
     <script>
-        const sb = document.getElementById('sidebar');
-        const ov = document.getElementById('overlay');
-        const m = document.getElementById('modal');
-        const ni = document.getElementById('niBanner');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const modal = document.getElementById('modal');
+        const niBanner = document.getElementById('niBanner');
 
-        document.getElementById('menuBtn').onclick = () => { sb.classList.add('open'); ov.classList.add('active'); };
-        ov.onclick = () => { sb.classList.remove('open'); ov.classList.remove('active'); };
-        
-        document.getElementById('pBtn').onclick = () => m.style.display = 'flex';
-        m.onclick = (e) => { if(e.target === m) m.style.display = 'none'; };
+        // Sidebar
+        document.getElementById('openMenu').onclick = () => { sidebar.classList.add('open'); overlay.classList.add('active'); };
+        overlay.onclick = () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); };
 
-        ni.onclick = () => ni.classList.toggle('expanded');
-        
-        document.getElementById('fabBtn').onclick = () => alert("You can't compose anything better than what you already have ❤️");
+        // Banner
+        niBanner.onclick = () => niBanner.classList.toggle('expanded');
+
+        // Modal
+        document.getElementById('openModal').onclick = () => { modal.style.display = 'flex'; };
+        modal.onclick = (e) => { if(e.target === modal) modal.style.display = 'none'; };
     </script>
 </body>
 </html>
