@@ -88,18 +88,20 @@
             position: absolute;
             top: 60px;
             right: 16px;
-            width: 340px;
-            background: white;
+            width: 280px;
+            background: #e9eef6;
             border-radius: 24px;
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-            padding: 24px;
+            padding: 28px 20px;
             z-index: 150;
             display: none;
+            text-align: center;
         }
         .profile-dropdown.active { display: block; }
         
-        .profile-header {
-            text-align: center;
+        .profile-email {
+            font-size: 14px;
+            color: #1f1f1f;
             margin-bottom: 20px;
         }
         
@@ -137,44 +139,11 @@
             font-weight: 500;
         }
         
-        .profile-name {
-            font-size: 16px;
-            font-weight: 500;
+        .profile-hi {
+            font-size: 24px;
+            font-weight: 400;
             color: #1f1f1f;
-            margin-bottom: 4px;
         }
-        
-        .profile-email {
-            font-size: 14px;
-            color: #5f6368;
-            margin-bottom: 16px;
-        }
-        
-        .manage-account-btn {
-            width: 100%;
-            padding: 10px;
-            background: transparent;
-            border: 1px solid #dadce0;
-            border-radius: 20px;
-            font-size: 14px;
-            color: #1a73e8;
-            font-weight: 500;
-            cursor: pointer;
-            font-family: 'Roboto', sans-serif;
-        }
-        
-        .manage-account-btn:hover {
-            background: #f8f9fa;
-        }
-
-        /* --- ACCOUNT MODAL (kept for fallback) --- */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 400; display: none; align-items: center; justify-content: center; }
-        .modal { background: #e9eef6; border-radius: 28px; width: 312px; padding: 32px 24px; text-align: center; }
-        .modal-email { font-size: 14px; color: #1f1f1f; margin-bottom: 24px; }
-        .ring-box { width: 84px; height: 84px; margin: 0 auto 16px; position: relative; display: flex; align-items: center; justify-content: center; }
-        .ring { position: absolute; inset: 0; border-radius: 50%; padding: 3.5px; background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        .pfp-inner { width: 72px; height: 72px; border-radius: 50%; background: #1a73e8; color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 500; }
-        .modal-hi { font-size: 26px; font-weight: 400; color: #1f1f1f; margin: 0; }
     </style>
 </head>
 <body>
@@ -192,7 +161,9 @@
             
             <div class="nav-list">
                 <div class="nav-item active">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v3H5v-3h14m1-2H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1zm-1-8l-7 5-7-5V5l7 5 7-5v2z"/></svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M20 6H4l8 4.99zM4 8v10h16V8l-8 5z"/>
+                    </svg>
                     <span class="nav-text">All inboxes</span>
                     <span class="nav-badge">1</span>
                 </div>
@@ -222,7 +193,12 @@
                 </div>
                 <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12l-4.37 6.16c-.37.52-.98.84-1.63.84h-10c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h10c.65 0 1.26.31 1.63.84L21 12z"/></svg><span class="nav-text">Important</span><span class="nav-badge">1</span></div>
                 <div class="divider"></div>
-                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3z"/></svg><span class="nav-text">Spam</span></div>
+                <div class="nav-item">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
+                    </svg>
+                    <span class="nav-text">Spam</span>
+                </div>
                 <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span class="nav-text">Bin</span></div>
             </div>
         </aside>
@@ -239,15 +215,12 @@
             
             <!-- Profile Dropdown -->
             <div class="profile-dropdown" id="profileDropdown">
-                <div class="profile-header">
-                    <div class="profile-ring-box">
-                        <div class="profile-ring"></div>
-                        <div class="profile-pfp-inner">N</div>
-                    </div>
-                    <div class="profile-name">Niv</div>
-                    <div class="profile-email">niv@futurehusband.com</div>
-                    <button class="manage-account-btn">Manage your Google Account</button>
+                <p class="profile-email">niv@futurehusband.com</p>
+                <div class="profile-ring-box">
+                    <div class="profile-ring"></div>
+                    <div class="profile-pfp-inner">N</div>
                 </div>
+                <h1 class="profile-hi">Hi, Niv!</h1>
             </div>
         </header>
 
