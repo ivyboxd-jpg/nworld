@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Gmail</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #d93025;
-            --active-bg: #fce8e6;
+            --primary-color: #d93025; /* Default Red */
+            --active-bg: #fce8e6;     /* Default Red BG */
             --text-primary: #202124;
             --text-secondary: #5f6368;
             --border-color: #e0e0e0;
-            --google-blue: #1a73e8;
             --search-bg: #e3e7ed;
         }
 
@@ -45,7 +44,7 @@
             align-items: center; 
             justify-content: center; 
             cursor: pointer; 
-            margin-right: 8px;
+            margin-right: 12px;
         }
         
         .search-input { 
@@ -55,7 +54,6 @@
             background: transparent;
             border: none;
             outline: none;
-            padding: 0 8px;
             font-family: 'Roboto', sans-serif;
             font-weight: 400; 
         }
@@ -65,8 +63,8 @@
         .pfp-btn {
             width: 32px; 
             height: 32px; 
-            background: #a0c3ff; 
-            color: #001d35;
+            background: #009688; 
+            color: white;
             border-radius: 50%; 
             display: flex; 
             align-items: center; 
@@ -143,7 +141,9 @@
         .nav-item.active .icon-svg { fill: var(--primary-color); }
 
         .nav-text { flex: 1; font-size: 14px; font-weight: 500; }
-        .nav-badge { font-size: 13px; color: #5f6368; }
+        
+        /* Updated badge style - minimal gray number */
+        .nav-badge { font-size: 12px; color: #5f6368; font-weight: 500; }
         .nav-item.active .nav-badge { color: var(--primary-color); }
 
         .divider { height: 1px; background: #e0e0e0; margin: 8px 0; }
@@ -153,7 +153,7 @@
             padding: 16px 16px 8px;
             font-size: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             color: #5f6368;
             font-weight: 500;
         }
@@ -168,17 +168,13 @@
         .email-item {
             display: flex;
             align-items: flex-start;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f1f1f1;
+            padding: 14px 16px; /* Slightly more padding for cleaner look */
             cursor: pointer;
             background: #fff;
             gap: 16px;
-            transition: background 0.2s;
         }
 
-        .email-item:active {
-            background: #f8f9fa;
-        }
+        .email-item:active { background: #f8f9fa; }
 
         .avatar-circle {
             width: 40px;
@@ -188,7 +184,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 500;
-            font-size: 18px;
+            font-size: 20px;
             color: white;
             flex-shrink: 0;
             text-transform: uppercase;
@@ -203,53 +199,40 @@
             display: flex;
             align-items: baseline;
             margin-bottom: 2px;
-            gap: 8px;
             justify-content: space-between;
         }
 
         .sender-name {
             font-size: 16px;
-            color: var(--text-primary);
+            color: #1f1f1f; /* Darker black */
             font-weight: 700;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-        }
-
-        .email-item.read .sender-name {
-            font-weight: 400;
-            color: #444;
+            flex: 1;
+            margin-right: 8px;
         }
 
         .email-time {
             font-size: 12px;
-            color: var(--text-primary);
+            color: #5f6368;
             font-weight: 500;
             flex-shrink: 0;
         }
 
-        .email-item.read .email-time {
-            font-weight: 400;
-            color: var(--text-secondary);
-        }
-
         .subject-line {
             font-size: 14px;
-            color: var(--text-primary);
+            color: #1f1f1f;
             margin-bottom: 2px;
-            font-weight: 700;
+            font-weight: 700; /* Bolder subject like reference */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
-        .email-item.read .subject-line {
-            font-weight: 400;
-        }
-
         .snippet {
             font-size: 14px;
-            color: var(--text-secondary);
+            color: #5f6368;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -299,14 +282,14 @@
             padding: 8px 4px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             background: #fff;
             position: sticky;
             top: 0;
             z-index: 10;
         }
 
-        .back-btn {
+        .back-btn, .action-btn {
             width: 48px;
             height: 48px;
             display: flex;
@@ -316,30 +299,22 @@
             border-radius: 50%;
         }
         
-        .back-btn:active { background: #f1f3f4; }
+        .back-btn:active, .action-btn:active { background: #f1f3f4; }
 
-        .detail-actions {
-            display: flex;
-            gap: 4px;
-            margin-left: auto;
+        /* Artistic Header Image */
+        .artistic-header {
+            width: 100%;
+            height: 180px;
+            background-color: #f1f3f4;
+            background-size: cover;
+            background-position: center;
+            /* No margin bottom here to keep subject close */
         }
-
-        .action-btn {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: 50%;
-        }
-        
-        .action-btn:active { background: #f1f3f4; }
 
         .detail-subject-header {
             padding: 20px 16px 12px;
             display: flex;
-            align-items: flex-start;
+            align-items: flex-start; /* Aligns star with top line of text */
             justify-content: space-between;
             gap: 12px;
         }
@@ -347,7 +322,7 @@
         .subject-container {
             display: flex;
             flex-direction: row; /* Horizontal alignment */
-            align-items: baseline;
+            align-items: baseline; /* Aligns text base */
             flex-wrap: wrap;
             gap: 8px;
             flex: 1;
@@ -357,7 +332,7 @@
             font-size: 22px;
             font-weight: 400;
             color: var(--text-primary);
-            line-height: 1.3;
+            line-height: 1.2;
         }
 
         .detail-inbox-label {
@@ -367,8 +342,8 @@
             font-size: 11px;
             color: #5f6368;
             font-weight: 500;
-            display: inline-block;
             vertical-align: middle;
+            display: inline-block;
         }
 
         .detail-star {
@@ -376,27 +351,7 @@
             height: 24px;
             margin-top: 4px;
             cursor: pointer;
-        }
-
-        /* Artistic Header Image */
-        .artistic-header {
-            width: 100%;
-            height: 180px;
-            background-color: #f1f3f4;
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 16px;
-            position: relative;
-        }
-
-        .artistic-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background: linear-gradient(to top, #fff, transparent);
+            flex-shrink: 0;
         }
 
         .detail-sender-row {
@@ -414,7 +369,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 500;
-            font-size: 18px;
+            font-size: 20px;
             color: white;
             flex-shrink: 0;
         }
@@ -441,11 +396,11 @@
         }
 
         .detail-body {
-            padding: 0 16px 100px; /* Extra padding for FAB */
+            padding: 0 16px 100px;
             line-height: 1.6;
             color: #202124;
             font-size: 15px;
-            font-family: 'Georgia', serif; /* More artistic font for body */
+            font-family: 'Georgia', serif; /* Artistic/Newsletter font */
         }
 
         /* Compose FAB */
@@ -490,6 +445,7 @@
             </div>
             
             <div class="nav-list">
+                <!-- Data attributes for coloring: Green for Promo, Blue for Social, Orange Updates -->
                 <div class="nav-item active" data-view="primary" data-color="#d93025" data-bg="#fce8e6">
                     <svg class="icon-svg" viewBox="0 0 24 24">
                         <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2V7h-4v2h2z"/>
@@ -534,6 +490,7 @@
                         <path d="M12 18.5L18.5 22l-1.5-7.03L22 10.5l-7.19-.61L12 2.5 9.19 9.89 2 10.5l5.46 4.47L6 22z"/>
                     </svg>
                     <span class="nav-text">Important</span>
+                    <span class="nav-badge">1</span>
                 </div>
 
                 <div class="nav-item" data-view="sent" data-color="#5f6368" data-bg="#f1f3f4">
@@ -541,6 +498,20 @@
                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                     </svg>
                     <span class="nav-text">Sent</span>
+                </div>
+                
+                <div class="nav-item" data-view="outbox" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span class="nav-text">Outbox</span>
+                </div>
+
+                <div class="nav-item" data-view="drafts" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h8v-2H6V4h7v5h5v11h-2v2h2c1.1 0 2-.9 2-2V8l-6-6z"/>
+                    </svg>
+                    <span class="nav-text">Drafts</span>
                 </div>
 
                 <div class="nav-item" data-view="spam" data-color="#5f6368" data-bg="#f1f3f4">
@@ -567,6 +538,7 @@
                         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
                     </svg>
                 </div>
+                <!-- Functional Search Input -->
                 <input type="text" class="search-input" id="searchInput" placeholder="Search in mail">
                 <div class="pfp-btn" id="openProfile">S</div>
             </div>
@@ -599,7 +571,7 @@
                     </div>
                 </div>
                 
-                <!-- Artistic Header (injected) -->
+                <!-- Artistic Header (injected via JS) -->
                 <div id="artisticHeader" class="artistic-header"></div>
 
                 <div class="detail-subject-header">
@@ -635,93 +607,201 @@
                 <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
             </svg>
         </div>
+        
+        <!-- Bottom Nav removed as requested -->
     </div>
 
     <script>
         const emails = [
             {
                 id: '1',
-                sender: 'The Moon',
-                subject: 'I saw you looking',
-                snippet: 'It was 2:00 AM and you were eating cheese directly from the block.',
-                time: '8:42 PM',
-                avatar: 'M',
-                color: '#673ab7',
+                sender: 'The Distance Times',
+                subject: 'Breaking: Local Man Still 2083km Away, Desperate',
+                snippet: 'Top story: Missing continues indefinitely. Experts baffled by...',
+                time: 'Feb 14',
+                avatar: 'DT',
+                color: '#607d8b',
                 starred: true,
-                artImage: 'https://images.unsplash.com/photo-1532431717904-4c407559c5d0?q=80&w=600&auto=format&fit=crop',
-                body: `<p>Dear Earthling,</p><p>I noticed you staring up at me last night. It was intimate. I felt seen. Usually, people just look for the flag or try to calculate tides, but you looked at me like I was a giant glowing aspirin dissolving in the sky.</p><p>You looked worried. Is it the mortgage? The girl? The fact that socks disappear?</p><p>Don't worry. I've seen dinosaurs die and empires fall and I've also seen a guy trip over his own shoelace in 1492. It all passes.</p><p>Shine on,</p><p>Luna</p>`
+                artImage: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <div style="text-align: center; border-bottom: 3px double #000; margin-bottom: 24px; padding-bottom: 16px;">
+                        <h1 style="font-family: 'Georgia', serif; font-size: 28px; margin: 0;">THE DISTANCE TIMES</h1>
+                        <p style="font-style: italic; color: #666; font-size: 12px; margin-top: 8px;">All The News That's Fit To Miss You Over</p>
+                    </div>
+                    <h2 style="font-family: 'Georgia', serif; font-size: 24px; line-height: 1.3; margin-bottom: 12px;">Breaking: Local Man Still 2083 Kilometers From Girlfriend, Friends Report "He Won't Shut Up"</h2>
+                    <p style="font-style: italic; color: #555; font-size: 13px; margin-bottom: 20px;">By The Editorial Board • February 14, 2026</p>
+                    
+                    <p style="margin-bottom: 16px;">In what experts are calling "an absolutely ridiculous situation that needs to end immediately," local future husband Niv remains separated from his girlfriend Aaradhya by approximately 2,083 kilometers.</p>
+                    <p style="margin-bottom: 16px;">Witnesses state that the subject has spent the last 48 hours checking flight prices and staring longingly at photos of the moon, claiming "it looks the same where she is."</p>
+                    <p style="margin-bottom: 16px;">"It is mathematically impossible to miss someone this much," stated leading scientist Dr. Heartache. "And yet, here we are."</p>
+                `
             },
             {
                 id: '2',
-                sender: 'Chronos Time Management',
-                subject: 'Refund issued for Yesterday',
-                snippet: 'We acknowledge that yesterday was subpar and contained too much waiting.',
-                time: '6:15 PM',
-                avatar: 'C',
-                color: '#009688',
+                sender: 'Future Husband Enterprises',
+                subject: 'Offer Letter: Position of Eternal Girlfriend',
+                snippet: 'Dear Aaradhya, We are pleased to extend an offer for the...',
+                time: 'Feb 13',
+                avatar: 'FH',
+                color: '#e91e63',
                 starred: false,
-                artImage: 'https://images.unsplash.com/photo-1501139083538-0139583c61ee?q=80&w=600&auto=format&fit=crop',
-                body: `<p><strong>Order #999-INFINITY-NULL</strong></p><p>We have reviewed your complaint regarding Yesterday, February 11th.</p><p>You noted that the hours between 2 PM and 4 PM felt "sticky" and "like wading through molasses," while the evening vanished in what felt like four seconds.</p><p>This was a server error on our end. We are crediting your account with 45 minutes of Lucid Dreaming and one (1) perfect sunset to be redeemed at your leisure.</p><p>Please do not spend it all on anxiety.</p>`
+                artImage: 'https://images.unsplash.com/photo-1554774853-719586f8c277?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <div style="text-align: center; margin-bottom: 32px;">
+                        <h2 style="font-size: 18px; letter-spacing: 1px; margin-bottom: 4px;">FUTURE HUSBAND ENTERPRISES</h2>
+                        <p style="font-size: 11px; color: #666; font-style: italic;">Est. The Moment I Saw You • Headquarters: My Heart</p>
+                        <div style="height: 1px; background: #000; margin-top: 16px;"></div>
+                    </div>
+                    
+                    <p style="text-align: right; color: #666; margin-bottom: 24px;">February 13, 2026</p>
+                    
+                    <p style="margin-bottom: 16px;">Dear Aaradhya,</p>
+                    <p style="margin-bottom: 16px;">We are pleased to extend you an offer for the position of Eternal Girlfriend at Future Husband Enterprises, reporting directly to Niv (Chief Executive of Missing You).</p>
+                    
+                    <h3 style="font-size: 14px; text-transform: uppercase; margin-top: 24px; margin-bottom: 8px; border-bottom: 1px solid #ddd;">Position Details</h3>
+                    <ul style="list-style-type: none; padding: 0; margin-bottom: 16px;">
+                        <li style="margin-bottom: 8px;">• <strong>Start Date:</strong> Retroactive to day one</li>
+                        <li style="margin-bottom: 8px;">• <strong>Duration:</strong> Forever (auto-renewing)</li>
+                        <li style="margin-bottom: 8px;">• <strong>Location:</strong> Currently 2083km apart (working to reduce to 0km)</li>
+                    </ul>
+
+                    <h3 style="font-size: 14px; text-transform: uppercase; margin-top: 24px; margin-bottom: 8px; border-bottom: 1px solid #ddd;">Compensation Package</h3>
+                    <ul style="list-style-type: none; padding: 0; margin-bottom: 24px;">
+                        <li>• Unlimited daily compliments</li>
+                        <li>• 24/7 "you are beautiful" coverage</li>
+                        <li>• Premium forehead kiss benefits</li>
+                    </ul>
+
+                    <p style="margin-top: 32px;">Yours eternally,</p>
+                    <p style="font-size: 20px; font-family: 'Brush Script MT', cursive; margin: 12px 0;">Niv</p>
+                    <p>Chief Executive Officer<br>"2083km is just a number (that I hate)"</p>
+                `
             },
             {
                 id: '3',
-                sender: 'A Stray Cat',
-                subject: 'Business Proposal (Urgent)',
-                snippet: 'regarding the barrier between us (the glass door) and the exchange of fish.',
-                time: '4:30 PM',
-                avatar: 'S',
-                color: '#ff5722',
+                sender: 'The Love Yorker',
+                subject: 'Letter from 2083km: A Meditation on Distance',
+                snippet: 'By Niv, Future Husband. On the peculiar mathematics of longing...',
+                time: 'Feb 12',
+                avatar: 'LY',
+                color: '#3f51b5',
                 starred: true,
-                artImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=600&auto=format&fit=crop',
-                body: `<p>Human,</p><p>I am writing to you from the patio. It is cold. My paws are, frankly, tragic.</p><p>I have observed you from afar. You have a box that produces heat and another box that contains cold light and ham. I have neither.</p><p><strong>The Proposal:</strong></p><ul><li>I enter.</li><li>I vibrate on your chest (medical benefits included).</li><li>You provide the Crunchies.</li></ul><p>Please respond by opening the door. Ignoring me is a hate crime.</p>`
+                artImage: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <div style="text-align: center; margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
+                        <h1 style="font-family: 'Times New Roman', serif; font-size: 32px; letter-spacing: -1px; margin-bottom: 8px;">THE LOVE YORKER</h1>
+                        <p style="font-family: sans-serif; font-size: 11px; color: #d93025;">Price $8.99 • February 2026</p>
+                    </div>
+
+                    <h2 style="font-family: 'Georgia', serif; font-size: 26px; font-style: italic; margin-bottom: 16px;">Letter from 2083 Kilometers: On the Peculiar Mathematics of Longing</h2>
+                    <p style="font-size: 13px; color: #666; margin-bottom: 24px;">By Niv, Future Husband</p>
+
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">There is a specific kind of arithmetic that occurs when you are in love with someone who exists in a different set of coordinates than you do. Two thousand and eighty-three kilometers, to be precise.</p>
+                    
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">It is a number I have become intimately familiar with, the way one might become familiar with a chronic condition or a particularly persistent song stuck in one's head. It is not just a distance; it is a physical weight.</p>
+
+                    <p style="font-size: 16px; line-height: 1.8; margin-bottom: 20px;">I found myself today looking at a map, tracing the line between us, wondering if sheer willpower could bend the screen of my phone until the blue dot of 'Me' touched the red pin of 'You'.</p>
+
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; font-style: italic; font-size: 12px; color: #666;">
+                        Niv is a future husband currently located 2,083 kilometers from his girlfriend, waiting for the gap to close.
+                    </div>
+                `
             },
             {
                 id: '4',
-                sender: 'Your Left Shoe',
-                subject: 'We need to talk about the Right one',
-                snippet: 'He’s wearing thin and frankly, he’s embarrassing us both.',
-                time: '2:12 PM',
-                avatar: 'L',
-                color: '#795548',
+                sender: 'Niv\'s Heart Publications',
+                subject: 'Your Weekly "You Are Beautiful" Newsletter',
+                snippet: 'This week\'s edition: 47 new reasons why you\'re extraordinary...',
+                time: 'Feb 11',
+                avatar: 'NH',
+                color: '#9c27b0',
                 starred: false,
-                artImage: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop',
-                body: `<p>Look,</p><p>I know I'm just a Converse, but I have a soul. (Ha, shoe pun. Sorry). But seriously.</p><p>Righty has developed a hole near the pinky toe. It's undignified. When we walk into a room, I feel the floorboards judging us. I am pristine. I have been dodging puddles for you. And him? He steps in gum like it's his job.</p><p>Replace him, or I walk. Literally.</p>`
+                artImage: 'https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <h2 style="color: #9c27b0;">Weekly Digest</h2>
+                    <p>Welcome back to your favorite publication.</p>
+                    <p><strong>Top Story:</strong> Your smile.</p>
+                    <p><strong>Economy:</strong> The value of my happiness skyrockets when you text back.</p>
+                    <p><strong>Weather:</strong> Sunny with a high chance of missing you.</p>
+                `
             },
             {
                 id: '5',
-                sender: 'The Coffee Stain',
-                subject: 'I am art now',
-                snippet: 'On your white shirt. I am not a mistake, I am a statement.',
-                time: '11:00 AM',
-                avatar: 'T',
-                color: '#3e2723',
+                sender: 'The Romantic Times',
+                subject: 'Opinion: Why Aaradhya Deserves Everything',
+                snippet: 'An editorial on the subject of your perfection. Studies show...',
+                time: 'Feb 10',
+                avatar: 'RT',
+                color: '#009688',
                 starred: false,
-                artImage: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=600&auto=format&fit=crop',
-                body: `<p>You tried to rub me out with club soda. Amateur.</p><p>I have bonded with the cotton fibers on a molecular level. I am a map of your clumsiness. I am a Rorschach test for your morning jitters.</p><p>Wear me with pride. Tell people I am a vintage wash. Tell them I am "Distressed."</p><p>Because you are distressed, aren't you?</p>`
+                artImage: 'https://images.unsplash.com/photo-1516575150278-77136aed6920?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <h3>Editorial Board Decision</h3>
+                    <p>After reviewing the evidence (your face, your brain, your laugh), we have concluded that you deserve the world.</p>
+                    <p>We are currently looking into logistics on how to gift-wrap the actual planet.</p>
+                `
             },
             {
                 id: '6',
-                sender: 'Future You',
-                subject: 'DON\'T BUY THE COUCH',
-                snippet: 'It won’t fit through the door. PIVOT won’t work.',
-                time: '9:05 AM',
-                avatar: 'F',
-                color: '#3f51b5',
+                sender: 'Niv',
+                subject: 'I saw a dog that looked like it missed you too',
+                snippet: 'It was sitting by a cafe looking sad. I related heavily.',
+                time: 'Feb 09',
+                avatar: 'N',
+                color: '#795548',
                 starred: true,
-                artImage: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop',
-                body: `<p>Listen to me very carefully.</p><p>I am writing from the year 2029. The world is fine, we have flying toasters now, it's cool. But the Green Velvet Sectional you are looking at on your phone right now?</p><p>It destroys your life.</p><p>It doesn't fit in the elevator. It gets stuck in the stairwell. You lose your security deposit. You cry in front of the delivery men.</p><p>Buy the beige loveseat. Trust me. Also, drink more water.</p>`
+                artImage: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <p>Hey,</p>
+                    <p>Just walking down the street. Saw a Golden Retriever sighing deeply at a closed bakery window.</p>
+                    <p>It was the perfect metaphor for me being 2083km away from you.</p>
+                    <p>Hope you're having a good day. I love you.</p>
+                    <p>- Niv</p>
+                `
             },
             {
                 id: '7',
-                sender: 'Gravity',
-                subject: 'Just checking in',
-                snippet: 'Still here. Still holding you down. You\'re welcome.',
-                time: 'Yesterday',
-                avatar: 'G',
-                color: '#607d8b',
+                sender: 'Niv Notification Service',
+                subject: 'Daily Summary: Your Impact on Someone\'s Life',
+                snippet: 'Today\'s stats: Made someone smile 47 times, inspired 12 daydreams...',
+                time: 'Feb 08',
+                avatar: 'NS',
+                color: '#1a73e8',
                 starred: false,
-                artImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop',
-                body: `<p>I don't get enough credit.</p><p>Do you know how hard it is to keep the ocean stuck to the ball? Do you know how much effort it takes to keep your coffee in the mug?</p><p>I'm the only stable relationship you have. I will never let you go. Even if you jump, I'll bring you back.</p><p>That's love, baby.</p>`
+                artImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop',
+                body: `
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <h2 style="font-size: 18px; margin-bottom: 16px;">Daily Activity Summary</h2>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <h3 style="font-size: 14px; text-transform: uppercase; color: #5f6368; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Your Impact Today</h3>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee;">
+                                <span>Made someone smile:</span>
+                                <strong>47 times</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee;">
+                                <span>Inspired daydreams:</span>
+                                <strong>12 times</strong>
+                            </div>
+                             <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                                <span>Mentioned in thoughts:</span>
+                                <strong>Continuously</strong>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 style="font-size: 14px; text-transform: uppercase; color: #5f6368; border-bottom: 1px solid #ddd; padding-bottom: 4px;">Distance Statistics</h3>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed #eee;">
+                                <span>Current separation:</span>
+                                <strong>2,083 km</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0;">
+                                <span>Acceptability rating:</span>
+                                <strong style="color: #d93025;">0/10</strong>
+                            </div>
+                        </div>
+                    </div>
+                `
             }
         ];
 
@@ -805,7 +885,7 @@
             avatar.textContent = email.avatar;
             avatar.style.background = email.color;
             
-            // Artistic Header
+            // Set Artistic Header Image
             document.getElementById('artisticHeader').style.backgroundImage = `url('${email.artImage}')`;
 
             // Star state
@@ -854,13 +934,13 @@
                 const color = item.getAttribute('data-color');
                 const bg = item.getAttribute('data-bg');
                 
-                // Update Variables
+                // Update Variables if color data exists
                 if(color && bg) {
                     root.style.setProperty('--primary-color', color);
                     root.style.setProperty('--active-bg', bg);
                 }
 
-                // Update label text in list
+                // Update label text in list header
                 const text = item.querySelector('.nav-text').textContent;
                 document.querySelector('.category-label').textContent = text;
 
