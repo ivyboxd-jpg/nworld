@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Gmail Mobile</title>
+    <title>Gmail</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,7 +13,7 @@
             --text-secondary: #5f6368;
             --google-blue: #1a73e8;
             --ai-bg: #f0f4f9;
-            --border: #e0e2e0;
+            /* Official Google Colors for Profile Ring */
             --g-blue: #4285f4; --g-red: #ea4335; --g-yellow: #fbbc05; --g-green: #34a853;
         }
 
@@ -43,7 +43,8 @@
         .nav-list { overflow-y: auto; padding: 8px 12px 12px 0; }
         .nav-item { height: 48px; display: flex; align-items: center; padding: 0 16px 0 24px; gap: 18px; border-radius: 0 24px 24px 0; cursor: pointer; color: var(--text-secondary); margin-bottom: 2px; }
         
-        /* SIDEBAR ACTIVE COLORS */
+        /* SPECIFIC LABEL COLORS */
+        .nav-item.active { font-weight: 500; }
         .nav-item.all-inboxes.active { background: #fce8e6; color: #d93025; }
         .nav-item.primary.active { background: #e8f0fe; color: #1a73e8; }
         .nav-item.social.active { background: #e2f2f1; color: #00695c; }
@@ -61,7 +62,7 @@
 
         .ni-banner { margin: 8px 16px; border-radius: 16px; padding: 16px; background: var(--ai-bg); cursor: pointer; display: none; }
         .ni-header { display: flex; align-items: center; }
-        .ni-sparkle { width: 20px; height: 20px; margin-right: 12px; }
+        .ni-sparkle { width: 24px; height: 24px; margin-right: 12px; }
         .ni-title { font-size: 15px; font-weight: 500; flex: 1; color: var(--google-blue); }
         .ni-content { font-size: 14px; color: #1f1f1f; margin-top: 10px; display: none; line-height: 1.5; }
         .expanded .ni-content { display: block; }
@@ -73,42 +74,33 @@
         .email-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
         .email-sender-name { font-size: 14px; font-weight: 700; }
         .email-date { font-size: 12px; color: var(--text-secondary); }
-        .email-subject-line { font-size: 14px; font-weight: 400; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .email-subject-line { font-size: 14px; font-weight: 500; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
         .order-row { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
-        .order-icon { width: 16px; height: 16px; fill: #5f6368; }
-        .inbox-tag-small { border: 1px solid #dadce0; color: #5f6368; font-size: 11px; padding: 1px 4px; border-radius: 4px; margin-right: 8px; }
+        .inbox-tag-rect { border: 1px solid #dadce0; color: #5f6368; font-size: 11px; padding: 2px 4px; border-radius: 4px; margin-right: 8px; font-weight: 400; }
         .star-ico { width: 22px; height: 22px; fill: none; stroke: #5f6368; stroke-width: 2; cursor: pointer; }
         .star-ico.starred { fill: #fbbc05; stroke: #fbbc05; }
 
-        /* --- MESSAGE VIEW --- */
+        /* --- EMAIL DETAIL --- */
         #msgView { display: none; background: white; height: 100%; position: absolute; inset: 0; z-index: 120; overflow-y: auto; flex-direction: column; padding: 16px; }
         #msgView.active { display: flex; }
         
-        .subject-container { display: flex; align-items: center; gap: 10px; margin: 10px 0 20px 0; }
-        .subject-h2 { font-size: 22px; font-weight: 400; color: #202124; line-height: 1.2; }
-        .inbox-label-full { border: 1px solid #dadce0; color: #5f6368; font-size: 12px; padding: 2px 6px; border-radius: 4px; font-weight: 400; }
-        
-        /* ARTISTIC CONTENT */
-        .artistic-header { width: 100%; height: 120px; background: #f8f9fa; border-radius: 8px; margin-bottom: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid #eee; overflow: hidden; }
-        .art-title { font-family: 'Times New Roman', serif; font-size: 24px; font-style: italic; color: #1a1a1a; }
-        .art-subtitle { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: #5f6368; margin-top: 5px; }
+        .subject-line-row { display: flex; align-items: center; gap: 10px; margin: 10px 0 24px; }
+        .subject-text-large { font-size: 20px; font-weight: 400; color: #202124; flex: 1; }
 
-        .msg-body-text { font-size: 16px; color: #3c4043; line-height: 1.6; white-space: pre-line; padding: 0 4px; }
+        /* ARTISTIC NEWSLETTER CONTENT */
+        .newsletter-hero { text-align: center; padding: 30px 0; border-bottom: 1px solid #eee; margin-bottom: 30px; }
+        .news-brand { font-family: 'Times New Roman', serif; font-size: 32px; font-weight: 700; font-style: italic; letter-spacing: -0.5px; }
+        .news-issue { font-size: 11px; text-transform: uppercase; color: #888; letter-spacing: 1.5px; margin-top: 8px; }
+        .article-body { font-family: Georgia, serif; font-size: 17px; line-height: 1.8; color: #333; }
 
-        /* INVOICE CARD (WHITE) */
-        .invoice-card-white { background: #ffffff; border: 1px solid #dadce0; border-radius: 12px; padding: 24px; color: #202124; margin-top: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .inv-placed-title { font-size: 30px; font-weight: 400; margin-bottom: 16px; }
-        .inv-meta { display: flex; gap: 10px; color: #5f6368; font-size: 13px; margin-bottom: 20px; }
-        .inv-btn { background: #1a73e8; color: white; border: none; padding: 12px 24px; border-radius: 24px; font-weight: 500; cursor: pointer; }
-
-        /* PROFILE MODAL (RESTORED) */
+        /* --- ACCOUNT MODAL --- */
         .profile-dropdown { position: absolute; top: 60px; right: 16px; width: 312px; background: #e9eef6; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 32px 20px; z-index: 150; display: none; text-align: center; }
         .profile-dropdown.active { display: block; }
         .modal-email { font-size: 15px; color: #1f1f1f; margin-bottom: 24px; }
         .ring-box { width: 88px; height: 88px; margin: 0 auto 20px; position: relative; display: flex; align-items: center; justify-content: center; }
         .pfp-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3.5px; background: conic-gradient(var(--g-blue) 0% 25%, var(--g-red) 25% 50%, var(--g-yellow) 50% 75%, var(--g-green) 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
         .pfp-inner { width: 74px; height: 74px; border-radius: 50%; background: var(--g-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 500; }
-        .modal-hi { font-size: 28px; font-weight: 400; color: #1f1f1f; margin: 0; }
     </style>
 </head>
 <body>
@@ -150,7 +142,7 @@
                     <span class="nav-text">Purchases</span>
                 </div>
                 <div class="nav-item spam" onclick="ui.switchView('inbox', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM12 17.3c-.72 0-1.3-.58-1.3-1.3s.58-1.3 1.3-1.3 1.3.58 1.3 1.3-.58 1.3-1.3 1.3zm1-4.3h-2V7h2v6z"/></svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3z"/></svg>
                     <span class="nav-text">Spam</span>
                 </div>
                 <div class="nav-item bin" onclick="ui.switchView('inbox', this)">
@@ -167,7 +159,7 @@
                 <input type="text" class="search-input" placeholder="Search in mail" oninput="ui.filter(this.value)">
                 <div class="pfp-btn" onclick="ui.toggleProfile(event)">N</div>
             </div>
-            <!-- RESTORED PROFILE MODAL -->
+            <!-- Profile Modal -->
             <div class="profile-dropdown" id="profileDropdown">
                 <p class="modal-email">niv@futurehusband.com</p>
                 <div class="ring-box"><div class="pfp-ring"></div><div class="pfp-inner">N</div></div>
@@ -178,7 +170,7 @@
         <main class="main-content">
             <div class="view-title" id="viewTitle">All inboxes</div>
 
-            <!-- Gemini (Only in All inboxes) -->
+            <!-- Gemini (All inboxes only) -->
             <div class="ni-banner" id="geminiBanner" onclick="this.classList.toggle('expanded')">
                 <div class="ni-header">
                     <svg class="ni-sparkle" viewBox="0 0 24 24"><defs><linearGradient id="g-grad"><stop offset="0%" stop-color="#4285f4"/><stop offset="100%" stop-color="#ea4335"/></linearGradient></defs><path fill="url(#g-grad)" d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z M19 3L19.7 4.7L21.4 5.4L19.7 6.1L19 7.8L18.3 6.1L16.6 5.4L18.3 4.7L19 3Z"/></svg>
@@ -190,50 +182,32 @@
 
             <div id="emailContainer"></div>
 
-            <!-- Message Detail View -->
+            <!-- Email Detail View -->
             <div id="msgView">
-                <div style="display:flex; padding-bottom:12px; margin-bottom:16px;">
+                <div style="padding-bottom:12px; border-bottom:1px solid #f1f3f4; margin-bottom:16px;">
                     <svg onclick="ui.backToList()" width="24" viewBox="0 0 24 24" style="cursor:pointer"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                 </div>
                 <div id="msgContent">
-                    <div class="subject-container">
-                        <h2 class="subject-h2" id="mSub">Subject Line</h2>
-                        <span class="inbox-label-full">Inbox</span>
+                    <div class="subject-line-row">
+                        <h2 class="subject-text-large" id="mSub">Subject</h2>
+                        <span class="inbox-tag-rect">Inbox</span>
+                        <svg class="star-ico" id="detailStar" onclick="this.classList.toggle('starred')" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
+                    
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
                         <div id="mCircle" style="width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700;"></div>
                         <div style="flex:1">
                             <div style="font-weight:700; font-size:14px;" id="mSender">Sender</div>
-                            <div style="font-size:12px; color:#5f6368;">to my.queen@forever.com <svg width="10" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>
+                            <div style="font-size:12px; color:#5f6368;">to my.queen@forever.com</div>
                         </div>
-                        <div style="font-size:12px; color:#5f6368;">4:34 PM</div>
                     </div>
                     
-                    <div id="artisticHeader" class="artistic-header">
-                        <span class="art-title" id="artTitle">The Weekly Devotion</span>
-                        <span class="art-subtitle" id="artSub">EST. 2026 • ALWAYS FOR YOU</span>
+                    <div class="newsletter-hero">
+                        <div class="news-brand" id="artTitle">Brand</div>
+                        <div class="news-issue" id="artIssue">Issue No. 01</div>
                     </div>
 
-                    <div id="textBody" class="msg-body-text"></div>
-
-                    <div id="invoiceCard" class="invoice-card-white" style="display:none">
-                        <div style="display:flex; justify-content:space-between">
-                            <div>
-                                <div style="font-weight:700;" id="cProd">Product</div>
-                                <div style="font-size:13px; color:#5f6368; margin-top:2px;">1 item from Provider</div>
-                            </div>
-                            <div style="width:44px; height:44px; background:#f1f3f4; border-radius:8px; display:flex; align-items:center; justify-content:center">❤️</div>
-                        </div>
-                        <div class="inv-placed-title">Order placed</div>
-                        <div class="inv-meta">
-                            <span style="font-size:20px; color:#1a73e8">#</span>
-                            <div>
-                                <div style="font-weight:700;">Order number</div>
-                                <div id="cNum">3-000-000</div>
-                            </div>
-                        </div>
-                        <button class="inv-btn" onclick="alert('Verification complete: Order status is Forever Yours.')">View order</button>
-                    </div>
+                    <div id="textBody" class="article-body"></div>
                 </div>
             </div>
         </main>
@@ -241,21 +215,18 @@
 
     <script>
         const database = {
-            'all-inboxes': [
-                { type: 'purchase', sender: 'Apple', initial: 'A', bg: '#000', subject: 'Your invoice from Apple.', prod: 'YouTube Music Subscription', num: '3-609046649', art: 'APPLE SERVICES', body: 'Your music is ready for our next car ride.' },
-                { type: 'email', sender: 'Husband HR', initial: 'H', bg: '#4285f4', subject: 'Offer Letter: Senior Cuddling Officer', art: 'RESOURCES DEPT', body: 'We are thrilled to extend an offer for the position of Head of Handholding.\n\nYour compensation includes unlimited kisses and priority access to my sweater collection.' }
-            ],
             'primary': [
-                { type: 'email', sender: 'The Devoted Daily', initial: 'D', bg: '#ea4335', subject: 'Newsletter: 7 Reasons Why You are Perfect', art: 'OP-ED PIECE', body: 'Reason #1: The way you tilt your head when you are confused.\nReason #2: You always pick the best movies.\nReason #3: You exist.\n\nFull article inside your heart.' },
-                { type: 'email', sender: 'System Administrator', initial: 'S', bg: '#fbbc05', subject: 'URGENT: Storage Full of Your Voice Notes', art: 'TECH BULLETIN', body: 'Warning: 60% of device storage is currently occupied by your "Good morning" voice notes.\n\nAction required: Send more. We will delete all other apps to make space.' },
-                { type: 'email', sender: 'Fridge Logistics', initial: 'F', bg: '#34a853', subject: 'Shared Grocery List Update', art: 'SUPPLY CHAIN', body: 'Item 1: Your favorite snacks.\nItem 2: Ingredients for the dinner I am going to cook for you.\nItem 3: 2083km of patience.\n\nUpdated by: Niv.' },
-                { type: 'email', sender: 'Love Policy Dept', initial: 'L', bg: '#607d8b', subject: 'Updated Policy: Forehead Kisses', art: 'BYLAWS 2026', body: 'Per the new regulation, the frequency of forehead kisses is being increased by 400%.\n\nThis policy is non-negotiable and effective immediately upon reunion.' },
-                { type: 'email', sender: 'Future Planning', initial: 'P', bg: '#1a73e8', subject: 'Reservation Confirmed: Forever with you', art: 'BOOKING OFFICE', body: 'Your reservation for "The rest of our lives" has been confirmed.\n\nNo deposit required. Payment accepted in the form of smiles.' }
+                { sender: 'Husband Resources', initial: 'H', bg: '#4285f4', subject: 'Offer Letter: Senior Cuddling Officer', issue: 'VACANCY NOTICE', body: 'Dear Niv,\n\nWe are thrilled to offer you the position of Lifetime CEO of My Heart. We were impressed by your background in being perfect.\n\nBenefits include:\n- Unlimited forehead kisses.\n- High-priority cuddle scheduling.\n- Lifetime access to my hoodie collection.' },
+                { sender: 'The Devoted Daily', initial: 'D', bg: '#ea4335', subject: 'Newsletter: 7 Reasons Why You are Perfect', issue: 'OP-ED • FEB 2026', body: 'Top Headline: "Local woman remains undisputed champion of being cute."\n\nInside this issue, we analyze why your laugh is the soundtrack to my life and why the 2083km between us is offensive to nature.' },
+                { sender: 'Cloud Storage Sys', initial: 'S', bg: '#fbbc05', subject: 'System Alert: Voice Note Capacity Reached', issue: 'TECHNICAL BULLETIN', body: 'Warning: 60% of device memory is currently occupied by your "Good morning" voice notes. Action required: Send more. We will delete the Operating System before we delete your voice.' },
+                { sender: 'Love Policy Dept', initial: 'L', bg: '#34a853', subject: 'Updated Regulation: Forehead Kisses', issue: 'BYLAW AMENDMENT', body: 'Per new regulation 2026-X, the minimum daily requirement for forehead kisses has been increased by 400%. Effective immediately upon arrival.' },
+                { sender: 'Grocery Logistics', initial: 'G', bg: '#673ab7', subject: 'Shared List Update: Shared Future', issue: 'HOUSEHOLD LOGS', body: 'Updated by Niv:\n- Milk\n- Eggs\n- That specific candy you like\n- 4 Cats (Proposed)\n- 2083km of patience' },
+                { sender: 'Reservation Confirmed', initial: 'R', bg: '#009688', subject: 'Booking: The Rest of Our Lives', issue: 'TRAVEL CONFIRMATION', body: 'Reservation for 2: You and Me.\nLocation: Everywhere we go together.\nDuration: Perpetual.\nNotes: No cancellations allowed.' },
+                { sender: 'Department of Missing You', initial: 'M', bg: '#795548', subject: 'Status Update: Severe Shortage of Kisses', issue: 'CRITICAL SHORTAGE', body: 'Current levels of "You" in the vicinity are dangerously low. 2083 kilometers is 2083 kilometers too many. Deployment of hugs is highly requested.' }
             ],
-            'purchases': [
-                { type: 'purchase', sender: 'Logistics of Love', initial: 'L', bg: '#ff69b4', subject: 'Order Confirmation: 10,000 I Miss You\'s', prod: 'Emotional Support Unit', num: 'IMY-2026-X', art: 'SHIPPING DEPT', body: 'Bulk order of missing you is currently in transit.' }
-            ]
+            'all-inboxes': [] // Populated by script
         };
+        database['all-inboxes'] = [...database['primary']];
 
         const ui = {
             toggleSidebar(o) { document.getElementById('sidebar').classList.toggle('open', o); document.getElementById('overlay').classList.toggle('active', o); },
@@ -271,18 +242,21 @@
             render(view) {
                 const container = document.getElementById('emailContainer');
                 container.innerHTML = '';
-                (database[view] || database['primary']).forEach((e, i) => {
-                    const rowContent = e.type === 'purchase' ? 
-                        `<div class="order-row"><svg class="order-icon" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><span class="order-text">Order placed</span><span class="inbox-tag-small">Inbox</span><svg class="star-ico" onclick="ui.star(event, this)" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>` :
-                        `<div class="order-row"><span class="email-snippet" style="flex:1">${e.body.substring(0, 50)}...</span><span class="inbox-tag-small">Inbox</span><svg class="star-ico" onclick="ui.star(event, this)" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>`;
-                    
+                const data = database[view] || [];
+                data.forEach((e, i) => {
                     container.innerHTML += `
                         <div class="email-item" onclick="ui.openMsg('${view}', ${i})">
                             <div class="email-pfp" style="background:${e.bg}">${e.initial}</div>
                             <div class="email-content-col">
                                 <div class="email-top-row"><span class="email-sender-name">${e.sender}</span><span class="email-date">Feb 12</span></div>
-                                <div class="email-subject-line">${e.subject}</div>
-                                ${rowContent}
+                                <div class="order-row">
+                                    <span class="email-subject-line" style="flex:1">${e.subject}</span>
+                                    <svg class="star-ico" onclick="ui.star(event, this)" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                                </div>
+                                <div class="order-row">
+                                    <span class="inbox-tag-rect">Inbox</span>
+                                    <span style="font-size:13px; color:#5f6368">${e.body.substring(0, 35)}...</span>
+                                </div>
                             </div>
                         </div>`;
                 });
@@ -294,18 +268,8 @@
                 document.getElementById('mCircle').innerText = e.initial;
                 document.getElementById('mCircle').style.background = e.bg;
                 document.getElementById('artTitle').innerText = e.sender;
-                document.getElementById('artSub').innerText = e.art;
-                
-                if(e.type === 'purchase') {
-                    document.getElementById('textBody').style.display = 'none';
-                    document.getElementById('invoiceCard').style.display = 'block';
-                    document.getElementById('cProd').innerText = e.prod;
-                    document.getElementById('cNum').innerText = e.num;
-                } else {
-                    document.getElementById('textBody').style.display = 'block';
-                    document.getElementById('invoiceCard').style.display = 'none';
-                    document.getElementById('textBody').innerText = e.body;
-                }
+                document.getElementById('artIssue').innerText = e.issue;
+                document.getElementById('textBody').innerText = e.body;
                 document.getElementById('msgView').classList.add('active');
             },
             backToList() { document.getElementById('msgView').classList.remove('active'); },
