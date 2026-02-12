@@ -9,14 +9,12 @@
     <style>
         :root {
             --gmail-red: #d93025;
-            --active-pill-bg: #fce8e6;
+            --active-bg: #fce8e6;
             --text-primary: #202124;
             --text-secondary: #5f6368;
-            --unread-bg: #ffffff;
-            --read-bg: #ffffff;
             --border-color: #e0e0e0;
             --google-blue: #1a73e8;
-            --star-gold: #f9ab00;
+            --search-bg: #e3e7ed;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -25,132 +23,164 @@
         .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
 
         /* Header */
-        .header { padding: 8px 16px; background: #fff; z-index: 100; position: relative; }
-        .search-container {
-            height: 48px; background: #f1f3f4; border-radius: 8px;
-            display: flex; align-items: center; padding: 0 12px;
+        .header { 
+            padding: 12px 16px; 
+            background: #f5f7fa; 
+            z-index: 100; 
         }
-        .menu-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .search-text { flex: 1; font-size: 16px; color: #5f6368; padding-left: 12px; font-weight: 400; }
+        
+        .search-container {
+            height: 56px; 
+            background: var(--search-bg); 
+            border-radius: 28px;
+            display: flex; 
+            align-items: center; 
+            padding: 0 16px;
+        }
+        
+        .menu-icon { 
+            width: 24px; 
+            height: 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+        }
+        
+        .search-text { 
+            flex: 1; 
+            font-size: 16px; 
+            color: #3c4043; 
+            padding-left: 16px; 
+            font-weight: 400; 
+        }
+        
         .pfp-btn {
-            width: 32px; height: 32px; background: var(--google-blue); color: white;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: 500; font-size: 14px; cursor: pointer;
+            width: 40px; 
+            height: 40px; 
+            background: #0f9d58; 
+            color: white;
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-weight: 500; 
+            font-size: 16px; 
+            cursor: pointer;
         }
 
         /* Sidebar */
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
+        .sidebar-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.4); 
+            z-index: 200; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: 0.25s; 
+        }
+        
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
         .sidebar {
-            position: fixed; top: 0; bottom: 0; left: 0; width: 280px;
-            background: #fff; z-index: 250; transform: translateX(-100%);
+            position: fixed; 
+            top: 0; 
+            bottom: 0; 
+            left: 0; 
+            width: 300px;
+            background: #fff; 
+            z-index: 250; 
+            transform: translateX(-100%);
             transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; flex-direction: column; box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 2px 0 8px rgba(0,0,0,0.15);
         }
+        
         .sidebar.open { transform: translateX(0); }
 
-        .sidebar-header { padding: 16px 24px; display: flex; align-items: center; gap: 14px; }
-        .sidebar-logo { height: 24px; width: auto; }
+        .sidebar-header { 
+            padding: 20px 24px; 
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+        }
+        
+        .sidebar-logo { height: 40px; width: auto; }
         .sidebar-logo-text { font-size: 22px; color: #5f6368; font-weight: 400; }
 
         .nav-list { overflow-y: auto; padding: 8px 0; }
         
         .nav-item {
-            height: 48px; display: flex; align-items: center; padding: 0 24px 0 28px; gap: 20px;
-            cursor: pointer; color: var(--text-primary); position: relative;
+            height: 48px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 24px; 
+            gap: 24px;
+            cursor: pointer; 
+            color: var(--text-primary);
         }
 
         .nav-item:hover { background: #f1f3f4; }
+        
         .nav-item.active { 
-            background: #d3e3fd; 
-            color: #001d35;
-            font-weight: 700;
-        }
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: #c2e7ff;
+            background: var(--active-bg); 
+            color: var(--gmail-red);
         }
         
-        .icon-svg { width: 20px; height: 20px; fill: #5f6368; }
-        .nav-item.active .icon-svg { fill: #001d35; }
+        .icon-svg { width: 24px; height: 24px; fill: #5f6368; }
+        .nav-item.active .icon-svg { fill: var(--gmail-red); }
 
         .nav-text { flex: 1; font-size: 14px; }
         .nav-badge { font-size: 13px; color: #5f6368; }
-        .nav-item.active .nav-badge { color: #001d35; font-weight: 700; }
+        .nav-item.active .nav-badge { color: var(--gmail-red); }
 
         .divider { height: 1px; background: #e0e0e0; margin: 8px 24px; }
 
-        /* Email List */
-        .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
-
-        .tab-section {
-            display: flex;
-            border-bottom: 1px solid var(--border-color);
-            background: #fff;
-            overflow-x: auto;
-        }
-
-        .tab {
-            min-width: 140px;
-            padding: 14px 20px;
+        /* Category Label */
+        .category-label {
+            padding: 16px 16px 8px;
             font-size: 14px;
             color: #5f6368;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            white-space: nowrap;
-            font-weight: 500;
+            font-weight: 400;
         }
 
-        .tab.active {
-            color: #1a73e8;
-            border-bottom-color: #1a73e8;
+        /* Email List */
+        .email-list-container { 
+            flex: 1; 
+            overflow-y: auto; 
+            background: #fff; 
         }
 
         .email-item {
             display: flex;
+            align-items: flex-start;
             padding: 12px 16px;
             border-bottom: 1px solid #f1f1f1;
             cursor: pointer;
-            background: var(--unread-bg);
-            position: relative;
+            background: #fff;
+            gap: 12px;
         }
 
-        .email-item:hover {
-            box-shadow: inset 1px 0 0 #dadce0, inset -1px 0 0 #dadce0, 0 1px 2px 0 rgba(60,64,67,.3), 0 1px 3px 1px rgba(60,64,67,.15);
+        .email-item:active {
+            background: #f8f9fa;
         }
 
-        .email-item.read {
-            background: var(--read-bg);
-        }
-
-        .star-container {
+        .avatar-circle {
             width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
-            align-items: flex-start;
-            padding-top: 2px;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 16px;
+            color: white;
+            flex-shrink: 0;
+            margin-top: 2px;
         }
 
-        .star {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            fill: none;
-            stroke: #5f6368;
-            stroke-width: 2;
-        }
-
-        .star.starred {
-            fill: var(--star-gold);
-            stroke: var(--star-gold);
-        }
-
-        .email-content {
+        .email-content-main {
             flex: 1;
             min-width: 0;
         }
@@ -159,14 +189,17 @@
             display: flex;
             align-items: baseline;
             margin-bottom: 2px;
+            gap: 8px;
         }
 
         .sender-name {
             font-size: 14px;
             color: var(--text-primary);
             font-weight: 500;
-            margin-right: 8px;
-            flex-shrink: 0;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .email-item.read .sender-name {
@@ -176,7 +209,6 @@
         .email-time {
             font-size: 12px;
             color: var(--text-secondary);
-            margin-left: auto;
             flex-shrink: 0;
         }
 
@@ -185,6 +217,9 @@
             color: var(--text-primary);
             margin-bottom: 2px;
             font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .email-item.read .subject-line {
@@ -199,6 +234,42 @@
             white-space: nowrap;
         }
 
+        .star-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .star-svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #5f6368;
+            stroke-width: 2;
+        }
+
+        .star-svg.starred {
+            fill: #f9ab00;
+            stroke: #f9ab00;
+        }
+
+        /* Purchase indicator */
+        .purchase-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .purchase-icon-small {
+            width: 16px;
+            height: 16px;
+            fill: #5f6368;
+        }
+
         /* Email Detail View */
         .email-detail {
             display: none;
@@ -211,11 +282,12 @@
         .email-detail.active { display: flex; }
 
         .detail-header-bar {
-            padding: 8px 4px 8px 16px;
+            padding: 8px 4px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 8px;
             border-bottom: 1px solid #e0e0e0;
+            background: #fff;
         }
 
         .back-btn {
@@ -225,10 +297,7 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border-radius: 50%;
         }
-
-        .back-btn:hover { background: #f1f3f4; }
 
         .detail-actions {
             display: flex;
@@ -243,65 +312,163 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            border-radius: 50%;
         }
 
-        .action-btn:hover { background: #f1f3f4; }
-
-        .detail-content {
-            padding: 0 16px 24px;
+        .detail-subject-header {
+            padding: 16px 16px 12px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
         }
 
-        .detail-subject {
-            font-size: 22px;
+        .detail-subject-text {
+            flex: 1;
+            font-size: 20px;
             font-weight: 400;
             color: var(--text-primary);
-            padding: 24px 0 16px;
-            line-height: 28px;
+            line-height: 1.4;
+        }
+
+        .detail-inbox-label {
+            padding: 4px 12px;
+            background: #f1f3f4;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #5f6368;
+            margin-top: 4px;
+        }
+
+        .detail-star {
+            width: 24px;
+            height: 24px;
+            margin-top: 2px;
+        }
+
+        /* Purchase Card in Detail */
+        .purchase-card-detail {
+            margin: 16px;
+            background: #f1f3f4;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .purchase-header-detail {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .purchase-app-icon {
+            width: 56px;
+            height: 56px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .purchase-product-info h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .purchase-product-info p {
+            font-size: 13px;
+            color: #5f6368;
+        }
+
+        .order-placed-title {
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .order-detail-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+
+        .order-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 8px;
+        }
+
+        .order-value {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .view-order-btn {
+            background: var(--google-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 32px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 12px;
+            cursor: pointer;
         }
 
         .detail-sender-row {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding-bottom: 16px;
+            padding: 0 16px 16px;
         }
 
-        .sender-avatar {
+        .sender-avatar-detail {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #e8f0fe;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 500;
             font-size: 16px;
-            color: #1967d2;
+            color: white;
             flex-shrink: 0;
         }
 
-        .sender-info { flex: 1; }
+        .sender-info-detail { flex: 1; }
 
         .sender-name-detail {
             font-size: 14px;
             font-weight: 500;
             color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
-        .sender-email-detail {
+        .verified-badge {
+            width: 16px;
+            height: 16px;
+            fill: var(--google-blue);
+        }
+
+        .sender-to {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .detail-time {
             font-size: 12px;
             color: var(--text-secondary);
         }
 
         .detail-body {
-            padding-top: 16px;
+            padding: 0 16px 80px;
             line-height: 1.6;
             color: #202124;
             font-size: 14px;
         }
 
-        /* Newsletter specific */
+        /* Newsletter Styling */
         .newsletter-header {
             text-align: center;
             padding: 32px 0 24px;
@@ -343,52 +510,74 @@
             font-family: Georgia, serif;
             font-size: 16px;
             line-height: 1.8;
-            color: #202124;
         }
 
         .article-text p {
             margin-bottom: 16px;
         }
 
-        /* Profile Dropdown */
-        .profile-dropdown {
-            position: absolute;
-            top: 60px;
+        /* Compose FAB */
+        .compose-fab {
+            position: fixed;
+            bottom: 80px;
             right: 16px;
-            width: 280px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            padding: 24px 20px;
-            z-index: 150;
-            display: none;
-            text-align: center;
-        }
-        .profile-dropdown.active { display: block; }
-        
-        .profile-avatar-large {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 16px;
-            border-radius: 50%;
-            background: var(--google-blue);
+            width: 56px;
+            height: 56px;
+            background: #c2e7ff;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .compose-icon {
+            width: 24px;
+            height: 24px;
+            fill: #001d35;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            height: 60px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 24px;
+        }
+
+        .nav-btn-icon {
+            width: 24px;
+            height: 24px;
+            fill: #5f6368;
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: 4px;
+            right: 16px;
+            background: var(--google-blue);
             color: white;
-        }
-
-        .profile-name {
-            font-size: 16px;
+            font-size: 11px;
             font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .profile-email-text {
-            font-size: 14px;
-            color: var(--text-secondary);
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            text-align: center;
         }
 
         .view-hidden { display: none; }
@@ -407,14 +596,24 @@
             </div>
             
             <div class="nav-list">
-                <div class="nav-item active" data-view="primary">
+                <div class="nav-item active" data-view="all-inboxes">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2V7h-4v2h2z"/>
+                    </svg>
+                    <span class="nav-text">All inboxes</span>
+                    <span class="nav-badge">2</span>
+                </div>
+                
+                <div class="divider"></div>
+
+                <div class="nav-item" data-view="primary">
                     <svg class="icon-svg" viewBox="0 0 24 24">
                         <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
                     </svg>
                     <span class="nav-text">Primary</span>
-                    <span class="nav-badge">3</span>
+                    <span class="nav-badge">2</span>
                 </div>
-                
+
                 <div class="nav-item" data-view="social">
                     <svg class="icon-svg" viewBox="0 0 24 24">
                         <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
@@ -427,6 +626,13 @@
                         <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
                     </svg>
                     <span class="nav-text">Promotions</span>
+                </div>
+
+                <div class="nav-item" data-view="updates">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
+                    <span class="nav-text">Updates</span>
                 </div>
 
                 <div class="divider"></div>
@@ -453,6 +659,44 @@
                     <span class="nav-text">Important</span>
                     <span class="nav-badge">1</span>
                 </div>
+
+                <div class="divider"></div>
+
+                <div class="nav-item" data-view="purchases">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
+                    </svg>
+                    <span class="nav-text">Purchases</span>
+                </div>
+
+                <div class="nav-item" data-view="sent">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                    <span class="nav-text">Sent</span>
+                </div>
+
+                <div class="nav-item" data-view="scheduled">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" opacity="0.3"/>
+                    </svg>
+                    <span class="nav-text">Scheduled</span>
+                </div>
+
+                <div class="nav-item" data-view="spam">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 11c-.55 0-1-.45-1-1V8c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"/>
+                    </svg>
+                    <span class="nav-text">Spam</span>
+                </div>
+
+                <div class="nav-item" data-view="bin">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
+                    <span class="nav-text">Bin</span>
+                </div>
             </div>
         </aside>
 
@@ -460,75 +704,102 @@
         <header class="header">
             <div class="search-container">
                 <div class="menu-icon" id="openMenu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#3c4043">
                         <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
                     </svg>
                 </div>
                 <div class="search-text">Search in mail</div>
-                <div class="pfp-btn" id="openProfile">A</div>
-            </div>
-            
-            <!-- Profile Dropdown -->
-            <div class="profile-dropdown" id="profileDropdown">
-                <div class="profile-avatar-large">A</div>
-                <div class="profile-name">Aaradhya</div>
-                <div class="profile-email-text">aaradhya@lovedbyNiv.com</div>
+                <div class="pfp-btn" id="openProfile">S</div>
             </div>
         </header>
 
         <!-- Content -->
         <main style="flex: 1; overflow-y: auto;">
-            <!-- Primary View -->
-            <div id="primaryView" class="view-visible email-list-container">
-                <div class="tab-section">
-                    <div class="tab active">Primary</div>
-                </div>
+            <!-- All Inboxes View -->
+            <div id="allInboxesView" class="view-visible email-list-container">
+                <div class="category-label">All inboxes</div>
 
+                <!-- Email with Avatar -->
                 <div class="email-item" onclick="openEmail('newsletter1')">
-                    <div class="star-container">
-                        <svg class="star" viewBox="0 0 24 24">
+                    <div class="avatar-circle" style="background: #f4b400;">
+                        <span>G</span>
+                    </div>
+                    <div class="email-content-main">
+                        <div class="email-first-line">
+                            <span class="sender-name">Galen - The Digital Project Mana...</span>
+                            <span class="email-time">7:46PM</span>
+                        </div>
+                        <div class="subject-line">Why Most PMOs Aren't Ready for AI</div>
+                        <div class="snippet">AI-led change is exposing who's truly strate...</div>
+                    </div>
+                    <div class="star-icon">
+                        <svg class="star-svg" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                         </svg>
-                    </div>
-                    <div class="email-content">
-                        <div class="email-first-line">
-                            <span class="sender-name">The Distance Times</span>
-                            <span class="email-time">Feb 14</span>
-                        </div>
-                        <div class="subject-line">Breaking: Local Man Still 2083km Away, Situation Desperate</div>
-                        <div class="snippet">In what experts are calling "an absolutely ridiculous situation," future husband Niv remains separated from girlfriend Aaradhya...</div>
                     </div>
                 </div>
 
-                <div class="email-item" onclick="openEmail('offer1')">
-                    <div class="star-container">
-                        <svg class="star" viewBox="0 0 24 24">
+                <div class="email-item" onclick="openEmail('jobs')">
+                    <div class="avatar-circle" style="background: #ff6d00;">
+                        <span>M</span>
+                    </div>
+                    <div class="email-content-main">
+                        <div class="email-first-line">
+                            <span class="sender-name">Mukhtar Kadiri from PM Therapy</span>
+                            <span class="email-time">7:41PM</span>
+                        </div>
+                        <div class="subject-line">Remote PM Roles in the Last 24 hours🚀</div>
+                        <div class="snippet">Up to 294K 👇</div>
+                    </div>
+                    <div class="star-icon">
+                        <svg class="star-svg" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                         </svg>
-                    </div>
-                    <div class="email-content">
-                        <div class="email-first-line">
-                            <span class="sender-name">Future Husband Enterprises</span>
-                            <span class="email-time">Feb 13</span>
-                        </div>
-                        <div class="subject-line">Offer Letter: Position of Eternal Girlfriend</div>
-                        <div class="snippet">Dear Aaradhya, We are pleased to extend you an offer for the position of Eternal Girlfriend at Future Husband Enterprises...</div>
                     </div>
                 </div>
 
-                <div class="email-item read" onclick="openEmail('magazine1')">
-                    <div class="star-container">
-                        <svg class="star starred" viewBox="0 0 24 24">
+                <div class="email-item read" onclick="openEmail('glassdoor')">
+                    <div class="avatar-circle" style="background: #9c27b0;">
+                        <span>G</span>
+                    </div>
+                    <div class="email-content-main">
+                        <div class="email-first-line">
+                            <span class="sender-name">Glassdoor Jobs</span>
+                            <span class="email-time">5:52PM</span>
+                        </div>
+                        <div class="subject-line">Technical Project Manager at Impero IT Ser...</div>
+                        <div class="snippet">Impero IT Services is hiring</div>
+                    </div>
+                    <div class="star-icon">
+                        <svg class="star-svg" viewBox="0 0 24 24">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                         </svg>
                     </div>
-                    <div class="email-content">
+                </div>
+
+                <div class="email-item read" onclick="openEmail('purchase1')">
+                    <div class="avatar-circle" style="background: #000;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                    </div>
+                    <div class="email-content-main">
                         <div class="email-first-line">
-                            <span class="sender-name">The Love Yorker</span>
-                            <span class="email-time">Feb 12</span>
+                            <span class="sender-name">Apple</span>
+                            <span class="email-time">11 Feb</span>
                         </div>
-                        <div class="subject-line">Letter from 2083 Kilometers: On the Mathematics of Longing</div>
-                        <div class="snippet">There is a specific kind of arithmetic that occurs when you are in love with someone who exists in a different set of coordinates...</div>
+                        <div class="subject-line">Your invoice from Apple.</div>
+                        <div class="purchase-indicator">
+                            <svg class="purchase-icon-small" viewBox="0 0 24 24">
+                                <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                            </svg>
+                            <span>Order placed</span>
+                        </div>
+                    </div>
+                    <div class="star-icon">
+                        <svg class="star-svg" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -542,6 +813,11 @@
                         </svg>
                     </div>
                     <div class="detail-actions">
+                        <div class="action-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                        </div>
                         <div class="action-btn">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
                                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -560,151 +836,117 @@
                     </div>
                 </div>
                 
-                <div class="detail-content">
-                    <div class="detail-subject" id="detailSubject"></div>
-                    <div class="detail-sender-row">
-                        <div class="sender-avatar" id="detailAvatar"></div>
-                        <div class="sender-info">
-                            <div class="sender-name-detail" id="detailSender"></div>
-                            <div class="sender-email-detail">to me</div>
-                        </div>
+                <div class="detail-subject-header">
+                    <div style="flex: 1;">
+                        <div class="detail-subject-text" id="detailSubject"></div>
+                        <div class="detail-inbox-label">Inbox</div>
                     </div>
-                    <div class="detail-body" id="detailBody"></div>
+                    <div class="detail-star">
+                        <svg class="star-svg" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
                 </div>
+
+                <div id="purchaseCardContainer"></div>
+
+                <div class="detail-sender-row">
+                    <div class="sender-avatar-detail" id="detailAvatar"></div>
+                    <div class="sender-info-detail">
+                        <div class="sender-name-detail">
+                            <span id="detailSender"></span>
+                            <svg class="verified-badge" viewBox="0 0 24 24" id="verifiedBadge" style="display: none;">
+                                <path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.69 3.1 5.5l.34 3.7L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2L12 21.03l3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12zm-12.91 4.72l-3.8-3.81 1.48-1.48 2.32 2.33 5.85-5.87 1.48 1.48-7.33 7.35z"/>
+                            </svg>
+                        </div>
+                        <div class="sender-to">to me</div>
+                    </div>
+                    <div class="detail-time" id="detailTime"></div>
+                </div>
+
+                <div class="detail-body" id="detailBody"></div>
             </div>
         </main>
+
+        <!-- Compose FAB -->
+        <div class="compose-fab">
+            <svg class="compose-icon" viewBox="0 0 24 24">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-btn">
+                <svg class="nav-btn-icon" viewBox="0 0 24 24">
+                    <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
+                </svg>
+                <div class="nav-badge">2</div>
+            </div>
+            <div class="nav-btn">
+                <svg class="nav-btn-icon" viewBox="0 0 24 24">
+                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                </svg>
+            </div>
+        </div>
     </div>
 
     <script>
         const emails = {
             newsletter1: {
-                subject: 'Breaking: Local Man Still 2083km Away, Situation Desperate',
-                sender: 'The Distance Times',
-                avatar: 'DT',
+                subject: 'Why Most PMOs Aren\'t Ready for AI',
+                sender: 'Galen - The Digital Project Manager',
+                senderShort: 'Galen - The Digit...',
+                avatar: 'G',
+                avatarBg: '#f4b400',
+                time: '7:46PM',
+                verified: false,
+                isPurchase: false,
                 body: `
-                    <div class="newsletter-header">
-                        <div class="newsletter-title">THE DISTANCE TIMES</div>
-                        <div class="newsletter-subtitle">All The News That's Fit To Miss You Over</div>
+                    <div style="background: #1a73e8; padding: 24px; margin-bottom: 24px;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='40'%3E%3Ctext x='50%25' y='50%25' font-family='Arial' font-size='20' fill='white' text-anchor='middle' dominant-baseline='middle'%3Edpm%3C/text%3E%3C/svg%3E" style="width: 100%; max-width: 400px;">
                     </div>
 
-                    <div class="article-headline">Local Man Still 2083 Kilometers From Girlfriend, Friends Report "He Won't Shut Up About Her"</div>
-                    <div class="article-byline">By The Editorial Board • February 14, 2026</div>
-                    
-                    <div class="article-text">
-                        <p>In what experts are calling "an absolutely ridiculous situation that needs to end immediately," local future husband Niv remains separated from his girlfriend Aaradhya by approximately 2,083 kilometers, a distance he has described as "completely unacceptable" and "a personal attack by geography itself."</p>
+                    <p style="margin-bottom: 16px;">Hey folks, Galen here, wondering if the phrase "digital transformation" is starting to read more like an oil change than an existential shift.</p>
 
-                        <p>Sources close to the situation report that Niv has been "insufferable" about the distance, frequently checking flight prices, staring longingly at maps, and telling anyone who will listen that his girlfriend is "the most beautiful person in the entire world, possibly the universe."</p>
+                    <p style="margin-bottom: 16px;">That's the focus of this week's podcast, where we dig into what it looks like for a PMO to truly support the business through digital and AI transformation instead of just planning capacity, reporting on project status, and checking the engine light.</p>
 
-                        <p>"He literally cannot have a normal conversation anymore," reported one anonymous friend. "Yesterday I asked him about the weather and he somehow turned it into a five-minute monologue about how Aaradhya would look beautiful in any weather condition."</p>
+                    <p style="margin-bottom: 16px;">Dive in below, along with the rest of this week's insights.</p>
 
-                        <p>The girlfriend in question, Aaradhya, is reportedly unaware of the full extent of how much she is missed, though witnesses claim Niv has attempted to convey this information through "an absurd number of messages" and "creating entire Gmail interfaces as elaborate romantic gestures."</p>
+                    <p style="margin-bottom: 16px; font-weight: 500;">Here's what I've got for you today:</p>
 
-                        <p>When reached for comment, Niv simply stated, "I love her," before trailing off to stare wistfully into the distance in the general direction of wherever Aaradhya currently is. He then added, "Also, have I mentioned she's beautiful? Because she is. Devastatingly so."</p>
-
-                        <p>Her forehead mole, in particular, has become something of an obsession. "It's the center of his universe now," explained one concerned friend. "He's mentioned it seventeen times in the last conversation alone."</p>
-
-                        <p>Experts in long-distance relationships have described the situation as "very cute" but also "please just visit each other already, this is painful to watch."</p>
-
-                        <p>The Distance Times will continue to monitor this developing story, though we suspect it will just be more of the same: him missing her, her being perfect, and everyone else rolling their eyes at how sweet it all is.</p>
-                    </div>
+                    <p style="margin-bottom: 8px;">• AI pilot icons: Braves Use Cases In...</p>
                 `
             },
-            offer1: {
-                subject: 'Offer Letter: Position of Eternal Girlfriend',
-                sender: 'Future Husband Enterprises',
-                avatar: 'FH',
+            purchase1: {
+                subject: 'Your invoice from Apple.',
+                sender: 'Apple',
+                senderShort: 'Apple',
+                avatar: 'A',
+                avatarBg: '#000',
+                time: '11 Feb',
+                verified: true,
+                isPurchase: true,
+                purchaseData: {
+                    product: 'YouTube Music Two-person (Monthly)',
+                    vendor: 'Apple',
+                    orderNumber: '3-609046649',
+                    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="#000">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>`
+                },
                 body: `
-                    <div style="text-align: center; padding: 24px 0; border-bottom: 2px solid #e0e0e0; margin-bottom: 24px;">
-                        <div style="font-size: 20px; font-weight: 700; color: #d63384; margin-bottom: 4px;">FUTURE HUSBAND ENTERPRISES</div>
-                        <div style="font-size: 12px; color: #5f6368; font-style: italic;">Est. The Moment I Saw You</div>
-                        <div style="font-size: 12px; color: #5f6368; font-style: italic;">Headquarters: My Heart</div>
+                    <div style="text-align: center; padding: 40px 0;">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="#999">
+                            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
                     </div>
 
-                    <div style="text-align: right; margin-bottom: 24px; font-size: 14px; color: #5f6368;">February 13, 2026</div>
+                    <h2 style="font-size: 32px; font-weight: 400; text-align: center; margin-bottom: 32px;">Tax Invoice</h2>
 
-                    <p style="margin-bottom: 16px;">Dear Aaradhya,</p>
-
-                    <p style="margin-bottom: 16px;">We are pleased to extend you an offer for the position of <strong>Eternal Girlfriend</strong> at Future Husband Enterprises, reporting directly to Niv (Chief Executive of Missing You).</p>
-
-                    <p style="margin-bottom: 8px; margin-top: 24px;"><strong>POSITION DETAILS</strong></p>
-                    <div style="border-top: 2px solid #e0e0e0; margin-bottom: 16px;"></div>
-
-                    <p style="margin-bottom: 8px;"><strong>Start Date:</strong> Retroactive to the day we started talking</p>
-                    <p style="margin-bottom: 8px;"><strong>Duration:</strong> Forever, with automatic renewal for all of eternity</p>
-                    <p style="margin-bottom: 8px;"><strong>Location:</strong> Currently 2083km apart (working to reduce to 0km)</p>
-                    <p style="margin-bottom: 16px;"><strong>Reporting Structure:</strong> You report to no one. You are in charge. I am obsessed with you.</p>
-
-                    <p style="margin-bottom: 8px; margin-top: 24px;"><strong>COMPENSATION PACKAGE</strong></p>
-                    <div style="border-top: 2px solid #e0e0e0; margin-bottom: 16px;"></div>
-
-                    <ul style="margin-left: 20px; margin-bottom: 16px; line-height: 1.8;">
-                        <li>Unlimited compliments (minimum 10,000 daily)</li>
-                        <li>Comprehensive "you are beautiful" coverage (24/7)</li>
-                        <li>Full forehead kiss benefits (concentrated on your forehead mole)</li>
-                        <li>Generous listening-to-biology-rants policy (unlimited, encouraged)</li>
-                        <li>Premium hand-holding package (never letting go)</li>
-                        <li>Domestic bliss starter kit (includes: grocery shopping together, doing laundry together, Stitch supervision, future cats Ivy, Jackie, and Wilson)</li>
-                        <li>Complete Harry Potter marathon rights</li>
-                        <li>Unlimited momos and wai wai provisions</li>
-                    </ul>
-
-                    <p style="margin-bottom: 8px; margin-top: 24px;"><strong>REQUIREMENTS</strong></p>
-                    <div style="border-top: 2px solid #e0e0e0; margin-bottom: 16px;"></div>
-
-                    <ul style="margin-left: 20px; margin-bottom: 16px; line-height: 1.8;">
-                        <li>Continue being yourself (already perfect)</li>
-                        <li>Accept that you will be told you're beautiful approximately 47 times per day</li>
-                        <li>Tolerate flight tracking behavior</li>
-                        <li>Acknowledge that someone 2083km away thinks about you constantly</li>
-                    </ul>
-
-                    <p style="margin-bottom: 16px; margin-top: 24px;">This position comes with the unwavering devotion of someone who has memorized your lipstick routine, thinks your forehead mole is the center of the universe, loves listening to you talk about literally anything, and is completely convinced you are the most extraordinary person alive.</p>
-
-                    <p style="margin-bottom: 16px;">Please note: This offer is non-negotiable because you are already perfect and there is nothing to negotiate. The position is already yours. You already have it. I'm already obsessed. This is just a formality.</p>
-
-                    <p style="margin-bottom: 16px;">We look forward to the continuation of our partnership, which will last until the end of time and possibly beyond.</p>
-
-                    <p style="margin-top: 32px;">Yours eternally,</p>
-                    <p style="margin-top: 8px;"><strong>Niv</strong></p>
-                    <p style="font-size: 13px; color: #5f6368;">Chief Executive Officer, Missing You Department</p>
-                    <p style="font-size: 13px; color: #5f6368;">Future Husband Enterprises</p>
-                    <p style="font-size: 12px; color: #5f6368; font-style: italic; margin-top: 8px;">"2083km is just a number (that I hate)"</p>
-                `
-            },
-            magazine1: {
-                subject: 'Letter from 2083 Kilometers: On the Mathematics of Longing',
-                sender: 'The Love Yorker',
-                avatar: 'LY',
-                body: `
-                    <div style="text-align: center; padding: 24px 0; margin-bottom: 24px;">
-                        <div style="font-family: 'Times New Roman', serif; font-size: 32px; font-weight: bold; letter-spacing: 1px;">THE LOVE YORKER</div>
-                        <div style="font-size: 11px; color: #5f6368; margin-top: 4px;">Price $8.99 • February 2026</div>
-                    </div>
-
-                    <div style="font-family: 'Times New Roman', serif; font-size: 26px; font-weight: bold; margin-bottom: 16px; line-height: 1.3;">Letter from 2083 Kilometers: On the Peculiar Mathematics of Longing</div>
-                    <div style="font-size: 13px; color: #5f6368; font-style: italic; margin-bottom: 24px;">By Niv, Future Husband</div>
-
-                    <div style="font-family: Georgia, serif; font-size: 16px; line-height: 1.8;">
-                        <p style="margin-bottom: 20px;">There is a specific kind of arithmetic that occurs when you are in love with someone who exists in a different set of coordinates than you do. Two thousand and eighty-three kilometers, to be precise. It is a number I have become intimately familiar with, the way one might become familiar with a chronic condition or a particularly persistent song stuck in one's head. Except this number is neither chronic nor persistent—it is, in fact, temporary, and it is the temporariness of it that makes it simultaneously bearable and unbearable.</p>
-
-                        <p style="margin-bottom: 20px;">I think about her constantly. This is not an exaggeration employed for literary effect. It is a simple statement of fact, verifiable by anyone who has had the misfortune of trying to have a normal conversation with me in recent months. "How are you?" they ask. "She's beautiful," I reply, which is not an answer to their question but is, I feel, an answer to a more important question that they should have asked.</p>
-
-                        <p style="margin-bottom: 20px;">Her forehead has a mole. I have spent what is probably an unreasonable amount of time thinking about this mole. It has become, in my mental geography, something of a landmark—the center point from which all other measurements are taken. North of the mole: her eyes, which I could write entire volumes about. South of the mole: everything else, which I could also write entire volumes about. The mole itself: perfect, like everything else about her.</p>
-
-                        <p style="margin-bottom: 20px;">She talks about biology with the kind of passion that most people reserve for things they are supposedly very passionate about but aren't really. She is actually passionate. I could listen to her explain cellular processes for hours. I have listened to her explain cellular processes for hours. This is not a complaint. This is perhaps the opposite of a complaint. There should be a word for that—a compliment that masquerades as mere observation but is actually a declaration of something much larger.</p>
-
-                        <p style="margin-bottom: 20px;">I have memorized her lipstick routine. This feels important to mention. Most people do not memorize other people's lipstick routines. But most people are not me, and most people are not her, and most people do not understand that when someone you love describes how they apply makeup, they are actually describing a small piece of their interior world, and you are privileged to witness it, even if that witnessing happens through a screen across 2,083 kilometers.</p>
-
-                        <p style="margin-bottom: 20px;">The distance is absurd. I want to be clear about this. It is completely, utterly, absurd. There is no reason for it. Geography is a social construct that I have decided to personally dislike. If I could rearrange the earth's surface to eliminate these 2,083 kilometers, I would do so immediately and without regard for the geological consequences.</p>
-
-                        <p style="margin-bottom: 20px;">But here is what I know: The distance is temporary. She is permanent. These are the only numbers that matter. Everything else—the kilometers, the time zones, the flight prices I compulsively check—these are just variables in an equation that has already been solved. The answer is her. The answer has always been her.</p>
-
-                        <p style="margin-bottom: 20px;">People ask me what it's like, being this far from someone you love. I tell them it's like being homesick for a person. I tell them it's like there's a piece of your day missing, except the piece is most of your day. I tell them it's worth it, because she's worth it, because she's worth everything.</p>
-
-                        <p style="margin-bottom: 20px;">But mostly, I tell them she's beautiful. Because she is. And because some truths are so overwhelming that they deserve to be stated repeatedly, like a mantra, like a prayer, like the only thing that makes sense when nothing else does.</p>
-
-                        <p style="margin-top: 32px; font-style: italic; color: #666; font-size: 14px; border-top: 1px solid #e0e0e0; padding-top: 16px;">Niv is a future husband currently located 2,083 kilometers from his girlfriend. His debut collection of essays, "I Love Her: An Extended Meditation," is forthcoming never because he will be too busy actually being with her.</p>
-                    </div>
+                    <p style="margin-bottom: 8px;">10 February 2026</p>
+                    <p style="margin-bottom: 8px;"><strong>Sequence:</strong> 3-609046649</p>
+                    <p style="margin-bottom: 8px;"><strong>Order ID:</strong> MNTK5VVK34</p>
                 `
             }
         };
@@ -730,35 +972,65 @@
             };
         });
 
-        // Profile
-        document.getElementById('openProfile').onclick = (e) => {
-            e.stopPropagation();
-            document.getElementById('profileDropdown').classList.toggle('active');
-        };
-        
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('profileDropdown');
-            const btn = document.getElementById('openProfile');
-            if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
-        });
-
         // Email functions
         function openEmail(emailId) {
             const email = emails[emailId];
+            
             document.getElementById('detailSubject').textContent = email.subject;
-            document.getElementById('detailSender').textContent = email.sender;
-            document.getElementById('detailAvatar').textContent = email.avatar;
+            document.getElementById('detailSender').textContent = email.senderShort;
+            document.getElementById('detailTime').textContent = email.time;
+            
+            const avatar = document.getElementById('detailAvatar');
+            avatar.textContent = '';
+            avatar.style.background = email.avatarBg;
+            
+            if (email.isPurchase) {
+                avatar.innerHTML = email.purchaseData.icon;
+            } else {
+                avatar.textContent = email.avatar;
+            }
+            
+            const verifiedBadge = document.getElementById('verifiedBadge');
+            verifiedBadge.style.display = email.verified ? 'block' : 'none';
+            
+            // Purchase card
+            const purchaseContainer = document.getElementById('purchaseCardContainer');
+            if (email.isPurchase) {
+                purchaseContainer.innerHTML = `
+                    <div class="purchase-card-detail">
+                        <div class="purchase-header-detail">
+                            <div class="purchase-app-icon">
+                                <svg width="40" height="40" viewBox="0 0 24 24" fill="#ff0000">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9 12l2 2 4-4" stroke="white" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <div class="purchase-product-info">
+                                <h3>${email.purchaseData.product}</h3>
+                                <p>1 item from ${email.purchaseData.vendor}</p>
+                            </div>
+                        </div>
+                        <div class="order-placed-title">Order placed</div>
+                        <div class="order-detail-row">
+                            <span class="order-label">Order number</span>
+                            <span class="order-value">${email.purchaseData.orderNumber}</span>
+                        </div>
+                        <button class="view-order-btn">View order</button>
+                    </div>
+                `;
+            } else {
+                purchaseContainer.innerHTML = '';
+            }
+            
             document.getElementById('detailBody').innerHTML = email.body;
             
-            document.getElementById('primaryView').style.display = 'none';
+            document.getElementById('allInboxesView').style.display = 'none';
             document.getElementById('emailDetailView').classList.add('active');
         }
 
         function closeEmail() {
             document.getElementById('emailDetailView').classList.remove('active');
-            document.getElementById('primaryView').style.display = 'flex';
+            document.getElementById('allInboxesView').style.display = 'flex';
         }
     </script>
 </body>
