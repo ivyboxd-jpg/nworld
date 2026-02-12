@@ -8,103 +8,477 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gmail-red: #d93025;
+            --primary-color: #d93025;
+            --active-bg: #fce8e6;
             --text-primary: #202124;
             --text-secondary: #5f6368;
+            --border-color: #e0e0e0;
             --google-blue: #1a73e8;
-            --ai-bg: #f0f4f9;
-            /* Official Google Colors for Profile Ring */
-            --g-blue: #4285f4; --g-red: #ea4335; --g-yellow: #fbbc05; --g-green: #34a853;
+            --search-bg: #e3e7ed;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: 'Roboto', -apple-system, sans-serif; letter-spacing: 0.2px; }
-        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: 'Roboto', sans-serif; }
 
-        /* --- HEADER --- */
-        .header { padding: 8px 16px; background: #fff; z-index: 100; position: relative; }
-        .search-container {
-            height: 48px; background: #fff; border-radius: 24px;
-            display: flex; align-items: center; padding: 0 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
+
+        /* Header */
+        .header { 
+            padding: 12px 16px; 
+            background: #f5f7fa; 
+            z-index: 100; 
         }
-        .search-input { flex: 1; border: none; outline: none; font-size: 16px; color: var(--text-primary); padding-left: 8px; }
-        .pfp-btn { width: 32px; height: 32px; background: var(--google-blue); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; margin-right: 4px; cursor: pointer; }
+        
+        .search-container {
+            height: 56px; 
+            background: var(--search-bg); 
+            border-radius: 28px;
+            display: flex; 
+            align-items: center; 
+            padding: 0 16px;
+        }
+        
+        .menu-icon { 
+            width: 24px; 
+            height: 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            margin-right: 8px;
+        }
+        
+        .search-input { 
+            flex: 1; 
+            font-size: 16px; 
+            color: #3c4043; 
+            background: transparent;
+            border: none;
+            outline: none;
+            padding: 0 8px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400; 
+        }
 
-        /* --- SIDEBAR --- */
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
+        .search-input::placeholder { color: #5f6368; }
+        
+        .pfp-btn {
+            width: 32px; 
+            height: 32px; 
+            background: #a0c3ff; 
+            color: #001d35;
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-weight: 500; 
+            font-size: 14px; 
+            cursor: pointer;
+            margin-left: 8px;
+        }
+
+        /* Sidebar */
+        .sidebar-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.4); 
+            z-index: 200; 
+            opacity: 0; 
+            visibility: hidden; 
+            transition: 0.25s; 
+        }
+        
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 285px; background: #fff; z-index: 250; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; border-radius: 0 16px 16px 0; padding-top: env(safe-area-inset-top); }
+
+        .sidebar {
+            position: fixed; 
+            top: 0; 
+            bottom: 0; 
+            left: 0; 
+            width: 300px;
+            background: #fff; 
+            z-index: 250; 
+            transform: translateX(-100%);
+            transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+        }
+        
         .sidebar.open { transform: translateX(0); }
-        .sidebar-header { padding: 18px 24px; display: flex; align-items: center; gap: 14px; }
-        .sidebar-logo { height: 24px; width: auto; }
+
+        .sidebar-header { 
+            padding: 20px 24px; 
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+            border-bottom: 1px solid transparent;
+        }
+        
+        .sidebar-logo { height: 40px; width: auto; }
         .sidebar-logo-text { font-size: 22px; color: #5f6368; font-weight: 400; }
 
-        .nav-list { overflow-y: auto; padding: 8px 12px 12px 0; }
-        .nav-item { height: 48px; display: flex; align-items: center; padding: 0 16px 0 24px; gap: 18px; border-radius: 0 24px 24px 0; cursor: pointer; color: var(--text-secondary); margin-bottom: 2px; }
+        .nav-list { overflow-y: auto; padding: 8px 0; }
         
-        /* SPECIFIC LABEL COLORS */
-        .nav-item.active { font-weight: 500; }
-        .nav-item.all-inboxes.active { background: #fce8e6; color: #d93025; }
-        .nav-item.primary.active { background: #e8f0fe; color: #1a73e8; }
-        .nav-item.social.active { background: #e2f2f1; color: #00695c; }
-        .nav-item.promotions.active { background: #e6f4ea; color: #137333; }
-        .nav-item.updates.active { background: #70584b; color: #fce8e6; }
-        .nav-item.purchases.active { background: #f1f3f4; color: #202124; }
+        .nav-item {
+            height: 48px; 
+            display: flex; 
+            align-items: center; 
+            padding: 0 24px; 
+            gap: 24px;
+            cursor: pointer; 
+            color: var(--text-primary);
+            border-radius: 0 24px 24px 0;
+            margin-right: 8px;
+        }
 
-        .icon-svg { width: 22px; height: 22px; fill: var(--text-secondary); }
-        .nav-item.active .icon-svg { fill: currentColor; }
-        .divider { height: 1px; background: #e0e2e0; margin: 8px 0 8px 24px; opacity: 0.5; }
-
-        /* --- CONTENT --- */
-        .main-content { flex: 1; overflow-y: auto; background: white; }
-        .view-title { padding: 16px 16px 8px 16px; font-size: 12px; font-weight: 500; color: #5f6368; text-transform: uppercase; }
-
-        .ni-banner { margin: 8px 16px; border-radius: 16px; padding: 16px; background: var(--ai-bg); cursor: pointer; display: none; }
-        .ni-header { display: flex; align-items: center; }
-        .ni-sparkle { width: 24px; height: 24px; margin-right: 12px; }
-        .ni-title { font-size: 15px; font-weight: 500; flex: 1; color: var(--google-blue); }
-        .ni-content { font-size: 14px; color: #1f1f1f; margin-top: 10px; display: none; line-height: 1.5; }
-        .expanded .ni-content { display: block; }
-
-        /* --- EMAIL LIST --- */
-        .email-item { padding: 12px 16px; border-bottom: 0.5px solid #f1f3f4; cursor: pointer; display: flex; gap: 16px; }
-        .email-pfp { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; }
-        .email-content-col { flex: 1; min-width: 0; }
-        .email-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px; }
-        .email-sender-name { font-size: 14px; font-weight: 700; }
-        .email-date { font-size: 12px; color: var(--text-secondary); }
-        .email-subject-line { font-size: 14px; font-weight: 500; color: #202124; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .nav-item:hover { background: #f1f3f4; }
         
-        .order-row { display: flex; align-items: center; gap: 6px; margin-top: 2px; }
-        .inbox-tag-rect { border: 1px solid #dadce0; color: #5f6368; font-size: 11px; padding: 2px 4px; border-radius: 4px; margin-right: 8px; font-weight: 400; }
-        .star-ico { width: 22px; height: 22px; fill: none; stroke: #5f6368; stroke-width: 2; cursor: pointer; }
-        .star-ico.starred { fill: #fbbc05; stroke: #fbbc05; }
-
-        /* --- EMAIL DETAIL --- */
-        #msgView { display: none; background: white; height: 100%; position: absolute; inset: 0; z-index: 120; overflow-y: auto; flex-direction: column; padding: 16px; }
-        #msgView.active { display: flex; }
+        .nav-item.active { 
+            background: var(--active-bg); 
+            color: var(--primary-color);
+        }
         
-        .subject-line-row { display: flex; align-items: center; gap: 10px; margin: 10px 0 24px; }
-        .subject-text-large { font-size: 20px; font-weight: 400; color: #202124; flex: 1; }
+        .icon-svg { width: 24px; height: 24px; fill: #5f6368; }
+        .nav-item.active .icon-svg { fill: var(--primary-color); }
 
-        /* ARTISTIC NEWSLETTER CONTENT */
-        .newsletter-hero { text-align: center; padding: 30px 0; border-bottom: 1px solid #eee; margin-bottom: 30px; }
-        .news-brand { font-family: 'Times New Roman', serif; font-size: 32px; font-weight: 700; font-style: italic; letter-spacing: -0.5px; }
-        .news-issue { font-size: 11px; text-transform: uppercase; color: #888; letter-spacing: 1.5px; margin-top: 8px; }
-        .article-body { font-family: Georgia, serif; font-size: 17px; line-height: 1.8; color: #333; }
+        .nav-text { flex: 1; font-size: 14px; font-weight: 500; }
+        .nav-badge { font-size: 13px; color: #5f6368; }
+        .nav-item.active .nav-badge { color: var(--primary-color); }
 
-        /* --- ACCOUNT MODAL --- */
-        .profile-dropdown { position: absolute; top: 60px; right: 16px; width: 312px; background: #e9eef6; border-radius: 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); padding: 32px 20px; z-index: 150; display: none; text-align: center; }
-        .profile-dropdown.active { display: block; }
-        .modal-email { font-size: 15px; color: #1f1f1f; margin-bottom: 24px; }
-        .ring-box { width: 88px; height: 88px; margin: 0 auto 20px; position: relative; display: flex; align-items: center; justify-content: center; }
-        .pfp-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3.5px; background: conic-gradient(var(--g-blue) 0% 25%, var(--g-red) 25% 50%, var(--g-yellow) 50% 75%, var(--g-green) 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        .pfp-inner { width: 74px; height: 74px; border-radius: 50%; background: var(--g-blue); color: white; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 500; }
+        .divider { height: 1px; background: #e0e0e0; margin: 8px 0; }
+
+        /* Category Label */
+        .category-label {
+            padding: 16px 16px 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #5f6368;
+            font-weight: 500;
+        }
+
+        /* Email List */
+        .email-list-container { 
+            flex: 1; 
+            overflow-y: auto; 
+            background: #fff; 
+        }
+
+        .email-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            background: #fff;
+            gap: 16px;
+            transition: background 0.2s;
+        }
+
+        .email-item:active {
+            background: #f8f9fa;
+        }
+
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+            text-transform: uppercase;
+        }
+
+        .email-content-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .email-first-line {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 2px;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        .sender-name {
+            font-size: 16px;
+            color: var(--text-primary);
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-item.read .sender-name {
+            font-weight: 400;
+            color: #444;
+        }
+
+        .email-time {
+            font-size: 12px;
+            color: var(--text-primary);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .email-item.read .email-time {
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .subject-line {
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-item.read .subject-line {
+            font-weight: 400;
+        }
+
+        .snippet {
+            font-size: 14px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .star-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .star-svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #5f6368;
+            stroke-width: 2;
+            transition: 0.2s;
+        }
+
+        .star-svg.starred {
+            fill: #f9ab00;
+            stroke: #f9ab00;
+        }
+
+        /* Email Detail View */
+        .email-detail {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            background: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 150;
+        }
+
+        .email-detail.active { display: flex; }
+
+        .detail-header-bar {
+            padding: 8px 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .back-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .back-btn:active { background: #f1f3f4; }
+
+        .detail-actions {
+            display: flex;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .action-btn {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .action-btn:active { background: #f1f3f4; }
+
+        .detail-subject-header {
+            padding: 20px 16px 12px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .subject-container {
+            display: flex;
+            flex-direction: row; /* Horizontal alignment */
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .detail-subject-text {
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+
+        .detail-inbox-label {
+            padding: 2px 6px;
+            background: #e8eaed;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #5f6368;
+            font-weight: 500;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .detail-star {
+            width: 24px;
+            height: 24px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        /* Artistic Header Image */
+        .artistic-header {
+            width: 100%;
+            height: 180px;
+            background-color: #f1f3f4;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .artistic-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(to top, #fff, transparent);
+        }
+
+        .detail-sender-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 16px 16px;
+        }
+
+        .sender-avatar-detail {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 18px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .sender-info-detail { flex: 1; }
+
+        .sender-name-detail {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sender-to {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .detail-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .detail-body {
+            padding: 0 16px 100px; /* Extra padding for FAB */
+            line-height: 1.6;
+            color: #202124;
+            font-size: 15px;
+            font-family: 'Georgia', serif; /* More artistic font for body */
+        }
+
+        /* Compose FAB */
+        .compose-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #c2e7ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+        
+        .compose-fab:active { transform: scale(0.95); }
+
+        .compose-icon {
+            width: 24px;
+            height: 24px;
+            fill: #001d35;
+        }
+
+        .view-hidden { display: none; }
+        .view-visible { display: flex; flex-direction: column; }
     </style>
 </head>
 <body>
-
     <div class="app-shell">
         <div class="sidebar-overlay" id="overlay"></div>
 
@@ -114,39 +488,72 @@
                 <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="sidebar-logo">
                 <span class="sidebar-logo-text">Gmail</span>
             </div>
+            
             <div class="nav-list">
-                <div class="nav-item all-inboxes active" onclick="ui.switchView('all-inboxes', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v3H5v-3h14m1-2H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1zm-1-8l-7 5-7-5V5l7 5 7-5v2z"/></svg>
-                    <span class="nav-text">All inboxes</span>
-                </div>
-                <div class="divider"></div>
-                <div class="nav-item primary" onclick="ui.switchView('primary', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10z"/></svg>
+                <div class="nav-item active" data-view="primary" data-color="#d93025" data-bg="#fce8e6">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-7-2h2V7h-4v2h2z"/>
+                    </svg>
                     <span class="nav-text">Primary</span>
+                    <span class="nav-badge">7</span>
                 </div>
-                <div class="nav-item social" onclick="ui.switchView('social', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                
+                <div class="nav-item" data-view="social" data-color="#1a73e8" data-bg="#e8f0fe">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                    </svg>
                     <span class="nav-text">Social</span>
                 </div>
-                <div class="nav-item promotions" onclick="ui.switchView('promotions', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+
+                <div class="nav-item" data-view="promotions" data-color="#188038" data-bg="#e6f4ea">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+                    </svg>
                     <span class="nav-text">Promotions</span>
                 </div>
-                <div class="nav-item updates" onclick="ui.switchView('updates', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+
+                <div class="nav-item" data-view="updates" data-color="#ea8600" data-bg="#feefe3">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                    </svg>
                     <span class="nav-text">Updates</span>
                 </div>
+
                 <div class="divider"></div>
-                <div class="nav-item purchases" onclick="ui.switchView('purchases', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
-                    <span class="nav-text">Purchases</span>
+
+                <div class="nav-item" data-view="starred" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                    <span class="nav-text">Starred</span>
                 </div>
-                <div class="nav-item spam" onclick="ui.switchView('inbox', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3z"/></svg>
+
+                <div class="nav-item" data-view="important" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2l-5.5 9h11z"/>
+                        <path d="M12 18.5L18.5 22l-1.5-7.03L22 10.5l-7.19-.61L12 2.5 9.19 9.89 2 10.5l5.46 4.47L6 22z"/>
+                    </svg>
+                    <span class="nav-text">Important</span>
+                </div>
+
+                <div class="nav-item" data-view="sent" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                    </svg>
+                    <span class="nav-text">Sent</span>
+                </div>
+
+                <div class="nav-item" data-view="spam" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 11c-.55 0-1-.45-1-1V8c0-.55.45-1 1-1s1 .45 1 1v4c0 .55-.45 1-1 1zm1 4h-2v-2h2v2z"/>
+                    </svg>
                     <span class="nav-text">Spam</span>
                 </div>
-                <div class="nav-item bin" onclick="ui.switchView('inbox', this)">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+
+                <div class="nav-item" data-view="bin" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    </svg>
                     <span class="nav-text">Bin</span>
                 </div>
             </div>
@@ -155,134 +562,313 @@
         <!-- Header -->
         <header class="header">
             <div class="search-container">
-                <div class="icon-btn" onclick="ui.toggleSidebar(true)"><svg viewBox="0 0 24 24" fill="#5f6368" width="24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg></div>
-                <input type="text" class="search-input" placeholder="Search in mail" oninput="ui.filter(this.value)">
-                <div class="pfp-btn" onclick="ui.toggleProfile(event)">N</div>
-            </div>
-            <!-- Profile Modal -->
-            <div class="profile-dropdown" id="profileDropdown">
-                <p class="modal-email">niv@futurehusband.com</p>
-                <div class="ring-box"><div class="pfp-ring"></div><div class="pfp-inner">N</div></div>
-                <h1 class="modal-hi">Hi, Niv!</h1>
+                <div class="menu-icon" id="openMenu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </div>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search in mail">
+                <div class="pfp-btn" id="openProfile">S</div>
             </div>
         </header>
 
-        <main class="main-content">
-            <div class="view-title" id="viewTitle">All inboxes</div>
-
-            <!-- Gemini (All inboxes only) -->
-            <div class="ni-banner" id="geminiBanner" onclick="this.classList.toggle('expanded')">
-                <div class="ni-header">
-                    <svg class="ni-sparkle" viewBox="0 0 24 24"><defs><linearGradient id="g-grad"><stop offset="0%" stop-color="#4285f4"/><stop offset="100%" stop-color="#ea4335"/></linearGradient></defs><path fill="url(#g-grad)" d="M12 2L14.85 9.15L22 12L14.85 14.85L12 22L9.15 14.85L2 12L9.15 9.15L12 2Z M19 3L19.7 4.7L21.4 5.4L19.7 6.1L19 7.8L18.3 6.1L16.6 5.4L18.3 4.7L19 3Z"/></svg>
-                    <span class="ni-title">Gemini Overview</span>
-                    <svg width="18" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+        <!-- Content -->
+        <main style="flex: 1; overflow-y: auto; position: relative;">
+            <!-- All Inboxes View -->
+            <div id="allInboxesView" class="view-visible email-list-container">
+                <div class="category-label">Primary</div>
+                <div id="emailList">
+                    <!-- Emails injected via JS -->
                 </div>
-                <div class="ni-content">You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.</div>
             </div>
-
-            <div id="emailContainer"></div>
 
             <!-- Email Detail View -->
-            <div id="msgView">
-                <div style="padding-bottom:12px; border-bottom:1px solid #f1f3f4; margin-bottom:16px;">
-                    <svg onclick="ui.backToList()" width="24" viewBox="0 0 24 24" style="cursor:pointer"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                </div>
-                <div id="msgContent">
-                    <div class="subject-line-row">
-                        <h2 class="subject-text-large" id="mSub">Subject</h2>
-                        <span class="inbox-tag-rect">Inbox</span>
-                        <svg class="star-ico" id="detailStar" onclick="this.classList.toggle('starred')" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <div id="emailDetailView" class="email-detail">
+                <div class="detail-header-bar">
+                    <div class="back-btn" onclick="closeEmail()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
                     </div>
-                    
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px;">
-                        <div id="mCircle" style="width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700;"></div>
-                        <div style="flex:1">
-                            <div style="font-weight:700; font-size:14px;" id="mSender">Sender</div>
-                            <div style="font-size:12px; color:#5f6368;">to my.queen@forever.com</div>
+                    <div class="detail-actions">
+                        <div class="action-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
+                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                            </svg>
                         </div>
                     </div>
-                    
-                    <div class="newsletter-hero">
-                        <div class="news-brand" id="artTitle">Brand</div>
-                        <div class="news-issue" id="artIssue">Issue No. 01</div>
-                    </div>
-
-                    <div id="textBody" class="article-body"></div>
                 </div>
+                
+                <!-- Artistic Header (injected) -->
+                <div id="artisticHeader" class="artistic-header"></div>
+
+                <div class="detail-subject-header">
+                    <div class="subject-container">
+                        <span class="detail-subject-text" id="detailSubject"></span>
+                        <span class="detail-inbox-label">Inbox</span>
+                    </div>
+                    <div class="detail-star" id="detailStarBtn">
+                        <svg class="star-svg" id="detailStarSvg" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="detail-sender-row">
+                    <div class="sender-avatar-detail" id="detailAvatar"></div>
+                    <div class="sender-info-detail">
+                        <div class="sender-name-detail">
+                            <span id="detailSender"></span>
+                        </div>
+                        <div class="sender-to">to me</div>
+                    </div>
+                    <div class="detail-time" id="detailTime"></div>
+                </div>
+
+                <div class="detail-body" id="detailBody"></div>
             </div>
         </main>
+
+        <!-- Compose FAB -->
+        <div class="compose-fab">
+            <svg class="compose-icon" viewBox="0 0 24 24">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+            </svg>
+        </div>
     </div>
 
     <script>
-        const database = {
-            'primary': [
-                { sender: 'Husband Resources', initial: 'H', bg: '#4285f4', subject: 'Offer Letter: Senior Cuddling Officer', issue: 'VACANCY NOTICE', body: 'Dear Niv,\n\nWe are thrilled to offer you the position of Lifetime CEO of My Heart. We were impressed by your background in being perfect.\n\nBenefits include:\n- Unlimited forehead kisses.\n- High-priority cuddle scheduling.\n- Lifetime access to my hoodie collection.' },
-                { sender: 'The Devoted Daily', initial: 'D', bg: '#ea4335', subject: 'Newsletter: 7 Reasons Why You are Perfect', issue: 'OP-ED • FEB 2026', body: 'Top Headline: "Local woman remains undisputed champion of being cute."\n\nInside this issue, we analyze why your laugh is the soundtrack to my life and why the 2083km between us is offensive to nature.' },
-                { sender: 'Cloud Storage Sys', initial: 'S', bg: '#fbbc05', subject: 'System Alert: Voice Note Capacity Reached', issue: 'TECHNICAL BULLETIN', body: 'Warning: 60% of device memory is currently occupied by your "Good morning" voice notes. Action required: Send more. We will delete the Operating System before we delete your voice.' },
-                { sender: 'Love Policy Dept', initial: 'L', bg: '#34a853', subject: 'Updated Regulation: Forehead Kisses', issue: 'BYLAW AMENDMENT', body: 'Per new regulation 2026-X, the minimum daily requirement for forehead kisses has been increased by 400%. Effective immediately upon arrival.' },
-                { sender: 'Grocery Logistics', initial: 'G', bg: '#673ab7', subject: 'Shared List Update: Shared Future', issue: 'HOUSEHOLD LOGS', body: 'Updated by Niv:\n- Milk\n- Eggs\n- That specific candy you like\n- 4 Cats (Proposed)\n- 2083km of patience' },
-                { sender: 'Reservation Confirmed', initial: 'R', bg: '#009688', subject: 'Booking: The Rest of Our Lives', issue: 'TRAVEL CONFIRMATION', body: 'Reservation for 2: You and Me.\nLocation: Everywhere we go together.\nDuration: Perpetual.\nNotes: No cancellations allowed.' },
-                { sender: 'Department of Missing You', initial: 'M', bg: '#795548', subject: 'Status Update: Severe Shortage of Kisses', issue: 'CRITICAL SHORTAGE', body: 'Current levels of "You" in the vicinity are dangerously low. 2083 kilometers is 2083 kilometers too many. Deployment of hugs is highly requested.' }
-            ],
-            'all-inboxes': [] // Populated by script
-        };
-        database['all-inboxes'] = [...database['primary']];
+        const emails = [
+            {
+                id: '1',
+                sender: 'The Moon',
+                subject: 'I saw you looking',
+                snippet: 'It was 2:00 AM and you were eating cheese directly from the block.',
+                time: '8:42 PM',
+                avatar: 'M',
+                color: '#673ab7',
+                starred: true,
+                artImage: 'https://images.unsplash.com/photo-1532431717904-4c407559c5d0?q=80&w=600&auto=format&fit=crop',
+                body: `<p>Dear Earthling,</p><p>I noticed you staring up at me last night. It was intimate. I felt seen. Usually, people just look for the flag or try to calculate tides, but you looked at me like I was a giant glowing aspirin dissolving in the sky.</p><p>You looked worried. Is it the mortgage? The girl? The fact that socks disappear?</p><p>Don't worry. I've seen dinosaurs die and empires fall and I've also seen a guy trip over his own shoelace in 1492. It all passes.</p><p>Shine on,</p><p>Luna</p>`
+            },
+            {
+                id: '2',
+                sender: 'Chronos Time Management',
+                subject: 'Refund issued for Yesterday',
+                snippet: 'We acknowledge that yesterday was subpar and contained too much waiting.',
+                time: '6:15 PM',
+                avatar: 'C',
+                color: '#009688',
+                starred: false,
+                artImage: 'https://images.unsplash.com/photo-1501139083538-0139583c61ee?q=80&w=600&auto=format&fit=crop',
+                body: `<p><strong>Order #999-INFINITY-NULL</strong></p><p>We have reviewed your complaint regarding Yesterday, February 11th.</p><p>You noted that the hours between 2 PM and 4 PM felt "sticky" and "like wading through molasses," while the evening vanished in what felt like four seconds.</p><p>This was a server error on our end. We are crediting your account with 45 minutes of Lucid Dreaming and one (1) perfect sunset to be redeemed at your leisure.</p><p>Please do not spend it all on anxiety.</p>`
+            },
+            {
+                id: '3',
+                sender: 'A Stray Cat',
+                subject: 'Business Proposal (Urgent)',
+                snippet: 'regarding the barrier between us (the glass door) and the exchange of fish.',
+                time: '4:30 PM',
+                avatar: 'S',
+                color: '#ff5722',
+                starred: true,
+                artImage: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=600&auto=format&fit=crop',
+                body: `<p>Human,</p><p>I am writing to you from the patio. It is cold. My paws are, frankly, tragic.</p><p>I have observed you from afar. You have a box that produces heat and another box that contains cold light and ham. I have neither.</p><p><strong>The Proposal:</strong></p><ul><li>I enter.</li><li>I vibrate on your chest (medical benefits included).</li><li>You provide the Crunchies.</li></ul><p>Please respond by opening the door. Ignoring me is a hate crime.</p>`
+            },
+            {
+                id: '4',
+                sender: 'Your Left Shoe',
+                subject: 'We need to talk about the Right one',
+                snippet: 'He’s wearing thin and frankly, he’s embarrassing us both.',
+                time: '2:12 PM',
+                avatar: 'L',
+                color: '#795548',
+                starred: false,
+                artImage: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop',
+                body: `<p>Look,</p><p>I know I'm just a Converse, but I have a soul. (Ha, shoe pun. Sorry). But seriously.</p><p>Righty has developed a hole near the pinky toe. It's undignified. When we walk into a room, I feel the floorboards judging us. I am pristine. I have been dodging puddles for you. And him? He steps in gum like it's his job.</p><p>Replace him, or I walk. Literally.</p>`
+            },
+            {
+                id: '5',
+                sender: 'The Coffee Stain',
+                subject: 'I am art now',
+                snippet: 'On your white shirt. I am not a mistake, I am a statement.',
+                time: '11:00 AM',
+                avatar: 'T',
+                color: '#3e2723',
+                starred: false,
+                artImage: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=600&auto=format&fit=crop',
+                body: `<p>You tried to rub me out with club soda. Amateur.</p><p>I have bonded with the cotton fibers on a molecular level. I am a map of your clumsiness. I am a Rorschach test for your morning jitters.</p><p>Wear me with pride. Tell people I am a vintage wash. Tell them I am "Distressed."</p><p>Because you are distressed, aren't you?</p>`
+            },
+            {
+                id: '6',
+                sender: 'Future You',
+                subject: 'DON\'T BUY THE COUCH',
+                snippet: 'It won’t fit through the door. PIVOT won’t work.',
+                time: '9:05 AM',
+                avatar: 'F',
+                color: '#3f51b5',
+                starred: true,
+                artImage: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=600&auto=format&fit=crop',
+                body: `<p>Listen to me very carefully.</p><p>I am writing from the year 2029. The world is fine, we have flying toasters now, it's cool. But the Green Velvet Sectional you are looking at on your phone right now?</p><p>It destroys your life.</p><p>It doesn't fit in the elevator. It gets stuck in the stairwell. You lose your security deposit. You cry in front of the delivery men.</p><p>Buy the beige loveseat. Trust me. Also, drink more water.</p>`
+            },
+            {
+                id: '7',
+                sender: 'Gravity',
+                subject: 'Just checking in',
+                snippet: 'Still here. Still holding you down. You\'re welcome.',
+                time: 'Yesterday',
+                avatar: 'G',
+                color: '#607d8b',
+                starred: false,
+                artImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=600&auto=format&fit=crop',
+                body: `<p>I don't get enough credit.</p><p>Do you know how hard it is to keep the ocean stuck to the ball? Do you know how much effort it takes to keep your coffee in the mug?</p><p>I'm the only stable relationship you have. I will never let you go. Even if you jump, I'll bring you back.</p><p>That's love, baby.</p>`
+            }
+        ];
 
-        const ui = {
-            toggleSidebar(o) { document.getElementById('sidebar').classList.toggle('open', o); document.getElementById('overlay').classList.toggle('active', o); },
-            toggleProfile(e) { e.stopPropagation(); document.getElementById('profileDropdown').classList.toggle('active'); },
-            switchView(view, el) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                el.classList.add('active');
-                document.getElementById('viewTitle').innerText = view.replace('-', ' ');
-                document.getElementById('geminiBanner').style.display = view === 'all-inboxes' ? 'block' : 'none';
-                document.getElementById('msgView').classList.remove('active');
-                this.render(view); this.toggleSidebar(false);
-            },
-            render(view) {
-                const container = document.getElementById('emailContainer');
-                container.innerHTML = '';
-                const data = database[view] || [];
-                data.forEach((e, i) => {
-                    container.innerHTML += `
-                        <div class="email-item" onclick="ui.openMsg('${view}', ${i})">
-                            <div class="email-pfp" style="background:${e.bg}">${e.initial}</div>
-                            <div class="email-content-col">
-                                <div class="email-top-row"><span class="email-sender-name">${e.sender}</span><span class="email-date">Feb 12</span></div>
-                                <div class="order-row">
-                                    <span class="email-subject-line" style="flex:1">${e.subject}</span>
-                                    <svg class="star-ico" onclick="ui.star(event, this)" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                                </div>
-                                <div class="order-row">
-                                    <span class="inbox-tag-rect">Inbox</span>
-                                    <span style="font-size:13px; color:#5f6368">${e.body.substring(0, 35)}...</span>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-            },
-            openMsg(view, i) {
-                const e = database[view][i];
-                document.getElementById('mSub').innerText = e.subject;
-                document.getElementById('mSender').innerText = e.sender;
-                document.getElementById('mCircle').innerText = e.initial;
-                document.getElementById('mCircle').style.background = e.bg;
-                document.getElementById('artTitle').innerText = e.sender;
-                document.getElementById('artIssue').innerText = e.issue;
-                document.getElementById('textBody').innerText = e.body;
-                document.getElementById('msgView').classList.add('active');
-            },
-            backToList() { document.getElementById('msgView').classList.remove('active'); },
-            star(e, el) { e.stopPropagation(); el.classList.toggle('starred'); },
-            filter(q) {
-                document.querySelectorAll('.email-item').forEach(item => item.style.display = item.innerText.toLowerCase().includes(q.toLowerCase()) ? 'flex' : 'none');
+        // Render List
+        const emailListContainer = document.getElementById('emailList');
+        
+        function renderEmails(filterText = '') {
+            emailListContainer.innerHTML = '';
+            
+            const filtered = emails.filter(e => 
+                e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
+                e.subject.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            filtered.forEach(email => {
+                const item = document.createElement('div');
+                item.className = 'email-item';
+                item.onclick = (e) => {
+                    if(!e.target.closest('.star-icon')) openEmail(email.id);
+                };
+
+                const starClass = email.starred ? 'starred' : '';
+
+                item.innerHTML = `
+                    <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                    <div class="email-content-main">
+                        <div class="email-first-line">
+                            <span class="sender-name">${email.sender}</span>
+                            <span class="email-time">${email.time}</span>
+                        </div>
+                        <div class="subject-line">${email.subject}</div>
+                        <div class="snippet">${email.snippet}</div>
+                    </div>
+                    <div class="star-icon" onclick="toggleStar(event, '${email.id}')">
+                        <svg class="star-svg ${starClass}" id="star-${email.id}" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
+                `;
+                emailListContainer.appendChild(item);
+            });
+        }
+
+        renderEmails();
+
+        // Interaction Logic
+        function toggleStar(e, id) {
+            e.stopPropagation(); // prevent opening email
+            const email = emails.find(x => x.id === id);
+            if (email) {
+                email.starred = !email.starred;
+                renderEmails(document.getElementById('searchInput').value);
+                
+                // Update detail view star if open
+                const detailStar = document.getElementById('detailStarSvg');
+                if(detailStar) {
+                   if(email.starred) detailStar.classList.add('starred');
+                   else detailStar.classList.remove('starred');
+                }
+            }
+        }
+        
+        // Detail View Star Logic
+        document.getElementById('detailStarBtn').onclick = () => {
+            const currentSubject = document.getElementById('detailSubject').textContent;
+            const email = emails.find(e => e.subject === currentSubject);
+            if(email) {
+                toggleStar({stopPropagation:()=>{}}, email.id);
             }
         };
 
-        document.getElementById('overlay').onclick = () => ui.toggleSidebar(false);
-        document.addEventListener('click', () => document.getElementById('profileDropdown').classList.remove('active'));
-        ui.render('all-inboxes');
-        document.getElementById('geminiBanner').style.display = 'block';
+        function openEmail(id) {
+            const email = emails.find(e => e.id === id);
+            if (!email) return;
+
+            document.getElementById('detailSubject').textContent = email.subject;
+            document.getElementById('detailSender').textContent = email.sender;
+            document.getElementById('detailTime').textContent = email.time;
+            
+            const avatar = document.getElementById('detailAvatar');
+            avatar.textContent = email.avatar;
+            avatar.style.background = email.color;
+            
+            // Artistic Header
+            document.getElementById('artisticHeader').style.backgroundImage = `url('${email.artImage}')`;
+
+            // Star state
+            const starSvg = document.getElementById('detailStarSvg');
+            if(email.starred) starSvg.classList.add('starred');
+            else starSvg.classList.remove('starred');
+            
+            document.getElementById('detailBody').innerHTML = email.body;
+            
+            document.getElementById('allInboxesView').classList.remove('view-visible');
+            document.getElementById('allInboxesView').classList.add('view-hidden');
+            document.getElementById('emailDetailView').classList.add('active');
+        }
+
+        function closeEmail() {
+            document.getElementById('emailDetailView').classList.remove('active');
+            document.getElementById('allInboxesView').classList.remove('view-hidden');
+            document.getElementById('allInboxesView').classList.add('view-visible');
+        }
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderEmails(e.target.value);
+        });
+
+        // Sidebar Toggles
+        document.getElementById('openMenu').onclick = () => { 
+            document.getElementById('sidebar').classList.add('open'); 
+            document.getElementById('overlay').classList.add('active'); 
+        };
+        
+        document.getElementById('overlay').onclick = () => { 
+            document.getElementById('sidebar').classList.remove('open'); 
+            document.getElementById('overlay').classList.remove('active'); 
+        };
+
+        // Navigation & Coloring
+        const root = document.documentElement;
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.onclick = () => {
+                // Remove active class from all
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Get colors
+                const color = item.getAttribute('data-color');
+                const bg = item.getAttribute('data-bg');
+                
+                // Update Variables
+                if(color && bg) {
+                    root.style.setProperty('--primary-color', color);
+                    root.style.setProperty('--active-bg', bg);
+                }
+
+                // Update label text in list
+                const text = item.querySelector('.nav-text').textContent;
+                document.querySelector('.category-label').textContent = text;
+
+                // Close sidebar
+                document.getElementById('sidebar').classList.remove('open');
+                document.getElementById('overlay').classList.remove('active');
+            };
+        });
     </script>
 </body>
 </html>
