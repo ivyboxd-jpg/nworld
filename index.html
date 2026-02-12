@@ -84,31 +84,209 @@
         .expanded .ni-content { display: block; }
         .expanded .ni-chevron { transform: rotate(180deg); }
 
-        /* --- PURCHASES SECTION --- */
-        .purchases-section {
-            margin: 16px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 16px;
+        /* --- EMAIL LIST --- */
+        .email-list {
+            flex: 1;
+            overflow-y: auto;
         }
 
-        .purchases-header {
+        .email-item {
+            padding: 16px;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .email-item:hover {
+            background: #f8f9fa;
+        }
+
+        .email-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .email-sender {
+            flex: 1;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .email-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .email-subject {
+            font-size: 14px;
+            color: var(--text-primary);
             margin-bottom: 4px;
         }
 
-        .purchases-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--text-secondary);
+        .email-snippet {
+            font-size: 13px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        .purchases-title {
+        /* --- PURCHASE DETAIL VIEW --- */
+        .purchase-detail {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .purchase-detail.active {
+            display: flex;
+        }
+
+        .back-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .back-btn:hover {
+            background: #f1f1f1;
+        }
+
+        .purchase-title {
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--text-primary);
+        }
+
+        .purchase-card {
+            background: linear-gradient(135deg, #ffeef8 0%, #ffe8f5 100%);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(255, 182, 223, 0.3);
+        }
+
+        .purchase-header-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .purchase-icon-large {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .purchase-icon-large svg {
+            width: 32px;
+            height: 32px;
+            fill: #ff69b4;
+        }
+
+        .purchase-info {
+            flex: 1;
+        }
+
+        .purchase-product {
+            font-size: 18px;
+            font-weight: 500;
+            color: #d63384;
+            margin-bottom: 4px;
+        }
+
+        .purchase-vendor {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .order-status {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .order-status-title {
+            font-size: 24px;
+            font-weight: 400;
+            color: #d63384;
+            margin-bottom: 12px;
+        }
+
+        .order-detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .order-label {
+            font-size: 14px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .view-order-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 14px;
             font-size: 16px;
             font-weight: 500;
-            color: var(--text-primary);
+            cursor: pointer;
+            margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3);
+        }
+
+        .cute-message {
+            background: #fff3f8;
+            border-left: 4px solid #ff69b4;
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #d63384;
+            font-style: italic;
+            line-height: 1.6;
         }
 
         /* --- PROFILE DROPDOWN --- */
@@ -172,6 +350,15 @@
             font-weight: 400;
             color: #1f1f1f;
         }
+
+        .view-hidden {
+            display: none;
+        }
+
+        .view-visible {
+            display: flex;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
@@ -182,13 +369,12 @@
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <!-- USING THE SAME METHOD THAT WORKED: Google's official Gmail logo -->
                 <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="sidebar-logo">
                 <span class="sidebar-logo-text">Gmail</span>
             </div>
             
             <div class="nav-list">
-                <div class="nav-item active">
+                <div class="nav-item active" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24">
                         <path d="M20 6H4l8 4.99zM4 8v10h16V8l-8 5z"/>
                     </svg>
@@ -196,38 +382,44 @@
                     <span class="nav-badge">1</span>
                 </div>
                 <div class="divider"></div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10z"/></svg>
                     <span class="nav-text">Primary</span>
                     <span class="nav-badge">1</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>
                     <span class="nav-text">Social</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7z"/></svg>
                     <span class="nav-text">Promotions</span>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
                     <span class="nav-text">Updates</span>
                 </div>
                 <div class="divider"></div>
-                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-text">Starred</span></div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('inbox')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><span class="nav-text">Starred</span></div>
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
                     <span class="nav-text">Snoozed</span>
                 </div>
-                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12l-4.37 6.16c-.37.52-.98.84-1.63.84h-10c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h10c.65 0 1.26.31 1.63.84L21 12z"/></svg><span class="nav-text">Important</span><span class="nav-badge">1</span></div>
+                <div class="nav-item" onclick="switchView('inbox')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 12l-4.37 6.16c-.37.52-.98.84-1.63.84h-10c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h10c.65 0 1.26.31 1.63.84L21 12z"/></svg><span class="nav-text">Important</span><span class="nav-badge">1</span></div>
                 <div class="divider"></div>
-                <div class="nav-item">
+                <div class="nav-item" onclick="switchView('purchases'); closeSidebar();">
+                    <svg class="icon-svg" viewBox="0 0 24 24">
+                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
+                    </svg>
+                    <span class="nav-text">Purchases</span>
+                </div>
+                <div class="nav-item" onclick="switchView('inbox')">
                     <svg class="icon-svg" viewBox="0 0 24 24">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
                     </svg>
                     <span class="nav-text">Spam</span>
                 </div>
-                <div class="nav-item"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span class="nav-text">Bin</span></div>
+                <div class="nav-item" onclick="switchView('inbox')"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg><span class="nav-text">Bin</span></div>
             </div>
         </aside>
 
@@ -254,34 +446,133 @@
 
         <!-- Content -->
         <main style="flex: 1; overflow-y: auto;">
-            <div class="ni-banner" id="niBanner">
-                <div class="ni-header">
-                    <svg class="ni-sparkle" viewBox="0 0 24 24" fill="url(#sparkleGradient)">
-                        <defs>
-                            <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
-                                <stop offset="50%" style="stop-color:#ea4335;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#fbbc05;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-                        <path d="M19 3L19.5 4.5L21 5L19.5 5.5L19 7L18.5 5.5L17 5L18.5 4.5L19 3Z"/>
-                    </svg>
-                    <span class="ni-title">Gemini</span>
-                    <svg class="ni-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
-                </div>
-                <div class="ni-content">
-                    You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.
+            <!-- Inbox View -->
+            <div id="inboxView" class="view-visible">
+                <div class="ni-banner" id="niBanner">
+                    <div class="ni-header">
+                        <svg class="ni-sparkle" viewBox="0 0 24 24" fill="url(#sparkleGradient)">
+                            <defs>
+                                <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#ea4335;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#fbbc05;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
+                            <path d="M19 3L19.5 4.5L21 5L19.5 5.5L19 7L18.5 5.5L17 5L18.5 4.5L19 3Z"/>
+                        </svg>
+                        <span class="ni-title">Gemini</span>
+                        <svg class="ni-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+                    </div>
+                    <div class="ni-content">
+                        You are logged in as Niv, <strong>niv@futurehusband.com</strong>. These are romantic updates released by your boyfriend. Explore by category, contribute to the starred list, search, or visit your heart.
+                    </div>
                 </div>
             </div>
 
-            <!-- Purchases Section -->
-            <div class="purchases-section">
-                <div class="purchases-header">
-                    <svg class="purchases-icon" viewBox="0 0 24 24">
-                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 16H6V8h12v12z"/>
-                    </svg>
-                    <span class="purchases-title">Purchases</span>
+            <!-- Purchases Email List View -->
+            <div id="purchasesView" class="view-hidden">
+                <div class="email-list">
+                    <div class="email-item" onclick="showPurchaseDetail('order1')">
+                        <div class="email-header">
+                            <span class="email-sender">The Affection Warehouse</span>
+                            <span class="email-time">Feb 14</span>
+                        </div>
+                        <div class="email-subject">Your order of 10,000 compliments has shipped</div>
+                        <div class="email-snippet">Order 2083-HEART • Delivery: Every time you breathe</div>
+                    </div>
+                    <div class="email-item" onclick="showPurchaseDetail('order2')">
+                        <div class="email-header">
+                            <span class="email-sender">Eternal Devotion Inc.</span>
+                            <span class="email-time">Feb 13</span>
+                        </div>
+                        <div class="email-subject">Lifetime subscription to being called beautiful renewed</div>
+                        <div class="email-snippet">Order DHOKLU-FOREVER • Auto-renews: Until the end of time</div>
+                    </div>
+                    <div class="email-item" onclick="showPurchaseDetail('order3')">
+                        <div class="email-header">
+                            <span class="email-sender">Distance Obliteration Services</span>
+                            <span class="email-time">Feb 12</span>
+                        </div>
+                        <div class="email-subject">2083 kilometers converted to 0 kilometers processing</div>
+                        <div class="email-snippet">Order SOON-2026 • Estimated completion: When planes exist</div>
+                    </div>
+                    <div class="email-item" onclick="showPurchaseDetail('order4')">
+                        <div class="email-header">
+                            <span class="email-sender">Forehead Kiss Logistics</span>
+                            <span class="email-time">Feb 11</span>
+                        </div>
+                        <div class="email-subject">Bulk order of 47 million forehead kisses confirmed</div>
+                        <div class="email-snippet">Order MOLE-CENTER • Reserved for your forehead mole exclusively</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Purchase Detail View -->
+            <div id="purchaseDetailView" class="purchase-detail">
+                <div class="back-header">
+                    <div class="back-btn" onclick="backToPurchases()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                        </svg>
+                    </div>
+                    <span class="purchase-title" id="detailTitle">Your order</span>
+                </div>
+
+                <div class="purchase-card">
+                    <div class="purchase-header-card">
+                        <div class="purchase-icon-large">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <div class="purchase-info">
+                            <div class="purchase-product" id="detailProduct">Loading...</div>
+                            <div class="purchase-vendor" id="detailVendor">From your future husband</div>
+                        </div>
+                    </div>
+
+                    <div class="order-status">
+                        <div class="order-status-title">Order Placed</div>
+                        
+                        <div class="order-detail-row">
+                            <span class="order-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/>
+                                </svg>
+                                Order Number
+                            </span>
+                            <span class="order-value" id="detailOrderNum">Loading...</span>
+                        </div>
+
+                        <div class="order-detail-row">
+                            <span class="order-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                </svg>
+                                Delivery
+                            </span>
+                            <span class="order-value" id="detailDelivery">Loading...</span>
+                        </div>
+
+                        <div class="order-detail-row">
+                            <span class="order-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                                Status
+                            </span>
+                            <span class="order-value" id="detailStatus">Loading...</span>
+                        </div>
+                    </div>
+
+                    <button class="view-order-btn" onclick="alert('This order exists in a dimension where distance means nothing and love means everything.')">
+                        View Full Order
+                    </button>
+                </div>
+
+                <div class="cute-message" id="detailMessage">
+                    Loading your personalized message...
                 </div>
             </div>
         </main>
@@ -292,6 +583,45 @@
         const overlay = document.getElementById('overlay');
         const niBanner = document.getElementById('niBanner');
         const profileDropdown = document.getElementById('profileDropdown');
+
+        const orderDetails = {
+            order1: {
+                title: 'Your order from The Affection Warehouse',
+                product: '10,000 Daily Compliments Package',
+                vendor: 'The Affection Warehouse',
+                orderNum: '2083-HEART-001',
+                delivery: 'Every time you breathe',
+                status: 'Perpetually in transit',
+                message: 'This package contains ten thousand unique ways to tell you that you are extraordinary. Each compliment has been carefully curated over 2083 kilometers of missing you. Delivery happens automatically whenever you exist, which is constantly, so you will be receiving these at an overwhelming rate. Side effects may include blushing, smiling for no reason, and the realization that someone 2083 kilometers away thinks about you more than is probably reasonable. Your boyfriend may have a problem. That problem is being completely obsessed with you.'
+            },
+            order2: {
+                title: 'Your order from Eternal Devotion Inc.',
+                product: 'Lifetime "You Are Beautiful" Subscription',
+                vendor: 'Eternal Devotion Inc.',
+                orderNum: 'DHOKLU-FOREVER',
+                delivery: 'Continuous streaming service',
+                status: 'Auto-renews eternally',
+                message: 'Congratulations on your lifetime subscription to being reminded that you are beautiful. This is not a limited-time offer. This subscription began the moment I saw you and will continue until the heat death of the universe, at which point it will probably still continue because cosmic entropy has nothing on my commitment to telling you how stunning you are. Included in this package: morning beautiful, afternoon beautiful, evening beautiful, 3am beautiful, just-woke-up beautiful, no-makeup beautiful, exists-in-my-general-vicinity beautiful. No cancellation policy exists because why would anyone ever want to cancel this.'
+            },
+            order3: {
+                title: 'Your order from Distance Obliteration Services',
+                product: '2083km to 0km Conversion Kit',
+                vendor: 'Distance Obliteration Services',
+                orderNum: 'SOON-2026',
+                delivery: 'Processing',
+                status: 'Awaiting plane tickets',
+                message: 'Your order to eliminate 2083 kilometers of absolutely ridiculous distance is currently being processed. This sophisticated conversion will transform the current state of "missing you terribly" into "actually holding you" through advanced transportation technology and sheer determination. Estimated completion date: as soon as humanly possible. This order includes: one reunion hug that lasts an unreasonable amount of time, immediate forehead kisses, hand holding that will not stop, and the permanent deletion of the phrase "I wish you were here" from our vocabulary. Please note: once this order is fulfilled, the customer may never leave.'
+            },
+            order4: {
+                title: 'Your order from Forehead Kiss Logistics',
+                product: '47 Million Forehead Kisses',
+                vendor: 'Forehead Kiss Logistics',
+                orderNum: 'MOLE-CENTER-47M',
+                delivery: 'Reserved for in-person delivery',
+                status: 'Awaiting proximity',
+                message: 'You have successfully placed an order for forty-seven million forehead kisses, with special concentration on the mole that has somehow become the center of my entire universe. This is a bulk order that can only be fulfilled in person, so we appreciate your patience as we work through the minor logistical challenge of being 2083 kilometers apart. Each kiss has been pre-approved for maximum softness and comes with a complimentary "you are so beautiful" whispered immediately after. Please allow 0-2083 kilometers for delivery. Expedited shipping is highly desired but dependent on flight availability and my ability to not lose my mind from missing you.'
+            }
+        };
 
         // Sidebar
         document.getElementById('openMenu').onclick = () => { 
@@ -304,6 +634,11 @@
             sidebar.classList.remove('open'); 
             overlay.classList.remove('active'); 
         };
+
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
 
         // Banner
         niBanner.onclick = () => niBanner.classList.toggle('expanded');
@@ -320,6 +655,47 @@
                 profileDropdown.classList.remove('active');
             }
         });
+
+        // View Switching
+        function switchView(view) {
+            const inboxView = document.getElementById('inboxView');
+            const purchasesView = document.getElementById('purchasesView');
+            const purchaseDetailView = document.getElementById('purchaseDetailView');
+
+            if (view === 'inbox') {
+                inboxView.classList.remove('view-hidden');
+                inboxView.classList.add('view-visible');
+                purchasesView.classList.remove('view-visible');
+                purchasesView.classList.add('view-hidden');
+                purchaseDetailView.classList.remove('active');
+            } else if (view === 'purchases') {
+                inboxView.classList.remove('view-visible');
+                inboxView.classList.add('view-hidden');
+                purchasesView.classList.remove('view-hidden');
+                purchasesView.classList.add('view-visible');
+                purchaseDetailView.classList.remove('active');
+            }
+        }
+
+        function showPurchaseDetail(orderId) {
+            const order = orderDetails[orderId];
+            
+            document.getElementById('detailTitle').textContent = order.title;
+            document.getElementById('detailProduct').textContent = order.product;
+            document.getElementById('detailVendor').textContent = order.vendor;
+            document.getElementById('detailOrderNum').textContent = order.orderNum;
+            document.getElementById('detailDelivery').textContent = order.delivery;
+            document.getElementById('detailStatus').textContent = order.status;
+            document.getElementById('detailMessage').textContent = order.message;
+            
+            document.getElementById('purchasesView').classList.add('view-hidden');
+            document.getElementById('purchaseDetailView').classList.add('active');
+        }
+
+        function backToPurchases() {
+            document.getElementById('purchaseDetailView').classList.remove('active');
+            document.getElementById('purchasesView').classList.remove('view-hidden');
+        }
     </script>
 </body>
 </html>
