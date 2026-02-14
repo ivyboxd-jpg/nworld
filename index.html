@@ -169,11 +169,40 @@
         .category-label { padding: 16px 16px 8px; font-size: 12px; font-weight: 500; color: #444746; font-family: var(--font-brand); letter-spacing: 0.1px; }
         .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
 
+        /* AI Overview Styles */
+        .ai-overview-container {
+            margin: 16px 16px 8px;
+            padding: 16px;
+            background: linear-gradient(135deg, #f0f4f9 0%, #f6f8fc 100%);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid #e3e3e3;
+        }
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #1f1f1f;
+            font-family: var(--font-brand);
+        }
+        .gemini-star { width: 16px; height: 16px; }
+        .ai-text {
+            font-size: 14px;
+            color: #1f1f1f;
+            line-height: 1.5;
+        }
+
         /* Updated Email Item Styles for Realism */
         .email-item { display: flex; align-items: flex-start; padding: 12px 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f2f2f2; }
         .email-item:active { background: #f2f6fc; }
 
         .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; text-transform: uppercase; font-family: var(--font-brand); }
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+        
         .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
         .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
         /* Sender Name: Bold, darker */
@@ -201,7 +230,8 @@
         .detail-star { width: 24px; height: 24px; margin-top: 6px; cursor: pointer; flex-shrink: 0; }
 
         .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 20px; }
-        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); }
+        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); overflow: hidden;}
+        .sender-avatar-detail img { width: 100%; height: 100%; object-fit: cover; }
         .sender-info-detail { flex: 1; }
         .sender-name-detail { font-size: 14px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
         .sender-to { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
@@ -465,6 +495,8 @@
     </div>
 
     <script>
+        const nivPfpUrl = "https://share.google/Wi667p59wJeprKEgD";
+
         const emailDatabase = {
             primary: [
                 {
@@ -887,23 +919,23 @@
                 {
                     id: 'pur1',
                     sender: 'Amazon',
-                    subject: 'Order Confirmed: "Books She Mentioned Once"',
-                    snippet: 'Delivery estimate: Before she forgets she mentioned it',
+                    subject: 'Order Confirmed: "Percy Jackson Series"',
+                    snippet: 'Delivery estimate: Tomorrow',
                     time: 'Feb 09',
                     avatar: 'A',
                     color: '#FF9900',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Song of Achilles + Six of Crows',
-                        quantity: '2 Items',
+                        product: 'Percy Jackson & The Olympians (5 Books)',
+                        quantity: '1 Box Set',
                         vendor: 'Amazon',
-                        orderNumber: 'LOVE-90210',
+                        orderNumber: 'PJ-OLYMP-26',
                         orderDate: 'Feb 9, 2026',
                         delivery: 'Feb 14, 2026',
                         status: 'Shipped'
                     },
-                    body: `<p>You mentioned books. I provide books. This is how I function.</p>`
+                    body: `<p>You mentioned these books. I provide books. This is how I function.</p>`
                 },
                 {
                     id: 'pur2',
@@ -1040,6 +1072,30 @@
         function renderEmails(filterText = '') {
             const container = document.getElementById('emailList');
             container.innerHTML = '';
+
+            // --- AI OVERVIEW (Gemini) ---
+            if (currentCategory === 'all-inboxes' && !filterText) {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'ai-overview-container';
+                aiDiv.innerHTML = `
+                    <div class="ai-header">
+                        <svg class="gemini-star" viewBox="0 0 24 24">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#db4437;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#grad1)" d="M12 2C12 7.52 7.52 12 2 12C7.52 12 12 16.48 12 22C12 16.48 16.48 12 22 12C16.48 12 12 7.52 12 2Z"/>
+                        </svg>
+                        <span>AI Overview</span>
+                    </div>
+                    <div class="ai-text">
+                        Niv is missing you (high confidence). He’s purchased the <strong>Percy Jackson series</strong> for you, is currently watching all 8 <strong>Harry Potter</strong> movies to impress you, and is reading Agatha Christie. <br><strong>Action items:</strong> Accept affection immediately.
+                    </div>
+                `;
+                container.appendChild(aiDiv);
+            }
             
             const filtered = currentEmails.filter(e => 
                 e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
@@ -1055,8 +1111,17 @@
 
                 const starClass = email.starred ? 'starred' : '';
 
+                // Handle Niv Profile Picture vs Default
+                let avatarHtml = '';
+                if (email.sender === 'Niv') {
+                    avatarHtml = `<img src="${nivPfpUrl}" class="avatar-img" alt="Niv" onerror="this.onerror=null; this.src=''; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                  <div class="avatar-circle" style="background: ${email.color}; display:none;">${email.avatar}</div>`;
+                } else {
+                    avatarHtml = `<div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>`;
+                }
+
                 item.innerHTML = `
-                    <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                    ${avatarHtml}
                     <div class="email-content-main">
                         <div class="email-first-line">
                             <span class="sender-name">${email.sender}</span>
@@ -1100,9 +1165,16 @@
             document.getElementById('detailSender').textContent = email.sender;
             document.getElementById('detailTime').textContent = email.time;
             
-            const avatar = document.getElementById('detailAvatar');
-            avatar.textContent = email.avatar;
-            avatar.style.background = email.color;
+            const avatarContainer = document.getElementById('detailAvatar');
+            
+            // Handle Detail View Avatar
+            if (email.sender === 'Niv') {
+                avatarContainer.innerHTML = `<img src="${nivPfpUrl}" alt="Niv">`;
+                avatarContainer.style.background = 'transparent';
+            } else {
+                avatarContainer.innerHTML = email.avatar;
+                avatarContainer.style.background = email.color;
+            }
             
             const starSvg = document.getElementById('detailStarSvg');
             if(email.starred) starSvg.classList.add('starred');
