@@ -5,115 +5,356 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Gmail - 2083km Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Importing Roboto for the authentic Gmail App feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #d93025;
             --active-bg: #fce8e6;
-            --text-primary: #202124;
-            --text-secondary: #5f6368;
+            --text-primary: #1f1f1f;
+            --text-secondary: #444746;
             --border-color: #e0e0e0;
             --search-bg: #e3e7ed;
+            --card-bg: #f2f6fc;
+            --google-blue: #0b57d0;
+            /* Authentic Gmail App Fonts */
+            --font-ui: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-brand: 'Product Sans', 'Google Sans', 'Roboto', sans-serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: 'Roboto', sans-serif; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
 
-        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; }
+        /* --- LOGIN PAGE STYLES --- */
+        .login-view {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #f0f4f9;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .login-card {
+            background: white;
+            padding: 48px 40px 36px;
+            border-radius: 28px;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            flex-direction: column;
+        }
 
-        .header { padding: 16px; background: #f5f7fa; z-index: 100; }
-        .search-container { height: 56px; background: var(--search-bg); border-radius: 28px; display: flex; align-items: center; padding: 0 16px; }
-        .menu-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 16px; }
-        .search-input { flex: 1; font-size: 16px; color: #3c4043; background: transparent; border: none; outline: none; font-family: 'Roboto', sans-serif; font-weight: 400; }
-        .search-input::placeholder { color: #5f6368; }
-        .pfp-btn { width: 32px; height: 32px; background: #ea4335; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 14px; cursor: pointer; margin-left: 12px; }
+        @media (max-width: 600px) {
+            .login-view { background: white; align-items: flex-start; }
+            .login-card { padding: 24px; max-width: 100%; border-radius: 0; height: 100%; justify-content: flex-start; padding-top: 60px; }
+        }
 
-        .profile-dropdown { position: fixed; top: 80px; right: 16px; width: 280px; background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.2); padding: 24px 20px; z-index: 150; display: none; text-align: center; }
+        .google-logo-login { height: 24px; margin-bottom: 16px; align-self: flex-start; }
+        @media (min-width: 601px) { .google-logo-login { align-self: center; } }
+        
+        .login-heading { font-size: 24px; font-weight: 400; color: #1f1f1f; margin-bottom: 8px; font-family: var(--font-brand); line-height: 1.33; }
+        .login-sub { font-size: 16px; color: #1f1f1f; margin-bottom: 40px; }
+        
+        .login-input-container { position: relative; margin-bottom: 8px; }
+        .login-input {
+            width: 100%;
+            height: 56px;
+            border: 1px solid #747775;
+            border-radius: 4px;
+            padding: 13px 16px;
+            font-size: 16px;
+            color: #1f1f1f;
+            background: transparent;
+            outline: none;
+            transition: 0.2s;
+        }
+        .login-input:focus { border-color: #0b57d0; border-width: 2px; padding: 12px 15px; }
+        .login-input-label {
+            position: absolute;
+            left: 12px;
+            top: -10px;
+            background: white;
+            padding: 0 4px;
+            font-size: 12px;
+            color: #1f1f1f;
+            display: none;
+        }
+        .login-input:focus + .login-input-label { display: block; color: #0b57d0; }
+        .login-input:not(:placeholder-shown) + .login-input-label { display: block; }
+
+        .forgot-link {
+            color: #0b57d0;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 4px;
+            padding: 4px 0;
+            display: inline-block;
+            cursor: pointer;
+            margin-bottom: 40px;
+        }
+
+        .guest-text { font-size: 14px; color: #444746; margin-top: 30px; line-height: 1.5; }
+        
+        .login-actions {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 30px;
+        }
+        
+        .create-btn { color: #0b57d0; font-weight: 500; font-size: 14px; background: none; border: none; cursor: pointer; }
+        
+        .next-btn {
+            background-color: #0b57d0;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .next-btn:active { background-color: #0947a8; }
+
+
+        /* --- MAIN APP STYLES --- */
+        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; display: none; }
+
+        /* Header / Search Bar */
+        .header { padding: 12px 16px; background: #f6f8fc; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
+        .search-container { height: 48px; background: #eaf1fb; border-radius: 24px; display: flex; align-items: center; padding: 0 16px; flex: 1; margin-right: 12px; }
+        .menu-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 16px; color: #444746; }
+        .search-input { flex: 1; font-size: 16px; color: #1f1f1f; background: transparent; border: none; outline: none; font-family: var(--font-ui); font-weight: 400; }
+        .search-input::placeholder { color: #444746; }
+        
+        .pfp-btn { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; margin-left: 0; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .pfp-btn img { width: 100%; height: 100%; object-fit: cover; }
+
+        .profile-dropdown { position: fixed; top: 70px; right: 16px; width: 300px; background: #eaf1fb; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 24px 20px; z-index: 150; display: none; text-align: center; }
         .profile-dropdown.active { display: block; }
-        .profile-email-text { font-size: 14px; color: #5f6368; margin-bottom: 20px; }
+        .profile-email-text { font-size: 14px; color: #444746; margin-bottom: 20px; font-family: var(--font-brand); }
         .profile-ring-box { width: 80px; height: 80px; margin: 0 auto 16px; position: relative; display: flex; align-items: center; justify-content: center; }
         .profile-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3px; background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        .profile-avatar-large { width: 72px; height: 72px; border-radius: 50%; background: #ea4335; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 500; color: white; }
-        .profile-hi { font-size: 24px; font-weight: 400; color: #202124; }
+        .profile-avatar-large { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; }
+        .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-hi { font-size: 22px; font-weight: 400; color: #1f1f1f; margin-top: 8px; font-family: var(--font-brand); }
 
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
 
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 300px; background: #fff; z-index: 250; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; box-shadow: 2px 0 8px rgba(0,0,0,0.15); }
+        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 300px; background: #f6f8fc; z-index: 250; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         .sidebar.open { transform: translateX(0); }
 
         .sidebar-header { padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
-        .sidebar-logo { height: 40px; width: auto; }
-        .sidebar-logo-text { font-size: 22px; color: #5f6368; font-weight: 400; }
+        .sidebar-logo { height: 35px; width: auto; }
+        .sidebar-logo-text { font-size: 22px; color: #444746; font-weight: 400; font-family: var(--font-brand); letter-spacing: -0.5px; }
 
-        .nav-list { overflow-y: auto; padding: 8px 0; }
-        .nav-item { height: 48px; display: flex; align-items: center; padding: 0 24px; gap: 24px; cursor: pointer; color: var(--text-primary); border-radius: 0 24px 24px 0; margin-right: 8px; }
-        .nav-item:hover { background: #f1f3f4; }
-        .nav-item.active { background: var(--active-bg); color: var(--primary-color); }
-        .icon-svg { width: 24px; height: 24px; fill: #5f6368; }
-        .nav-item.active .icon-svg { fill: var(--primary-color); }
-        .nav-text { flex: 1; font-size: 14px; font-weight: 500; }
-        .nav-badge { font-size: 12px; color: #5f6368; font-weight: 500; }
-        .nav-item.active .nav-badge { color: var(--primary-color); }
+        .nav-list { overflow-y: auto; padding: 12px; }
+        .nav-item { height: 56px; display: flex; align-items: center; padding: 0 16px 0 26px; gap: 18px; cursor: pointer; color: #444746; border-radius: 28px; margin-bottom: 2px; }
+        .nav-item:hover { background: #e0e6f0; }
+        .nav-item.active { background: #d3e3fd; color: #001d35; }
+        .icon-svg { width: 24px; height: 24px; fill: #444746; }
+        .nav-item.active .icon-svg { fill: #001d35; }
+        .nav-text { flex: 1; font-size: 14px; font-weight: 500; font-family: var(--font-brand); }
+        .nav-badge { font-size: 12px; font-weight: 500; font-family: var(--font-ui); }
         .divider { height: 1px; background: #e0e0e0; margin: 8px 0; }
 
-        .ai-overview { margin: 16px; background: #f0f4f9; border-radius: 16px; padding: 16px; cursor: pointer; display: none; }
-        .ai-header { display: flex; align-items: center; gap: 12px; }
-        .ai-sparkle { width: 20px; height: 20px; }
-        .ai-title { flex: 1; font-size: 15px; font-weight: 500; color: #1f1f1f; }
-        .ai-chevron { width: 18px; height: 18px; fill: #5f6368; transition: 0.2s; }
-        .ai-overview.expanded .ai-chevron { transform: rotate(180deg); }
-        .ai-content { display: none; margin-top: 12px; font-size: 14px; line-height: 1.5; color: #1f1f1f; }
-        .ai-overview.expanded .ai-content { display: block; }
-
-        .category-label { padding: 20px 16px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: #5f6368; font-weight: 500; }
+        .category-label { padding: 16px 16px 8px; font-size: 12px; font-weight: 500; color: #444746; font-family: var(--font-brand); letter-spacing: 0.1px; }
         .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
 
-        .email-item { display: flex; align-items: flex-start; padding: 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f1f1f1; }
-        .email-item:active { background: #f8f9fa; }
+        /* Updated Email Item Styles for Realism */
+        .email-item { display: flex; align-items: flex-start; padding: 12px 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f2f2f2; }
+        .email-item:active { background: #f2f6fc; }
 
-        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 18px; color: white; flex-shrink: 0; text-transform: uppercase; }
-        .email-content-main { flex: 1; min-width: 0; }
-        .email-first-line { display: flex; align-items: baseline; margin-bottom: 4px; justify-content: space-between; }
-        .sender-name { font-size: 14px; color: #1f1f1f; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 8px; }
-        .email-time { font-size: 12px; color: #5f6368; font-weight: 400; flex-shrink: 0; }
-        .subject-line { font-size: 14px; color: #1f1f1f; margin-bottom: 4px; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .snippet { font-size: 13px; color: #5f6368; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; text-transform: uppercase; font-family: var(--font-brand); }
+        .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
+        .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
+        /* Sender Name: Bold, darker */
+        .sender-name { font-size: 16px; color: #1f1f1f; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 8px; font-family: var(--font-ui); }
+        .email-time { font-size: 12px; color: #1f1f1f; font-weight: 500; flex-shrink: 0; font-family: var(--font-ui); }
+        /* Subject: Boldish */
+        .subject-line { font-size: 14px; color: #1f1f1f; margin-bottom: 2px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-ui); }
+        /* Snippet: Regular, Grey */
+        .snippet { font-size: 14px; color: #5e5e5e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; font-family: var(--font-ui); }
         .star-icon { width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
-        .star-svg { width: 20px; height: 20px; fill: none; stroke: #5f6368; stroke-width: 2; transition: 0.2s; }
-        .star-svg.starred { fill: #f9ab00; stroke: #f9ab00; }
+        .star-svg { width: 20px; height: 20px; fill: none; stroke: #5e5e5e; stroke-width: 2; transition: 0.2s; }
+        .star-svg.starred { fill: #f9ab00; stroke: #f9ab00; stroke-width: 0; }
 
         .email-detail { display: none; flex-direction: column; height: 100%; overflow-y: auto; background: white; position: absolute; top: 0; left: 0; width: 100%; z-index: 150; }
         .email-detail.active { display: flex; }
 
-        .detail-header-bar { padding: 8px 4px; display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10; }
-        .back-btn, .action-btn { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; }
-        .back-btn:active, .action-btn:active { background: #f1f3f4; }
+        .detail-header-bar { padding: 12px 8px; display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10; }
+        .back-btn, .action-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; color: #1f1f1f; }
+        .back-btn:active, .action-btn:active { background: #f2f2f2; }
 
-        .detail-subject-header { padding: 20px 16px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .detail-subject-header { padding: 16px 16px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
         .subject-container { display: flex; flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 8px; flex: 1; }
-        .detail-subject-text { font-size: 20px; font-weight: 400; color: var(--text-primary); line-height: 1.3; }
-        .detail-inbox-label { padding: 2px 8px; background: #e8eaed; border-radius: 4px; font-size: 11px; color: #5f6368; font-weight: 500; display: inline-block; }
-        .detail-star { width: 24px; height: 24px; margin-top: 4px; cursor: pointer; flex-shrink: 0; }
+        .detail-subject-text { font-size: 22px; font-weight: 400; color: #1f1f1f; line-height: 1.3; font-family: var(--font-brand); }
+        .detail-inbox-label { padding: 4px 8px; background: #e8f0fe; border-radius: 4px; font-size: 11px; color: #1f1f1f; font-weight: 500; display: inline-block; font-family: var(--font-ui); }
+        .detail-star { width: 24px; height: 24px; margin-top: 6px; cursor: pointer; flex-shrink: 0; }
 
-        .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 16px; }
-        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 18px; color: white; flex-shrink: 0; }
+        .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 20px; }
+        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); }
         .sender-info-detail { flex: 1; }
-        .sender-name-detail { font-size: 14px; font-weight: 500; color: var(--text-primary); }
-        .sender-to { font-size: 12px; color: var(--text-secondary); }
-        .detail-time { font-size: 12px; color: var(--text-secondary); }
+        .sender-name-detail { font-size: 14px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
+        .sender-to { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
+        .detail-time { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
 
-        .artistic-illustration { width: 100%; padding: 20px 0; background: #fff; display: flex; justify-content: center; overflow: hidden; }
-        .artistic-illustration svg { max-width: 100%; height: auto; max-height: 220px; display: block; margin: 0 auto; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.05)); }
+        .artistic-illustration { width: 100%; padding: 30px 0; background: #fff; display: flex; justify-content: center; overflow: hidden; }
+        .artistic-illustration svg { max-width: 100%; height: auto; max-height: 350px; display: block; margin: 0 auto; filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.08)); }
 
-        .detail-body { padding: 0 16px 100px; line-height: 1.7; color: #202124; font-size: 15px; font-family: 'Georgia', serif; }
+        .detail-body { padding: 0 16px 100px; line-height: 1.6; color: #1f1f1f; font-size: 15px; font-family: var(--font-ui); }
+        
+        /* --- PIXEL PERFECT GOOGLE PURCHASE CARD --- */
+        .google-order-card {
+            background-color: var(--card-bg); /* #f2f6fc */
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+            font-family: var(--font-brand); /* Google Sans mimic */
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+        
+        .card-title-group {
+            flex: 1;
+            padding-right: 16px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 600; /* Medium-Bold */
+            color: #1f1f1f;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        
+        .card-subtitle {
+            font-size: 14px;
+            color: #444746;
+            font-weight: 400;
+        }
+        
+        .card-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            flex-shrink: 0;
+            font-size: 24px;
+            color: #d93025;
+        }
+        
+        .order-status {
+            font-size: 32px; /* Large */
+            font-weight: 400; /* Regular */
+            color: #1f1f1f;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .order-number-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+        
+        .hashtag-icon {
+            font-size: 20px;
+            color: #1f1f1f;
+            margin-right: 14px;
+            margin-top: 0px;
+            font-weight: 400;
+        }
+        
+        .order-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .order-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #1f1f1f;
+            margin-bottom: 2px;
+        }
+        
+        .order-value {
+            font-size: 14px;
+            color: #444746;
+            font-weight: 400;
+        }
+        
+        .view-order-btn {
+            background-color: var(--google-blue);
+            color: white;
+            border: none;
+            border-radius: 24px; /* Rounded Pill */
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
 
         .view-hidden { display: none; }
         .view-visible { display: flex; flex-direction: column; }
     </style>
 </head>
 <body>
-    <div class="app-shell">
+
+    <!-- LOGIN PAGE VIEW -->
+    <div class="login-view" id="loginView">
+        <div class="login-card">
+            <svg class="google-logo-login" viewBox="0 0 75 24" height="24" width="75">
+                <path fill="#4285F4" d="M9.77 10.15V14.2h5.73c-.22 1.4-1.55 4.09-5.73 4.09-3.46 0-6.28-2.86-6.28-6.39 0-3.53 2.82-6.39 6.28-6.39 1.97 0 3.29.84 4.04 1.56l2.76-2.67C14.8 2.68 12.51 1.6 9.77 1.6 4.41 1.6 0 6.01 0 11.9s4.41 10.3 9.77 10.3c5.64 0 9.39-3.97 9.39-9.56 0-.66-.07-1.18-.15-1.59H9.77z"/>
+                <path fill="#EA4335" d="M25.75 8.1c-3.14 0-5.77 2.39-5.77 5.6s2.63 5.6 5.77 5.6c3.14 0 5.77-2.39 5.77-5.6s-2.63-5.6-5.77-5.6zm0 9c-1.8 0-3.3-1.46-3.3-3.4s1.5-3.4 3.3-3.4c1.8 0 3.3 1.46 3.3 3.4s-1.5 3.4-3.3 3.4z"/>
+                <path fill="#FBBC05" d="M38.25 8.1c-3.14 0-5.77 2.39-5.77 5.6s2.63 5.6 5.77 5.6c3.14 0 5.77-2.39 5.77-5.6s-2.63-5.6-5.77-5.6zm0 9c-1.8 0-3.3-1.46-3.3-3.4s1.5-3.4 3.3-3.4c1.8 0 3.3 1.46 3.3 3.4s-1.5 3.4-3.3 3.4z"/>
+                <path fill="#4285F4" d="M50.25 8.32h-.09c-.58-.69-1.7-1.32-3.1-1.32-2.95 0-5.54 2.58-5.54 5.69 0 3.1 2.59 5.69 5.54 5.69 1.4 0 2.52-.63 3.1-1.32h.09v.82c0 2.17-1.16 3.34-3.03 3.34-1.52 0-2.46-1.09-2.85-2l-2.18.91c.62 1.49 2.27 3.29 5.03 3.29 2.92 0 5.4-1.72 5.4-5.91V8.5h-2.37v-.18zM47.38 17.1c-1.63 0-2.93-1.39-2.93-3.39 0-1.99 1.3-3.39 2.93-3.39 1.62 0 2.87 1.42 2.87 3.39 0 1.96-1.25 3.39-2.87 3.39z"/>
+                <path fill="#34A853" d="M57.75 1.6h2.46v20.6h-2.46z"/>
+                <path fill="#EA4335" d="M66.66 17.1c-1.25 0-2.14-.57-2.73-1.72l7.53-3.12-.26-.64c-.48-1.29-1.95-3.52-4.96-3.52-2.99 0-5.46 2.35-5.46 5.6 0 3.09 2.45 5.6 5.78 5.6 2.67 0 4.22-1.64 4.87-2.6l-1.96-1.31c-.65.97-1.54 1.71-2.81 1.71zm-.17-7.3c1.03 0 1.9.53 2.18 1.28l-5.26 2.18c0-2.44 1.73-3.46 3.08-3.46z"/>
+            </svg>
+            <h1 class="login-heading">Sign in</h1>
+            <p class="login-sub">to continue to Gmail</p>
+            
+            <div class="login-input-container">
+                <input type="text" class="login-input" id="emailInput" placeholder=" " value="aaradhya@lovedbyNiv.com">
+                <span class="login-input-label">Email or phone</span>
+            </div>
+            
+            <a class="forgot-link">Forgot email?</a>
+            
+            <div class="guest-text">
+                Not your computer? Use Guest mode to sign in privately.<br>
+                <a href="#" style="color:#0b57d0; text-decoration:none; font-weight:500;">Learn more</a>
+            </div>
+            
+            <div class="login-actions">
+                <button class="create-btn">Create account</button>
+                <button class="next-btn" id="loginNextBtn">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-shell" id="appShell">
         <div class="sidebar-overlay" id="overlay"></div>
 
         <aside class="sidebar" id="sidebar">
@@ -124,62 +365,40 @@
             
             <div class="nav-list">
                 <div class="nav-item active" data-view="all-inboxes" data-color="#d93025" data-bg="#fce8e6">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v5c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-5c0-.55-.45-1-1-1zM19 5v4H5V5h14m0-2H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v5c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-5c0-.55-.45-1-1-1zM19 5v4H5V5h14m0-2H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
                     <span class="nav-text">All inboxes</span>
                     <span class="nav-badge" id="badge-all"></span>
                 </div>
-                
                 <div class="divider"></div>
-
                 <div class="nav-item" data-view="primary" data-color="#d93025" data-bg="#fce8e6">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
                     <span class="nav-text">Primary</span>
                     <span class="nav-badge" id="badge-primary"></span>
                 </div>
-
                 <div class="nav-item" data-view="social" data-color="#1a73e8" data-bg="#e8f0fe">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                     <span class="nav-text">Social</span>
                     <span class="nav-badge" id="badge-social"></span>
                 </div>
-
                 <div class="nav-item" data-view="promotions" data-color="#188038" data-bg="#e6f4ea">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 7z"/></svg>
                     <span class="nav-text">Promotions</span>
                     <span class="nav-badge" id="badge-promotions"></span>
                 </div>
-                
                  <div class="nav-item" data-view="purchases" data-color="#f4b400" data-bg="#fef7e0">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 14H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v10z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 14H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v10z"/></svg>
                     <span class="nav-text">Purchases</span>
                     <span class="nav-badge" id="badge-purchases"></span>
                 </div>
-
                 <div class="divider"></div>
-
                 <div class="nav-item" data-view="starred" data-color="#5f6368" data-bg="#f1f3f4">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                    </svg>
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     <span class="nav-text">Starred</span>
                 </div>
-                
-                <div class="nav-item" data-view="bin" data-color="#5f6368" data-bg="#f1f3f4">
-                    <svg class="icon-svg" viewBox="0 0 24 24">
-                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                    </svg>
-                    <span class="nav-text">Bin</span>
-                    <span class="nav-badge" id="badge-bin"></span>
+                <div class="nav-item" data-view="spam" data-color="#5f6368" data-bg="#f1f3f4">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
+                    <span class="nav-text">Spam</span>
+                    <span class="nav-badge" id="badge-spam"></span>
                 </div>
             </div>
         </aside>
@@ -187,19 +406,21 @@
         <header class="header">
             <div class="search-container">
                 <div class="menu-icon" id="openMenu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#444746"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
                 </div>
                 <input type="text" class="search-input" id="searchInput" placeholder="Search in mail">
-                <div class="pfp-btn" id="openProfile">A</div>
+            </div>
+            <div class="pfp-btn" id="openProfile">
+                <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="Lorelai">
             </div>
             
             <div class="profile-dropdown" id="profileDropdown">
                 <p class="profile-email-text">aaradhya@lovedbyNiv.com</p>
                 <div class="profile-ring-box">
                     <div class="profile-ring"></div>
-                    <div class="profile-avatar-large">A</div>
+                    <div class="profile-avatar-large">
+                        <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="Lorelai">
+                    </div>
                 </div>
                 <h1 class="profile-hi">Hi, Aaradhya!</h1>
             </div>
@@ -207,29 +428,6 @@
 
         <main style="flex: 1; overflow-y: auto; position: relative;">
             <div id="emailListView" class="view-visible email-list-container">
-                <div class="ai-overview" id="aiOverview">
-                    <div class="ai-header">
-                        <svg class="ai-sparkle" viewBox="0 0 24 24" fill="url(#sparkleGradient)">
-                            <defs>
-                                <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
-                                    <stop offset="50%" style="stop-color:#ea4335;stop-opacity:1" />
-                                    <stop offset="100%" style="stop-color:#fbbc05;stop-opacity:1" />
-                                </linearGradient>
-                            </defs>
-                            <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/>
-                            <path d="M19 3L19.5 4.5L21 5L19.5 5.5L19 7L18.5 5.5L17 5L18.5 4.5L19 3Z"/>
-                        </svg>
-                        <span class="ai-title">Gemini</span>
-                        <svg class="ai-chevron" viewBox="0 0 24 24">
-                            <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
-                        </svg>
-                    </div>
-                    <div class="ai-content">
-                        You are logged in as Aaradhya. Here is your daily summary: Niv misses you (obviously), Stitch is judging him, and your exams are going to go great. 2083km is far, but his emails are instant.
-                    </div>
-                </div>
-
                 <div class="category-label" id="categoryLabel">All inboxes</div>
                 <div id="emailList"></div>
             </div>
@@ -237,15 +435,11 @@
             <div id="emailDetailView" class="email-detail">
                 <div class="detail-header-bar">
                     <div class="back-btn" onclick="closeEmail()">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
-                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#1f1f1f"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                     </div>
                     <div class="detail-actions">
                         <div class="action-btn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#5f6368">
-                                <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
-                            </svg>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#1f1f1f"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                         </div>
                     </div>
                 </div>
@@ -256,9 +450,7 @@
                         <span class="detail-inbox-label">Inbox</span>
                     </div>
                     <div class="detail-star" id="detailStarBtn">
-                        <svg class="star-svg" id="detailStarSvg" viewBox="0 0 24 24">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                        </svg>
+                        <svg class="star-svg" id="detailStarSvg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
                 </div>
 
@@ -282,467 +474,587 @@
             primary: [
                 {
                     id: 'p1',
-                    sender: 'The Distance Times',
-                    subject: 'Breaking: Local Man Still 2083km Away, Situation Desperate',
-                    snippet: 'In what experts are calling "an absolutely ridiculous situation," future husband Niv remains separated...',
-                    time: 'Feb 14',
-                    avatar: 'DT',
-                    color: '#607d8b',
-                    starred: true,
-                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><rect fill="#f5f5f5" width="400" height="200"/><rect x="20" y="20" width="360" height="160" fill="white" stroke="#333" stroke-width="1"/><rect x="30" y="30" width="340" height="20" fill="#333"/><text x="200" y="44" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="12" fill="white">THE DISTANCE TIMES</text><line x1="30" y1="65" x2="370" y2="65" stroke="#333" stroke-width="1"/><text x="200" y="100" text-anchor="middle" font-family="Georgia" font-size="14" fill="#333">2083 KM IS TOO FAR</text><text x="200" y="120" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">Sources confirm: It sucks.</text></svg>`,
-                    body: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; line-height: 1.8;"><h1 style="border-bottom: 3px double #333; padding-bottom: 15px; text-align: center; font-size: 28px; letter-spacing: -0.5px;">THE DISTANCE TIMES</h1><h2 style="font-size: 22px; font-weight: bold; margin-bottom: 10px;">Breaking: Local Man Still 2083km Away</h2><p style="font-style: italic; color: #555; font-size: 13px; margin-bottom: 20px;">By The Editorial Board (Niv)</p><p style="margin-bottom: 16px;"><strong>CITY OF YEARNING —</strong> In what experts are calling "an absolutely ridiculous situation that needs to end immediately," local future husband Niv remains separated from his girlfriend Aaradhya by approximately 2,083 kilometers.</p><p style="margin-bottom: 16px;">"It's a personal attack by geography," Niv stated in a press conference held from his kitchen. "I have calculated the distance down to the meter. It is exactly 2,083,000 meters too far."</p><p style="margin-bottom: 16px;">Stitch (the cat) declined to comment, mostly because he was busy sleeping on Niv's laptop, specifically on the keys needed to book a flight.</p><p style="margin-top: 30px; font-size: 14px; font-style: italic; color: #444; border-top: 1px solid #000; padding-top: 10px;">The Distance Times will continue to monitor the situation.</p></div>`
+                    sender: 'Niv',
+                    subject: 'STRICTLY PRIVATE & CONFIDENTIAL: Employment Offer - Aaradhya',
+                    snippet: 'Attached: Employment Contract for position of Permanent Girlfriend.',
+                    time: '3:00 PM',
+                    avatar: 'N',
+                    color: '#d93025',
+                    starred: false,
+                    body: `<div style="font-family: 'Times New Roman', Times, serif; color: #000; padding: 40px; border: 1px solid #ccc; background: #fff;">
+                        <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px;">
+                            <h2 style="margin: 0; letter-spacing: 2px; font-size: 24px;">NIV'S LIFE INC.</h2>
+                            <p style="margin: 5px 0 0; font-size: 12px; color: #555; text-transform: uppercase;">Human Resources Department | 2083km Branch</p>
+                        </div>
+                        
+                        <p><strong>Date:</strong> February 14, 2026</p>
+                        <p><strong>To:</strong> Ms. Aaradhya</p>
+                        <p><strong>Subject:</strong> OFFER OF EMPLOYMENT - PERMANENT POSITION</p>
+                        <hr style="margin: 20px 0; border-top: 1px solid #eee;">
+                        
+                        <p>Dear Ms. Aaradhya,</p>
+
+                        <p>Following a successful 8-month probationary period, during which you demonstrated exceptional performance in the areas of "Putting Up With Me" and "Being Generally Perfect," the Board of Directors (me) is pleased to extend a formal offer for the following position:</p>
+
+                        <p style="margin-left: 20px;"><strong>Role:</strong> Permanent Girlfriend & Future Cat Manager<br>
+                        <strong>Reporting To:</strong> No one (You are the boss)<br>
+                        <strong>Start Date:</strong> Retroactive (8 months ago)<br>
+                        <strong>Location:</strong> Remote (2083km) transitioning to On-Site</p>
+
+                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">1. COMPENSATION PACKAGE</h4>
+                        <ul>
+                            <li><strong>Base Salary:</strong> Unlimited affection, paid daily via text, voice note, and annoying levels of attention.</li>
+                            <li><strong>Equity:</strong> 100% ownership of My Heart (vested immediately, non-dilutable).</li>
+                            <li><strong>Bonuses:</strong> Unlimited Momo and Wai Wai allowance whenever we are in the same zip code.</li>
+                        </ul>
+
+                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">2. RESPONSIBILITIES</h4>
+                        <ul>
+                            <li>Maintain current levels of kindness and resilience.</li>
+                            <li>Continue explaining biology concepts (Employer promises to listen intently).</li>
+                            <li>Allow Employer to track flights purely out of obsession/love.</li>
+                        </ul>
+
+                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">3. NON-COMPETE CLAUSE</h4>
+                        <p>Employee agrees to be the only person in the world for the Employer. Employer agrees to the same. This clause is binding in perpetuity.</p>
+
+                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">4. TERMINATION</h4>
+                        <p>There is no termination clause. You are stuck with me. Legal recourse is unavailable as the contract is sealed with "I Love You."</p>
+
+                        <p style="margin-top: 30px;">Please indicate your acceptance by continuing to be amazing.</p>
+
+                        <p>Sincerely,</p>
+                        <br>
+                        <p><strong>Niv</strong><br>
+                        <em>Chief Executive Officer<br>
+                        Niv's Life Inc.</em></p>
+                    </div>`
                 },
                 {
                     id: 'p2',
-                    sender: 'The Love Yorker',
-                    subject: 'Essay: The Uncanny Valley of Missing You',
-                    snippet: 'On the strange specificity of knowing someone without knowing their height.',
+                    sender: 'Niv',
+                    subject: 'The pen situation',
+                    snippet: 'We need to discuss something important regarding stationery.',
                     time: 'Feb 13',
-                    avatar: 'LY',
-                    color: '#333',
-                    starred: true,
-                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><rect fill="#fff" width="400" height="200"/><rect x="190" y="50" width="20" height="100" fill="#333"/><rect x="150" y="80" width="20" height="70" fill="#555"/><rect x="230" y="70" width="20" height="80" fill="#555"/><line x1="100" y1="150" x2="300" y2="150" stroke="#333" stroke-width="2"/><circle cx="280" cy="40" r="10" stroke="#333" fill="none" stroke-width="1"/><text x="200" y="180" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#333">City of Longing</text></svg>`,
-                    body: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; line-height: 1.8;"><h1 style="font-size: 32px; font-family: 'Times New Roman', serif; text-align: center; margin-bottom: 10px;">THE LOVE YORKER</h1><h2 style="font-size: 18px; text-align: center; font-style: italic; color: #555; margin-bottom: 30px;">The Uncanny Valley of Missing You</h2><p style="margin-bottom: 16px;">There is a specific kind of math involved in loving someone 2,083 kilometers away whom you have never actually stood next to. It's a relationship built entirely on pixels and audio waves.</p><p style="margin-bottom: 16px;">I know exactly how your voice sounds when you're sleepy. I know your opinions on genetically modified space plants. I know the exact shade of lipstick you use because you taught me the routine.</p><p style="margin-bottom: 16px;">But I don't know if you walk fast or slow. I don't know if you steal the blankets. I don't know how loud your laugh is in a crowded room without audio compression.</p><p style="margin-bottom: 16px;">It's weird, isn't it? To know the map of someone's mind perfectly, but not the simple physics of them occupying space in your room. I am fond of you. I am also very impatient to finally learn the physics part.</p></div>`
+                    avatar: 'N',
+                    color: '#d93025',
+                    starred: false,
+                    body: `<p>We need to discuss something important.</p>
+                    <p>You mentioned your favorite pen once. ONCE. Like 6 months ago. In passing.</p>
+                    <p>I remember.</p>
+                    <p>Here's the thing: that's what this is. It's not the big stuff. It's remembering that you prefer that specific pen. That you got excited about the grip. That you mentioned it casually and moved on.</p>
+                    <p>I didn't move on. I saved it.</p>
+                    <p>Your favorite pen. How you like your coffee. That you love momo. That Harry Potter is non-negotiable. That you rewatch Gilmore Girls. That biology makes you light up. That you sent me nail clippers because you're thoughtful in ways that surprise me.</p>
+                    <p>I'm taking notes. Constantly. Because when we're finally together, I want to already know. I want to hand you your coffee right. I want to have the pen stocked.</p>
+                    <p>Is this a lot? Yes.<br>Do I care? No.</p>
+                    <p>Also I looked it up and they're out of stock but I have alerts set so expect a package eventually.</p>`
                 },
                 {
                     id: 'p3',
-                    sender: 'Niv',
-                    subject: 'Your voice is my favorite thing',
-                    snippet: 'Called you just to hear you talk about your day...',
+                    sender: 'The Distance Times',
+                    subject: 'Study confirms: 2083km is "Too Far"',
+                    snippet: 'Experts (Me) cite high humidity and lack of holding hands as primary complaints.',
                     time: 'Feb 13',
-                    avatar: 'N',
-                    color: '#ff6b6b',
-                    starred: true,
-                    body: `<p style="margin-bottom: 16px;">Hey,</p><p style="margin-bottom: 16px;">I know I call you a lot. Sometimes for no reason. Sometimes I just ask how your day was even though I already know because we've been texting all day.</p><p style="margin-bottom: 16px;">But here's the thing—I'm obsessed with your voice. The way it speeds up when you get excited about something. The way you laugh at your own jokes before you finish telling them. That specific tone when you're explaining biology facts to me like I'm five (I appreciate it, by the way, it's the only way I understand).</p><p style="margin-bottom: 16px;">I could listen to you read the phone book. Hell, I'd pay to listen to you read terms and conditions out loud.</p><p style="margin-bottom: 16px;">Anyway. Just wanted you to know that. Call me later if you want. Or don't. I'll call you anyway.</p><p style="margin-top: 24px;">Love,<br>Niv</p>`
+                    avatar: 'DT',
+                    color: '#607d8b',
+                    starred: false,
+                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect fill="#f9f9f9" width="400" height="200"/>
+                        <text x="200" y="35" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="24" fill="#333">THE DISTANCE TIMES</text>
+                        <line x1="20" y1="50" x2="380" y2="50" stroke="#333" stroke-width="2"/>
+                        <path d="M50 100 Q 200 50 350 100" stroke="#999" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+                        <circle cx="50" cy="100" r="5" fill="#d93025"/>
+                        <circle cx="350" cy="100" r="5" fill="#d93025"/>
+                        <text x="50" y="120" text-anchor="middle" font-size="10" font-family="Arial">ME</text>
+                        <text x="350" y="120" text-anchor="middle" font-size="10" font-family="Arial">YOU</text>
+                        <text x="200" y="140" text-anchor="middle" font-family="Georgia" font-size="14" fill="#333">GAP REMAINS UNACCEPTABLE</text>
+                    </svg>`,
+                    body: `<div style="font-family: Georgia, serif; line-height: 1.6;">
+                    <h1 style="text-align: center; border-bottom: 3px double #000; padding-bottom: 10px;">THE DISTANCE TIMES</h1>
+                    <p style="font-style: italic; font-size: 12px; color: #555;">Vol. 422 | Weather: Longing with scattered showers</p>
+                    <h3>LOCAL MAN CALCULATES FLIGHT COST VS. RENT</h3>
+                    <p><strong>(AP) —</strong> A local man, Niv, was seen today staring at a flight comparison website for four hours straight. Witnesses say he mumbled "I could just eat instant noodles for a month" before reluctantly closing the tab.</p>
+                    <p>Scientists advise that the only cure is for Aaradhya to finish her exams so that normal operations can resume.</p>
+                    </div>`
                 },
                 {
                     id: 'p4',
-                    sender: 'Niv',
-                    subject: 'Stitch update: He's being weird',
-                    snippet: 'He sat on my chest for exactly 3 minutes then left...',
-                    time: 'Feb 12',
-                    avatar: 'N',
-                    color: '#795548',
-                    starred: false,
-                    body: `<p style="margin-bottom: 16px;">Quick Stitch update:</p><p style="margin-bottom: 16px;">He sat on my chest today. For exactly three minutes. Just stared at me. Didn't purr, didn't knead, just… judgment. Then he left.</p><p style="margin-bottom: 16px;">I don't know what I did wrong but I feel like I failed some kind of test.</p><p style="margin-bottom: 16px;">He's currently sitting in a box that's way too small for him, looking directly at me. It's unsettling.</p><p style="margin-bottom: 16px;">Send help. Or catnip. Or just come back and explain to him that I'm doing my best here.</p><p style="margin-top: 24px;">- Niv</p>`
+                    sender: 'The Love Yorker',
+                    subject: 'Essay: The Haptic Heartbeat',
+                    snippet: 'When a vibration in your pocket means more than a heartbeat in your chest.',
+                    time: 'Feb 14',
+                    avatar: 'LY',
+                    color: '#333',
+                    starred: true,
+                    illustration: `<svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="420" fill="#fcfcfc"/>
+                        <rect x="140" y="30" width="120" height="220" rx="15" fill="none" stroke="#2c3e50" stroke-width="3"/>
+                        <rect x="145" y="35" width="110" height="210" rx="10" fill="#fff"/>
+                        <circle cx="200" cy="235" r="8" fill="none" stroke="#2c3e50" stroke-width="2"/>
+                        <rect x="155" y="80" width="90" height="30" rx="5" fill="#f0f0f0"/>
+                        <rect x="165" y="90" width="60" height="4" rx="2" fill="#bbb"/>
+                        <path d="M 200 250 L 200 280" fill="none" stroke="#e91e63" stroke-width="3"/>
+                        <path d="M 200 280 C 200 280, 130 230, 130 310 C 130 350, 200 390, 200 390 C 200 390, 270 350, 270 310 C 270 230, 200 280, 200 280" fill="none" stroke="#e91e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        <text x="200" y="410" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="14" fill="#555">Plugged into you</text>
+                    </svg>`,
+                    body: `<div style="max-width: 650px; margin: 0 auto;">
+                    <h1 style="font-family: 'Georgia', serif; font-size: 32px; text-align: center; margin-bottom: 8px;">THE LOVE YORKER</h1>
+                    <h2 style="font-family: 'Arial', sans-serif; font-size: 14px; text-align: center; letter-spacing: 2px; color: #757575; margin-bottom: 40px; border-bottom: 1px solid #ddd; padding-bottom: 20px;">FICTION & ESSAYS</h2>
+                    <p>There is a phantom limb syndrome associated with long-distance relationships, but it manifests in the pocket of your jeans. You feel the vibration before it happens. You are attuned to a specific frequency of electronic hum that signifies: <em>She is awake. She is reading. She is typing.</em></p>
+                    <p>Yesterday, you texted me about plants. It was a simple message, really. You were deep in revision mode, hair probably tied up in that messy bun I’ve only seen on FaceTime, and you wrote: <em>"It's easier to change ourselves than our surroundings sometimes."</em></p>
+                    <p>That sentence has been living in my head rent-free for twenty-four hours. It’s biology, yes. It’s evolutionary theory. But it’s also the most romantic thing anyone has ever said to me via SMS. We can't change the 2,083 kilometers. We can't terraform the distance between us. So we change ourselves.</p>
+                    <p>The text is the theory. The FaceTime is the lab work. And this feeling? This constant, low-level hum in my chest every time my phone lights up? That’s the data proving the hypothesis: You are worth every single kilometer.</p>
+                    </div>`
                 },
                 {
                     id: 'p5',
                     sender: 'Niv',
-                    subject: 'About that lipstick tutorial',
-                    snippet: 'Still thinking about when you walked me through it on that call...',
-                    time: 'Feb 11',
+                    subject: 'Quick thoughts on the plant text',
+                    snippet: 'I can\'t stop thinking about what you said.',
+                    time: 'Feb 13',
                     avatar: 'N',
-                    color: '#e91e63',
+                    color: '#d93025',
                     starred: true,
-                    body: `<p style="margin-bottom: 16px;">I've been thinking about that call where you walked me through your entire lipstick routine.</p><p style="margin-bottom: 16px;">You were so specific. "First this, then blend it like this, then the other one, then touch it up here." I was just nodding along like I understood, but really I was just thinking about how cute it was that you cared enough to explain it to me in detail.</p><p style="margin-bottom: 16px;">I have now memorized this routine. I could probably recite it. Is that weird? That's probably weird.</p><p style="margin-bottom: 16px;">Anyway. I liked that call. Do more of those.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
+                    body: `<p>Aaradhya,</p>
+                    <p>I know you're burying yourself in books, but I had to say this.</p>
+                    <p>That text you sent? The one about genetically modifying plants for space? "It's easier to change ourselves than our surroundings."</p>
+                    <p>It was so casual, but so smart. It’s been stuck in my head all day. It makes me feel like this whole long-distance thing is just us acting like astronauts. We're adapting to the environment. We're changing ourselves to survive the lack of gravity (and the lack of you next to me).</p>
+                    <p>Keep studying. You're brilliant.</p>
+                    <p>- Niv</p>`
                 },
                 {
                     id: 'p6',
                     sender: 'Niv',
-                    subject: 'Exam prep check-in',
-                    snippet: 'How's studying going? Remember to eat actual food...',
-                    time: 'Feb 10',
+                    subject: 'Lipstick Tutorial: My notes',
+                    snippet: '1. You look good. 2. I have no idea what "baking" is.',
+                    time: 'Feb 12',
                     avatar: 'N',
-                    color: '#4caf50',
+                    color: '#e01e5a',
                     starred: false,
-                    body: `<p style="margin-bottom: 16px;">Hey,</p><p style="margin-bottom: 16px;">Just checking in. How's the studying going? Are you sleeping? Eating? Or are you in full Lorelai Gilmore mode running on coffee and witty commentary?</p><p style="margin-bottom: 16px;">You're going to do great. I know you're stressed, but you know this stuff. You talk about biology the way some people talk about their favorite movies. You've got this.</p><p style="margin-bottom: 16px;">Take breaks. Drink water. Maybe eat something that isn't coffee.</p><p style="margin-bottom: 16px;">And if you need a distraction, call me. I'll tell you about the weird thing Stitch did today (he knocked over a plant, then sat next to it like he was framing someone else).</p><p style="margin-top: 24px;">You got this,<br>Niv</p>`
+                    body: `<p>My takeaways from your FaceTime tutorial:</p>
+                    <ol>
+                        <li>You have incredible focus. The way you hold the mirror? Intense.</li>
+                        <li>I still don't understand "baking." Is there heat involved? Do we need an oven?</li>
+                        <li>You talk almost as fast as Lorelai when you're explaining products. It's my favorite sound.</li>
+                        <li>I miss you. A lot.</li>
+                    </ol>
+                    <p>Next time, teach me something easier. Like quantum physics.</p>`
                 },
-                {
-                    id: 'p7',
-                    sender: 'Niv',
-                    subject: 'That FaceTime',
-                    snippet: 'Still thinking about the one time we FaceTimed and you talked about space plants...',
-                    time: 'Feb 9',
-                    avatar: 'N',
-                    color: '#00bcd4',
-                    starred: true,
-                    body: `<p style="margin-bottom: 16px;">I keep thinking about that FaceTime.</p><p style="margin-bottom: 16px;">You were talking about genetically modifying plants for space instead of changing the space environment. "It's easier to change ourselves than our surroundings sometimes."</p><p style="margin-bottom: 16px;">I was supposed to be listening (I was listening), but I was also just looking at you. The way you get when you talk about this stuff—animated, focused, like you're solving a puzzle in real time.</p><p style="margin-bottom: 16px;">I couldn't stop looking at you. I tried to focus on what you were saying, and I did, but also… you're really beautiful when you talk about things you care about.</p><p style="margin-bottom: 16px;">Anyway. That's all. Just been thinking about it.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
-                },
+                /* REMOVED STITCH EMAIL p7 */
                 {
                     id: 'p8',
-                    sender: 'Strava',
-                    subject: 'Activity from Niv: "Running away from missing you (unsuccessful)"',
-                    snippet: '5.2 km • Pace: Distracted',
-                    time: 'Feb 8',
-                    avatar: 'ST',
-                    color: '#fc4c02',
+                    sender: 'Niv',
+                    subject: 'F1 logic / Hamilton thoughts',
+                    snippet: 'Watching the quali highlights and realized something.',
+                    time: 'Feb 13',
+                    avatar: 'N',
+                    color: '#e01e5a',
                     starred: false,
-                    body: `<div style="font-family: 'Roboto', sans-serif; padding: 20px; background: #f5f5f5; border-radius: 8px;"><h3 style="color: #fc4c02; margin-bottom: 16px;">🏃 Morning Run</h3><p style="margin-bottom: 12px;"><strong>Distance:</strong> 5.2 km</p><p style="margin-bottom: 12px;"><strong>Time:</strong> 34:22</p><p style="margin-bottom: 12px;"><strong>Pace:</strong> 6:37 /km</p><p style="margin-bottom: 16px;"><strong>Description:</strong> Tried to run away from thoughts of you. Failed miserably. Pace suffered because I kept thinking about that thing you said about mitochondria being the powerhouse of the cell and then laughing to myself like an idiot.</p><p style="margin-top: 16px; color: #666;">📍 Location: 2083km away from where I want to be</p></div>`
+                    body: `<p>I was watching the F1 highlights (Hamilton at Ferrari is still weird to look at), and I realized something.</p>
+                    <p>They obsess over milliseconds. 0.001 seconds makes the difference between pole position and P2. And here I am, dealing with a time difference of hours and a physical difference of 2000+ kilometers.</p>
+                    <p>If Lewis Hamilton can freak out over a gap of 0.2 seconds, I am allowed to be dramatic about the gap between us. That's just logic.</p>
+                    <p>Good luck studying. Drive fast (metaphorically).</p>`
                 },
                 {
                     id: 'p9',
-                    sender: 'Letterboxd',
-                    subject: 'Niv logged: The Prisoner of Azkaban (Rewatch)',
-                    snippet: 'Rating: ★★★★★ • "Aaradhya's favorite so it's automatically perfect"',
-                    time: 'Feb 7',
-                    avatar: 'LB',
-                    color: '#00e054',
-                    starred: false,
-                    body: `<div style="font-family: 'Roboto', sans-serif; padding: 20px;"><h3 style="color: #00e054; margin-bottom: 16px;">📽️ Harry Potter and the Prisoner of Azkaban (2004)</h3><p style="margin-bottom: 12px;"><strong>Rating:</strong> ★★★★★</p><p style="margin-bottom: 12px;"><strong>Watched:</strong> February 7, 2026</p><p style="margin-bottom: 16px;"><strong>Review:</strong></p><p style="font-style: italic; line-height: 1.6;">"Aaradhya loves this one the most so obviously it's a masterpiece. Also Alfonso Cuarón is a genius. But mostly the first thing. We're going to watch all of them together eventually and I'm going to pretend I haven't seen them 47 times already because watching her reactions will be better than the actual movies."</p><p style="margin-top: 16px; color: #666;">🔁 Rewatch #12</p></div>`
+                    sender: 'Niv',
+                    subject: 'Board exam reminder',
+                    snippet: 'Quick message before you study.',
+                    time: 'Feb 12',
+                    avatar: 'N',
+                    color: '#d93025',
+                    starred: true,
+                    body: `<p>Quick message before you study.</p>
+                    <p>You're stressed about boards. I can tell from your texts.</p>
+                    <p>Here's what I need you to know: You're going to do well. Not just because you're smart (you are), but because you're prepared. You work harder than anyone I know.</p>
+                    <p>Boards are temporary. A few hours. They don't define you. Your kindness does. Your resilience does. The way you explain biology like it matters (because it does to you).</p>
+                    <p>After exams: we celebrate. I don't care how it went. We celebrate you showing up and trying.</p>
+                    <p>You've got this.</p>`
                 },
                 {
                     id: 'p10',
                     sender: 'Niv',
-                    subject: 'Random 3am thought',
-                    snippet: 'Can't sleep. Thinking about future cats named Ivy, Jackie, and Wilson...',
-                    time: 'Feb 6',
+                    subject: 'Coffee logic',
+                    snippet: 'I drank too much coffee and now I have a theory.',
+                    time: 'Feb 09',
                     avatar: 'N',
-                    color: '#9c27b0',
+                    color: '#6f4e37',
+                    starred: false,
+                    body: `<p>I have consumed 4 cups of coffee.</p>
+                    <p>Theory: If I vibrate fast enough, maybe I can phase through the space-time continuum and appear in your room.</p>
+                    <p>Testing in progress. Will update.</p>`
+                },
+                {
+                    id: 'p11',
+                    sender: 'Niv',
+                    subject: 'Random thought at 5PM',
+                    snippet: 'If I start driving now...',
+                    time: '5:00 PM',
+                    avatar: 'N',
+                    color: '#6f4e37',
+                    starred: false,
+                    body: `<p>I did the math. If I got in a car right now and drove at an average of 80km/h without stopping...</p>
+                    <p>Actually, never mind. Google Maps laughed at me. There's an ocean in the way? Or at least very difficult borders. Geography is my nemesis.</p>
+                    <p>Go back to sleep (or study). I'm just staring at the ceiling calculating logistics.</p>`
+                },
+                {
+                    id: 'p12',
+                    sender: 'Niv',
+                    subject: 'The "I like you so much" era',
+                    snippet: 'Remembering before we said love.',
+                    time: 'Feb 11',
+                    avatar: 'N',
+                    color: '#d93025',
                     starred: true,
-                    body: `<p style="margin-bottom: 16px;">It's 3am and I can't sleep so naturally I'm thinking about our future cats.</p><p style="margin-bottom: 16px;">Ivy, Jackie, and Wilson. We decided on these names without ever having met in person. We have planned out imaginary cats. This is either very romantic or we're both insane. Probably both.</p><p style="margin-bottom: 16px;">I'm also thinking about how Stitch is going to react to having siblings. He's currently an only child and very spoiled. This is going to be an adjustment for him.</p><p style="margin-bottom: 16px;">Anyway. That's where my brain is at 3am. Cats we don't have yet and a future that feels both very far away and also inevitable.</p><p style="margin-bottom: 16px;">Go to sleep. You have exams to study for tomorrow. Unlike me, who is apparently using my insomnia to plan our future pet adoption strategy.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
+                    body: `<p>Remember when we couldn't say love yet? When it felt too big, too real, too scary? So we said "I like you so much" instead?</p>
+                    <p>We both knew. We knew what we really meant. But we weren't official yet and "love" felt like jumping off a cliff without knowing if there was water below.</p>
+                    <p>So we said "I like you so much" and we meant "I love you but i'm not ready to say it yet."</p>
+                    <p>There was something beautiful about that. The waiting. The knowing without saying. The building up to it.</p>
+                    <p>I like you so much.<br>(I love you so much.)</p>`
                 }
             ],
             social: [
                 {
                     id: 's1',
-                    sender: 'Niv tagged you',
-                    subject: 'Tagged in: "Thoughts about your voice"',
-                    snippet: 'Niv mentioned you in a post...',
+                    sender: 'Strava',
+                    subject: 'Niv completed: "Running from my feelings"',
+                    snippet: 'New activity from Niv',
                     time: 'Feb 14',
-                    avatar: 'NT',
-                    color: '#1a73e8',
+                    avatar: 'S',
+                    color: '#fc4c02',
                     starred: false,
-                    body: `<div style="background: #e8f0fe; padding: 20px; border-radius: 8px;"><p style="margin-bottom: 12px;"><strong>Niv</strong> tagged you in a post:</p><p style="font-style: italic; padding: 16px; background: white; border-radius: 4px;">"Her voice does this thing where it speeds up when she gets excited and I could listen to it for hours. Which I do. Because I call her like 47 times a day."</p></div>`
+                    body: `<p><strong>Niv completed a run</strong></p>
+                    <p><strong>Title:</strong> Running from my feelings (jk running toward her)</p>
+                    <p><strong>Description:</strong> Ran 5km. Still 2083km away from her. Math isn't mathing. Need better strategy.</p>
+                    <p><strong>Segment efforts:</strong> Missing her (PR), Thinking about grocery shopping (New Route).</p>`
                 },
                 {
                     id: 's2',
-                    sender: 'Memory Shared',
-                    subject: 'Niv shared: That one FaceTime',
-                    snippet: 'Remember when you explained space plants to him...',
-                    time: 'Feb 13',
-                    avatar: 'MS',
-                    color: '#4caf50',
-                    starred: true,
-                    body: `<div style="border-left: 4px solid #4caf50; padding-left: 16px;"><h3 style="margin-bottom: 12px;">💭 Memory from January 2026</h3><p style="margin-bottom: 8px;"><strong>Niv</strong> shared a memory:</p><p style="font-style: italic; color: #666;">"That FaceTime where you explained genetically modifying plants for space and said 'it's easier to change ourselves than our surroundings' and I forgot how to form sentences because you were so smart and beautiful."</p></div>`
+                    sender: 'Goodreads',
+                    subject: 'Niv added a book to "books she\'d love"',
+                    snippet: 'The Song of Achilles by Madeline Miller',
+                    time: 'Feb 10',
+                    avatar: 'G',
+                    color: '#754a00',
+                    starred: false,
+                    body: `<p><strong>Niv added a book:</strong></p>
+                    <p>📖 <strong>The Song of Achilles</strong></p>
+                    <p><strong>Review:</strong> "Read this because she mentioned Greek mythology once three months ago. It was good. She'd love it. Ordering her a copy. Yes I'm like this about everything she mentions."</p>`
                 },
                 {
                     id: 's3',
-                    sender: 'Someone is thinking about you',
-                    subject: 'Live notification: Currently happening',
-                    snippet: 'Niv is thinking about you right now...',
-                    time: 'Feb 12',
-                    avatar: 'TH',
-                    color: '#ff6b6b',
+                    sender: 'Letterboxd',
+                    subject: 'Niv logged: The Notebook',
+                    snippet: 'New review from Niv',
+                    time: 'Feb 11',
+                    avatar: 'L',
+                    color: '#00e054',
                     starred: false,
-                    body: `<div style="text-align: center; padding: 24px;"><h2 style="font-size: 24px; margin-bottom: 16px;">🔴 LIVE</h2><p style="font-size: 18px; margin-bottom: 8px;">Someone 2083km away is thinking about you</p><p style="font-size: 13px; color: #666;">Status: Ongoing<br>Duration: Continuous<br>Intensity: Maximum</p></div>`
+                    body: `<p><strong>Niv logged a film:</strong></p>
+                    <p>🎥 <strong>The Notebook</strong> (2004)</p>
+                    <p><strong>Review:</strong> "They had to be apart for years but they ended up together. Currently relating to this on a spiritual level. Cried three times. Would cry again. Distance is temporary. Love is permanent."</p>`
                 },
                 {
                     id: 's4',
-                    sender: 'Daily Appreciation Alert',
-                    subject: 'You are loved',
-                    snippet: 'Automated reminder from 2083km away...',
-                    time: 'Feb 11',
-                    avatar: 'DA',
-                    color: '#f4b400',
-                    starred: false,
-                    body: `<div style="background: #fff9e6; padding: 20px; border-radius: 8px; text-align: center;"><h3 style="margin-bottom: 16px;">Daily Reminder</h3><p style="font-size: 18px; margin-bottom: 12px;">You are:</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Smart</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Beautiful</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Going to ace those exams</p><p style="font-size: 16px; margin-bottom: 16px;">✓ Loved by someone 2083km away</p><p style="font-size: 12px; color: #666;">This message repeats daily at 9 AM, 2 PM, and 8 PM.</p></div>`
-                },
-                {
-                    id: 's5',
                     sender: 'Spotify',
-                    subject: 'Niv added songs to your Blend',
-                    snippet: 'New tracks: "The Scientist", "Bloom", "First Day of My Life"...',
-                    time: 'Feb 10',
+                    subject: 'Your Daily Mix: Songs that remind you of her',
+                    snippet: 'Personalized playlist ready',
+                    time: 'Feb 12',
                     avatar: 'SP',
                     color: '#1db954',
                     starred: false,
-                    body: `<div style="background: #000; color: #1db954; padding: 20px; border-radius: 8px;"><h3 style="margin-bottom: 16px;">🎵 Blend Updated</h3><p style="color: white; margin-bottom: 12px;">Niv added 3 new tracks:</p><p style="color: #1db954; margin-bottom: 8px;">♫ The Scientist - Coldplay</p><p style="color: #1db954; margin-bottom: 8px;">♫ Bloom - The Paper Kites</p><p style="color: #1db954; margin-bottom: 8px;">♫ First Day of My Life - Bright Eyes</p><p style="color: #666; margin-top: 16px; font-size: 12px;">Tagged: "songs that remind me of her"</p></div>`
+                    body: `<p><strong>YOUR DAILY MIX</strong></p>
+                    <p>Based on your recent listening history (every song makes you think of her, we know)</p>
+                    <p>🎵 Currently playing: "Distance" – literally every lyric</p>`
+                },
+                {
+                    id: 's5',
+                    sender: 'Twitter/X',
+                    subject: '@NivTheObsessed: New tweet',
+                    snippet: 'Posted 2 minutes ago',
+                    time: 'Feb 13',
+                    avatar: 'X',
+                    color: '#000',
+                    starred: false,
+                    body: `<p><strong>@NivTheObsessed tweeted:</strong></p>
+                    <p>"being in love long distance is just constantly thinking 'wish you were here' about literally everything. eating food? wish you were here. saw a cat? wish you were here. breathing? wish you were here."</p>`
                 },
                 {
                     id: 's6',
                     sender: 'Instagram',
-                    subject: 'Niv sent you a reel',
-                    snippet: 'It's a cat video. Obviously it's a cat video.',
-                    time: 'Feb 9',
+                    subject: 'Niv tagged you in a Reel',
+                    snippet: 'Subject: "Cats who act like dogs"',
+                    time: 'Feb 10',
                     avatar: 'IG',
-                    color: '#e91e63',
+                    color: '#e1306c',
                     starred: false,
-                    body: `<div style="padding: 20px;"><p style="margin-bottom: 12px;"><strong>Niv</strong> sent you a reel</p><p style="font-style: italic; color: #666;">Message: "This is Stitch's energy. Chaotic and judgmental."</p></div>`
+                    body: `<p>Reminded me of Stitch (except Stitch is evil).</p>`
                 }
             ],
             promotions: [
                 {
                     id: 'pr1',
-                    sender: 'The Affection Warehouse',
-                    subject: 'Limited Time: Premium Hand-Holding Package',
-                    snippet: 'Exclusive offer ending never: Unlimited hand-holding...',
-                    time: 'Feb 12',
-                    avatar: 'AW',
-                    color: '#8d6e63',
+                    sender: 'Skyscanner',
+                    subject: 'Price Alert: Your City to My City',
+                    snippet: 'Price is stable (High).',
+                    time: 'Feb 14',
+                    avatar: 'S',
+                    color: '#00a698',
                     starred: false,
-                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px; font-family: Helvetica, sans-serif;"><h1 style="font-size: 20px; text-align: center; margin-bottom: 24px; color: #333; letter-spacing: 2px;">THE AFFECTION WAREHOUSE</h1><div style="border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 20px 0; margin-bottom: 24px;"><h2 style="font-size: 16px; font-weight: 400; margin-bottom: 12px;">Premium Hand-Holding Package</h2><p style="font-size: 14px; color: #666; line-height: 1.6;">Unlimited access. Lifetime warranty. No assembly required.</p></div><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Includes</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>→ Interlocked fingers (perpetual)</li><li>→ Thumb circles on back of hand</li><li>→ Never letting go policy</li><li>→ Applicable during: walks, movies, grocery shopping, life</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;"><p style="font-size: 11px; color: #999;">Offer expires: Never</p><p style="font-size: 11px; color: #999;">Shipping: Upon arrival</p></div></div>`
+                    body: `<p>I check this every morning. One day the price will drop and I will click buy so fast my finger will break.</p>`
                 },
                 {
                     id: 'pr2',
-                    sender: 'Future Planning Co.',
-                    subject: 'New: Complete Domestic Bliss Package',
-                    snippet: 'Includes: Grocery shopping together, Harry Potter marathons, cat supervision...',
-                    time: 'Feb 10',
-                    avatar: 'FP',
-                    color: '#4caf50',
+                    sender: 'Duolingo',
+                    subject: 'New Course: Speaking "Biology"',
+                    snippet: 'Learn to impress your girlfriend.',
+                    time: 'Feb 13',
+                    avatar: 'DL',
+                    color: '#58cc02',
                     starred: false,
-                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px; font-family: 'Helvetica', sans-serif;"><h1 style="font-size: 18px; text-align: center; margin-bottom: 32px; letter-spacing: 2px;">FUTURE PLANNING CO.</h1><h2 style="font-size: 16px; margin-bottom: 16px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;">Complete Domestic Bliss Package</h2><p style="font-size: 14px; color: #666; margin-bottom: 24px; line-height: 1.6;">Everything you need for a shared life. Assembly required: Just show up.</p><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px;">PACKAGE INCLUDES:</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>• Grocery shopping together (arguing about vegetables)</li><li>• Harry Potter marathon rights (all 8 films)</li><li>• Shared coffee addiction management</li><li>• Cat supervision (Stitch, Ivy, Jackie, Wilson)</li><li>• Cooking disasters and occasional successes</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 16px;"><p style="font-size: 11px; color: #999;">Available: Soon™</p></div></div>`
+                    body: `<p>Lesson 1: What is a chloroplast? (I still don't know, please help).</p>`
                 },
                 {
                     id: 'pr3',
-                    sender: 'The Distance Elimination Company',
-                    subject: 'New Service: 2083km Removal',
-                    snippet: 'Professional geographic correction. Permanent results.',
-                    time: 'Feb 8',
-                    avatar: 'DE',
-                    color: '#607d8b',
+                    sender: 'Netflix',
+                    subject: 'New Arrival: Gilmore Girls (Again)',
+                    snippet: 'We know you watch this when you miss her.',
+                    time: 'Feb 10',
+                    avatar: 'N',
+                    color: '#e50914',
                     starred: false,
-                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px;"><h1 style="font-size: 20px; text-align: center; margin-bottom: 32px; letter-spacing: 3px;">DISTANCE ELIMINATION CO.</h1><div style="border: 2px solid #333; padding: 24px; margin-bottom: 24px; text-align: center;"><h2 style="font-size: 18px; margin-bottom: 12px;">2083 Kilometer Removal Service</h2><p style="font-size: 14px; color: #666;">Professional. Permanent. Long overdue.</p></div><div style="margin-bottom: 24px;"><table style="width: 100%; font-size: 13px; line-height: 2;"><tr><td>Current Distance:</td><td style="text-align: right;">2083 km</td></tr><tr><td>Target Distance:</td><td style="text-align: right;">0 km</td></tr><tr><td>Method:</td><td style="text-align: right;">Planes + Plans</td></tr><tr><td>Timeline:</td><td style="text-align: right;">ASAP</td></tr></table></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 16px;"><p style="font-size: 11px; color: #999;">Estimated completion: When the universe cooperates</p></div></div>`
+                    body: `<p>Resume playing: Season 4, Episode 2?</p>`
                 },
                 {
                     id: 'pr4',
-                    sender: 'The Listening Company',
-                    subject: 'Premium: Unlimited Biology Discussion Package',
-                    snippet: 'For all your cellular respiration and exam prep needs...',
-                    time: 'Feb 6',
-                    avatar: 'LC',
-                    color: '#3f51b5',
+                    sender: 'Cat Fancy Magazine',
+                    subject: 'Subscription Offer',
+                    snippet: 'How to tell if your cat hates you',
+                    time: 'Feb 08',
+                    avatar: 'CF',
+                    color: '#ff9800',
                     starred: false,
-                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px;"><h1 style="font-size: 18px; text-align: center; margin-bottom: 32px; letter-spacing: 2px;">THE LISTENING COMPANY</h1><div style="border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 24px 0; margin-bottom: 24px;"><h2 style="font-size: 16px; font-weight: 400; margin-bottom: 12px;">Unlimited Biology Discussion Package</h2><p style="font-size: 14px; color: #666; line-height: 1.6;">Talk about mitochondria for hours. We'll listen. Enthusiastically.</p></div><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px;">FEATURES:</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>• Genuine interest (not feigned)</li><li>• Active listening guaranteed</li><li>• "Tell me more" available 24/7</li><li>• Enthusiasm matching your own</li><li>• Zero eye-rolling policy</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;"><p style="font-size: 11px; color: #999;">Duration: Lifetime • Cost: Free • Availability: Always</p></div></div>`
+                    body: `<p>Perfect for Stitch owners.</p>`
+                },
+                {
+                    id: 'pr5',
+                    sender: 'The Dragonfly Inn',
+                    subject: 'Reservation Confirmed (In my dreams)',
+                    snippet: 'Table for two. Infinite coffee.',
+                    time: 'Feb 14',
+                    avatar: 'DI',
+                    color: '#795548',
+                    starred: false,
+                    body: `<div style="padding: 24px; border: 1px solid #ccc;">
+                        <h3>Reservation for Two</h3>
+                        <p><strong>Guests:</strong> Niv & Aaradhya</p>
+                        <p><strong>Menu:</strong> Burgers, Coffee, Pop-Tarts.</p>
+                        <p><strong>Conversation Speed:</strong> Fast.</p>
+                    </div>`
+                },
+                {
+                    id: 'pr6',
+                    sender: 'Coursera',
+                    subject: 'Recommended: "Advanced LDR Management"',
+                    snippet: 'Based on your desperate Googling',
+                    time: 'Feb 10',
+                    avatar: 'C',
+                    color: '#0056D2',
+                    starred: false,
+                    body: `<p><strong>Course Overview:</strong><br>Master the art of loving someone you can't touch. Learn essential skills including: Timezone Math Without Crying.</p>`
                 }
             ],
             purchases: [
                 {
                     id: 'pur1',
-                    sender: 'The Affection Store',
-                    subject: 'Your order of Daily "I Love You" Messages has shipped',
-                    snippet: 'Order #2083-HEART • Delivery: Continuous',
-                    time: 'Feb 11',
-                    avatar: 'AS',
-                    color: '#f4b400',
+                    sender: 'Amazon',
+                    subject: 'Order Confirmed: "Books She Mentioned Once"',
+                    snippet: 'Delivery estimate: Before she forgets she mentioned it',
+                    time: 'Feb 09',
+                    avatar: 'A',
+                    color: '#FF9900',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Daily "I Love You" Messages',
-                        quantity: 'Unlimited',
-                        vendor: 'The Affection Store',
-                        orderNumber: '2083-HEART-001',
-                        orderDate: 'February 11, 2026',
-                        delivery: 'Continuous delivery (ongoing)',
-                        status: 'Shipped & Active'
+                        product: 'Song of Achilles + Six of Crows',
+                        quantity: '2 Items',
+                        vendor: 'Amazon',
+                        orderNumber: 'LOVE-90210',
+                        orderDate: 'Feb 9, 2026',
+                        delivery: 'Feb 14, 2026',
+                        status: 'Shipped'
                     },
-                    body: `<p>Thank you for your order. Messages are being delivered continuously.</p>`
+                    body: `<p>You mentioned books. I provide books. This is how I function.</p>`
                 },
                 {
                     id: 'pur2',
-                    sender: 'Future Dreams LLC',
-                    subject: 'Order Confirmation: Four-Cat Household Plan',
-                    snippet: 'Order #2083-CATS • Items: Stitch, Ivy, Jackie, Wilson',
-                    time: 'Feb 9',
-                    avatar: 'FD',
-                    color: '#795548',
+                    sender: 'BookMyShow',
+                    subject: 'Booking Confirmed: Future Movie Dates',
+                    snippet: 'Reservations for when distance = 0',
+                    time: 'Feb 10',
+                    avatar: 'B',
+                    color: '#F84464',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Four-Cat Household Subscription',
-                        quantity: '4 Cats (Stitch, Ivy, Jackie, Wilson)',
-                        vendor: 'Future Dreams LLC',
-                        orderNumber: '2083-CATS-004',
-                        orderDate: 'February 9, 2026',
-                        delivery: 'Pending proximity',
-                        status: 'Pre-ordered'
+                        product: 'Future Movie Dates',
+                        quantity: 'x100',
+                        vendor: 'BookMyShow',
+                        orderNumber: 'FUTURE-DATE',
+                        orderDate: 'Feb 10, 2026',
+                        delivery: 'Pending Arrival',
+                        status: 'Reserved'
                     },
-                    body: `<p>Your future cat family is reserved and waiting. Stitch is already in possession. Ivy, Jackie, and Wilson pending adoption.</p>`
+                    body: `<p>Her choice of movie (always). Popcorn included.</p>`
+                },
+                {
+                    id: 'pur2',
+                    sender: 'Swiggy',
+                    subject: 'Order Placed: Momo & Wai Wai Subscription',
+                    snippet: 'For when she\'s actually here',
+                    time: 'Feb 12',
+                    avatar: 'S',
+                    color: '#FC8019',
+                    starred: false,
+                    isPurchase: true,
+                    purchaseData: {
+                        product: 'Momo & Wai Wai',
+                        quantity: 'Unlimited',
+                        vendor: 'Swiggy',
+                        orderNumber: 'MOMO-LOVE',
+                        orderDate: 'Feb 12, 2026',
+                        delivery: 'Future',
+                        status: 'Pending'
+                    },
+                    body: `<p>These are for my girlfriend who loves momo and wai wai and I'm being very normal about stocking up.</p>`
                 },
                 {
                     id: 'pur3',
-                    sender: 'Voice Call Minutes Inc',
-                    subject: 'Receipt: Unlimited Call Package',
-                    snippet: 'Order #VOICE-UNLIMITED',
-                    time: 'Feb 7',
-                    avatar: 'VC',
-                    color: '#00bcd4',
+                    sender: 'Zomato',
+                    subject: 'Pre-Order: Future Birthday Cakes (x50)',
+                    snippet: 'Planning ahead (way ahead)',
+                    time: 'Feb 13',
+                    avatar: 'Z',
+                    color: '#CB202D',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Unlimited Voice Call Minutes',
-                        quantity: '∞',
-                        vendor: 'Long Distance Solutions',
-                        orderNumber: 'VOICE-UNLIMITED',
-                        orderDate: 'February 7, 2026',
-                        delivery: 'Instant',
-                        status: 'Active (heavily used)'
+                        product: 'Birthday Cakes',
+                        quantity: '50',
+                        vendor: 'Zomato',
+                        orderNumber: 'CAKE-4-LIFE',
+                        orderDate: 'Feb 13, 2026',
+                        delivery: 'Annually',
+                        status: 'Committed'
                     },
-                    body: `<p>Because texting isn't enough when you're obsessed with someone's voice.</p>`
-                },
-                {
-                    id: 'pur4',
-                    sender: 'Exam Support Services',
-                    subject: 'Your order: Good Luck & Belief Package',
-                    snippet: 'Order #EXAM-ACE',
-                    time: 'Feb 5',
-                    avatar: 'ES',
-                    color: '#4caf50',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Good Luck & Unwavering Belief',
-                        quantity: 'Maximum',
-                        vendor: 'Niv (2083km away)',
-                        orderNumber: 'EXAM-ACE-2026',
-                        orderDate: 'February 5, 2026',
-                        delivery: 'Telepathic',
-                        status: 'Constantly active'
-                    },
-                    body: `<p>You're going to ace these exams. I believe in you more than you believe in yourself.</p>`
-                },
-                {
-                    id: 'pur5',
-                    sender: 'Spotify Premium',
-                    subject: 'Receipt: Duo Plan Activated',
-                    snippet: 'Aaradhya has been added to your plan',
-                    time: 'Feb 4',
-                    avatar: 'SP',
-                    color: '#1db954',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Spotify Duo Premium',
-                        quantity: '2 accounts',
-                        vendor: 'Spotify',
-                        orderNumber: 'SPOT-DUO-2026',
-                        orderDate: 'February 4, 2026',
-                        delivery: 'Digital',
-                        status: 'Active'
-                    },
-                    body: `<p>Because you need good music while studying and I refuse to let ads interrupt your playlists.</p>`
-                },
-                {
-                    id: 'pur6',
-                    sender: 'Flight Alert System',
-                    subject: 'Price Watch: Your City → My City',
-                    snippet: 'Monitoring flights constantly...',
-                    time: 'Feb 3',
-                    avatar: 'FA',
-                    color: '#2196f3',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Flight Price Monitoring Service',
-                        quantity: 'Continuous surveillance',
-                        vendor: 'Skyscanner',
-                        orderNumber: 'FLY-2083KM-AWAY',
-                        orderDate: 'February 3, 2026',
-                        delivery: 'Email alerts',
-                        status: 'Monitoring (obsessively)'
-                    },
-                    body: `<p>Checking prices multiple times a day. Will book the moment it's feasible. 2083km won't last forever.</p>`
+                    body: `<p>Yes, I'm pre-ordering 50 years of birthday cakes. Yes, I'm aware this is excessive.</p>`
                 }
             ],
             spam: [
                 {
                     id: 'sp1',
-                    sender: 'Generic Dating App',
-                    subject: 'You have 47 new matches nearby!',
-                    snippet: 'Singles in your area want to meet you...',
-                    time: 'Feb 9',
-                    avatar: 'DA',
+                    sender: 'Suspicious Link',
+                    subject: 'HOT SINGLES IN YOUR AREA (2083KM AWAY)',
+                    snippet: 'Click here to find love...',
+                    time: 'Feb 11',
+                    avatar: 'S',
                     color: '#999',
                     starred: false,
-                    body: `<p>This is spam. You don't need this. You already have someone 2083km away who thinks you're perfect.</p>`
-                }
-            ],
-            bin: [
-                {
-                    id: 'b1',
-                    sender: 'Self Doubt',
-                    subject: 'What if you're not good enough',
-                    snippet: 'What if...',
-                    time: 'Feb 8',
-                    avatar: 'SD',
-                    color: '#666',
-                    starred: false,
-                    body: `<p>This belongs in the trash. It's not true. You're extraordinary.</p>`
+                    body: `<p><strong>MATCH FOUND:</strong></p>
+                    <p><strong>Niv, 2083km away</strong><br>- Status: Taken (by you)<br>- Looking for: You (specifically)</p>
+                    <p><strong>Other singles nearby:</strong> None. He's only interested in one person.</p>`
                 },
                 {
-                    id: 'b2',
-                    sender: 'Draft: Bad F1 Joke',
-                    subject: 'Why did the Red Bull car...',
-                    snippet: 'Because it had too much downforce on my heart.',
-                    time: 'Feb 7',
-                    avatar: 'N',
-                    color: '#ccc',
+                    id: 'sp2',
+                    sender: 'Free Prize Notification',
+                    subject: 'YOU\'VE WON: One Boyfriend (Slightly Obsessed)',
+                    snippet: 'Claim your prize now!',
+                    time: 'Feb 13',
+                    avatar: 'F',
+                    color: '#999',
                     starred: false,
-                    body: `<p>Deleted before sending because even I have standards.</p>`
-                },
-                {
-                    id: 'b3',
-                    sender: 'Draft: Flight Booking (Almost)',
-                    subject: 'Confirmation #...',
-                    snippet: 'I had my credit card out and everything.',
-                    time: 'Feb 6',
-                    avatar: 'N',
-                    color: '#ccc',
-                    starred: false,
-                    body: `<p>Almost booked a flight at 2am. Then remembered rent exists. Deleted. Still want to though.</p>`
-                },
-                {
-                    id: 'b4',
-                    sender: 'Draft: Anxiety Email',
-                    subject: 'What if when we meet...',
-                    snippet: 'What if I'm annoying in 3D?',
-                    time: 'Feb 5',
-                    avatar: 'N',
-                    color: '#ccc',
-                    starred: false,
-                    body: `<p>Deleted. Overthinking. We're going to be fine. More than fine.</p>`
-                },
-                {
-                    id: 'b5',
-                    sender: 'Draft: Too Much',
-                    subject: 'I miss you',
-                    snippet: 'Typed this 12 times today already.',
-                    time: 'Feb 4',
-                    avatar: 'N',
-                    color: '#ccc',
-                    starred: false,
-                    body: `<p>Deleted because I already said it on the call. And in the text. And in the other email. But it's still true.</p>`
+                    body: `<p><strong>🎉 CONGRATULATIONS! 🎉</strong></p>
+                    <p>You've won our GRAND PRIZE: <strong>ONE (1) BOYFRIEND</strong></p>
+                    <p>Features: Flight tracking, voice note hoarding, excessive thoughtfulness.</p>`
                 }
             ]
         };
 
-        const allEmails = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases, ...emailDatabase.spam, ...emailDatabase.bin];
+        const allEmails = [
+            ...emailDatabase.primary, 
+            ...emailDatabase.social, 
+            ...emailDatabase.promotions,
+            ...emailDatabase.purchases,
+            ...emailDatabase.spam
+        ];
+        
         let currentCategory = 'all-inboxes';
         let currentEmails = allEmails;
+
+        // --- LOGIN LOGIC ---
+        document.getElementById('loginNextBtn').addEventListener('click', () => {
+            const loginView = document.getElementById('loginView');
+            const appShell = document.getElementById('appShell');
+            
+            // Simple fade out effect
+            loginView.style.opacity = '0';
+            loginView.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                loginView.style.display = 'none';
+                appShell.style.display = 'flex';
+            }, 300);
+        });
 
         function updateBadges() {
             document.getElementById('badge-primary').textContent = emailDatabase.primary.length;
             document.getElementById('badge-social').textContent = emailDatabase.social.length;
             document.getElementById('badge-promotions').textContent = emailDatabase.promotions.length;
             document.getElementById('badge-purchases').textContent = emailDatabase.purchases.length;
-            document.getElementById('badge-bin').textContent = emailDatabase.bin.length;
+            document.getElementById('badge-spam').textContent = emailDatabase.spam.length;
+            
+            // All Inboxes total (excluding Spam)
             const allReadable = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases];
             document.getElementById('badge-all').textContent = allReadable.length;
         }
 
-        document.getElementById('aiOverview').onclick = function() {
-            this.classList.toggle('expanded');
-        };
-
         function renderEmails(filterText = '') {
             const container = document.getElementById('emailList');
             container.innerHTML = '';
-            const aiOverview = document.getElementById('aiOverview');
-            if(currentCategory === 'all-inboxes' && filterText === '') {
-                aiOverview.style.display = 'block';
-            } else {
-                aiOverview.style.display = 'none';
-            }
-            const filtered = currentEmails.filter(e => e.sender.toLowerCase().includes(filterText.toLowerCase()) || e.subject.toLowerCase().includes(filterText.toLowerCase()));
+            
+            const filtered = currentEmails.filter(e => 
+                e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
+                e.subject.toLowerCase().includes(filterText.toLowerCase())
+            );
+
             filtered.forEach(email => {
                 const item = document.createElement('div');
                 item.className = 'email-item';
-                item.onclick = (e) => { if(!e.target.closest('.star-icon')) openEmail(email.id); };
+                item.onclick = (e) => {
+                    if(!e.target.closest('.star-icon')) openEmail(email.id);
+                };
+
                 const starClass = email.starred ? 'starred' : '';
-                item.innerHTML = `<div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div><div class="email-content-main"><div class="email-first-line"><span class="sender-name">${email.sender}</span><span class="email-time">${email.time}</span></div><div class="subject-line">${email.subject}</div><div class="snippet">${email.snippet}</div></div><div class="star-icon" onclick="toggleStar(event, '${email.id}')"><svg class="star-svg ${starClass}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>`;
+
+                item.innerHTML = `
+                    <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                    <div class="email-content-main">
+                        <div class="email-first-line">
+                            <span class="sender-name">${email.sender}</span>
+                            <span class="email-time">${email.time}</span>
+                        </div>
+                        <div class="subject-line">${email.subject}</div>
+                        <div class="snippet">${email.snippet}</div>
+                    </div>
+                    <div class="star-icon" onclick="toggleStar(event, '${email.id}')">
+                        <svg class="star-svg ${starClass}" viewBox="0 0 24 24">
+                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </div>
+                `;
                 container.appendChild(item);
             });
+            
             if (filtered.length === 0) {
                 container.innerHTML = '<div style="padding: 40px; text-align: center; color: #5f6368;">No mails found.</div>';
             }
@@ -764,29 +1076,57 @@
         function openEmail(id) {
             const email = allEmails.find(e => e.id === id);
             if (!email) return;
+
             document.getElementById('detailSubject').textContent = email.subject;
             document.getElementById('detailSender').textContent = email.sender;
             document.getElementById('detailTime').textContent = email.time;
+            
             const avatar = document.getElementById('detailAvatar');
             avatar.textContent = email.avatar;
             avatar.style.background = email.color;
+            
             const starSvg = document.getElementById('detailStarSvg');
             if(email.starred) starSvg.classList.add('starred');
             else starSvg.classList.remove('starred');
+            
             const illustrationContainer = document.getElementById('illustrationContainer');
             if (email.illustration) {
                 illustrationContainer.innerHTML = `<div class="artistic-illustration">${email.illustration}</div>`;
             } else {
                 illustrationContainer.innerHTML = '';
             }
+            
             const detailBody = document.getElementById('detailBody');
+            
             if (email.isPurchase && email.purchaseData) {
                 const p = email.purchaseData;
-                const receiptHtml = `<div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; margin: 20px 0; font-family: 'Roboto', sans-serif; background: #fafafa;"><div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;"><span style="font-weight: 500; color: #202124;">Order Confirmation</span><span style="color: #5f6368;">${p.orderNumber}</span></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; font-size: 14px;"><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Product</div><div style="font-weight: 500;">${p.product}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Quantity</div><div>${p.quantity}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Date</div><div>${p.orderDate}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Status</div><div style="color: #188038; font-weight: 500;">${p.status}</div></div></div><div style="text-align: center; border-top: 1px dashed #ccc; padding-top: 12px; font-size: 12px; color: #5f6368;">Vendor: ${p.vendor}</div></div>`;
+                const receiptHtml = `
+                    <div class="google-order-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <div class="card-title">${p.product}</div>
+                                <div class="card-subtitle">1 item from ${p.vendor}</div>
+                            </div>
+                            <div class="card-logo">
+                                ${p.vendor.substring(0,1)}
+                            </div>
+                        </div>
+                        <div class="order-status">Order placed</div>
+                        <div class="order-number-row">
+                            <div class="hashtag-icon">#</div>
+                            <div class="order-info">
+                                <div class="order-label">Order number</div>
+                                <div class="order-value">${p.orderNumber}</div>
+                            </div>
+                        </div>
+                        <a href="#" class="view-order-btn">View order</a>
+                    </div>
+                `;
                 detailBody.innerHTML = receiptHtml + email.body;
             } else {
                 detailBody.innerHTML = email.body;
             }
+            
             document.getElementById('emailListView').classList.remove('view-visible');
             document.getElementById('emailListView').classList.add('view-hidden');
             document.getElementById('emailDetailView').classList.add('active');
@@ -825,18 +1165,23 @@
             item.onclick = () => {
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
+
                 const view = item.getAttribute('data-view');
                 const color = item.getAttribute('data-color');
                 const bg = item.getAttribute('data-bg');
+                
                 if(color && bg) {
                     root.style.setProperty('--primary-color', color);
                     root.style.setProperty('--active-bg', bg);
                 }
+
                 const text = item.querySelector('.nav-text').textContent;
                 document.getElementById('categoryLabel').textContent = text;
+                
                 currentCategory = view;
+                
                 if (view === 'all-inboxes') {
-                    currentEmails = allEmails.filter(e => !emailDatabase.bin.includes(e) && !emailDatabase.spam.includes(e));
+                    currentEmails = allEmails.filter(e => !emailDatabase.spam.includes(e));
                 } else if (view === 'primary') {
                     currentEmails = emailDatabase.primary;
                 } else if (view === 'social') {
@@ -847,12 +1192,14 @@
                     currentEmails = emailDatabase.purchases;
                 } else if (view === 'starred') {
                     currentEmails = allEmails.filter(e => e.starred);
-                } else if (view === 'bin') {
-                    currentEmails = emailDatabase.bin;
+                } else if (view === 'spam') {
+                    currentEmails = emailDatabase.spam;
                 } else {
                     currentEmails = [];
                 }
+                
                 renderEmails();
+
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('overlay').classList.remove('active');
             };
@@ -862,7 +1209,6 @@
             renderEmails(e.target.value);
         });
 
-        currentEmails = allEmails.filter(e => !emailDatabase.bin.includes(e) && !emailDatabase.spam.includes(e));
         updateBadges();
         renderEmails();
     </script>
