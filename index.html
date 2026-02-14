@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Importing Roboto for the authentic Gmail App feel -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Google Sans / Product Sans local mimic via Google Fonts is hard, using Roboto + adjustments -->
     <style>
         :root {
             --primary-color: #d93025;
@@ -20,25 +19,11 @@
             --search-bg: #e3e7ed;
             --card-bg: #f2f6fc;
             --google-blue: #0b57d0;
-            --ai-bg: #eff3f8; /* Specific Gemini Card BG */
+            --ai-bg: #eff3f8;
             
             /* Authentic Gmail App Fonts */
             --font-ui: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-brand: 'Google Sans', 'Roboto', sans-serif;
-        }
-
-        @font-face {
-            font-family: 'Google Sans';
-            font-style: normal;
-            font-weight: 400;
-            src: local('Open Sans'), local('Roboto'); /* Fallback mimic */
-        }
-        
-        @font-face {
-            font-family: 'Google Sans';
-            font-style: normal;
-            font-weight: 500;
-            src: local('Open Sans Medium'), local('Roboto Medium'); /* Fallback mimic */
+            --font-brand: 'Product Sans', 'Google Sans', 'Roboto', sans-serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -189,24 +174,27 @@
         /* --- AI Overview Styles (Gemini Card) --- */
         .ai-overview-card {
             margin: 16px;
-            padding: 16px 20px 24px 20px;
-            background-color: var(--ai-bg); /* Light Blue #eff3f8 */
+            padding: 12px 20px;
+            background-color: var(--ai-bg); /* Light Blue */
             border-radius: 12px;
             font-family: var(--font-brand);
-            position: relative;
+            overflow: hidden;
+            transition: 0.3s ease;
         }
 
         .ai-header-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            cursor: pointer;
+            padding-top: 4px;
+            padding-bottom: 4px;
         }
 
         .ai-title-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .ai-label {
@@ -224,6 +212,11 @@
             width: 24px;
             height: 24px;
             fill: #444746;
+            transition: transform 0.3s ease;
+        }
+        
+        .ai-chevron.rotated {
+            transform: rotate(180deg);
         }
 
         .ai-content {
@@ -231,6 +224,13 @@
             color: #1f1f1f;
             line-height: 1.6;
             font-family: var(--font-ui);
+            margin-top: 12px;
+            display: block; /* Default open */
+            padding-bottom: 8px;
+        }
+        
+        .ai-content.collapsed {
+            display: none;
         }
 
         /* Updated Email Item Styles */
@@ -239,7 +239,7 @@
 
         .avatar-container { width: 40px; height: 40px; flex-shrink: 0; position: relative; }
         .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; text-transform: uppercase; font-family: var(--font-brand); position: absolute; inset:0; }
-        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: #eee; }
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: transparent; }
         
         .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
         .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
@@ -529,7 +529,7 @@
     </div>
 
     <script>
-        const nivPfpUrl = "https://share.google/Wi667p59wJeprKEgD";
+        const nivPfpUrl = "https://share.google/epZpGxKXgn6roWisz";
 
         const emailDatabase = {
             primary: [
@@ -792,14 +792,14 @@
                     id: 's2',
                     sender: 'Goodreads',
                     subject: 'Niv added a book to "books she\'d love"',
-                    snippet: 'The Song of Achilles by Madeline Miller',
+                    snippet: 'Percy Jackson & The Olympians',
                     time: 'Feb 10',
                     avatar: 'G',
                     color: '#754a00',
                     starred: false,
                     body: `<p><strong>Niv added a book:</strong></p>
-                    <p>📖 <strong>The Song of Achilles</strong></p>
-                    <p><strong>Review:</strong> "Read this because she mentioned Greek mythology once three months ago. It was good. She'd love it. Ordering her a copy. Yes I'm like this about everything she mentions."</p>`
+                    <p>📖 <strong>Percy Jackson & The Olympians</strong></p>
+                    <p><strong>Review:</strong> "Reading this because she loves it. I need to understand the lore immediately."</p>`
                 },
                 {
                     id: 's3',
@@ -1112,21 +1112,45 @@
                 const aiDiv = document.createElement('div');
                 aiDiv.className = 'ai-overview-card';
                 aiDiv.innerHTML = `
-                    <div class="ai-header-row">
+                    <div class="ai-header-row" id="aiHeader">
                         <div class="ai-title-group">
                             <svg class="gemini-star" viewBox="0 0 24 24">
-                                <path fill="#4285F4" d="M13.5 19.5h-3v-3h3v3zm0-15h-3v-3h3v3zm7.5 7.5h-3v-3h3v3zm-15 0h-3v-3h3v3z"/>
-                                <path fill="#DB4437" d="M12 2C9.5 7.5 7.5 9.5 2 12c5.5 2.5 7.5 4.5 10 10 2.5-5.5 4.5-7.5 10-10-5.5-2.5-7.5-4.5-10-10z"/>
+                                <defs>
+                                    <linearGradient id="geminiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#4285f4;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#db4437;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path fill="url(#geminiGrad)" d="M13.5 19.5h-3v-3h3v3zm0-15h-3v-3h3v3zm7.5 7.5h-3v-3h3v3zm-15 0h-3v-3h3v3z M12 2C9.5 7.5 7.5 9.5 2 12c5.5 2.5 7.5 4.5 10 10 2.5-5.5 4.5-7.5 10-10-5.5-2.5-7.5-4.5-10-10z"/>
                             </svg>
                             <span class="ai-label">AI Overview</span>
                         </div>
-                        <svg class="ai-chevron" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                        <svg class="ai-chevron" id="aiChevron" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
                     </div>
-                    <div class="ai-content">
-                        Niv is missing you (high confidence). He’s purchased the <strong>Percy Jackson series</strong> for you, is currently watching all 8 <strong>Harry Potter</strong> movies to impress you, and is reading Agatha Christie. <br><br><strong>Action items:</strong> Accept affection immediately.
+                    <div class="ai-content" id="aiContent">
+                        You are logged in as Aaradhya. Key insights from your inbox: Sender 'Niv' is actively bridging the 2083km gap. He has prioritized your reading list (Agatha Christie), acquired the <strong>Percy Jackson</strong> series, and is binge-watching <strong>Harry Potter</strong>. <br><br><strong>Status:</strong> Highly Devoted.
                     </div>
                 `;
                 container.appendChild(aiDiv);
+                
+                // Add Toggle Event Listener immediately after creating the element
+                setTimeout(() => {
+                    const header = document.getElementById('aiHeader');
+                    const content = document.getElementById('aiContent');
+                    const chevron = document.getElementById('aiChevron');
+                    
+                    if(header && content && chevron) {
+                        header.addEventListener('click', () => {
+                            if (content.style.display === 'none') {
+                                content.style.display = 'block';
+                                chevron.classList.remove('rotated');
+                            } else {
+                                content.style.display = 'none';
+                                chevron.classList.add('rotated');
+                            }
+                        });
+                    }
+                }, 0);
             }
             
             const filtered = currentEmails.filter(e => 
