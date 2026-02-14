@@ -7,7 +7,6 @@
     <title>Gmail - 2083km Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Importing Roboto for the authentic Gmail App feel -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,123 +19,73 @@
             --card-bg: #f2f6fc;
             --google-blue: #0b57d0;
             --ai-bg: #eff3f8;
-            
-            /* Authentic Gmail App Fonts */
             --font-ui: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-brand: 'Product Sans', 'Google Sans', 'Roboto', sans-serif;
+            --font-brand: 'Google Sans', 'Roboto', sans-serif;
+        }
+
+        /* Attempting to mimic Google Sans */
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Open Sans'), local('Roboto');
+        }
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Open Sans Medium'), local('Roboto Medium');
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
         html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
 
-        /* --- LOGIN PAGE STYLES --- */
+        /* --- LOGIN PAGE --- */
         .login-view {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #f0f4f9;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #f0f4f9; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
             font-family: 'Roboto', sans-serif;
         }
-        
         .login-card {
-            background: white;
-            padding: 48px 40px 36px;
-            border-radius: 28px;
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
+            background: white; padding: 48px 40px 36px; border-radius: 28px;
+            width: 100%; max-width: 450px; display: flex; flex-direction: column;
         }
-
         @media (max-width: 600px) {
             .login-view { background: white; align-items: flex-start; }
             .login-card { padding: 24px; max-width: 100%; border-radius: 0; height: 100%; justify-content: flex-start; padding-top: 60px; }
         }
-
-        .google-logo-login { height: 24px; margin-bottom: 16px; align-self: flex-start; }
+        .google-logo-login { height: 24px; margin-bottom: 16px; align-self: flex-start; width: auto; }
         @media (min-width: 601px) { .google-logo-login { align-self: center; } }
-        
         .login-heading { font-size: 24px; font-weight: 400; color: #1f1f1f; margin-bottom: 8px; font-family: var(--font-brand); line-height: 1.33; }
         .login-sub { font-size: 16px; color: #1f1f1f; margin-bottom: 40px; }
-        
         .login-input-container { position: relative; margin-bottom: 8px; }
         .login-input {
-            width: 100%;
-            height: 56px;
-            border: 1px solid #747775;
-            border-radius: 4px;
-            padding: 13px 16px;
-            font-size: 16px;
-            color: #1f1f1f;
-            background: transparent;
-            outline: none;
-            transition: 0.2s;
+            width: 100%; height: 56px; border: 1px solid #747775; border-radius: 4px;
+            padding: 13px 16px; font-size: 16px; color: #1f1f1f; background: transparent;
+            outline: none; transition: 0.2s;
         }
         .login-input:focus { border-color: #0b57d0; border-width: 2px; padding: 12px 15px; }
         .login-input-label {
-            position: absolute;
-            left: 12px;
-            top: -10px;
-            background: white;
-            padding: 0 4px;
-            font-size: 12px;
-            color: #1f1f1f;
-            display: none;
+            position: absolute; left: 12px; top: -10px; background: white; padding: 0 4px;
+            font-size: 12px; color: #1f1f1f; display: none;
         }
         .login-input:focus + .login-input-label { display: block; color: #0b57d0; }
         .login-input:not(:placeholder-shown) + .login-input-label { display: block; }
-
-        .forgot-link {
-            color: #0b57d0;
-            font-weight: 500;
-            font-size: 14px;
-            border-radius: 4px;
-            padding: 4px 0;
-            display: inline-block;
-            cursor: pointer;
-            margin-bottom: 40px;
-        }
-
+        .forgot-link { color: #0b57d0; font-weight: 500; font-size: 14px; border-radius: 4px; padding: 4px 0; display: inline-block; cursor: pointer; margin-bottom: 40px; }
         .guest-text { font-size: 14px; color: #444746; margin-top: 30px; line-height: 1.5; }
-        
-        .login-actions {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            padding-top: 30px;
-        }
-        
+        .login-actions { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 30px; }
         .create-btn { color: #0b57d0; font-weight: 500; font-size: 14px; background: none; border: none; cursor: pointer; }
-        
-        .next-btn {
-            background-color: #0b57d0;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-        }
+        .next-btn { background-color: #0b57d0; color: white; border: none; border-radius: 20px; padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer; }
         .next-btn:active { background-color: #0947a8; }
 
-
-        /* --- MAIN APP STYLES --- */
+        /* --- APP SHELL --- */
         .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; display: none; }
-
-        /* Header / Search Bar */
         .header { padding: 12px 16px; background: #f6f8fc; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
         .search-container { height: 48px; background: #eaf1fb; border-radius: 24px; display: flex; align-items: center; padding: 0 16px; flex: 1; margin-right: 12px; }
         .menu-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 16px; color: #444746; }
         .search-input { flex: 1; font-size: 16px; color: #1f1f1f; background: transparent; border: none; outline: none; font-family: var(--font-ui); font-weight: 400; }
-        .search-input::placeholder { color: #444746; }
-        
-        .pfp-btn { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; margin-left: 0; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .pfp-btn { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
         .pfp-btn img { width: 100%; height: 100%; object-fit: cover; }
 
         .profile-dropdown { position: fixed; top: 70px; right: 16px; width: 300px; background: #eaf1fb; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 24px 20px; z-index: 150; display: none; text-align: center; }
@@ -150,14 +99,11 @@
 
         .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
         .sidebar-overlay.active { opacity: 1; visibility: visible; }
-
         .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 300px; background: #f6f8fc; z-index: 250; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
         .sidebar.open { transform: translateX(0); }
-
         .sidebar-header { padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
         .sidebar-logo { height: 35px; width: auto; }
         .sidebar-logo-text { font-size: 22px; color: #444746; font-weight: 400; font-family: var(--font-brand); letter-spacing: -0.5px; }
-
         .nav-list { overflow-y: auto; padding: 12px; }
         .nav-item { height: 56px; display: flex; align-items: center; padding: 0 16px 0 26px; gap: 18px; cursor: pointer; color: #444746; border-radius: 28px; margin-bottom: 2px; }
         .nav-item:hover { background: #e0e6f0; }
@@ -167,79 +113,35 @@
         .nav-text { flex: 1; font-size: 14px; font-weight: 500; font-family: var(--font-brand); }
         .nav-badge { font-size: 12px; font-weight: 500; font-family: var(--font-ui); }
         .divider { height: 1px; background: #e0e0e0; margin: 8px 0; }
-
         .category-label { padding: 16px 16px 8px; font-size: 12px; font-weight: 500; color: #444746; font-family: var(--font-brand); letter-spacing: 0.1px; }
         .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
 
         /* --- AI Overview Styles (Gemini Card) --- */
         .ai-overview-card {
             margin: 16px;
-            padding: 12px 20px;
-            background-color: var(--ai-bg); /* Light Blue */
-            border-radius: 12px;
+            padding: 16px 20px;
+            background-color: var(--ai-bg); /* #eff3f8 */
+            border-radius: 16px;
             font-family: var(--font-brand);
             overflow: hidden;
             transition: 0.3s ease;
         }
+        .ai-header-row { display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+        .ai-title-group { display: flex; align-items: center; gap: 10px; }
+        .ai-label { font-size: 15px; color: #1f1f1f; font-weight: 500; }
+        .gemini-star { width: 24px; height: 24px; }
+        .ai-chevron { width: 20px; height: 20px; fill: #444746; transition: transform 0.3s ease; }
+        .ai-chevron.rotated { transform: rotate(180deg); }
+        .ai-content { font-size: 14px; color: #1f1f1f; line-height: 1.6; font-family: var(--font-ui); margin-top: 12px; display: block; }
+        .ai-link { color: #0b57d0; text-decoration: none; }
 
-        .ai-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            padding-top: 4px;
-            padding-bottom: 4px;
-        }
-
-        .ai-title-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-label {
-            font-size: 16px;
-            color: #1f1f1f;
-            font-weight: 400;
-        }
-
-        .gemini-star {
-            width: 20px;
-            height: 20px;
-        }
-        
-        .ai-chevron {
-            width: 24px;
-            height: 24px;
-            fill: #444746;
-            transition: transform 0.3s ease;
-        }
-        
-        .ai-chevron.rotated {
-            transform: rotate(180deg);
-        }
-
-        .ai-content {
-            font-size: 15px;
-            color: #1f1f1f;
-            line-height: 1.6;
-            font-family: var(--font-ui);
-            margin-top: 12px;
-            display: block; /* Default open */
-            padding-bottom: 8px;
-        }
-        
-        .ai-content.collapsed {
-            display: none;
-        }
-
-        /* Updated Email Item Styles */
+        /* --- Email List --- */
         .email-item { display: flex; align-items: flex-start; padding: 12px 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f2f2f2; }
         .email-item:active { background: #f2f6fc; }
-
         .avatar-container { width: 40px; height: 40px; flex-shrink: 0; position: relative; }
-        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; text-transform: uppercase; font-family: var(--font-brand); position: absolute; inset:0; }
-        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: transparent; }
+        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; text-transform: uppercase; font-family: var(--font-brand); position: absolute; inset:0; z-index: 1;}
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: #fff; z-index: 2; }
+        /* If img fails, we hide it via JS, revealing the circle */
         
         .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
         .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
@@ -251,134 +153,42 @@
         .star-svg { width: 20px; height: 20px; fill: none; stroke: #5e5e5e; stroke-width: 2; transition: 0.2s; }
         .star-svg.starred { fill: #f9ab00; stroke: #f9ab00; stroke-width: 0; }
 
+        /* --- Detail View --- */
         .email-detail { display: none; flex-direction: column; height: 100%; overflow-y: auto; background: white; position: absolute; top: 0; left: 0; width: 100%; z-index: 150; }
         .email-detail.active { display: flex; }
-
         .detail-header-bar { padding: 12px 8px; display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10; }
         .back-btn, .action-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; color: #1f1f1f; }
         .back-btn:active, .action-btn:active { background: #f2f2f2; }
-
         .detail-subject-header { padding: 16px 16px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
         .subject-container { display: flex; flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 8px; flex: 1; }
         .detail-subject-text { font-size: 22px; font-weight: 400; color: #1f1f1f; line-height: 1.3; font-family: var(--font-brand); }
         .detail-inbox-label { padding: 4px 8px; background: #e8f0fe; border-radius: 4px; font-size: 11px; color: #1f1f1f; font-weight: 500; display: inline-block; font-family: var(--font-ui); }
         .detail-star { width: 24px; height: 24px; margin-top: 6px; cursor: pointer; flex-shrink: 0; }
-
         .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 20px; }
         .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); overflow: hidden; position: relative;}
-        .sender-avatar-detail img { width: 100%; height: 100%; object-fit: cover; }
+        .sender-avatar-detail img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; z-index: 2; }
         .sender-info-detail { flex: 1; }
         .sender-name-detail { font-size: 14px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
         .sender-to { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
         .detail-time { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
-
         .artistic-illustration { width: 100%; padding: 30px 0; background: #fff; display: flex; justify-content: center; overflow: hidden; }
         .artistic-illustration svg { max-width: 100%; height: auto; max-height: 350px; display: block; margin: 0 auto; filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.08)); }
-
         .detail-body { padding: 0 16px 100px; line-height: 1.6; color: #1f1f1f; font-size: 15px; font-family: var(--font-ui); }
         
-        /* --- PIXEL PERFECT GOOGLE PURCHASE CARD --- */
-        .google-order-card {
-            background-color: var(--card-bg); /* #f2f6fc */
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
-            font-family: var(--font-brand); /* Google Sans mimic */
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-        
-        .card-title-group {
-            flex: 1;
-            padding-right: 16px;
-        }
-        
-        .card-title {
-            font-size: 16px;
-            font-weight: 600; /* Medium-Bold */
-            color: #1f1f1f;
-            line-height: 1.4;
-            margin-bottom: 4px;
-        }
-        
-        .card-subtitle {
-            font-size: 14px;
-            color: #444746;
-            font-weight: 400;
-        }
-        
-        .card-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            flex-shrink: 0;
-            font-size: 24px;
-            color: #d93025;
-        }
-        
-        .order-status {
-            font-size: 32px; /* Large */
-            font-weight: 400; /* Regular */
-            color: #1f1f1f;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-        }
-        
-        .order-number-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 24px;
-        }
-        
-        .hashtag-icon {
-            font-size: 20px;
-            color: #1f1f1f;
-            margin-right: 14px;
-            margin-top: 0px;
-            font-weight: 400;
-        }
-        
-        .order-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .order-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1f1f1f;
-            margin-bottom: 2px;
-        }
-        
-        .order-value {
-            font-size: 14px;
-            color: #444746;
-            font-weight: 400;
-        }
-        
-        .view-order-btn {
-            background-color: var(--google-blue);
-            color: white;
-            border: none;
-            border-radius: 24px; /* Rounded Pill */
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-        }
+        /* --- Purchase Card --- */
+        .google-order-card { background-color: var(--card-bg); border-radius: 20px; padding: 24px; margin-bottom: 24px; font-family: var(--font-brand); }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; }
+        .card-title-group { flex: 1; padding-right: 16px; }
+        .card-title { font-size: 16px; font-weight: 600; color: #1f1f1f; line-height: 1.4; margin-bottom: 4px; }
+        .card-subtitle { font-size: 14px; color: #444746; font-weight: 400; }
+        .card-logo { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: white; flex-shrink: 0; font-size: 24px; color: #d93025; }
+        .order-status { font-size: 32px; font-weight: 400; color: #1f1f1f; margin-bottom: 24px; letter-spacing: -0.5px; line-height: 1.2; }
+        .order-number-row { display: flex; align-items: flex-start; margin-bottom: 24px; }
+        .hashtag-icon { font-size: 20px; color: #1f1f1f; margin-right: 14px; margin-top: 0px; font-weight: 400; }
+        .order-info { display: flex; flex-direction: column; }
+        .order-label { font-size: 12px; font-weight: 700; color: #1f1f1f; margin-bottom: 2px; }
+        .order-value { font-size: 14px; color: #444746; font-weight: 400; }
+        .view-order-btn { background-color: var(--google-blue); color: white; border: none; border-radius: 24px; padding: 12px 24px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; }
 
         .view-hidden { display: none; }
         .view-visible { display: flex; flex-direction: column; }
@@ -389,23 +199,18 @@
     <!-- LOGIN PAGE VIEW -->
     <div class="login-view" id="loginView">
         <div class="login-card">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" height="28" class="google-logo-login" style="width: auto;">
-            
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" height="28" class="google-logo-login">
             <h1 class="login-heading">Sign in</h1>
             <p class="login-sub">to continue to Gmail</p>
-            
             <div class="login-input-container">
-                <input type="text" class="login-input" id="emailInput" placeholder=" " value="aaradhya@lovedbyNiv.com">
+                <input type="text" class="login-input" id="emailInput" placeholder=" " value="aaradhya@lovedbyniv.com">
                 <span class="login-input-label">Email or phone</span>
             </div>
-            
             <a class="forgot-link">Forgot email?</a>
-            
             <div class="guest-text">
                 Not your computer? Use Guest mode to sign in privately.<br>
                 <a href="#" style="color:#0b57d0; text-decoration:none; font-weight:500;">Learn more</a>
             </div>
-            
             <div class="login-actions">
                 <button class="create-btn">Create account</button>
                 <button class="next-btn" id="loginNextBtn">Next</button>
@@ -421,7 +226,6 @@
                 <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="sidebar-logo">
                 <span class="sidebar-logo-text">Gmail</span>
             </div>
-            
             <div class="nav-list">
                 <div class="nav-item active" data-view="all-inboxes" data-color="#d93025" data-bg="#fce8e6">
                     <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v5c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-5c0-.55-.45-1-1-1zM19 5v4H5V5h14m0-2H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
@@ -472,9 +276,8 @@
             <div class="pfp-btn" id="openProfile">
                 <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="Lorelai">
             </div>
-            
             <div class="profile-dropdown" id="profileDropdown">
-                <p class="profile-email-text">aaradhya@lovedbyNiv.com</p>
+                <p class="profile-email-text">aaradhya@lovedbyniv.com</p>
                 <div class="profile-ring-box">
                     <div class="profile-ring"></div>
                     <div class="profile-avatar-large">
@@ -502,7 +305,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="detail-subject-header">
                     <div class="subject-container">
                         <span class="detail-subject-text" id="detailSubject"></span>
@@ -512,7 +314,6 @@
                         <svg class="star-svg" id="detailStarSvg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     </div>
                 </div>
-
                 <div class="detail-sender-row">
                     <div class="sender-avatar-detail" id="detailAvatar"></div>
                     <div class="sender-info-detail">
@@ -521,7 +322,6 @@
                     </div>
                     <div class="detail-time" id="detailTime"></div>
                 </div>
-
                 <div id="illustrationContainer"></div>
                 <div class="detail-body" id="detailBody"></div>
             </div>
@@ -1080,11 +880,8 @@
         document.getElementById('loginNextBtn').addEventListener('click', () => {
             const loginView = document.getElementById('loginView');
             const appShell = document.getElementById('appShell');
-            
-            // Simple fade out effect
             loginView.style.opacity = '0';
             loginView.style.transition = 'opacity 0.3s ease';
-            
             setTimeout(() => {
                 loginView.style.display = 'none';
                 appShell.style.display = 'flex';
@@ -1097,8 +894,6 @@
             document.getElementById('badge-promotions').textContent = emailDatabase.promotions.length;
             document.getElementById('badge-purchases').textContent = emailDatabase.purchases.length;
             document.getElementById('badge-spam').textContent = emailDatabase.spam.length;
-            
-            // All Inboxes total (excluding Spam)
             const allReadable = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases];
             document.getElementById('badge-all').textContent = allReadable.length;
         }
@@ -1121,19 +916,19 @@
                                         <stop offset="100%" style="stop-color:#db4437;stop-opacity:1" />
                                     </linearGradient>
                                 </defs>
-                                <path fill="url(#geminiGrad)" d="M13.5 19.5h-3v-3h3v3zm0-15h-3v-3h3v3zm7.5 7.5h-3v-3h3v3zm-15 0h-3v-3h3v3z M12 2C9.5 7.5 7.5 9.5 2 12c5.5 2.5 7.5 4.5 10 10 2.5-5.5 4.5-7.5 10-10-5.5-2.5-7.5-4.5-10-10z"/>
+                                <path fill="url(#geminiGrad)" d="M12 2C12 7.5 7.5 12 2 12C7.5 12 12 16.5 12 22C12 16.5 16.5 12 22 12C16.5 12 12 7.5 12 2Z"/>
                             </svg>
                             <span class="ai-label">AI Overview</span>
                         </div>
-                        <svg class="ai-chevron" id="aiChevron" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                        <svg class="ai-chevron" id="aiChevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
                     </div>
                     <div class="ai-content" id="aiContent">
-                        You are logged in as Aaradhya. Key insights from your inbox: Sender 'Niv' is actively bridging the 2083km gap. He has prioritized your reading list (Agatha Christie), acquired the <strong>Percy Jackson</strong> series, and is binge-watching <strong>Harry Potter</strong>. <br><br><strong>Status:</strong> Highly Devoted.
+                        You are logged in as Aaradhya. A summary of your inbox indicates high priority messages from sender 'Niv'. Analysis detects: Acquisition of the <strong>Percy Jackson</strong> series (replacing previous literary data), binge-watching of <strong>Harry Potter</strong> for compatibility optimization, and reading Agatha Christie to match your TBR. <br><br><strong>Status:</strong> Highly Devoted. <a href="#" class="ai-link">Show more</a>
                     </div>
                 `;
                 container.appendChild(aiDiv);
                 
-                // Add Toggle Event Listener immediately after creating the element
+                // Add Toggle Event Listener immediately
                 setTimeout(() => {
                     const header = document.getElementById('aiHeader');
                     const content = document.getElementById('aiContent');
@@ -1170,7 +965,6 @@
                 // Handle Niv Profile Picture logic with fallback
                 let avatarHtml = '';
                 if (email.sender === 'Niv') {
-                    // Using the container method to allow hiding the img on error
                     avatarHtml = `
                         <div class="avatar-container">
                             <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
@@ -1240,7 +1034,7 @@
                 avatarContainer.style.background = 'transparent';
             } else {
                 avatarContainer.innerHTML = `<div class="avatar-circle" style="background: ${email.color}; position:static;">${email.avatar}</div>`;
-                avatarContainer.style.background = 'transparent'; // Reset to avoid double bg
+                avatarContainer.style.background = 'transparent';
             }
             
             const starSvg = document.getElementById('detailStarSvg');
