@@ -226,7 +226,7 @@
                         </svg>
                     </div>
                     <div class="ai-content">
-                        You are logged in as Aaradhya. Summary: Niv thinks you're the smartest person on earth, Stitch is judging his life choices, and the lipstick tutorial screenshot is his favorite image ever.
+                        You are logged in as Aaradhya. Here is your daily summary: Niv misses you (obviously), Stitch is judging him, and your exams are going to go great. 2083km is far, but his emails are instant.
                     </div>
                 </div>
 
@@ -279,541 +279,435 @@
 
     <script>
         const emailDatabase = {
-            // PRIMARY EMAILS
             primary: [
                 {
                     id: 'p1',
-                    sender: 'Niv',
-                    subject: 'That lipstick tutorial...',
-                    snippet: 'I’m not even talking about the makeup. I’m talking about you.',
-                    time: '10:04 AM',
-                    avatar: 'N',
-                    color: '#e91e63',
+                    sender: 'The Distance Times',
+                    subject: 'Breaking: Local Man Still 2083km Away, Situation Desperate',
+                    snippet: 'In what experts are calling "an absolutely ridiculous situation," future husband Niv remains separated...',
+                    time: 'Feb 14',
+                    avatar: 'DT',
+                    color: '#607d8b',
                     starred: true,
-                    body: `<p>Hey,</p>
-                    <p>I know the point of that call was to teach me the difference between a lip liner and a crayon (I still don't totally get it), but I was barely listening to the instructions.</p>
-                    <p>I was just watching you. The way you focus when you're looking in the mirror, that little tilt of your chin... you looked so confident. It was honestly mesmerizing. You were glowing through the screen.</p>
-                    <p>I took a screenshot. I'm not sorry. It's my favorite photo now.</p>
-                    <p>- Niv</p>`
+                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><rect fill="#f5f5f5" width="400" height="200"/><rect x="20" y="20" width="360" height="160" fill="white" stroke="#333" stroke-width="1"/><rect x="30" y="30" width="340" height="20" fill="#333"/><text x="200" y="44" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="12" fill="white">THE DISTANCE TIMES</text><line x1="30" y1="65" x2="370" y2="65" stroke="#333" stroke-width="1"/><text x="200" y="100" text-anchor="middle" font-family="Georgia" font-size="14" fill="#333">2083 KM IS TOO FAR</text><text x="200" y="120" text-anchor="middle" font-family="Arial" font-size="10" fill="#666">Sources confirm: It sucks.</text></svg>`,
+                    body: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; line-height: 1.8;"><h1 style="border-bottom: 3px double #333; padding-bottom: 15px; text-align: center; font-size: 28px; letter-spacing: -0.5px;">THE DISTANCE TIMES</h1><h2 style="font-size: 22px; font-weight: bold; margin-bottom: 10px;">Breaking: Local Man Still 2083km Away</h2><p style="font-style: italic; color: #555; font-size: 13px; margin-bottom: 20px;">By The Editorial Board (Niv)</p><p style="margin-bottom: 16px;"><strong>CITY OF YEARNING —</strong> In what experts are calling "an absolutely ridiculous situation that needs to end immediately," local future husband Niv remains separated from his girlfriend Aaradhya by approximately 2,083 kilometers.</p><p style="margin-bottom: 16px;">"It's a personal attack by geography," Niv stated in a press conference held from his kitchen. "I have calculated the distance down to the meter. It is exactly 2,083,000 meters too far."</p><p style="margin-bottom: 16px;">Stitch (the cat) declined to comment, mostly because he was busy sleeping on Niv's laptop, specifically on the keys needed to book a flight.</p><p style="margin-top: 30px; font-size: 14px; font-style: italic; color: #444; border-top: 1px solid #000; padding-top: 10px;">The Distance Times will continue to monitor the situation.</p></div>`
                 },
                 {
                     id: 'p2',
                     sender: 'The Love Yorker',
-                    subject: 'Essay: The Science of Missing Someone You Haven\'t Met',
-                    snippet: 'Why 2083km feels like both infinity and nothing.',
-                    time: 'Yesterday',
+                    subject: 'Essay: The Uncanny Valley of Missing You',
+                    snippet: 'On the strange specificity of knowing someone without knowing their height.',
+                    time: 'Feb 13',
                     avatar: 'LY',
                     color: '#333',
                     starred: true,
-                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        <rect fill="#fff" width="400" height="200"/>
-                        <text x="200" y="40" text-anchor="middle" font-family="Times New Roman" font-size="24">THE LOVE YORKER</text>
-                        <path d="M100 120 Q 200 60 300 120" stroke="#000" stroke-width="1" fill="none" stroke-dasharray="5,5"/>
-                        <circle cx="100" cy="120" r="4" fill="#000"/>
-                        <circle cx="300" cy="120" r="4" fill="none" stroke="#000"/>
-                        <text x="200" y="150" text-anchor="middle" font-family="Georgia" font-size="12" font-style="italic">Connection Established.</text>
-                    </svg>`,
-                    body: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; line-height: 1.8;">
-                        <h2 style="font-style: italic; text-align: center;">The Science of Missing Someone You Haven't Met</h2>
-                        <p>It’s a weird paradox. I know exactly how you take your coffee. I know your opinions on Draco Malfoy (justified) and your rant about genetically modified space plants (brilliant). I know your mind better than I know my own sometimes.</p>
-                        <p>But I don't know how tall you really feel standing next to me. I don't know if you walk fast or slow. I don't know the temperature of your hands.</p>
-                        <p>We are building a castle out of voice notes and pixels. It’s a great castle. I just really want to open the front door and actually walk in.</p>
-                    </div>`
+                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg"><rect fill="#fff" width="400" height="200"/><rect x="190" y="50" width="20" height="100" fill="#333"/><rect x="150" y="80" width="20" height="70" fill="#555"/><rect x="230" y="70" width="20" height="80" fill="#555"/><line x1="100" y1="150" x2="300" y2="150" stroke="#333" stroke-width="2"/><circle cx="280" cy="40" r="10" stroke="#333" fill="none" stroke-width="1"/><text x="200" y="180" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="12" fill="#333">City of Longing</text></svg>`,
+                    body: `<div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; line-height: 1.8;"><h1 style="font-size: 32px; font-family: 'Times New Roman', serif; text-align: center; margin-bottom: 10px;">THE LOVE YORKER</h1><h2 style="font-size: 18px; text-align: center; font-style: italic; color: #555; margin-bottom: 30px;">The Uncanny Valley of Missing You</h2><p style="margin-bottom: 16px;">There is a specific kind of math involved in loving someone 2,083 kilometers away whom you have never actually stood next to. It's a relationship built entirely on pixels and audio waves.</p><p style="margin-bottom: 16px;">I know exactly how your voice sounds when you're sleepy. I know your opinions on genetically modified space plants. I know the exact shade of lipstick you use because you taught me the routine.</p><p style="margin-bottom: 16px;">But I don't know if you walk fast or slow. I don't know if you steal the blankets. I don't know how loud your laugh is in a crowded room without audio compression.</p><p style="margin-bottom: 16px;">It's weird, isn't it? To know the map of someone's mind perfectly, but not the simple physics of them occupying space in your room. I am fond of you. I am also very impatient to finally learn the physics part.</p></div>`
                 },
                 {
                     id: 'p3',
                     sender: 'Niv',
-                    subject: 'Space plants & why you are smarter than me',
-                    snippet: 'Still thinking about that FaceTime rant. "Easier to change ourselves..."',
-                    time: 'Feb 12',
+                    subject: 'Your voice is my favorite thing',
+                    snippet: 'Called you just to hear you talk about your day...',
+                    time: 'Feb 13',
                     avatar: 'N',
-                    color: '#3f51b5',
+                    color: '#ff6b6b',
                     starred: true,
-                    body: `<p>I was driving today and saw a weird tree and immediately thought of your space plant rant.</p>
-                    <p><em>"It's easier to change ourselves than our surroundings sometimes."</em></p>
-                    <p>That line has been stuck in my head. You were so passionate explaining how we should modify plants for space rather than terraforming planets. You looked so intense. I love that your brain works like that.</p>
-                    <p>Most people talk about the weather. You talk about bio-ethics in zero gravity. God, you're cool.</p>`
+                    body: `<p style="margin-bottom: 16px;">Hey,</p><p style="margin-bottom: 16px;">I know I call you a lot. Sometimes for no reason. Sometimes I just ask how your day was even though I already know because we've been texting all day.</p><p style="margin-bottom: 16px;">But here's the thing—I'm obsessed with your voice. The way it speeds up when you get excited about something. The way you laugh at your own jokes before you finish telling them. That specific tone when you're explaining biology facts to me like I'm five (I appreciate it, by the way, it's the only way I understand).</p><p style="margin-bottom: 16px;">I could listen to you read the phone book. Hell, I'd pay to listen to you read terms and conditions out loud.</p><p style="margin-bottom: 16px;">Anyway. Just wanted you to know that. Call me later if you want. Or don't. I'll call you anyway.</p><p style="margin-top: 24px;">Love,<br>Niv</p>`
                 },
                 {
                     id: 'p4',
                     sender: 'Niv',
-                    subject: 'Stitch is being a roommate from hell',
-                    snippet: 'He knocked over my water. Again.',
+                    subject: 'Stitch update: He's being weird',
+                    snippet: 'He sat on my chest for exactly 3 minutes then left...',
                     time: 'Feb 12',
                     avatar: 'N',
                     color: '#795548',
                     starred: false,
-                    body: `<p>Update on the cat situation:</p>
-                    <p>Stitch looked me dead in the eye and pushed my water glass off the table. He didn't even run away. He just sat there judging me.</p>
-                    <p>I told him "Aaradhya wouldn't let you do that," and he meowed. I think he misses you. Or he just knows I'm a pushover. Probably both.</p>`
+                    body: `<p style="margin-bottom: 16px;">Quick Stitch update:</p><p style="margin-bottom: 16px;">He sat on my chest today. For exactly three minutes. Just stared at me. Didn't purr, didn't knead, just… judgment. Then he left.</p><p style="margin-bottom: 16px;">I don't know what I did wrong but I feel like I failed some kind of test.</p><p style="margin-bottom: 16px;">He's currently sitting in a box that's way too small for him, looking directly at me. It's unsettling.</p><p style="margin-bottom: 16px;">Send help. Or catnip. Or just come back and explain to him that I'm doing my best here.</p><p style="margin-top: 24px;">- Niv</p>`
                 },
                 {
                     id: 'p5',
                     sender: 'Niv',
-                    subject: 'F1 / Ferrari pain',
-                    snippet: 'Why do I support this team? Why?',
+                    subject: 'About that lipstick tutorial',
+                    snippet: 'Still thinking about when you walked me through it on that call...',
                     time: 'Feb 11',
                     avatar: 'N',
-                    color: '#d32f2f',
-                    starred: false,
-                    body: `<p>Qualifying is in an hour.</p>
-                    <p>I am ready to be hurt again. Ferrari strategy team is basically a random number generator at this point.</p>
-                    <p>If I start texting in all caps later, just ignore me. Or send calming biology facts.</p>`
+                    color: '#e91e63',
+                    starred: true,
+                    body: `<p style="margin-bottom: 16px;">I've been thinking about that call where you walked me through your entire lipstick routine.</p><p style="margin-bottom: 16px;">You were so specific. "First this, then blend it like this, then the other one, then touch it up here." I was just nodding along like I understood, but really I was just thinking about how cute it was that you cared enough to explain it to me in detail.</p><p style="margin-bottom: 16px;">I have now memorized this routine. I could probably recite it. Is that weird? That's probably weird.</p><p style="margin-bottom: 16px;">Anyway. I liked that call. Do more of those.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
                 },
                 {
                     id: 'p6',
-                    sender: 'Letterboxd',
-                    subject: 'Niv logged "Harry Potter & The Half-Blood Prince"',
-                    snippet: 'Rating: 4 Stars. "Rewatching because she quoted it."',
+                    sender: 'Niv',
+                    subject: 'Exam prep check-in',
+                    snippet: 'How's studying going? Remember to eat actual food...',
                     time: 'Feb 10',
-                    avatar: 'LB',
-                    color: '#00e054',
+                    avatar: 'N',
+                    color: '#4caf50',
                     starred: false,
-                    body: `<p><strong>Watched:</strong> Half-Blood Prince</p>
-                    <p><strong>Review:</strong> "Aaradhya is right, the color grading is too dark. But the vibes are immaculate. Wish we were watching this together so she could explain the book differences in real time."</p>`
+                    body: `<p style="margin-bottom: 16px;">Hey,</p><p style="margin-bottom: 16px;">Just checking in. How's the studying going? Are you sleeping? Eating? Or are you in full Lorelai Gilmore mode running on coffee and witty commentary?</p><p style="margin-bottom: 16px;">You're going to do great. I know you're stressed, but you know this stuff. You talk about biology the way some people talk about their favorite movies. You've got this.</p><p style="margin-bottom: 16px;">Take breaks. Drink water. Maybe eat something that isn't coffee.</p><p style="margin-bottom: 16px;">And if you need a distraction, call me. I'll tell you about the weird thing Stitch did today (he knocked over a plant, then sat next to it like he was framing someone else).</p><p style="margin-top: 24px;">You got this,<br>Niv</p>`
                 },
                 {
                     id: 'p7',
                     sender: 'Niv',
-                    subject: 'Exam check-in (Don\'t stress)',
-                    snippet: 'Just a reminder that you are a genius.',
-                    time: 'Feb 09',
+                    subject: 'That FaceTime',
+                    snippet: 'Still thinking about the one time we FaceTimed and you talked about space plants...',
+                    time: 'Feb 9',
                     avatar: 'N',
-                    color: '#009688',
+                    color: '#00bcd4',
                     starred: true,
-                    body: `<p>Hey,</p>
-                    <p>I know the boards prep is intense right now. Just wanted to remind you that you're literally the smartest person I know.</p>
-                    <p>Take a break. Eat something that isn't instant noodles. Go look at the sky for 5 minutes.</p>
-                    <p>You got this. I'm rooting for you from 2083km away.</p>`
+                    body: `<p style="margin-bottom: 16px;">I keep thinking about that FaceTime.</p><p style="margin-bottom: 16px;">You were talking about genetically modifying plants for space instead of changing the space environment. "It's easier to change ourselves than our surroundings sometimes."</p><p style="margin-bottom: 16px;">I was supposed to be listening (I was listening), but I was also just looking at you. The way you get when you talk about this stuff—animated, focused, like you're solving a puzzle in real time.</p><p style="margin-bottom: 16px;">I couldn't stop looking at you. I tried to focus on what you were saying, and I did, but also… you're really beautiful when you talk about things you care about.</p><p style="margin-bottom: 16px;">Anyway. That's all. Just been thinking about it.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
                 },
                 {
                     id: 'p8',
                     sender: 'Strava',
-                    subject: 'Niv titled a run: "Running to clear my head"',
-                    snippet: '5km • "Humid evening, good pace"',
-                    time: 'Feb 08',
+                    subject: 'Activity from Niv: "Running away from missing you (unsuccessful)"',
+                    snippet: '5.2 km • Pace: Distracted',
+                    time: 'Feb 8',
                     avatar: 'ST',
                     color: '#fc4c02',
                     starred: false,
-                    body: `<p><strong>Niv finished a run.</strong></p>
-                    <p>Tried to beat my 5k time. Failed. Blaming the humidity, but actually I was just distracted thinking about when I can visit.</p>`
+                    body: `<div style="font-family: 'Roboto', sans-serif; padding: 20px; background: #f5f5f5; border-radius: 8px;"><h3 style="color: #fc4c02; margin-bottom: 16px;">🏃 Morning Run</h3><p style="margin-bottom: 12px;"><strong>Distance:</strong> 5.2 km</p><p style="margin-bottom: 12px;"><strong>Time:</strong> 34:22</p><p style="margin-bottom: 12px;"><strong>Pace:</strong> 6:37 /km</p><p style="margin-bottom: 16px;"><strong>Description:</strong> Tried to run away from thoughts of you. Failed miserably. Pace suffered because I kept thinking about that thing you said about mitochondria being the powerhouse of the cell and then laughing to myself like an idiot.</p><p style="margin-top: 16px; color: #666;">📍 Location: 2083km away from where I want to be</p></div>`
                 },
                 {
                     id: 'p9',
-                    sender: 'Niv',
-                    subject: 'Your voice',
-                    snippet: 'Is it weird to say I miss a sound?',
-                    time: 'Feb 07',
-                    avatar: 'N',
-                    color: '#607d8b',
-                    starred: true,
-                    body: `<p>It's quiet in my apartment right now and I really miss your voice.</p>
-                    <p>Not even saying anything important. just that fast-talking thing you do when you're excited about something. It's my favorite sound.</p>
-                    <p>Call me later if you're free?</p>`
+                    sender: 'Letterboxd',
+                    subject: 'Niv logged: The Prisoner of Azkaban (Rewatch)',
+                    snippet: 'Rating: ★★★★★ • "Aaradhya's favorite so it's automatically perfect"',
+                    time: 'Feb 7',
+                    avatar: 'LB',
+                    color: '#00e054',
+                    starred: false,
+                    body: `<div style="font-family: 'Roboto', sans-serif; padding: 20px;"><h3 style="color: #00e054; margin-bottom: 16px;">📽️ Harry Potter and the Prisoner of Azkaban (2004)</h3><p style="margin-bottom: 12px;"><strong>Rating:</strong> ★★★★★</p><p style="margin-bottom: 12px;"><strong>Watched:</strong> February 7, 2026</p><p style="margin-bottom: 16px;"><strong>Review:</strong></p><p style="font-style: italic; line-height: 1.6;">"Aaradhya loves this one the most so obviously it's a masterpiece. Also Alfonso Cuarón is a genius. But mostly the first thing. We're going to watch all of them together eventually and I'm going to pretend I haven't seen them 47 times already because watching her reactions will be better than the actual movies."</p><p style="margin-top: 16px; color: #666;">🔁 Rewatch #12</p></div>`
                 },
                 {
                     id: 'p10',
                     sender: 'Niv',
-                    subject: 'Momo disappointment',
-                    snippet: 'I tried a new place. It was a mistake.',
-                    time: 'Feb 06',
+                    subject: 'Random 3am thought',
+                    snippet: 'Can't sleep. Thinking about future cats named Ivy, Jackie, and Wilson...',
+                    time: 'Feb 6',
                     avatar: 'N',
-                    color: '#ff9800',
-                    starred: false,
-                    body: `<p>I cheated on my usual momo spot. Huge mistake.</p>
-                    <p>The wrapper was too thick. The chutney had no kick. I sat there eating it feeling deep regret. I need to come to your city so you can show me what "real" momos taste like, because this wasn't it.</p>`
-                },
-                {
-                    id: 'p11',
-                    sender: 'Niv',
-                    subject: 'Song link',
-                    snippet: 'This came on shuffle and sounded like us.',
-                    time: 'Feb 05',
-                    avatar: 'N',
-                    color: '#1db954',
-                    starred: false,
-                    body: `<p>Sent you a Spotify link.</p>
-                    <p>It's a bit indie/sad but in a good way. Listen to it when you're studying.</p>`
-                },
-                {
-                    id: 'p12',
-                    sender: 'Niv',
-                    subject: 'Octopus update',
-                    snippet: 'I looked it up. They are weird.',
-                    time: 'Feb 04',
-                    avatar: 'N',
-                    color: '#673ab7',
-                    starred: false,
-                    body: `<p>Remember the octopus conversation? I went down a rabbit hole.</p>
-                    <p>They have 9 brains? One for each arm? That seems excessive. I barely have one working brain when I'm talking to you.</p>
-                    <p>Biology is wild. You picked a cool field.</p>`
-                },
-                {
-                    id: 'p13',
-                    sender: 'Niv',
-                    subject: 'Good morning',
-                    snippet: 'Hope you slept well.',
-                    time: 'Feb 03',
-                    avatar: 'N',
-                    color: '#00bcd4',
-                    starred: false,
-                    body: `<p>Morning.</p>
-                    <p>Stitch is asleep on my face. Can't move. Send help (or coffee).</p>
-                    <p>Have a good study session today.</p>`
+                    color: '#9c27b0',
+                    starred: true,
+                    body: `<p style="margin-bottom: 16px;">It's 3am and I can't sleep so naturally I'm thinking about our future cats.</p><p style="margin-bottom: 16px;">Ivy, Jackie, and Wilson. We decided on these names without ever having met in person. We have planned out imaginary cats. This is either very romantic or we're both insane. Probably both.</p><p style="margin-bottom: 16px;">I'm also thinking about how Stitch is going to react to having siblings. He's currently an only child and very spoiled. This is going to be an adjustment for him.</p><p style="margin-bottom: 16px;">Anyway. That's where my brain is at 3am. Cats we don't have yet and a future that feels both very far away and also inevitable.</p><p style="margin-bottom: 16px;">Go to sleep. You have exams to study for tomorrow. Unlike me, who is apparently using my insomnia to plan our future pet adoption strategy.</p><p style="margin-top: 24px;">Love you,<br>Niv</p>`
                 }
             ],
-            
-            // SOCIAL EMAILS
             social: [
                 {
                     id: 's1',
-                    sender: 'Instagram',
-                    subject: 'Niv sent you a reel',
-                    snippet: 'Cat video. Obviously.',
-                    time: '11:00 AM',
-                    avatar: 'IG',
-                    color: '#e91e63',
+                    sender: 'Niv tagged you',
+                    subject: 'Tagged in: "Thoughts about your voice"',
+                    snippet: 'Niv mentioned you in a post...',
+                    time: 'Feb 14',
+                    avatar: 'NT',
+                    color: '#1a73e8',
                     starred: false,
-                    body: `<p>Niv sent a reel.</p><p>"This cat looks exactly like Stitch when he's hungry."</p>`
+                    body: `<div style="background: #e8f0fe; padding: 20px; border-radius: 8px;"><p style="margin-bottom: 12px;"><strong>Niv</strong> tagged you in a post:</p><p style="font-style: italic; padding: 16px; background: white; border-radius: 4px;">"Her voice does this thing where it speeds up when she gets excited and I could listen to it for hours. Which I do. Because I call her like 47 times a day."</p></div>`
                 },
                 {
                     id: 's2',
-                    sender: 'Strava',
-                    subject: 'Kudos on your walk',
-                    snippet: 'Niv liked "Mental health walk"',
-                    time: 'Yesterday',
-                    avatar: 'ST',
-                    color: '#fc4c02',
-                    starred: false,
-                    body: `<p>Niv gave you kudos.</p>`
+                    sender: 'Memory Shared',
+                    subject: 'Niv shared: That one FaceTime',
+                    snippet: 'Remember when you explained space plants to him...',
+                    time: 'Feb 13',
+                    avatar: 'MS',
+                    color: '#4caf50',
+                    starred: true,
+                    body: `<div style="border-left: 4px solid #4caf50; padding-left: 16px;"><h3 style="margin-bottom: 12px;">💭 Memory from January 2026</h3><p style="margin-bottom: 8px;"><strong>Niv</strong> shared a memory:</p><p style="font-style: italic; color: #666;">"That FaceTime where you explained genetically modifying plants for space and said 'it's easier to change ourselves than our surroundings' and I forgot how to form sentences because you were so smart and beautiful."</p></div>`
                 },
                 {
                     id: 's3',
-                    sender: 'Letterboxd',
-                    subject: 'Niv liked your review',
-                    snippet: 'On "Pride & Prejudice"',
+                    sender: 'Someone is thinking about you',
+                    subject: 'Live notification: Currently happening',
+                    snippet: 'Niv is thinking about you right now...',
                     time: 'Feb 12',
-                    avatar: 'LB',
-                    color: '#00e054',
+                    avatar: 'TH',
+                    color: '#ff6b6b',
                     starred: false,
-                    body: `<p>Niv liked your review.</p>`
+                    body: `<div style="text-align: center; padding: 24px;"><h2 style="font-size: 24px; margin-bottom: 16px;">🔴 LIVE</h2><p style="font-size: 18px; margin-bottom: 8px;">Someone 2083km away is thinking about you</p><p style="font-size: 13px; color: #666;">Status: Ongoing<br>Duration: Continuous<br>Intensity: Maximum</p></div>`
                 },
                 {
                     id: 's4',
-                    sender: 'Pinterest',
-                    subject: 'Niv saved to "Future Home"',
-                    snippet: 'A room with a lot of plants.',
+                    sender: 'Daily Appreciation Alert',
+                    subject: 'You are loved',
+                    snippet: 'Automated reminder from 2083km away...',
                     time: 'Feb 11',
-                    avatar: 'PT',
-                    color: '#bd081c',
+                    avatar: 'DA',
+                    color: '#f4b400',
                     starred: false,
-                    body: `<p>He's pinning plant shelves again. He knows you'll need space for your experiments.</p>`
+                    body: `<div style="background: #fff9e6; padding: 20px; border-radius: 8px; text-align: center;"><h3 style="margin-bottom: 16px;">Daily Reminder</h3><p style="font-size: 18px; margin-bottom: 12px;">You are:</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Smart</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Beautiful</p><p style="font-size: 16px; margin-bottom: 8px;">✓ Going to ace those exams</p><p style="font-size: 16px; margin-bottom: 16px;">✓ Loved by someone 2083km away</p><p style="font-size: 12px; color: #666;">This message repeats daily at 9 AM, 2 PM, and 8 PM.</p></div>`
                 },
                 {
                     id: 's5',
                     sender: 'Spotify',
-                    subject: 'Niv added to Blend',
-                    snippet: 'New tracks added.',
+                    subject: 'Niv added songs to your Blend',
+                    snippet: 'New tracks: "The Scientist", "Bloom", "First Day of My Life"...',
                     time: 'Feb 10',
                     avatar: 'SP',
                     color: '#1db954',
                     starred: false,
-                    body: `<p>Niv added 3 songs. They are all very chill.</p>`
+                    body: `<div style="background: #000; color: #1db954; padding: 20px; border-radius: 8px;"><h3 style="margin-bottom: 16px;">🎵 Blend Updated</h3><p style="color: white; margin-bottom: 12px;">Niv added 3 new tracks:</p><p style="color: #1db954; margin-bottom: 8px;">♫ The Scientist - Coldplay</p><p style="color: #1db954; margin-bottom: 8px;">♫ Bloom - The Paper Kites</p><p style="color: #1db954; margin-bottom: 8px;">♫ First Day of My Life - Bright Eyes</p><p style="color: #666; margin-top: 16px; font-size: 12px;">Tagged: "songs that remind me of her"</p></div>`
                 },
                 {
                     id: 's6',
-                    sender: 'Niv',
-                    subject: 'Mentioned you in a comment',
-                    snippet: '"She explains this better than the professor"',
-                    time: 'Feb 09',
+                    sender: 'Instagram',
+                    subject: 'Niv sent you a reel',
+                    snippet: 'It's a cat video. Obviously it's a cat video.',
+                    time: 'Feb 9',
                     avatar: 'IG',
                     color: '#e91e63',
                     starred: false,
-                    body: `<p>On a post about cellular respiration.</p>`
-                },
-                {
-                    id: 's7',
-                    sender: 'Twitter',
-                    subject: 'Niv liked your reply',
-                    snippet: 'To that F1 meme.',
-                    time: 'Feb 08',
-                    avatar: 'TW',
-                    color: '#1da1f2',
-                    starred: false,
-                    body: `<p>Niv liked your reply.</p>`
-                },
-                {
-                    id: 's8',
-                    sender: 'Google Photos',
-                    subject: 'New Memory: "Screenshots"',
-                    snippet: 'You have 400 items in this folder.',
-                    time: 'Feb 07',
-                    avatar: 'GP',
-                    color: '#fbbc05',
-                    starred: false,
-                    body: `<p>Mostly blurry faces from video calls.</p>`
-                },
-                {
-                    id: 's9',
-                    sender: 'Niv',
-                    subject: 'Tagged you',
-                    snippet: 'Meme: "Dating a biology student"',
-                    time: 'Feb 06',
-                    avatar: 'IG',
-                    color: '#e91e63',
-                    starred: false,
-                    body: `<p>"This is literally us."</p>`
+                    body: `<div style="padding: 20px;"><p style="margin-bottom: 12px;"><strong>Niv</strong> sent you a reel</p><p style="font-style: italic; color: #666;">Message: "This is Stitch's energy. Chaotic and judgmental."</p></div>`
                 }
             ],
-            
-            // PROMOTIONS EMAILS
             promotions: [
                 {
                     id: 'pr1',
-                    sender: 'Skyscanner',
-                    subject: 'Price Alert: Your Route',
-                    snippet: 'Price unchanged. Sorry.',
-                    time: '9:00 AM',
-                    avatar: 'SK',
-                    color: '#00a698',
+                    sender: 'The Affection Warehouse',
+                    subject: 'Limited Time: Premium Hand-Holding Package',
+                    snippet: 'Exclusive offer ending never: Unlimited hand-holding...',
+                    time: 'Feb 12',
+                    avatar: 'AW',
+                    color: '#8d6e63',
                     starred: false,
-                    body: `<p>We are watching the flights. Niv checks this page 4 times a day.</p>`
+                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px; font-family: Helvetica, sans-serif;"><h1 style="font-size: 20px; text-align: center; margin-bottom: 24px; color: #333; letter-spacing: 2px;">THE AFFECTION WAREHOUSE</h1><div style="border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 20px 0; margin-bottom: 24px;"><h2 style="font-size: 16px; font-weight: 400; margin-bottom: 12px;">Premium Hand-Holding Package</h2><p style="font-size: 14px; color: #666; line-height: 1.6;">Unlimited access. Lifetime warranty. No assembly required.</p></div><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Includes</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>→ Interlocked fingers (perpetual)</li><li>→ Thumb circles on back of hand</li><li>→ Never letting go policy</li><li>→ Applicable during: walks, movies, grocery shopping, life</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;"><p style="font-size: 11px; color: #999;">Offer expires: Never</p><p style="font-size: 11px; color: #999;">Shipping: Upon arrival</p></div></div>`
                 },
                 {
                     id: 'pr2',
-                    sender: 'The Cat Store',
-                    subject: 'Adoption Event: Meet Ivy & Jackie?',
-                    snippet: 'Kittens looking for homes.',
-                    time: 'Feb 12',
-                    avatar: 'CS',
-                    color: '#ff9800',
+                    sender: 'Future Planning Co.',
+                    subject: 'New: Complete Domestic Bliss Package',
+                    snippet: 'Includes: Grocery shopping together, Harry Potter marathons, cat supervision...',
+                    time: 'Feb 10',
+                    avatar: 'FP',
+                    color: '#4caf50',
                     starred: false,
-                    body: `<p>Just browsing. For the future. We need to find a Wilson first.</p>`
+                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px; font-family: 'Helvetica', sans-serif;"><h1 style="font-size: 18px; text-align: center; margin-bottom: 32px; letter-spacing: 2px;">FUTURE PLANNING CO.</h1><h2 style="font-size: 16px; margin-bottom: 16px; border-bottom: 1px solid #e0e0e0; padding-bottom: 8px;">Complete Domestic Bliss Package</h2><p style="font-size: 14px; color: #666; margin-bottom: 24px; line-height: 1.6;">Everything you need for a shared life. Assembly required: Just show up.</p><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px;">PACKAGE INCLUDES:</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>• Grocery shopping together (arguing about vegetables)</li><li>• Harry Potter marathon rights (all 8 films)</li><li>• Shared coffee addiction management</li><li>• Cat supervision (Stitch, Ivy, Jackie, Wilson)</li><li>• Cooking disasters and occasional successes</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 16px;"><p style="font-size: 11px; color: #999;">Available: Soon™</p></div></div>`
                 },
                 {
                     id: 'pr3',
-                    sender: 'Coffee House',
-                    subject: 'BOGO Offer',
-                    snippet: 'Buy one, get one free.',
-                    time: 'Feb 10',
-                    avatar: 'CH',
-                    color: '#795548',
+                    sender: 'The Distance Elimination Company',
+                    subject: 'New Service: 2083km Removal',
+                    snippet: 'Professional geographic correction. Permanent results.',
+                    time: 'Feb 8',
+                    avatar: 'DE',
+                    color: '#607d8b',
                     starred: false,
-                    body: `<p>Offer valid only in person. Which is rude, considering the 2083km.</p>`
+                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px;"><h1 style="font-size: 20px; text-align: center; margin-bottom: 32px; letter-spacing: 3px;">DISTANCE ELIMINATION CO.</h1><div style="border: 2px solid #333; padding: 24px; margin-bottom: 24px; text-align: center;"><h2 style="font-size: 18px; margin-bottom: 12px;">2083 Kilometer Removal Service</h2><p style="font-size: 14px; color: #666;">Professional. Permanent. Long overdue.</p></div><div style="margin-bottom: 24px;"><table style="width: 100%; font-size: 13px; line-height: 2;"><tr><td>Current Distance:</td><td style="text-align: right;">2083 km</td></tr><tr><td>Target Distance:</td><td style="text-align: right;">0 km</td></tr><tr><td>Method:</td><td style="text-align: right;">Planes + Plans</td></tr><tr><td>Timeline:</td><td style="text-align: right;">ASAP</td></tr></table></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 16px;"><p style="font-size: 11px; color: #999;">Estimated completion: When the universe cooperates</p></div></div>`
                 },
                 {
                     id: 'pr4',
-                    sender: 'Wizarding World',
-                    subject: 'New Wand Collection',
-                    snippet: 'Ravenclaw editions back in stock.',
-                    time: 'Feb 08',
-                    avatar: 'WW',
+                    sender: 'The Listening Company',
+                    subject: 'Premium: Unlimited Biology Discussion Package',
+                    snippet: 'For all your cellular respiration and exam prep needs...',
+                    time: 'Feb 6',
+                    avatar: 'LC',
                     color: '#3f51b5',
                     starred: false,
-                    body: `<p>You definitely need a new wand for the collection.</p>`
-                },
-                {
-                    id: 'pr5',
-                    sender: 'Netflix',
-                    subject: 'New Arrival: Gilmore Girls',
-                    snippet: 'Watch it again?',
-                    time: 'Feb 06',
-                    avatar: 'NF',
-                    color: '#e50914',
-                    starred: false,
-                    body: `<p>You've watched it 10 times. Make it 11.</p>`
-                },
-                {
-                    id: 'pr6',
-                    sender: 'Stationery World',
-                    subject: 'Highlighters Sale',
-                    snippet: 'For your exam prep.',
-                    time: 'Feb 04',
-                    avatar: 'SW',
-                    color: '#ffeb3b',
-                    starred: false,
-                    body: `<p>Pastel highlighters. Your weakness.</p>`
+                    body: `<div style="max-width: 500px; margin: 0 auto; border: 1px solid #e0e0e0; padding: 32px;"><h1 style="font-size: 18px; text-align: center; margin-bottom: 32px; letter-spacing: 2px;">THE LISTENING COMPANY</h1><div style="border-top: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; padding: 24px 0; margin-bottom: 24px;"><h2 style="font-size: 16px; font-weight: 400; margin-bottom: 12px;">Unlimited Biology Discussion Package</h2><p style="font-size: 14px; color: #666; line-height: 1.6;">Talk about mitochondria for hours. We'll listen. Enthusiastically.</p></div><div style="margin-bottom: 24px;"><p style="font-size: 12px; color: #999; margin-bottom: 12px;">FEATURES:</p><ul style="list-style: none; padding: 0; font-size: 14px; line-height: 2;"><li>• Genuine interest (not feigned)</li><li>• Active listening guaranteed</li><li>• "Tell me more" available 24/7</li><li>• Enthusiasm matching your own</li><li>• Zero eye-rolling policy</li></ul></div><div style="text-align: center; border-top: 1px solid #e0e0e0; padding-top: 20px;"><p style="font-size: 11px; color: #999;">Duration: Lifetime • Cost: Free • Availability: Always</p></div></div>`
                 }
             ],
-            
-            // PURCHASES
             purchases: [
                 {
                     id: 'pur1',
-                    sender: 'Uber',
-                    subject: 'Receipt: Airport Drop (Manifesting)',
-                    snippet: 'One day. Not today, but one day.',
-                    time: 'Feb 13',
-                    avatar: 'UB',
-                    color: '#000',
+                    sender: 'The Affection Store',
+                    subject: 'Your order of Daily "I Love You" Messages has shipped',
+                    snippet: 'Order #2083-HEART • Delivery: Continuous',
+                    time: 'Feb 11',
+                    avatar: 'AS',
+                    color: '#f4b400',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Ride to Airport',
-                        quantity: '1',
-                        vendor: 'Uber Dreams',
-                        orderNumber: 'UBER-FUTURE',
-                        orderDate: 'Pending',
-                        delivery: 'Someday',
-                        status: 'Dreaming'
+                        product: 'Daily "I Love You" Messages',
+                        quantity: 'Unlimited',
+                        vendor: 'The Affection Store',
+                        orderNumber: '2083-HEART-001',
+                        orderDate: 'February 11, 2026',
+                        delivery: 'Continuous delivery (ongoing)',
+                        status: 'Shipped & Active'
                     },
-                    body: `<p>I am manifesting this. The car ride to come see you.</p>`
+                    body: `<p>Thank you for your order. Messages are being delivered continuously.</p>`
                 },
                 {
                     id: 'pur2',
-                    sender: 'Spotify',
-                    subject: 'Receipt: Premium Duo',
-                    snippet: 'Invited Aaradhya.',
-                    time: 'Feb 11',
+                    sender: 'Future Dreams LLC',
+                    subject: 'Order Confirmation: Four-Cat Household Plan',
+                    snippet: 'Order #2083-CATS • Items: Stitch, Ivy, Jackie, Wilson',
+                    time: 'Feb 9',
+                    avatar: 'FD',
+                    color: '#795548',
+                    starred: false,
+                    isPurchase: true,
+                    purchaseData: {
+                        product: 'Four-Cat Household Subscription',
+                        quantity: '4 Cats (Stitch, Ivy, Jackie, Wilson)',
+                        vendor: 'Future Dreams LLC',
+                        orderNumber: '2083-CATS-004',
+                        orderDate: 'February 9, 2026',
+                        delivery: 'Pending proximity',
+                        status: 'Pre-ordered'
+                    },
+                    body: `<p>Your future cat family is reserved and waiting. Stitch is already in possession. Ivy, Jackie, and Wilson pending adoption.</p>`
+                },
+                {
+                    id: 'pur3',
+                    sender: 'Voice Call Minutes Inc',
+                    subject: 'Receipt: Unlimited Call Package',
+                    snippet: 'Order #VOICE-UNLIMITED',
+                    time: 'Feb 7',
+                    avatar: 'VC',
+                    color: '#00bcd4',
+                    starred: false,
+                    isPurchase: true,
+                    purchaseData: {
+                        product: 'Unlimited Voice Call Minutes',
+                        quantity: '∞',
+                        vendor: 'Long Distance Solutions',
+                        orderNumber: 'VOICE-UNLIMITED',
+                        orderDate: 'February 7, 2026',
+                        delivery: 'Instant',
+                        status: 'Active (heavily used)'
+                    },
+                    body: `<p>Because texting isn't enough when you're obsessed with someone's voice.</p>`
+                },
+                {
+                    id: 'pur4',
+                    sender: 'Exam Support Services',
+                    subject: 'Your order: Good Luck & Belief Package',
+                    snippet: 'Order #EXAM-ACE',
+                    time: 'Feb 5',
+                    avatar: 'ES',
+                    color: '#4caf50',
+                    starred: false,
+                    isPurchase: true,
+                    purchaseData: {
+                        product: 'Good Luck & Unwavering Belief',
+                        quantity: 'Maximum',
+                        vendor: 'Niv (2083km away)',
+                        orderNumber: 'EXAM-ACE-2026',
+                        orderDate: 'February 5, 2026',
+                        delivery: 'Telepathic',
+                        status: 'Constantly active'
+                    },
+                    body: `<p>You're going to ace these exams. I believe in you more than you believe in yourself.</p>`
+                },
+                {
+                    id: 'pur5',
+                    sender: 'Spotify Premium',
+                    subject: 'Receipt: Duo Plan Activated',
+                    snippet: 'Aaradhya has been added to your plan',
+                    time: 'Feb 4',
                     avatar: 'SP',
                     color: '#1db954',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Premium Duo Plan',
-                        quantity: '1 Month',
+                        product: 'Spotify Duo Premium',
+                        quantity: '2 accounts',
                         vendor: 'Spotify',
-                        orderNumber: 'SPOT-DUO-01',
-                        orderDate: 'Feb 11, 2026',
+                        orderNumber: 'SPOT-DUO-2026',
+                        orderDate: 'February 4, 2026',
                         delivery: 'Digital',
                         status: 'Active'
                     },
-                    body: `<p>No more ads interrupting our shared sad boy hours.</p>`
+                    body: `<p>Because you need good music while studying and I refuse to let ads interrupt your playlists.</p>`
                 },
                 {
-                    id: 'pur3',
-                    sender: 'Amazon',
-                    subject: 'Order: "Board Exam Stress Ball"',
-                    snippet: 'Sent to your address.',
-                    time: 'Feb 09',
-                    avatar: 'AM',
-                    color: '#ff9900',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Squishy Cat Toy',
-                        quantity: '1',
-                        vendor: 'Amazon',
-                        orderNumber: 'AMZ-999',
-                        orderDate: 'Feb 09, 2026',
-                        delivery: 'Shipped',
-                        status: 'On the way'
-                    },
-                    body: `<p>Something to squeeze when physics gets annoying.</p>`
-                },
-                {
-                    id: 'pur4',
-                    sender: 'Future Plans Inc.',
-                    subject: 'Order: "Ivy, Jackie, Wilson"',
-                    snippet: 'Reservation for 3 cats.',
-                    time: 'Feb 07',
-                    avatar: 'FP',
-                    color: '#607d8b',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Three Cats',
-                        quantity: '3',
-                        vendor: 'Shelter',
-                        orderNumber: 'CATS-2027',
-                        orderDate: 'Future',
-                        delivery: 'Pending',
-                        status: 'Goal'
-                    },
-                    body: `<p>Just keeping the dream alive. Stitch needs friends.</p>`
-                },
-                {
-                    id: 'pur5',
-                    sender: 'Data Provider',
-                    subject: 'Top Up: Video Calls',
-                    snippet: 'Unlimited data plan.',
-                    time: 'Feb 05',
-                    avatar: 'DP',
+                    id: 'pur6',
+                    sender: 'Flight Alert System',
+                    subject: 'Price Watch: Your City → My City',
+                    snippet: 'Monitoring flights constantly...',
+                    time: 'Feb 3',
+                    avatar: 'FA',
                     color: '#2196f3',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: '5G Data Add-on',
-                        quantity: 'Unlimited',
-                        vendor: 'Jio',
-                        orderNumber: 'DATA-001',
-                        orderDate: 'Feb 05, 2026',
-                        delivery: 'Instant',
-                        status: 'Active'
+                        product: 'Flight Price Monitoring Service',
+                        quantity: 'Continuous surveillance',
+                        vendor: 'Skyscanner',
+                        orderNumber: 'FLY-2083KM-AWAY',
+                        orderDate: 'February 3, 2026',
+                        delivery: 'Email alerts',
+                        status: 'Monitoring (obsessively)'
                     },
-                    body: `<p>So the video doesn't lag when you're talking.</p>`
+                    body: `<p>Checking prices multiple times a day. Will book the moment it's feasible. 2083km won't last forever.</p>`
                 }
             ],
-            
-            // BIN / DRAFTS
+            spam: [
+                {
+                    id: 'sp1',
+                    sender: 'Generic Dating App',
+                    subject: 'You have 47 new matches nearby!',
+                    snippet: 'Singles in your area want to meet you...',
+                    time: 'Feb 9',
+                    avatar: 'DA',
+                    color: '#999',
+                    starred: false,
+                    body: `<p>This is spam. You don't need this. You already have someone 2083km away who thinks you're perfect.</p>`
+                }
+            ],
             bin: [
                 {
                     id: 'b1',
-                    sender: 'Draft: Anxiety',
-                    subject: 'What if...',
-                    snippet: 'What if we meet and it’s awkward?',
-                    time: 'Feb 14',
-                    avatar: 'N',
-                    color: '#ccc',
+                    sender: 'Self Doubt',
+                    subject: 'What if you're not good enough',
+                    snippet: 'What if...',
+                    time: 'Feb 8',
+                    avatar: 'SD',
+                    color: '#666',
                     starred: false,
-                    body: `<p>Deleted. It won't be awkward. We talk for 6 hours a day. It'll be fine. Shut up brain.</p>`
+                    body: `<p>This belongs in the trash. It's not true. You're extraordinary.</p>`
                 },
                 {
                     id: 'b2',
-                    sender: 'Draft: Bad Joke',
-                    subject: 'Are you a mitochondria?',
-                    snippet: 'Because you are the powerhouse of my...',
-                    time: 'Feb 12',
+                    sender: 'Draft: Bad F1 Joke',
+                    subject: 'Why did the Red Bull car...',
+                    snippet: 'Because it had too much downforce on my heart.',
+                    time: 'Feb 7',
                     avatar: 'N',
                     color: '#ccc',
                     starred: false,
-                    body: `<p>This is too cringey even for me. Deleting before I send it and get blocked.</p>`
+                    body: `<p>Deleted before sending because even I have standards.</p>`
                 },
                 {
                     id: 'b3',
-                    sender: 'Draft: Impulse Buy',
-                    subject: 'Flight Booking (Unsent)',
-                    snippet: 'I almost clicked buy.',
-                    time: 'Feb 10',
+                    sender: 'Draft: Flight Booking (Almost)',
+                    subject: 'Confirmation #...',
+                    snippet: 'I had my credit card out and everything.',
+                    time: 'Feb 6',
                     avatar: 'N',
                     color: '#ccc',
                     starred: false,
-                    body: `<p>I had the dates selected. But you have exams. And I have rent. Being an adult is the worst.</p>`
+                    body: `<p>Almost booked a flight at 2am. Then remembered rent exists. Deleted. Still want to though.</p>`
                 },
                 {
                     id: 'b4',
-                    sender: 'Draft: Too Honest',
-                    subject: 'I hate this',
-                    snippet: 'I hate the distance today.',
-                    time: 'Feb 08',
+                    sender: 'Draft: Anxiety Email',
+                    subject: 'What if when we meet...',
+                    snippet: 'What if I'm annoying in 3D?',
+                    time: 'Feb 5',
                     avatar: 'N',
                     color: '#ccc',
                     starred: false,
-                    body: `<p>Not sending this. No point complaining. It is what it is. But ugh.</p>`
+                    body: `<p>Deleted. Overthinking. We're going to be fine. More than fine.</p>`
                 },
                 {
                     id: 'b5',
-                    sender: 'Draft: 3AM thoughts',
-                    subject: 'You know what...',
-                    snippet: 'Rambling about space plants.',
-                    time: 'Feb 06',
+                    sender: 'Draft: Too Much',
+                    subject: 'I miss you',
+                    snippet: 'Typed this 12 times today already.',
+                    time: 'Feb 4',
                     avatar: 'N',
                     color: '#ccc',
                     starred: false,
-                    body: `<p>I was going to write a whole theory about your space plant idea but I need to sleep.</p>`
+                    body: `<p>Deleted because I already said it on the call. And in the text. And in the other email. But it's still true.</p>`
                 }
             ]
         };
 
-        const allEmails = [
-            ...emailDatabase.primary, 
-            ...emailDatabase.social, 
-            ...emailDatabase.promotions,
-            ...emailDatabase.purchases,
-            ...emailDatabase.spam,
-            ...emailDatabase.bin
-        ];
-        
+        const allEmails = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases, ...emailDatabase.spam, ...emailDatabase.bin];
         let currentCategory = 'all-inboxes';
         let currentEmails = allEmails;
 
@@ -823,7 +717,6 @@
             document.getElementById('badge-promotions').textContent = emailDatabase.promotions.length;
             document.getElementById('badge-purchases').textContent = emailDatabase.purchases.length;
             document.getElementById('badge-bin').textContent = emailDatabase.bin.length;
-            
             const allReadable = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases];
             document.getElementById('badge-all').textContent = allReadable.length;
         }
@@ -835,47 +728,21 @@
         function renderEmails(filterText = '') {
             const container = document.getElementById('emailList');
             container.innerHTML = '';
-            
             const aiOverview = document.getElementById('aiOverview');
             if(currentCategory === 'all-inboxes' && filterText === '') {
                 aiOverview.style.display = 'block';
             } else {
                 aiOverview.style.display = 'none';
             }
-            
-            const filtered = currentEmails.filter(e => 
-                e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
-                e.subject.toLowerCase().includes(filterText.toLowerCase())
-            );
-
+            const filtered = currentEmails.filter(e => e.sender.toLowerCase().includes(filterText.toLowerCase()) || e.subject.toLowerCase().includes(filterText.toLowerCase()));
             filtered.forEach(email => {
                 const item = document.createElement('div');
                 item.className = 'email-item';
-                item.onclick = (e) => {
-                    if(!e.target.closest('.star-icon')) openEmail(email.id);
-                };
-
+                item.onclick = (e) => { if(!e.target.closest('.star-icon')) openEmail(email.id); };
                 const starClass = email.starred ? 'starred' : '';
-
-                item.innerHTML = `
-                    <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
-                    <div class="email-content-main">
-                        <div class="email-first-line">
-                            <span class="sender-name">${email.sender}</span>
-                            <span class="email-time">${email.time}</span>
-                        </div>
-                        <div class="subject-line">${email.subject}</div>
-                        <div class="snippet">${email.snippet}</div>
-                    </div>
-                    <div class="star-icon" onclick="toggleStar(event, '${email.id}')">
-                        <svg class="star-svg ${starClass}" viewBox="0 0 24 24">
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                        </svg>
-                    </div>
-                `;
+                item.innerHTML = `<div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div><div class="email-content-main"><div class="email-first-line"><span class="sender-name">${email.sender}</span><span class="email-time">${email.time}</span></div><div class="subject-line">${email.subject}</div><div class="snippet">${email.snippet}</div></div><div class="star-icon" onclick="toggleStar(event, '${email.id}')"><svg class="star-svg ${starClass}" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>`;
                 container.appendChild(item);
             });
-            
             if (filtered.length === 0) {
                 container.innerHTML = '<div style="padding: 40px; text-align: center; color: #5f6368;">No mails found.</div>';
             }
@@ -897,64 +764,29 @@
         function openEmail(id) {
             const email = allEmails.find(e => e.id === id);
             if (!email) return;
-
             document.getElementById('detailSubject').textContent = email.subject;
             document.getElementById('detailSender').textContent = email.sender;
             document.getElementById('detailTime').textContent = email.time;
-            
             const avatar = document.getElementById('detailAvatar');
             avatar.textContent = email.avatar;
             avatar.style.background = email.color;
-            
             const starSvg = document.getElementById('detailStarSvg');
             if(email.starred) starSvg.classList.add('starred');
             else starSvg.classList.remove('starred');
-            
             const illustrationContainer = document.getElementById('illustrationContainer');
             if (email.illustration) {
                 illustrationContainer.innerHTML = `<div class="artistic-illustration">${email.illustration}</div>`;
             } else {
                 illustrationContainer.innerHTML = '';
             }
-            
             const detailBody = document.getElementById('detailBody');
-            
             if (email.isPurchase && email.purchaseData) {
                 const p = email.purchaseData;
-                const receiptHtml = `
-                    <div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; margin: 20px 0; font-family: 'Roboto', sans-serif; background: #fafafa;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
-                            <span style="font-weight: 500; color: #202124;">Order Confirmation</span>
-                            <span style="color: #5f6368;">${p.orderNumber}</span>
-                        </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; font-size: 14px;">
-                            <div>
-                                <div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Product</div>
-                                <div style="font-weight: 500;">${p.product}</div>
-                            </div>
-                            <div>
-                                <div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Quantity</div>
-                                <div>${p.quantity}</div>
-                            </div>
-                            <div>
-                                <div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Date</div>
-                                <div>${p.orderDate}</div>
-                            </div>
-                            <div>
-                                <div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Status</div>
-                                <div style="color: #188038; font-weight: 500;">${p.status}</div>
-                            </div>
-                        </div>
-                         <div style="text-align: center; border-top: 1px dashed #ccc; padding-top: 12px; font-size: 12px; color: #5f6368;">
-                            Vendor: ${p.vendor}
-                        </div>
-                    </div>
-                `;
+                const receiptHtml = `<div style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 24px; margin: 20px 0; font-family: 'Roboto', sans-serif; background: #fafafa;"><div style="display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;"><span style="font-weight: 500; color: #202124;">Order Confirmation</span><span style="color: #5f6368;">${p.orderNumber}</span></div><div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; font-size: 14px;"><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Product</div><div style="font-weight: 500;">${p.product}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Quantity</div><div>${p.quantity}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Date</div><div>${p.orderDate}</div></div><div><div style="color: #5f6368; font-size: 12px; margin-bottom: 4px;">Status</div><div style="color: #188038; font-weight: 500;">${p.status}</div></div></div><div style="text-align: center; border-top: 1px dashed #ccc; padding-top: 12px; font-size: 12px; color: #5f6368;">Vendor: ${p.vendor}</div></div>`;
                 detailBody.innerHTML = receiptHtml + email.body;
             } else {
                 detailBody.innerHTML = email.body;
             }
-            
             document.getElementById('emailListView').classList.remove('view-visible');
             document.getElementById('emailListView').classList.add('view-hidden');
             document.getElementById('emailDetailView').classList.add('active');
@@ -993,21 +825,16 @@
             item.onclick = () => {
                 document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
-
                 const view = item.getAttribute('data-view');
                 const color = item.getAttribute('data-color');
                 const bg = item.getAttribute('data-bg');
-                
                 if(color && bg) {
                     root.style.setProperty('--primary-color', color);
                     root.style.setProperty('--active-bg', bg);
                 }
-
                 const text = item.querySelector('.nav-text').textContent;
                 document.getElementById('categoryLabel').textContent = text;
-                
                 currentCategory = view;
-                
                 if (view === 'all-inboxes') {
                     currentEmails = allEmails.filter(e => !emailDatabase.bin.includes(e) && !emailDatabase.spam.includes(e));
                 } else if (view === 'primary') {
@@ -1025,9 +852,7 @@
                 } else {
                     currentEmails = [];
                 }
-                
                 renderEmails();
-
                 document.getElementById('sidebar').classList.remove('open');
                 document.getElementById('overlay').classList.remove('active');
             };
@@ -1037,7 +862,6 @@
             renderEmails(e.target.value);
         });
 
-        // Initial render
         currentEmails = allEmails.filter(e => !emailDatabase.bin.includes(e) && !emailDatabase.spam.includes(e));
         updateBadges();
         renderEmails();
