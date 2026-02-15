@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Importing Roboto for the authentic Gmail App feel -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Sans / Product Sans local mimic via Google Fonts is hard, using Roboto + adjustments -->
     <style>
         :root {
             --primary-color: #d93025;
@@ -19,9 +20,25 @@
             --search-bg: #e3e7ed;
             --card-bg: #f2f6fc;
             --google-blue: #0b57d0;
+            --ai-bg: #eff3f8; /* Specific Gemini Card BG */
+            
             /* Authentic Gmail App Fonts */
             --font-ui: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-brand: 'Product Sans', 'Google Sans', 'Roboto', sans-serif;
+            --font-brand: 'Google Sans', 'Roboto', sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Open Sans'), local('Roboto'); /* Fallback mimic */
+        }
+        
+        @font-face {
+            font-family: 'Google Sans';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Open Sans Medium'), local('Roboto Medium'); /* Fallback mimic */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -169,19 +186,66 @@
         .category-label { padding: 16px 16px 8px; font-size: 12px; font-weight: 500; color: #444746; font-family: var(--font-brand); letter-spacing: 0.1px; }
         .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
 
-        /* Updated Email Item Styles for Realism */
+        /* --- AI Overview Styles (Gemini Card) --- */
+        .ai-overview-card {
+            margin: 16px;
+            padding: 16px 20px 24px 20px;
+            background-color: var(--ai-bg); /* Light Blue #eff3f8 */
+            border-radius: 12px;
+            font-family: var(--font-brand);
+            position: relative;
+        }
+
+        .ai-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .ai-title-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-label {
+            font-size: 16px;
+            color: #1f1f1f;
+            font-weight: 400;
+        }
+
+        .gemini-star {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .ai-chevron {
+            width: 24px;
+            height: 24px;
+            fill: #444746;
+        }
+
+        .ai-content {
+            font-size: 15px;
+            color: #1f1f1f;
+            line-height: 1.6;
+            font-family: var(--font-ui);
+        }
+
+        /* Updated Email Item Styles */
         .email-item { display: flex; align-items: flex-start; padding: 12px 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f2f2f2; }
         .email-item:active { background: #f2f6fc; }
 
-        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; text-transform: uppercase; font-family: var(--font-brand); }
+        .avatar-container { width: 40px; height: 40px; flex-shrink: 0; position: relative; }
+        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; text-transform: uppercase; font-family: var(--font-brand); position: absolute; inset:0; }
+        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: #eee; }
+        
         .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
         .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
-        /* Sender Name: Bold, darker */
         .sender-name { font-size: 16px; color: #1f1f1f; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 8px; font-family: var(--font-ui); }
         .email-time { font-size: 12px; color: #1f1f1f; font-weight: 500; flex-shrink: 0; font-family: var(--font-ui); }
-        /* Subject: Boldish */
         .subject-line { font-size: 14px; color: #1f1f1f; margin-bottom: 2px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-ui); }
-        /* Snippet: Regular, Grey */
         .snippet { font-size: 14px; color: #5e5e5e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; font-family: var(--font-ui); }
         .star-icon { width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
         .star-svg { width: 20px; height: 20px; fill: none; stroke: #5e5e5e; stroke-width: 2; transition: 0.2s; }
@@ -201,7 +265,8 @@
         .detail-star { width: 24px; height: 24px; margin-top: 6px; cursor: pointer; flex-shrink: 0; }
 
         .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 20px; }
-        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); }
+        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); overflow: hidden; position: relative;}
+        .sender-avatar-detail img { width: 100%; height: 100%; object-fit: cover; }
         .sender-info-detail { flex: 1; }
         .sender-name-detail { font-size: 14px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
         .sender-to { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
@@ -324,7 +389,6 @@
     <!-- LOGIN PAGE VIEW -->
     <div class="login-view" id="loginView">
         <div class="login-card">
-            <!-- Fixed Google Logo to actual Image for perfect look -->
             <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" height="28" class="google-logo-login" style="width: auto;">
             
             <h1 class="login-heading">Sign in</h1>
@@ -465,6 +529,8 @@
     </div>
 
     <script>
+        const nivPfpUrl = "https://share.google/Wi667p59wJeprKEgD";
+
         const emailDatabase = {
             primary: [
                 {
@@ -887,23 +953,23 @@
                 {
                     id: 'pur1',
                     sender: 'Amazon',
-                    subject: 'Order Confirmed: "Books She Mentioned Once"',
-                    snippet: 'Delivery estimate: Before she forgets she mentioned it',
+                    subject: 'Order Confirmed: "Percy Jackson Series"',
+                    snippet: 'Delivery estimate: Tomorrow',
                     time: 'Feb 09',
                     avatar: 'A',
                     color: '#FF9900',
                     starred: false,
                     isPurchase: true,
                     purchaseData: {
-                        product: 'Song of Achilles + Six of Crows',
-                        quantity: '2 Items',
+                        product: 'Percy Jackson & The Olympians (5 Books)',
+                        quantity: '1 Box Set',
                         vendor: 'Amazon',
-                        orderNumber: 'LOVE-90210',
+                        orderNumber: 'PJ-OLYMP-26',
                         orderDate: 'Feb 9, 2026',
                         delivery: 'Feb 14, 2026',
                         status: 'Shipped'
                     },
-                    body: `<p>You mentioned books. I provide books. This is how I function.</p>`
+                    body: `<p>You mentioned these books. I provide books. This is how I function.</p>`
                 },
                 {
                     id: 'pur2',
@@ -1040,6 +1106,28 @@
         function renderEmails(filterText = '') {
             const container = document.getElementById('emailList');
             container.innerHTML = '';
+
+            // --- AI OVERVIEW (Gemini Style) ---
+            if (currentCategory === 'all-inboxes' && !filterText) {
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'ai-overview-card';
+                aiDiv.innerHTML = `
+                    <div class="ai-header-row">
+                        <div class="ai-title-group">
+                            <svg class="gemini-star" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M13.5 19.5h-3v-3h3v3zm0-15h-3v-3h3v3zm7.5 7.5h-3v-3h3v3zm-15 0h-3v-3h3v3z"/>
+                                <path fill="#DB4437" d="M12 2C9.5 7.5 7.5 9.5 2 12c5.5 2.5 7.5 4.5 10 10 2.5-5.5 4.5-7.5 10-10-5.5-2.5-7.5-4.5-10-10z"/>
+                            </svg>
+                            <span class="ai-label">AI Overview</span>
+                        </div>
+                        <svg class="ai-chevron" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+                    </div>
+                    <div class="ai-content">
+                        Niv is missing you (high confidence). He’s purchased the <strong>Percy Jackson series</strong> for you, is currently watching all 8 <strong>Harry Potter</strong> movies to impress you, and is reading Agatha Christie. <br><br><strong>Action items:</strong> Accept affection immediately.
+                    </div>
+                `;
+                container.appendChild(aiDiv);
+            }
             
             const filtered = currentEmails.filter(e => 
                 e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
@@ -1055,8 +1143,27 @@
 
                 const starClass = email.starred ? 'starred' : '';
 
+                // Handle Niv Profile Picture logic with fallback
+                let avatarHtml = '';
+                if (email.sender === 'Niv') {
+                    // Using the container method to allow hiding the img on error
+                    avatarHtml = `
+                        <div class="avatar-container">
+                            <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                            <img src="${nivPfpUrl}" class="avatar-img" alt="Niv" 
+                                onerror="this.style.display='none';">
+                        </div>
+                    `;
+                } else {
+                    avatarHtml = `
+                        <div class="avatar-container">
+                            <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                        </div>
+                    `;
+                }
+
                 item.innerHTML = `
-                    <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                    ${avatarHtml}
                     <div class="email-content-main">
                         <div class="email-first-line">
                             <span class="sender-name">${email.sender}</span>
@@ -1100,9 +1207,17 @@
             document.getElementById('detailSender').textContent = email.sender;
             document.getElementById('detailTime').textContent = email.time;
             
-            const avatar = document.getElementById('detailAvatar');
-            avatar.textContent = email.avatar;
-            avatar.style.background = email.color;
+            const avatarContainer = document.getElementById('detailAvatar');
+            
+            // Handle Detail View Avatar
+            if (email.sender === 'Niv') {
+                avatarContainer.innerHTML = `<div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
+                                             <img src="${nivPfpUrl}" alt="Niv" onerror="this.style.display='none'">`;
+                avatarContainer.style.background = 'transparent';
+            } else {
+                avatarContainer.innerHTML = `<div class="avatar-circle" style="background: ${email.color}; position:static;">${email.avatar}</div>`;
+                avatarContainer.style.background = 'transparent'; // Reset to avoid double bg
+            }
             
             const starSvg = document.getElementById('detailStarSvg');
             if(email.starred) starSvg.classList.add('starred');
