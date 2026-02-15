@@ -1,1350 +1,606 @@
+<!-- START OF FILE Paste February 15, 2026 - 10:55AM -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#f6f8fc">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>A-Mail</title>
+    <title>Gmail</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Importing Roboto for the authentic Gmail App feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Google Sans / Product Sans local mimic via Google Fonts is hard, using Roboto + adjustments -->
+    <!-- Roboto for UI, Google Sans for Headers -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --primary-color: #d93025;
-            --active-bg: #fce8e6;
-            --text-primary: #1f1f1f;
-            --text-secondary: #444746;
-            --border-color: #e0e0e0;
-            --search-bg: #e3e7ed;
-            --card-bg: #f2f6fc;
-            --google-blue: #0b57d0;
-            --ai-bg: #eff3f8; /* Specific Gemini Card BG */
+            --primary-bg: #fff;
+            --surface-container: #f0f4f9;
+            --surface-variant: #f0f4f9; 
+            --on-surface: #1f1f1f;
+            --on-surface-variant: #444746;
+            --primary: #0b57d0;
+            --primary-container: #d3e3fd;
+            --on-primary-container: #041e49;
+            --outline: #747775;
             
-            /* Authentic Gmail App Fonts */
-            --font-ui: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-brand: 'Google Sans', 'Roboto', sans-serif;
+            --font-brand: 'Open Sans', sans-serif; /* Closest Google Sans proxy */
+            --font-ui: 'Roboto', sans-serif;
+            
+            --niv-pfp-url: url('https://lh3.googleusercontent.com/pw/AP1GczO_L-E4y-1h4-1h4-1h4-1h4'); /* Fallback */
         }
 
         @font-face {
             font-family: 'Google Sans';
-            font-style: normal;
+            src: local('Open Sans'); /* Fallback mimic */
             font-weight: 400;
-            src: local('Open Sans'), local('Roboto'); /* Fallback mimic */
-        }
-        
-        @font-face {
-            font-family: 'Google Sans';
-            font-style: normal;
-            font-weight: 500;
-            src: local('Open Sans Medium'), local('Roboto Medium'); /* Fallback mimic */
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; font-family: var(--font-ui); -webkit-font-smoothing: antialiased; }
+        
+        body { 
+            width: 100%; height: 100%; overflow: hidden; 
+            background: var(--primary-bg); 
+            color: var(--on-surface);
+            font-family: var(--font-ui); 
+            -webkit-font-smoothing: antialiased; 
+        }
 
-        /* --- LOGIN PAGE STYLES --- */
+        /* --- LOGIN VIEW --- */
         .login-view {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #f0f4f9;
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Roboto', sans-serif;
+            position: fixed; inset: 0; z-index: 9999;
+            background: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+            padding-top: 120px;
+            transition: opacity 0.4s ease;
         }
         
-        .login-card {
-            background: white;
-            padding: 48px 40px 36px;
-            border-radius: 28px;
-            width: 100%;
-            max-width: 450px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        @media (max-width: 600px) {
-            .login-view { background: white; align-items: flex-start; }
-            .login-card { padding: 24px; max-width: 100%; border-radius: 0; height: 100%; justify-content: flex-start; padding-top: 60px; }
-        }
-
-        .google-logo-login { height: 24px; margin-bottom: 16px; align-self: flex-start; }
-        @media (min-width: 601px) { .google-logo-login { align-self: center; } }
+        .login-content { width: 100%; max-width: 400px; padding: 24px; }
+        .google-logo { height: 28px; margin-bottom: 20px; }
+        .login-title { font-family: var(--font-brand); font-size: 24px; margin-bottom: 8px; color: #1f1f1f; }
+        .login-subtitle { font-size: 16px; margin-bottom: 40px; color: #1f1f1f; }
         
-        .login-heading { font-size: 24px; font-weight: 400; color: #1f1f1f; margin-bottom: 8px; font-family: var(--font-brand); line-height: 1.33; }
-        .login-sub { font-size: 16px; color: #1f1f1f; margin-bottom: 40px; }
-        
-        .login-input-container { position: relative; margin-bottom: 8px; }
-        .login-input {
-            width: 100%;
-            height: 56px;
-            border: 1px solid #747775;
-            border-radius: 4px;
-            padding: 13px 16px;
-            font-size: 16px;
-            color: #1f1f1f;
-            background: transparent;
-            outline: none;
-            transition: 0.2s;
+        .user-chip {
+            border: 1px solid #dadce0; border-radius: 24px; padding: 6px 12px 6px 6px;
+            display: inline-flex; align-items: center; margin-bottom: 40px; cursor: pointer;
         }
-        .login-input:focus { border-color: #0b57d0; border-width: 2px; padding: 12px 15px; }
-        .login-input-label {
-            position: absolute;
-            left: 12px;
-            top: -10px;
-            background: white;
-            padding: 0 4px;
-            font-size: 12px;
-            color: #1f1f1f;
-            display: none;
-        }
-        .login-input:focus + .login-input-label { display: block; color: #0b57d0; }
-        .login-input:not(:placeholder-shown) + .login-input-label { display: block; }
+        .chip-avatar { width: 28px; height: 28px; border-radius: 50%; background: purple; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 10px; }
+        .chip-text { font-size: 14px; font-weight: 500; color: #3c4043; }
+        .chip-arrow { margin-left: 8px; }
 
-        .forgot-link {
-            color: #0b57d0;
-            font-weight: 500;
-            font-size: 14px;
-            border-radius: 4px;
-            padding: 4px 0;
-            display: inline-block;
-            cursor: pointer;
-            margin-bottom: 40px;
+        .login-btn {
+            background: #0b57d0; color: white; border: none; padding: 10px 24px;
+            border-radius: 20px; font-weight: 500; float: right; cursor: pointer;
         }
 
-        .guest-text { font-size: 14px; color: #444746; margin-top: 30px; line-height: 1.5; }
+        /* --- APP LAYOUT --- */
+        .app-shell { display: none; flex-direction: column; height: 100%; }
         
-        .login-actions {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-            padding-top: 30px;
+        /* Search Bar Header */
+        .header-bar {
+            padding: 8px 16px;
+            background: #f6f8fc;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
         }
         
-        .create-btn { color: #0b57d0; font-weight: 500; font-size: 14px; background: none; border: none; cursor: pointer; }
-        
-        .next-btn {
-            background-color: #0b57d0;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            padding: 10px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        .next-btn:active { background-color: #0947a8; }
-
-
-        /* --- MAIN APP STYLES --- */
-        .app-shell { width: 100%; height: 100%; display: flex; flex-direction: column; display: none; }
-
-        /* Header / Search Bar */
-        .header { padding: 12px 16px; background: #f6f8fc; z-index: 100; display: flex; align-items: center; justify-content: space-between; }
-        .search-container { height: 48px; background: #eaf1fb; border-radius: 24px; display: flex; align-items: center; padding: 0 16px; flex: 1; margin-right: 12px; }
-        .menu-icon { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 16px; color: #444746; }
-        .search-input { flex: 1; font-size: 16px; color: #1f1f1f; background: transparent; border: none; outline: none; font-family: var(--font-ui); font-weight: 400; }
-        .search-input::placeholder { color: #444746; }
-        
-        .pfp-btn { width: 32px; height: 32px; border-radius: 50%; overflow: hidden; cursor: pointer; margin-left: 0; flex-shrink: 0; border: 2px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .pfp-btn img { width: 100%; height: 100%; object-fit: cover; }
-
-        .profile-dropdown { position: fixed; top: 70px; right: 16px; width: 300px; background: #eaf1fb; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 24px 20px; z-index: 150; display: none; text-align: center; }
-        .profile-dropdown.active { display: block; }
-        .profile-email-text { font-size: 14px; color: #444746; margin-bottom: 20px; font-family: var(--font-brand); }
-        .profile-ring-box { width: 80px; height: 80px; margin: 0 auto 16px; position: relative; display: flex; align-items: center; justify-content: center; }
-        .profile-ring { position: absolute; inset: 0; border-radius: 50%; padding: 3px; background: conic-gradient(#4285f4 0 25%, #ea4335 25% 50%, #fbbc05 50% 75%, #34a853 75% 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
-        .profile-avatar-large { width: 72px; height: 72px; border-radius: 50%; overflow: hidden; }
-        .profile-avatar-large img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-hi { font-size: 22px; font-weight: 400; color: #1f1f1f; margin-top: 8px; font-family: var(--font-brand); }
-
-        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; opacity: 0; visibility: hidden; transition: 0.25s; }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-
-        .sidebar { position: fixed; top: 0; bottom: 0; left: 0; width: 300px; background: #f6f8fc; z-index: 250; transform: translateX(-100%); transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1); display: flex; flex-direction: column; }
-        .sidebar.open { transform: translateX(0); }
-
-        .sidebar-header { padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
-        .sidebar-logo { height: 35px; width: auto; }
-        .sidebar-logo-text { font-size: 22px; color: #444746; font-weight: 400; font-family: var(--font-brand); letter-spacing: -0.5px; }
-
-        .nav-list { overflow-y: auto; padding: 12px; }
-        .nav-item { height: 56px; display: flex; align-items: center; padding: 0 16px 0 26px; gap: 18px; cursor: pointer; color: #444746; border-radius: 28px; margin-bottom: 2px; }
-        .nav-item:hover { background: #e0e6f0; }
-        .nav-item.active { background: #d3e3fd; color: #001d35; }
-        .icon-svg { width: 24px; height: 24px; fill: #444746; }
-        .nav-item.active .icon-svg { fill: #001d35; }
-        .nav-text { flex: 1; font-size: 14px; font-weight: 500; font-family: var(--font-brand); }
-        .nav-badge { font-size: 12px; font-weight: 500; font-family: var(--font-ui); }
-        .divider { height: 1px; background: #e0e0e0; margin: 8px 0; }
-
-        .category-label { padding: 16px 16px 8px; font-size: 12px; font-weight: 500; color: #444746; font-family: var(--font-brand); letter-spacing: 0.1px; }
-        .email-list-container { flex: 1; overflow-y: auto; background: #fff; }
-
-        /* --- AI Overview Styles (Gemini Card) --- */
-        .ai-overview-card {
-            margin: 16px;
-            padding: 16px 20px 24px 20px;
-            background-color: var(--ai-bg); /* Light Blue #eff3f8 */
-            border-radius: 12px;
-            font-family: var(--font-brand);
-            position: relative;
-        }
-
-        .ai-header-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .ai-title-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ai-label {
-            font-size: 16px;
-            color: #1f1f1f;
-            font-weight: 400;
-        }
-
-        .gemini-star {
-            width: 20px;
-            height: 20px;
-        }
-        
-        .ai-chevron {
-            width: 24px;
-            height: 24px;
-            fill: #444746;
-        }
-
-        .ai-content {
-            font-size: 15px;
-            color: #1f1f1f;
-            line-height: 1.6;
-            font-family: var(--font-ui);
-        }
-
-        /* Updated Email Item Styles */
-        .email-item { display: flex; align-items: flex-start; padding: 12px 16px; cursor: pointer; background: #fff; gap: 16px; border-bottom: 1px solid #f2f2f2; }
-        .email-item:active { background: #f2f6fc; }
-
-        .avatar-container { width: 40px; height: 40px; flex-shrink: 0; position: relative; }
-        .avatar-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; text-transform: uppercase; font-family: var(--font-brand); position: absolute; inset:0; }
-        .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; position: absolute; inset:0; background: #eee; }
-        
-        .email-content-main { flex: 1; min-width: 0; padding-top: 0; }
-        .email-first-line { display: flex; align-items: baseline; margin-bottom: 2px; justify-content: space-between; }
-        .sender-name { font-size: 16px; color: #1f1f1f; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; margin-right: 8px; font-family: var(--font-ui); }
-        .email-time { font-size: 12px; color: #1f1f1f; font-weight: 500; flex-shrink: 0; font-family: var(--font-ui); }
-        .subject-line { font-size: 14px; color: #1f1f1f; margin-bottom: 2px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-ui); }
-        .snippet { font-size: 14px; color: #5e5e5e; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; font-family: var(--font-ui); }
-        .star-icon { width: 24px; height: 24px; flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
-        .star-svg { width: 20px; height: 20px; fill: none; stroke: #5e5e5e; stroke-width: 2; transition: 0.2s; }
-        .star-svg.starred { fill: #f9ab00; stroke: #f9ab00; stroke-width: 0; }
-
-        .email-detail { display: none; flex-direction: column; height: 100%; overflow-y: auto; background: white; position: absolute; top: 0; left: 0; width: 100%; z-index: 150; }
-        .email-detail.active { display: flex; }
-
-        .detail-header-bar { padding: 12px 8px; display: flex; align-items: center; justify-content: space-between; background: #fff; position: sticky; top: 0; z-index: 10; }
-        .back-btn, .action-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; color: #1f1f1f; }
-        .back-btn:active, .action-btn:active { background: #f2f2f2; }
-
-        .detail-subject-header { padding: 16px 16px 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-        .subject-container { display: flex; flex-direction: row; align-items: baseline; flex-wrap: wrap; gap: 8px; flex: 1; }
-        .detail-subject-text { font-size: 22px; font-weight: 400; color: #1f1f1f; line-height: 1.3; font-family: var(--font-brand); }
-        .detail-inbox-label { padding: 4px 8px; background: #e8f0fe; border-radius: 4px; font-size: 11px; color: #1f1f1f; font-weight: 500; display: inline-block; font-family: var(--font-ui); }
-        .detail-star { width: 24px; height: 24px; margin-top: 6px; cursor: pointer; flex-shrink: 0; }
-
-        .detail-sender-row { display: flex; align-items: center; gap: 12px; padding: 0 16px 20px; }
-        .sender-avatar-detail { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 500; font-size: 20px; color: white; flex-shrink: 0; font-family: var(--font-brand); overflow: hidden; position: relative;}
-        .sender-avatar-detail img { width: 100%; height: 100%; object-fit: cover; }
-        .sender-info-detail { flex: 1; }
-        .sender-name-detail { font-size: 14px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
-        .sender-to { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
-        .detail-time { font-size: 12px; color: #5e5e5e; font-family: var(--font-ui); }
-
-        .artistic-illustration { width: 100%; padding: 30px 0; background: #fff; display: flex; justify-content: center; overflow: hidden; }
-        .artistic-illustration svg { max-width: 100%; height: auto; max-height: 350px; display: block; margin: 0 auto; filter: drop-shadow(0px 2px 8px rgba(0,0,0,0.08)); }
-
-        .detail-body { padding: 0 16px 100px; line-height: 1.6; color: #1f1f1f; font-size: 15px; font-family: var(--font-ui); }
-        
-        /* --- PIXEL PERFECT GOOGLE PURCHASE CARD --- */
-        .google-order-card {
-            background-color: var(--card-bg); /* #f2f6fc */
-            border-radius: 20px;
-            padding: 24px;
-            margin-bottom: 24px;
-            font-family: var(--font-brand); /* Google Sans mimic */
-        }
-        
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-        
-        .card-title-group {
-            flex: 1;
-            padding-right: 16px;
-        }
-        
-        .card-title {
-            font-size: 16px;
-            font-weight: 600; /* Medium-Bold */
-            color: #1f1f1f;
-            line-height: 1.4;
-            margin-bottom: 4px;
-        }
-        
-        .card-subtitle {
-            font-size: 14px;
-            color: #444746;
-            font-weight: 400;
-        }
-        
-        .card-logo {
-            width: 48px;
+        .search-pill {
+            background: #eaf1fb;
             height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            flex-shrink: 0;
-            font-size: 24px;
-            color: #d93025;
+            border-radius: 24px;
+            flex: 1;
+            display: flex; align-items: center;
+            padding: 0 16px;
+            margin-right: 12px;
         }
         
-        .order-status {
-            font-size: 32px; /* Large */
-            font-weight: 400; /* Regular */
-            color: #1f1f1f;
-            margin-bottom: 24px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
+        .menu-btn { padding: 4px; margin-right: 12px; cursor: pointer; }
+        .search-text { font-size: 16px; color: #444746; font-family: var(--font-brand); background:transparent; border:none; width:100%; outline:none;}
+        
+        .profile-icon {
+            width: 32px; height: 32px; border-radius: 50%; overflow: hidden;
+            background: #ccc; cursor: pointer; flex-shrink: 0;
+        }
+        .profile-icon img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Sidebar */
+        .sidebar-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; opacity: 0; pointer-events: none; transition: 0.2s; }
+        .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .sidebar {
+            position: fixed; top: 0; left: 0; bottom: 0; width: 300px;
+            background: #f6f8fc; z-index: 201;
+            transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.2, 0.0, 0, 1.0);
+            padding-right: 8px;
+        }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-logo { padding: 20px 24px; font-family: var(--font-brand); font-size: 22px; color: #444746; display: flex; align-items: center; gap: 12px; }
+        .sidebar-logo img { height: 20px; }
+        
+        .nav-item {
+            display: flex; align-items: center; gap: 16px; height: 56px;
+            padding: 0 24px; margin-right: 12px; border-top-right-radius: 28px; border-bottom-right-radius: 28px;
+            cursor: pointer; color: #444746;
+        }
+        .nav-item.active { background: #d3e3fd; color: #001d35; font-weight: 700; }
+        .nav-item.active svg { fill: #001d35; }
+        .nav-label { font-size: 14px; font-weight: 500; flex: 1; }
+        .nav-badge { font-size: 12px; }
+
+        /* Email List */
+        .mail-container { flex: 1; overflow-y: auto; background: #fff; padding-bottom: 80px; }
+        .section-title { padding: 16px; font-size: 12px; font-weight: 500; color: #444746; letter-spacing: 0.5px; }
+        
+        .email-row {
+            display: flex; align-items: flex-start; padding: 10px 16px; gap: 16px;
+            cursor: pointer; position: relative;
+        }
+        .email-row:active { background: #f2f2f2; }
+        
+        .avatar-spot {
+            width: 40px; height: 40px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 20px; font-family: var(--font-brand);
+            flex-shrink: 0; overflow: hidden; background: #ddd;
+        }
+        .avatar-spot img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .email-info { flex: 1; min-width: 0; border-bottom: 1px solid #f2f2f2; padding-bottom: 12px; }
+        .row-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+        .sender { font-size: 16px; font-weight: 700; color: #1f1f1f; font-family: var(--font-ui); }
+        .sender.read { font-weight: 400; opacity: 0.9; }
+        .time { font-size: 12px; color: #444746; font-weight: 500; }
+        
+        .subject { font-size: 14px; font-weight: 700; color: #1f1f1f; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .snippet { font-size: 14px; color: #444746; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 400; }
+        
+        .star-btn { padding: 0 0 10px 10px; cursor: pointer; }
+
+        /* --- EMAIL DETAIL VIEW --- */
+        .detail-view {
+            position: fixed; inset: 0; background: #fff; z-index: 300;
+            display: flex; flex-direction: column;
+            transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        .detail-view.active { transform: translateX(0); }
+        
+        .detail-toolbar {
+            height: 56px; display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
         }
         
-        .order-number-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 24px;
-        }
+        .detail-scroll { flex: 1; overflow-y: auto; padding: 0 16px 40px 16px; }
         
-        .hashtag-icon {
-            font-size: 20px;
-            color: #1f1f1f;
-            margin-right: 14px;
-            margin-top: 0px;
-            font-weight: 400;
+        .detail-subject-row {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin: 10px 0 20px 0;
         }
+        .detail-subject { font-size: 22px; font-family: var(--font-brand); line-height: 1.2; color: #1f1f1f; flex: 1; }
+        .detail-tag { background: #e8f0fe; padding: 2px 8px; border-radius: 4px; font-size: 11px; margin-left: 8px; display: inline-block; vertical-align: middle; color: #1f1f1f;}
         
-        .order-info {
-            display: flex;
-            flex-direction: column;
-        }
+        .detail-sender-area { display: flex; gap: 12px; margin-bottom: 24px; align-items: center; }
+        .detail-avatar { width: 40px; height: 40px; border-radius: 50%; overflow: hidden; font-size: 18px; color: white; display: flex; align-items: center; justify-content: center; }
+        .detail-avatar img { width: 100%; height: 100%; object-fit: cover; }
         
-        .order-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #1f1f1f;
-            margin-bottom: 2px;
-        }
+        .sender-meta { display: flex; flex-direction: column; }
+        .sender-name-full { font-size: 14px; font-weight: 700; color: #1f1f1f; }
+        .sender-details { font-size: 12px; color: #444746; display: flex; align-items: center; gap: 4px; }
         
-        .order-value {
-            font-size: 14px;
-            color: #444746;
-            font-weight: 400;
-        }
-        
-        .view-order-btn {
-            background-color: var(--google-blue);
-            color: white;
-            border: none;
-            border-radius: 24px; /* Rounded Pill */
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
+        .email-body { 
+            font-size: 15px; line-height: 1.5; color: #1f1f1f; 
+            font-family: var(--font-ui); white-space: pre-wrap;
         }
 
-        .view-hidden { display: none; }
-        .view-visible { display: flex; flex-direction: column; }
+        /* --- SPECIAL STYLING FOR NIV'S EMAILS --- */
+        /* Lowercase and wider spacing for that 'soft/intimate' feel */
+        .email-body-niv {
+            text-transform: lowercase;
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            color: #1f1f1f;
+            padding-bottom: 50px;
+        }
+        
+        .niv-signature {
+            margin-top: 30px;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        /* FAB */
+        .fab {
+            position: fixed; bottom: 24px; right: 24px;
+            background: #eaf1fb; color: #0b57d0;
+            height: 56px; border-radius: 16px; padding: 0 20px;
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            font-weight: 600; font-family: var(--font-brand);
+            cursor: pointer;
+        }
+
+        /* Utilities */
+        .star-filled { fill: #f9ab00; stroke: none; }
+        .star-empty { fill: none; stroke: #444746; stroke-width: 2; }
+
     </style>
 </head>
 <body>
 
-    <!-- LOGIN PAGE VIEW -->
+    <!-- LOGIN SCREEN -->
     <div class="login-view" id="loginView">
-        <div class="login-card">
-            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" height="28" class="google-logo-login" style="width: auto;">
+        <div class="login-content">
+            <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png" alt="Google" class="google-logo">
+            <h1 class="login-title">Sign in</h1>
+            <p class="login-subtitle">to continue to Gmail</p>
             
-            <h1 class="login-heading">Sign in</h1>
-            <p class="login-sub">to continue to Gmail</p>
-            
-            <div class="login-input-container">
-                <input type="text" class="login-input" id="emailInput" placeholder=" " value="aaradhya@lovedbyNiv.com">
-                <span class="login-input-label">Email or phone</span>
+            <div class="user-chip">
+                <div class="chip-avatar">A</div>
+                <span class="chip-text">aaradhya@lovedbyNiv.com</span>
+                <span class="chip-arrow">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#5f6368"><path d="M7 10l5 5 5-5z"/></svg>
+                </span>
             </div>
             
-            <a class="forgot-link">Forgot email?</a>
-            
-            <div class="guest-text">
-                Not your computer? Use Guest mode to sign in privately.<br>
-                <a href="#" style="color:#0b57d0; text-decoration:none; font-weight:500;">Learn more</a>
-            </div>
-            
-            <div class="login-actions">
-                <button class="create-btn">Create account</button>
-                <button class="next-btn" id="loginNextBtn">Next</button>
+            <div style="margin-top: 20px;">
+                <button class="login-btn" onclick="enterApp()">Next</button>
             </div>
         </div>
     </div>
 
-    <div class="app-shell" id="appShell">
-        <div class="sidebar-overlay" id="overlay"></div>
-
+    <!-- MAIN APP -->
+    <div class="app-shell" id="app">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" id="overlay" onclick="toggleSidebar()"></div>
+        
+        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <img src="https://ssl.gstatic.com/ui/v1/icons/mail/rfr/gmail.ico" alt="Gmail" class="sidebar-logo">
-                <span class="sidebar-logo-text">Gmail</span>
+            <div class="sidebar-logo">
+                <span>Gmail</span>
             </div>
-            
-            <div class="nav-list">
-                <div class="nav-item active" data-view="all-inboxes" data-color="#d93025" data-bg="#fce8e6">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v5c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-5c0-.55-.45-1-1-1zM19 5v4H5V5h14m0-2H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-                    <span class="nav-text">All inboxes</span>
-                    <span class="nav-badge" id="badge-all"></span>
-                </div>
-                <div class="divider"></div>
-                <div class="nav-item" data-view="primary" data-color="#d93025" data-bg="#fce8e6">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"/></svg>
-                    <span class="nav-text">Primary</span>
-                    <span class="nav-badge" id="badge-primary"></span>
-                </div>
-                <div class="nav-item" data-view="social" data-color="#1a73e8" data-bg="#e8f0fe">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                    <span class="nav-text">Social</span>
-                    <span class="nav-badge" id="badge-social"></span>
-                </div>
-                <div class="nav-item" data-view="promotions" data-color="#188038" data-bg="#e6f4ea">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 7z"/></svg>
-                    <span class="nav-text">Promotions</span>
-                    <span class="nav-badge" id="badge-promotions"></span>
-                </div>
-                 <div class="nav-item" data-view="purchases" data-color="#f4b400" data-bg="#fef7e0">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M18 6h-2c0-2.21-1.79-4-4-4S8 3.79 8 6H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-2c1.1 0 2 .9 2 2h-4c0-1.1.9-2 2-2zm6 14H6V8h2v2c0 .55.45 1 1 1s1-.45 1-1V8h4v2c0 .55.45 1 1 1s1-.45 1-1V8h2v10z"/></svg>
-                    <span class="nav-text">Purchases</span>
-                    <span class="nav-badge" id="badge-purchases"></span>
-                </div>
-                <div class="divider"></div>
-                <div class="nav-item" data-view="starred" data-color="#5f6368" data-bg="#f1f3f4">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    <span class="nav-text">Starred</span>
-                </div>
-                <div class="nav-item" data-view="spam" data-color="#5f6368" data-bg="#f1f3f4">
-                    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-                    <span class="nav-text">Spam</span>
-                    <span class="nav-badge" id="badge-spam"></span>
-                </div>
+            <div class="nav-item active" onclick="filterEmails('all')">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z"/></svg>
+                <span class="nav-label">All Inboxes</span>
+                <span class="nav-badge">99+</span>
+            </div>
+            <div class="nav-item" onclick="filterEmails('primary')">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M20 6H4l8 4.99L20 6zM4 8v10h16V8l-8 5-8-5z"/></svg>
+                <span class="nav-label">Primary</span>
+            </div>
+            <div class="nav-item" onclick="filterEmails('social')">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span class="nav-label">Social</span>
+            </div>
+            <div class="nav-item" onclick="filterEmails('promotions')">
+                <svg width="24" height="24" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42z"/></svg>
+                <span class="nav-label">Promotions</span>
             </div>
         </aside>
 
-        <header class="header">
-            <div class="search-container">
-                <div class="menu-icon" id="openMenu">
+        <!-- Header -->
+        <header class="header-bar">
+            <div class="search-pill">
+                <div class="menu-btn" onclick="toggleSidebar()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="#444746"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
                 </div>
-                <input type="text" class="search-input" id="searchInput" placeholder="Search in mail">
-            </div>
-            <div class="pfp-btn" id="openProfile">
-                <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="Lorelai">
-            </div>
-            
-            <div class="profile-dropdown" id="profileDropdown">
-                <p class="profile-email-text">aaradhya@lovedbyniv.com</p>
-                <div class="profile-ring-box">
-                    <div class="profile-ring"></div>
-                    <div class="profile-avatar-large">
-                        <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="Lorelai">
-                    </div>
+                <input type="text" class="search-text" placeholder="Search in emails">
+                <div class="profile-icon">
+                    <img src="https://masukfreepress.com/wp-content/uploads/2024/11/img_0732.jpeg" alt="A">
                 </div>
-                <h1 class="profile-hi">Hi, Aaradhya!</h1>
             </div>
         </header>
 
-        <main style="flex: 1; overflow-y: auto; position: relative;">
-            <div id="emailListView" class="view-visible email-list-container">
-                <div class="category-label" id="categoryLabel">All inboxes</div>
-                <div id="emailList"></div>
+        <!-- List -->
+        <div class="mail-container" id="mailContainer">
+            <div class="section-title">Everything</div>
+            <div id="emailList"></div>
+        </div>
+        
+        <!-- FAB -->
+        <div class="fab">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+            <span>Compose</span>
+        </div>
+    </div>
+
+    <!-- DETAIL VIEW -->
+    <div class="detail-view" id="detailView">
+        <div class="detail-toolbar">
+            <div onclick="closeDetail()" style="padding: 8px; cursor: pointer;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#1f1f1f"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            </div>
+            <div style="display:flex; gap:16px;">
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#444746"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                 <svg width="24" height="24" viewBox="0 0 24 24" fill="#444746"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </div>
+        </div>
+
+        <div class="detail-scroll">
+            <div class="detail-subject-row">
+                <div class="detail-subject">
+                    <span id="d-subject">Subject</span>
+                    <span class="detail-tag">Inbox</span>
+                </div>
+                <div id="d-star-btn">
+                     <svg width="24" height="24" viewBox="0 0 24 24" class="star-empty"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
             </div>
 
-            <div id="emailDetailView" class="email-detail">
-                <div class="detail-header-bar">
-                    <div class="back-btn" onclick="closeEmail()">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="#1f1f1f"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    </div>
-                    <div class="detail-actions">
-                        <div class="action-btn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="#1f1f1f"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-                        </div>
-                    </div>
+            <div class="detail-sender-area">
+                <div class="detail-avatar" id="d-avatar">N</div>
+                <div class="sender-meta">
+                    <span class="sender-name-full" id="d-sender">Niv</span>
+                    <span class="sender-details">to me <span id="d-time">10:00 AM</span></span>
                 </div>
-
-                <div class="detail-subject-header">
-                    <div class="subject-container">
-                        <span class="detail-subject-text" id="detailSubject"></span>
-                        <span class="detail-inbox-label">Inbox</span>
-                    </div>
-                    <div class="detail-star" id="detailStarBtn">
-                        <svg class="star-svg" id="detailStarSvg" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                    </div>
-                </div>
-
-                <div class="detail-sender-row">
-                    <div class="sender-avatar-detail" id="detailAvatar"></div>
-                    <div class="sender-info-detail">
-                        <div class="sender-name-detail" id="detailSender"></div>
-                        <div class="sender-to">to me</div>
-                    </div>
-                    <div class="detail-time" id="detailTime"></div>
-                </div>
-
-                <div id="illustrationContainer"></div>
-                <div class="detail-body" id="detailBody"></div>
             </div>
-        </main>
+            
+            <div class="email-body" id="d-body"></div>
+        </div>
     </div>
 
     <script>
-        const nivPfpUrl = "https://share.google/Wi667p59wJeprKEgD";
-
-        const emailDatabase = {
-            primary: [
-                {
-                    id: 'p1',
-                    sender: 'Niv',
-                    subject: 'PRIVATE & CONFIDENTIAL: Employment Offer - Aaradhya',
-                    snippet: 'Attached: Employment Contract for position of Permanent Girlfriend.',
-                    time: '3:00 PM',
-                    avatar: 'N',
-                    color: '#d93025',
-                    starred: false,
-                    body: `<div style="font-family: 'Times New Roman', Times, serif; color: #000; padding: 40px; border: 1px solid #ccc; background: #fff;">
-                        <div style="text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px;">
-                            <h2 style="margin: 0; letter-spacing: 2px; font-size: 24px;">NIV'S LIFE INC.</h2>
-                            <p style="margin: 5px 0 0; font-size: 12px; color: #555; text-transform: uppercase;">Human Resources Department | 2083km Branch</p>
-                        </div>
-                        
-                        <p><strong>Date:</strong> February 14, 2026</p>
-                        <p><strong>To:</strong> Ms. Aaradhya</p>
-                        <p><strong>Subject:</strong> OFFER OF EMPLOYMENT - PERMANENT POSITION</p>
-                        <hr style="margin: 20px 0; border-top: 1px solid #eee;">
-                        
-                        <p>Dear Ms. Aaradhya,</p>
-
-                        <p>Following a successful 8-month probationary period, during which you demonstrated exceptional performance in the areas of "Putting Up With Me" and "Being Generally Perfect," the Board of Directors (me) is pleased to extend a formal offer for the following position:</p>
-
-                        <p style="margin-left: 20px;"><strong>Role:</strong> Permanent Girlfriend & Future Cat Manager<br>
-                        <strong>Reporting To:</strong> No one (You are the boss)<br>
-                        <strong>Start Date:</strong> Retroactive (8 months ago)<br>
-                        <strong>Location:</strong> Remote (2083km) transitioning to On-Site</p>
-
-                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">1. COMPENSATION PACKAGE</h4>
-                        <ul>
-                            <li><strong>Base Salary:</strong> Unlimited affection, paid daily via text, voice note, and annoying levels of attention.</li>
-                            <li><strong>Equity:</strong> 100% ownership of My Heart (vested immediately, non-dilutable).</li>
-                            <li><strong>Bonuses:</strong> Unlimited Momo and Wai Wai allowance whenever we are in the same zip code.</li>
-                        </ul>
-
-                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">2. RESPONSIBILITIES</h4>
-                        <ul>
-                            <li>Maintain current levels of kindness and resilience.</li>
-                            <li>Continue explaining biology concepts (Employer promises to listen intently).</li>
-                            <li>Allow Employer to track flights purely out of obsession/love.</li>
-                        </ul>
-
-                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">3. NON-COMPETE CLAUSE</h4>
-                        <p>Employee agrees to be the only person in the world for the Employer. Employer agrees to the same. This clause is binding in perpetuity.</p>
-
-                        <h4 style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 25px;">4. TERMINATION</h4>
-                        <p>There is no termination clause. You are stuck with me. Legal recourse is unavailable as the contract is sealed with "I Love You."</p>
-
-                        <p style="margin-top: 30px;">Please indicate your acceptance by continuing to be amazing.</p>
-
-                        <p>Sincerely,</p>
-                        <br>
-                        <p><strong>Niv</strong><br>
-                        <em>Chief Executive Officer<br>
-                        Niv's Life Inc.</em></p>
-                    </div>`
-                },
-                {
-                    id: 'p2',
-                    sender: 'Niv',
-                    subject: 'The pen thing',
-                    snippet: 'We need to discuss something important regarding stationery.',
-                    time: 'Feb 13',
-                    avatar: 'N',
-                    color: '#d93025',
-                    starred: false,
-                    body: `<p>We need to discuss something important.</p>
-                    <p>You mentioned your favorite pen once. ONCE. Like idk months ago. In passing.</p>
-                    <p>I remember.</p>
-                    <p>Here's the thing: that's what this is. It's not the big stuff. It's remembering that you prefer that specific pen. That you got excited about the grip. That you mentioned it casually and moved on.</p>
-                    <p>I didn't move on. I saved it.</p>
-                    <p>Your favorite pen. How you like your coffee. That you love momo more than life itself. That Harry Potter is non-negotiable. That you rewatch Gilmore Girls. That biology makes you light up. That you sent me nail clippers because you're thoughtful in ways that surprise me.</p>
-                    <p>I'm taking notes. Constantly. Because when we're finally together, I want to already know. I want to hand you your coffee right. I want to have the pen stocked.</p>
-                    <p>Is this a lot? Yes.<br>Do I care? No.</p>
-                    <p>Also I looked it up and they're out of stock but I have alerts set so expect a package eventually.</p>`
-                },
-                {
-                    id: 'p3',
-                    sender: 'The Distance Times',
-                    subject: 'Study confirms: 2083km is "Too Far"',
-                    snippet: 'Experts (Me) cite high humidity and lack of holding hands as primary complaints.',
-                    time: 'Feb 13',
-                    avatar: 'DT',
-                    color: '#607d8b',
-                    starred: false,
-                    illustration: `<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
-                        <rect fill="#f9f9f9" width="400" height="200"/>
-                        <text x="200" y="35" text-anchor="middle" font-family="Georgia" font-weight="bold" font-size="24" fill="#333">THE DISTANCE TIMES</text>
-                        <line x1="20" y1="50" x2="380" y2="50" stroke="#333" stroke-width="2"/>
-                        <path d="M50 100 Q 200 50 350 100" stroke="#999" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
-                        <circle cx="50" cy="100" r="5" fill="#d93025"/>
-                        <circle cx="350" cy="100" r="5" fill="#d93025"/>
-                        <text x="50" y="120" text-anchor="middle" font-size="10" font-family="Arial">ME</text>
-                        <text x="350" y="120" text-anchor="middle" font-size="10" font-family="Arial">YOU</text>
-                        <text x="200" y="140" text-anchor="middle" font-family="Georgia" font-size="14" fill="#333">GAP REMAINS UNACCEPTABLE</text>
-                    </svg>`,
-                    body: `<div style="font-family: Georgia, serif; line-height: 1.6;">
-                    <h1 style="text-align: center; border-bottom: 3px double #000; padding-bottom: 10px;">THE DISTANCE TIMES</h1>
-                    <p style="font-style: italic; font-size: 12px; color: #555;">Vol. 422 | Weather: Longing with scattered showers</p>
-                    <h3>LOCAL MAN CALCULATES FLIGHT COST VS. RENT</h3>
-                    <p><strong>(AP) —</strong> A local man, Niv, was seen today staring at a flight comparison website for four hours straight. Witnesses say he mumbled "I could just eat instant noodles for a month" before reluctantly closing the tab.</p>
-                    <p>Scientists advise that the only cure is for Aaradhya to finish her exams so that normal operations can resume.</p>
-                    </div>`
-                },
-                {
-                    id: 'p4',
-                    sender: 'The Love Yorker',
-                    subject: 'Essay: The Haptic Heartbeat',
-                    snippet: 'When a vibration in your pocket means more than a heartbeat in your chest.',
-                    time: 'Feb 14',
-                    avatar: 'LY',
-                    color: '#333',
-                    starred: true,
-                    illustration: `<svg viewBox="0 0 400 420" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="400" height="420" fill="#fcfcfc"/>
-                        <rect x="140" y="30" width="120" height="220" rx="15" fill="none" stroke="#2c3e50" stroke-width="3"/>
-                        <rect x="145" y="35" width="110" height="210" rx="10" fill="#fff"/>
-                        <circle cx="200" cy="235" r="8" fill="none" stroke="#2c3e50" stroke-width="2"/>
-                        <rect x="155" y="80" width="90" height="30" rx="5" fill="#f0f0f0"/>
-                        <rect x="165" y="90" width="60" height="4" rx="2" fill="#bbb"/>
-                        <path d="M 200 250 L 200 280" fill="none" stroke="#e91e63" stroke-width="3"/>
-                        <path d="M 200 280 C 200 280, 130 230, 130 310 C 130 350, 200 390, 200 390 C 200 390, 270 350, 270 310 C 270 230, 200 280, 200 280" fill="none" stroke="#e91e63" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        <text x="200" y="410" text-anchor="middle" font-family="Georgia" font-style="italic" font-size="14" fill="#555">Plugged into you</text>
-                    </svg>`,
-                    body: `<div style="max-width: 650px; margin: 0 auto;">
-                    <h1 style="font-family: 'Georgia', serif; font-size: 32px; text-align: center; margin-bottom: 8px;">THE LOVE YORKER</h1>
-                    <h2 style="font-family: 'Arial', sans-serif; font-size: 14px; text-align: center; letter-spacing: 2px; color: #757575; margin-bottom: 40px; border-bottom: 1px solid #ddd; padding-bottom: 20px;">FICTION & ESSAYS</h2>
-                    <p>There is a phantom limb syndrome associated with long-distance relationships, but it manifests in the pocket of your jeans. You feel the vibration before it happens. You are attuned to a specific frequency of electronic hum that signifies: <em>She is awake. She is reading. She is typing.</em></p>
-                    <p>Yesterday, you texted me about plants. It was a simple message, really. You were deep in revision mode, hair probably tied up in that messy bun I’ve only seen on FaceTime, and you wrote: <em>"It's easier to change ourselves than our surroundings sometimes."</em></p>
-                    <p>That sentence has been living in my head rent-free for twenty-four hours. It’s biology, yes. It’s evolutionary theory. But it’s also the most romantic thing anyone has ever said to me via SMS. We can't change the 2,083 kilometers. We can't terraform the distance between us. So we change ourselves.</p>
-                    <p>The text is the theory. The FaceTime is the lab work. And this feeling? This constant, low-level hum in my chest every time my phone lights up? That’s the data proving the hypothesis: You are worth every single kilometer.</p>
-                    </div>`
-                },
-                {
-                    id: 'p5',
-                    sender: 'Niv',
-                    subject: 'Quick thoughts on the plant text',
-                    snippet: 'I can\'t stop thinking about what you said.',
-                    time: 'Feb 13',
-                    avatar: 'N',
-                    color: '#d93025',
-                    starred: true,
-                    body: `<p>Aaradhya,</p>
-                    <p>I know you're burying yourself in books, but I had to say this.</p>
-                    <p>When you talked about genetically modifying plants for space and said "It's easier to change ourselves than our surroundings."</p>
-                    <p>It was so casual, but so smart. It’s been stuck in my head ever since you said it. It makes me feel like this whole long-distance thing is just us acting like astronauts. We're adapting to the environment. We're changing ourselves to survive the lack of gravity (and the lack of you next to me).</p>
-                    <p>Keep going. You're brilliant.</p>
-                    <p>- Niv</p>`
-                },
-                {
-                    id: 'p6',
-                    sender: 'Niv',
-                    subject: 'Lipstick Tutorial: My notes',
-                    snippet: '1. You look good. 2. I have no idea what a liner is.',
-                    time: 'Feb 12',
-                    avatar: 'N',
-                    color: '#e01e5a',
-                    starred: false,
-                    body: `<p>My takeaways from your FaceTime tutorial:</p>
-                    <ol>
-                        <li>You have incredible focus. The way you hold the mirror is so intense.</li>
-                        <li>I still don't understand liner. Do we need crayons or pencils?</li>
-                        <li>You talk almost as fast as Lorelai when you're explaining products. It's my favorite sound.</li>
-                        <li>I miss you. A lot.</li>
-                    </ol>
-                    <p>Next time, teach me something easier. Like quantum physics.</p>`
-                },
-                {
-                    id: 'p7',
-                    sender: 'Niv',
-                    subject: 'F1 logic / Hamilton thoughts',
-                    snippet: 'Watching the quali highlights and realized something.',
-                    time: 'Feb 13',
-                    avatar: 'N',
-                    color: '#e01e5a',
-                    starred: false,
-                    body: `<p>I was watching the F1 highlights (Hamilton at Ferrari is still weird to look at), and I realized something.</p>
-                    <p>They obsess over milliseconds. 0.001 seconds makes the difference between pole position and P2. And here I am, dealing with a time difference of hours and a physical difference of 2000+ kilometers.</p>
-                    <p>If Lewis Hamilton can freak out over a gap of 0.2 seconds, I am allowed to be dramatic about the gap between us. That's just logic.</p>
-                    <p>Good luck studying. Drive fast (metaphorically).</p>`
-                },
-                {
-                    id: 'p8',
-                    sender: 'Niv',
-                    subject: 'Board exam reminder',
-                    snippet: 'Quick message before you study.',
-                    time: 'Feb 12',
-                    avatar: 'N',
-                    color: '#d93025',
-                    starred: true,
-                    body: `<p>Quick message before you study.</p>
-                    <p>You're stressed about boards. I know that.</p>
-                    <p>Here's what I need you to know: You're going to be just fine. Not just because you're smart (you are), but because you're prepared. You work harder than anyone I know.</p>
-                    <p>Boards are temporary. A few hours. They don't define you. Your kindness does. Your resilience does. The way you explain biology like it matters (because it does to you).</p>
-                    <p>After exams we're gonna celebrate. I don't care how it went. We celebrate you showing up and trying.</p>
-                    <p>You've got this.</p>`
-                },
-                {
-                    id: 'p9',
-                    sender: 'Niv',
-                    subject: 'Coffee logic',
-                    snippet: 'I drank too much coffee and now I have a theory.',
-                    time: 'Feb 09',
-                    avatar: 'N',
-                    color: '#6f4e37',
-                    starred: false,
-                    body: `<p>I have consumed 2 cups of coffee.</p>
-                    <p>Theory: If I vibrate fast enough, maybe I can phase through the space-time continuum and appear in your room.</p>
-                    <p>Testing in progress. Will update.</p>`
-                },
-                {
-                    id: 'p10',
-                    sender: 'Niv',
-                    subject: 'Random thought at 5PM',
-                    snippet: 'If I start driving now...',
-                    time: '5:00 PM',
-                    avatar: 'N',
-                    color: '#6f4e37',
-                    starred: false,
-                    body: `<p>I did the math. If I got in a car right now and drove at an average of 80km/h without stopping...</p>
-                    <p>Actually, never mind. Google Maps laughed at me. There's an ocean in the way? Or at least very difficult borders. Geography is my nemesis.</p>
-                    <p>Go back to sleep (or study). I'm just staring at the ceiling calculating logistics.</p>`
-                },
-                {
-                    id: 'p11',
-                    sender: 'Niv',
-                    subject: 'The "I like you so much" era',
-                    snippet: 'Remembering before we said love.',
-                    time: 'Feb 11',
-                    avatar: 'N',
-                    color: '#d93025',
-                    starred: true,
-                    body: `<p>Remember when we couldn't say love yet? When it felt too big, too real? So we said "I like you so much" instead?</p>
-                    <p>We both knew. We knew what we really meant. But we weren't official yet and "love" felt like jumping off a cliff without knowing if there was water below.</p>
-                    <p>So we said "I like you so much" and we meant "I love you but i'm not ready to say it yet."</p>
-                    <p>There was something beautiful about that. The waiting. The knowing without saying. The building up to it.</p>
-                    <p>I like you so much.<br>(I love you so much.)</p>`
-                }
-            ],
-            social: [
-                {
-                    id: 's1',
-                    sender: 'Strava',
-                    subject: 'Niv completed: "Running from my feelings"',
-                    snippet: 'New activity from Niv',
-                    time: 'Feb 14',
-                    avatar: 'S',
-                    color: '#fc4c02',
-                    starred: false,
-                    body: `<p><strong>Niv completed a run</strong></p>
-                    <p><strong>Title:</strong> Running from my feelings (jk running toward her)</p>
-                    <p><strong>Description:</strong> Ran 5km. Still thousands of kilometers away from her. Math isn't mathing. Need better strategy.</p>
-                    <p><strong>Segment efforts:</strong> Missing her (PR), Thinking about grocery shopping (New Route).</p>`
-                },
-                {
-                    id: 's2',
-                    sender: 'Goodreads',
-                    subject: 'Niv added a book to "books she loves"',
-                    snippet: 'The Book Thief by Markus Zusack',
-                    time: 'Feb 10',
-                    avatar: 'G',
-                    color: '#754a00',
-                    starred: false,
-                    body: `<p><strong>Niv added a book:</strong></p>
-                    <p>📖 <strong>The Book Thief</strong></p>
-                    <p><strong>Review:</strong> "Read it because she told me she loves it. Yes I'm like this about everything she mentions."</p>`
-                },
-                {
-                    id: 's3',
-                    sender: 'Goodreads',
-                    subject: 'Niv added "And Then There Were None"',
-                    snippet: 'Niv wants to read what you are reading.',
-                    time: 'Feb 10',
-                    avatar: 'G',
-                    color: '#754a00',
-                    starred: false,
-                    body: `<p><strong>Niv added a book:</strong></p>
-                    <p>📖 <strong>And Then There Were None</strong> by Agatha Christie</p>
-                    <p><strong>Note:</strong> "She has this on her TBR so I'm reading it first so I can discuss theories with her when she starts. Also, she loves mysteries."</p>`
-                },
-                {
-                    id: 's4',
-                    sender: 'Letterboxd',
-                    subject: 'Niv added 8 films to Watchlist',
-                    snippet: 'Harry Potter and the Sorcerer\'s Stone + 7 others',
-                    time: 'Feb 11',
-                    avatar: 'L',
-                    color: '#00e054',
-                    starred: false,
-                    body: `<p><strong>Niv added 8 films to Watchlist:</strong></p>
-                    <ul>
-                        <li>Harry Potter and the Sorcerer's Stone</li>
-                        <li>Harry Potter and the Chamber of Secrets</li>
-                        <li>Harry Potter and the Prisoner of Azkaban</li>
-                        <li>Harry Potter and the Goblet of Fire</li>
-                        <li>Harry Potter and the Order of the Phoenix</li>
-                        <li>Harry Potter and the Half-Blood Prince</li>
-                        <li>Harry Potter and the Deathly Hallows: Part 1</li>
-                        <li>Harry Potter and the Deathly Hallows: Part 2</li>
-                    </ul>
-                    <p><strong>Note:</strong> "Aaradhya demands I watch these. I am complying for love."</p>`
-                },
-                {
-                    id: 's5',
-                    sender: 'Spotify',
-                    subject: 'Your Daily Mix: Songs that remind you of her',
-                    snippet: 'Personalized playlist ready',
-                    time: 'Feb 12',
-                    avatar: 'SP',
-                    color: '#1db954',
-                    starred: false,
-                    body: `<p><strong>YOUR DAILY MIX</strong></p>
-                    <p>Based on your recent listening history (every song makes you think of her, we know)</p>
-                    <p>🎵 Currently playing: "Valentine" – literally every lyric</p>`
-                },
-                {
-                    id: 's6',
-                    sender: 'Twitter/X',
-                    subject: '@NivTheObsessed: New tweet',
-                    snippet: 'Posted 2 minutes ago',
-                    time: 'Feb 13',
-                    avatar: 'X',
-                    color: '#000',
-                    starred: false,
-                    body: `<p><strong>@NivTheObsessed tweeted:</strong></p>
-                    <p>"being in love long distance is just constantly thinking 'wish you were here' about literally everything. eating food? wish you were here. saw a cat? wish you were here. breathing? wish you were here."</p>`
-                },
-                {
-                    id: 's7',
-                    sender: 'Instagram',
-                    subject: 'Niv tagged you in a Reel',
-                    snippet: 'Subject: "Cats who act like dogs"',
-                    time: 'Feb 10',
-                    avatar: 'IG',
-                    color: '#e1306c',
-                    starred: false,
-                    body: `<p>Reminded me of Stitch (except Stitch is evil).</p>`
-                },
-                {
-                    id: 's8',
-                    sender: 'Letterboxd',
-                    subject: 'Niv logged: HP & The Philosopher\'s Stone',
-                    snippet: 'Review: "Okay, she was right. It\'s magical."',
-                    time: 'Feb 12',
-                    avatar: 'L',
-                    color: '#00e054',
-                    starred: false,
-                    body: `<p><strong>Niv logged a film:</strong></p>
-                    <p>🎥 <strong>Harry Potter and the Philosopher's Stone</strong></p>
-                    <p><strong>Rating:</strong> ★★★★½</p>
-                    <p><strong>Review:</strong> "I watched this because she told me to. I hate to admit it, but it was really good. Now I have to watch the other 7 immediately."</p>`
-                }
-            ],
-            promotions: [
-                {
-                    id: 'pr1',
-                    sender: 'Skyscanner',
-                    subject: 'Price Alert: Your City to My City',
-                    snippet: 'Price is stable (High).',
-                    time: 'Feb 14',
-                    avatar: 'S',
-                    color: '#00a698',
-                    starred: false,
-                    body: `<p>I check this every morning. One day the price will drop and I will click buy so fast my finger will break.</p>`
-                },
-                {
-                    id: 'pr2',
-                    sender: 'Duolingo',
-                    subject: 'New Course: Speaking "Biology"',
-                    snippet: 'Learn to impress your girlfriend.',
-                    time: 'Feb 13',
-                    avatar: 'DL',
-                    color: '#58cc02',
-                    starred: false,
-                    body: `<p>Lesson 1: What is a chloroplast? (I still don't know, please help).</p>`
-                },
-                {
-                    id: 'pr3',
-                    sender: 'Netflix',
-                    subject: 'New Arrival: Gilmore Girls (Again)',
-                    snippet: 'We know you watch this when you miss her.',
-                    time: 'Feb 10',
-                    avatar: 'N',
-                    color: '#e50914',
-                    starred: false,
-                    body: `<p>Resume playing: Season 4, Episode 2?</p>`
-                },
-                {
-                    id: 'pr4',
-                    sender: 'The Dragonfly Inn',
-                    subject: 'Reservation Confirmed (In my dreams)',
-                    snippet: 'Table for two. Infinite coffee.',
-                    time: 'Feb 14',
-                    avatar: 'DI',
-                    color: '#795548',
-                    starred: false,
-                    body: `<div style="padding: 24px; border: 1px solid #ccc;">
-                        <h3>Reservation for Two</h3>
-                        <p><strong>Guests:</strong> Niv & Aaradhya</p>
-                        <p><strong>Menu:</strong> Burgers, Coffee, Pop-Tarts.</p>
-                        <p><strong>Conversation Speed:</strong> Fast.</p>
-                    </div>`
-                },
-                {
-                    id: 'pr5',
-                    sender: 'Coursera',
-                    subject: 'Recommended: "Advanced LDR Management"',
-                    snippet: 'Based on your desperate Googling',
-                    time: 'Feb 10',
-                    avatar: 'C',
-                    color: '#0056D2',
-                    starred: false,
-                    body: `<p><strong>Course Overview:</strong><br>Master the art of loving someone you can't touch. Learn essential skills including: Timezone Math Without Crying.</p>`
-                }
-            ],
-            purchases: [
-                {
-                    id: 'pur1',
-                    sender: 'Amazon',
-                    subject: 'Order Confirmed: "Percy Jackson Series"',
-                    snippet: 'Delivery estimate: Tomorrow',
-                    time: 'Feb 09',
-                    avatar: 'A',
-                    color: '#FF9900',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Percy Jackson & The Olympians (5 Books)',
-                        quantity: '1 Box Set',
-                        vendor: 'Amazon',
-                        orderNumber: 'PJ-OLYMP-26',
-                        orderDate: 'Feb 9, 2026',
-                        delivery: 'Feb 14, 2026',
-                        status: 'Shipped'
-                    },
-                    body: `<p>You mentioned these books. I provide books. This is how I function.</p>`
-                },
-                {
-                    id: 'pur2',
-                    sender: 'BookMyShow',
-                    subject: 'Booking Confirmed: Future Movie Dates',
-                    snippet: 'Reservations for when distance = 0',
-                    time: 'Feb 10',
-                    avatar: 'B',
-                    color: '#F84464',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Future Movie Dates',
-                        quantity: 'x100',
-                        vendor: 'BookMyShow',
-                        orderNumber: 'FUTURE-DATE',
-                        orderDate: 'Feb 10, 2026',
-                        delivery: 'Pending Arrival',
-                        status: 'Reserved'
-                    },
-                    body: `<p>Her choice of movie (always). Popcorn included.</p>`
-                },
-                {
-                    id: 'pur3',
-                    sender: 'Swiggy',
-                    subject: 'Order Placed: Momo & Wai Wai Subscription',
-                    snippet: 'For when she\'s actually here',
-                    time: 'Feb 12',
-                    avatar: 'S',
-                    color: '#FC8019',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Momo & Wai Wai',
-                        quantity: 'Unlimited',
-                        vendor: 'Swiggy',
-                        orderNumber: 'MOMO-LOVE',
-                        orderDate: 'Feb 12, 2026',
-                        delivery: 'Future',
-                        status: 'Pending'
-                    },
-                    body: `<p>These are for my girlfriend who loves momo and wai wai and I'm being very normal about stocking up.</p>`
-                },
-                {
-                    id: 'pur4',
-                    sender: 'Zomato',
-                    subject: 'Pre-Order: Future Birthday Cakes (x50)',
-                    snippet: 'Planning ahead (way ahead)',
-                    time: 'Feb 13',
-                    avatar: 'Z',
-                    color: '#CB202D',
-                    starred: false,
-                    isPurchase: true,
-                    purchaseData: {
-                        product: 'Birthday Cakes',
-                        quantity: '50',
-                        vendor: 'Zomato',
-                        orderNumber: 'CAKE-4-LIFE',
-                        orderDate: 'Feb 13, 2026',
-                        delivery: 'Annually',
-                        status: 'Committed'
-                    },
-                    body: `<p>Yes, I'm pre-ordering 50 years of birthday cakes. Yes, I'm aware this is excessive.</p>`
-                }
-            ],
-            spam: [
-                {
-                    id: 'sp1',
-                    sender: 'Suspicious Link',
-                    subject: 'HOT SINGLES IN YOUR AREA (2083KM AWAY)',
-                    snippet: 'Click here to find love...',
-                    time: 'Feb 11',
-                    avatar: 'S',
-                    color: '#999',
-                    starred: false,
-                    body: `<p><strong>MATCH FOUND:</strong></p>
-                    <p><strong>Niv, 2083km away</strong><br>- Status: Taken (by you)<br>- Looking for: You (specifically)</p>
-                    <p><strong>Other singles nearby:</strong> None. He's only interested in one person.</p>`
-                },
-                {
-                    id: 'sp2',
-                    sender: 'Free Prize Notification',
-                    subject: 'YOU\'VE WON: One Boyfriend (Slightly Obsessed)',
-                    snippet: 'Claim your prize now!',
-                    time: 'Feb 13',
-                    avatar: 'F',
-                    color: '#999',
-                    starred: false,
-                    body: `<p><strong>🎉 CONGRATULATIONS! 🎉</strong></p>
-                    <p>You've won our GRAND PRIZE: <strong>ONE (1) BOYFRIEND</strong></p>
-                    <p>Features: Flight tracking, voice note hoarding, excessive thoughtfulness.</p>`
-                }
-            ]
-        };
-
-        const allEmails = [
-            ...emailDatabase.primary, 
-            ...emailDatabase.social, 
-            ...emailDatabase.promotions,
-            ...emailDatabase.purchases,
-            ...emailDatabase.spam
-        ];
+        // Niv's Profile Picture Link from Prompt
+        // Note: Using the provided share.google link. If it fails to load as an image, logic falls back to initial.
+        const NIV_PFP = "https://share.google/dgepSKieLlCVv41Hf"; 
         
-        let currentCategory = 'all-inboxes';
-        let currentEmails = allEmails;
-
-        // --- LOGIN LOGIC ---
-        document.getElementById('loginNextBtn').addEventListener('click', () => {
-            const loginView = document.getElementById('loginView');
-            const appShell = document.getElementById('appShell');
-            
-            // Simple fade out effect
-            loginView.style.opacity = '0';
-            loginView.style.transition = 'opacity 0.3s ease';
-            
-            setTimeout(() => {
-                loginView.style.display = 'none';
-                appShell.style.display = 'flex';
-            }, 300);
-        });
-
-        function updateBadges() {
-            document.getElementById('badge-primary').textContent = emailDatabase.primary.length;
-            document.getElementById('badge-social').textContent = emailDatabase.social.length;
-            document.getElementById('badge-promotions').textContent = emailDatabase.promotions.length;
-            document.getElementById('badge-purchases').textContent = emailDatabase.purchases.length;
-            document.getElementById('badge-spam').textContent = emailDatabase.spam.length;
-            
-            // All Inboxes total (excluding Spam)
-            const allReadable = [...emailDatabase.primary, ...emailDatabase.social, ...emailDatabase.promotions, ...emailDatabase.purchases];
-            document.getElementById('badge-all').textContent = allReadable.length;
+        // This function handles the image error to prevent broken image icon
+        function handleImgError(image) {
+            image.style.display = 'none';
+            image.parentElement.style.backgroundColor = '#d93025'; // Google Red fallback
+            image.parentElement.innerHTML = "N"; // Text fallback
         }
 
-        function renderEmails(filterText = '') {
-            const container = document.getElementById('emailList');
-            container.innerHTML = '';
+        const EMAILS = [
+            {
+                id: 1,
+                sender: "Niv",
+                subject: "Grocery shopping fantasies",
+                snippet: "I have elaborate, borderline concerning fantasies about grocery shopping.",
+                time: "10:42 AM",
+                avatar: "N",
+                color: "#d93025",
+                starred: true,
+                isNiv: true,
+                body: `I have elaborate, borderline concerning fantasies about grocery shopping.
 
-            // --- AI OVERVIEW (Gemini Style) ---
-            if (currentCategory === 'all-inboxes' && !filterText) {
-                const aiDiv = document.createElement('div');
-                aiDiv.className = 'ai-overview-card';
-                aiDiv.innerHTML = `
-                    <div class="ai-header-row">
-                        <div class="ai-title-group">
-                            <svg class="gemini-star" viewBox="0 0 24 24">
-                                <path fill="#4285F4" d="M13.5 19.5h-3v-3h3v3zm0-15h-3v-3h3v3zm7.5 7.5h-3v-3h3v3zm-15 0h-3v-3h3v3z"/>
-                                <path fill="#DB4437" d="M12 2C9.5 7.5 7.5 9.5 2 12c5.5 2.5 7.5 4.5 10 10 2.5-5.5 4.5-7.5 10-10-5.5-2.5-7.5-4.5-10-10z"/>
-                            </svg>
-                            <span class="ai-label">AI Overview</span>
-                        </div>
-                        <svg class="ai-chevron" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
-                    </div>
-                    <div class="ai-content">
-                        Niv is missing you (high confidence). He’s purchased the <strong>Percy Jackson series</strong> for you, is currently watching all 8 <strong>Harry Potter</strong> movies to impress you, and is reading Agatha Christie. <br><br><strong>Action items:</strong> Accept affection immediately.
-                    </div>
-                `;
-                container.appendChild(aiDiv);
+We’re in the produce section. She’s explaining photosynthesis or chlorophyll or something biological about the lettuce. I’m not listening. I’m watching her exist in three dimensions for the first time, and my brain is struggling to process that she’s real and here and reaching for tomatoes like this is normal.
+
+We argue about coffee brands in aisle seven. She wins. She always wins because she actually knows what she’s talking about and I just like watching her be right about things.
+Diet Coke and Wai Wai go in the cart. She gets that specific kind of excited that makes her voice go up half an octave. I’m filing away this expression for future reference, this particular configuration of happiness.
+
+At checkout, I’m helping, staring. She’s managing everything perfectly like she always does, and I’m just standing there having an emotional crisis about the fact that we’re buying groceries together like this is a normal thing that normal people do.
+
+This is what distance does to a person: it turns buying tomatoes into a religious experience.`
+            },
+            {
+                id: 2,
+                sender: "Niv",
+                subject: "PRIVATE & CONFIDENTIAL: Employment Offer",
+                snippet: "Attached: Employment Contract for position of Permanent Girlfriend.",
+                time: "Yesterday",
+                avatar: "N",
+                color: "#d93025",
+                starred: true,
+                isNiv: true,
+                body: `date: february 14, 2026
+
+dear ms. aaradhya,
+
+following a successful probationary period, during which you demonstrated exceptional performance in the areas of "putting up with me" and "being generally perfect," i am pleased to extend a formal offer for the following position:
+
+role: permanent girlfriend & future cat manager
+reporting to: no one (you are the boss)
+location: remote (2083km) transitioning to on-site
+
+compensation package:
+1. unlimited affection, paid daily via text.
+2. 100% ownership of my heart.
+3. unlimited momo allowance whenever we are in the same zip code.
+
+responsibilities:
+- maintain current levels of kindness.
+- continue explaining biology concepts (i promise to listen).
+
+there is no termination clause. you are stuck with me.`
+            },
+            {
+                id: 3,
+                sender: "Amazon",
+                subject: "Your package is out for delivery",
+                snippet: "Arriving by 8 PM: Percy Jackson Box Set...",
+                time: "8:00 AM",
+                avatar: "A",
+                color: "#f09440",
+                starred: false,
+                isNiv: false,
+                body: `Hello Aaradhya,
+
+Your order containing "Percy Jackson & The Olympians (5 Books)" is out for delivery.
+
+Track your package:
+[Link]
+
+(Gift Note from Niv: "You mentioned these. I listen.")`
+            },
+            {
+                id: 4,
+                sender: "Niv",
+                subject: "The pen thing",
+                snippet: "I remember you said you liked that specific grip.",
+                time: "Feb 13",
+                avatar: "N",
+                color: "#d93025",
+                starred: false,
+                isNiv: true,
+                body: `we need to discuss something important.
+
+you mentioned your favorite pen once. once. like months ago. in passing.
+i remember.
+
+here's the thing: that's what this is. it's not the big stuff. it's remembering that you prefer that specific pen. that you got excited about the grip.
+
+i'm taking notes. constantly. because when we're finally together, i want to already know. i want to hand you your coffee right. i want to have the pen stocked.
+
+is this a lot? yes.
+do i care? no.
+
+(ps: they are out of stock but i have alerts set.)`
+            },
+            {
+                id: 5,
+                sender: "Duolingo",
+                subject: "Time for your Biology lesson!",
+                snippet: "Learn to impress your girlfriend today.",
+                time: "Feb 12",
+                avatar: "D",
+                color: "#58cc02",
+                starred: false,
+                isNiv: false,
+                body: `Hi Niv,
+
+Keep your streak alive! 
+
+Lesson: Chloroplasts vs Mitochondria.
+Goal: Impress Aaradhya during tonight's FaceTime.`
+            },
+            {
+                id: 6,
+                sender: "Niv",
+                subject: "quick thought before you sleep",
+                snippet: "you're doing great with exams.",
+                time: "Feb 11",
+                avatar: "N",
+                color: "#d93025",
+                starred: true,
+                isNiv: true,
+                body: `just wanted to say:
+
+you're stressed about boards. i know.
+but you're going to be just fine. not just because you're smart (you are), but because you work harder than anyone.
+
+boards are temporary. we are forever. 
+go sleep.`
+            },
+             {
+                id: 7,
+                sender: "Spotify",
+                subject: "New Playlist: 'Songs that sound like her'",
+                snippet: "We made a mix based on your recent crying sessions.",
+                time: "Feb 10",
+                avatar: "S",
+                color: "#1db954",
+                starred: false,
+                isNiv: false,
+                body: `Your Daily Mix is ready.
+Includes: 
+1. "Valentine"
+2. Songs about Long Distance
+3. Taylor Swift (lots of it)`
             }
+        ];
+
+        function enterApp() {
+            document.getElementById('loginView').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('loginView').style.display = 'none';
+                document.getElementById('app').style.display = 'flex';
+            }, 400);
+            renderList(EMAILS);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function filterEmails(category) {
+            toggleSidebar(); // close menu
+            let filtered = [];
+            if(category === 'all') filtered = EMAILS;
+            else if(category === 'primary') filtered = EMAILS.filter(e => e.isNiv || e.sender === "Amazon"); // Mock filter
+            else filtered = EMAILS.filter(e => !e.isNiv); // Mock filter
             
-            const filtered = currentEmails.filter(e => 
-                e.sender.toLowerCase().includes(filterText.toLowerCase()) || 
-                e.subject.toLowerCase().includes(filterText.toLowerCase())
-            );
+            renderList(filtered);
+        }
 
-            filtered.forEach(email => {
-                const item = document.createElement('div');
-                item.className = 'email-item';
-                item.onclick = (e) => {
-                    if(!e.target.closest('.star-icon')) openEmail(email.id);
-                };
-
-                const starClass = email.starred ? 'starred' : '';
-
-                // Handle Niv Profile Picture logic with fallback
-                let avatarHtml = '';
-                if (email.sender === 'Niv') {
-                    // Using the container method to allow hiding the img on error
-                    avatarHtml = `
-                        <div class="avatar-container">
-                            <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
-                            <img src="${nivPfpUrl}" class="avatar-img" alt="Niv" 
-                                onerror="this.style.display='none';">
-                        </div>
-                    `;
+        function renderList(list) {
+            const container = document.getElementById('emailList');
+            container.innerHTML = "";
+            
+            list.forEach(email => {
+                const row = document.createElement('div');
+                row.className = 'email-row';
+                row.onclick = () => openDetail(email);
+                
+                // Avatar Logic
+                let avatarHTML = '';
+                if(email.isNiv) {
+                    // Try to load Niv's PFP, fallback logic handled by onerror
+                    avatarHTML = `<img src="${NIV_PFP}" onerror="handleImgError(this)" alt="N">`;
                 } else {
-                    avatarHtml = `
-                        <div class="avatar-container">
-                            <div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
-                        </div>
-                    `;
+                    avatarHTML = email.avatar;
                 }
-
-                item.innerHTML = `
-                    ${avatarHtml}
-                    <div class="email-content-main">
-                        <div class="email-first-line">
-                            <span class="sender-name">${email.sender}</span>
-                            <span class="email-time">${email.time}</span>
+                
+                // Styling
+                const fw = email.id < 3 ? '700' : '400'; // Make recent ones bold
+                const bgAvatar = email.isNiv ? 'transparent' : email.color;
+                
+                row.innerHTML = `
+                    <div class="avatar-spot" style="background:${bgAvatar}">
+                        ${avatarHTML}
+                    </div>
+                    <div class="email-info">
+                        <div class="row-top">
+                            <span class="sender" style="font-weight:${fw}">${email.sender}</span>
+                            <span class="time" style="font-weight:${fw}">${email.time}</span>
                         </div>
-                        <div class="subject-line">${email.subject}</div>
+                        <div class="subject" style="font-weight:${fw}">${email.subject}</div>
                         <div class="snippet">${email.snippet}</div>
                     </div>
-                    <div class="star-icon" onclick="toggleStar(event, '${email.id}')">
-                        <svg class="star-svg ${starClass}" viewBox="0 0 24 24">
+                    <div class="star-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" class="${email.starred ? 'star-filled' : 'star-empty'}">
                             <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
                         </svg>
                     </div>
                 `;
-                container.appendChild(item);
+                container.appendChild(row);
             });
-            
-            if (filtered.length === 0) {
-                container.innerHTML = '<div style="padding: 40px; text-align: center; color: #5f6368;">No mails found.</div>';
-            }
         }
 
-        function toggleStar(e, id) {
-            e.stopPropagation();
-            const email = allEmails.find(x => x.id === id);
-            if (email) {
-                email.starred = !email.starred;
-                renderEmails(document.getElementById('searchInput').value);
-                if(currentCategory === 'starred') {
-                    currentEmails = allEmails.filter(e => e.starred);
-                    renderEmails();
-                }
-            }
-        }
-
-        function openEmail(id) {
-            const email = allEmails.find(e => e.id === id);
-            if (!email) return;
-
-            document.getElementById('detailSubject').textContent = email.subject;
-            document.getElementById('detailSender').textContent = email.sender;
-            document.getElementById('detailTime').textContent = email.time;
+        function openDetail(email) {
+            const view = document.getElementById('detailView');
+            document.getElementById('d-subject').innerText = email.subject;
+            document.getElementById('d-sender').innerText = email.sender;
+            document.getElementById('d-time').innerText = email.time;
             
-            const avatarContainer = document.getElementById('detailAvatar');
+            const bodyEl = document.getElementById('d-body');
+            bodyEl.innerText = email.body;
             
-            // Handle Detail View Avatar
-            if (email.sender === 'Niv') {
-                avatarContainer.innerHTML = `<div class="avatar-circle" style="background: ${email.color};">${email.avatar}</div>
-                                             <img src="${nivPfpUrl}" alt="Niv" onerror="this.style.display='none'">`;
-                avatarContainer.style.background = 'transparent';
+            // Special styling for Niv styling (Lowercase, spaced)
+            if (email.isNiv) {
+                bodyEl.className = 'email-body email-body-niv';
             } else {
-                avatarContainer.innerHTML = `<div class="avatar-circle" style="background: ${email.color}; position:static;">${email.avatar}</div>`;
-                avatarContainer.style.background = 'transparent'; // Reset to avoid double bg
+                bodyEl.className = 'email-body';
             }
-            
-            const starSvg = document.getElementById('detailStarSvg');
-            if(email.starred) starSvg.classList.add('starred');
-            else starSvg.classList.remove('starred');
-            
-            const illustrationContainer = document.getElementById('illustrationContainer');
-            if (email.illustration) {
-                illustrationContainer.innerHTML = `<div class="artistic-illustration">${email.illustration}</div>`;
+
+            // Avatar in detail view
+            const dAvatar = document.getElementById('d-avatar');
+            if(email.isNiv) {
+                dAvatar.style.background = 'transparent';
+                dAvatar.innerHTML = `<img src="${NIV_PFP}" onerror="handleImgError(this)" alt="N">`;
             } else {
-                illustrationContainer.innerHTML = '';
+                dAvatar.style.background = email.color;
+                dAvatar.innerHTML = email.avatar;
             }
-            
-            const detailBody = document.getElementById('detailBody');
-            
-            if (email.isPurchase && email.purchaseData) {
-                const p = email.purchaseData;
-                const receiptHtml = `
-                    <div class="google-order-card">
-                        <div class="card-header">
-                            <div class="card-title-group">
-                                <div class="card-title">${p.product}</div>
-                                <div class="card-subtitle">1 item from ${p.vendor}</div>
-                            </div>
-                            <div class="card-logo">
-                                ${p.vendor.substring(0,1)}
-                            </div>
-                        </div>
-                        <div class="order-status">Order placed</div>
-                        <div class="order-number-row">
-                            <div class="hashtag-icon">#</div>
-                            <div class="order-info">
-                                <div class="order-label">Order number</div>
-                                <div class="order-value">${p.orderNumber}</div>
-                            </div>
-                        </div>
-                        <a href="#" class="view-order-btn">View order</a>
-                    </div>
-                `;
-                detailBody.innerHTML = receiptHtml + email.body;
-            } else {
-                detailBody.innerHTML = email.body;
-            }
-            
-            document.getElementById('emailListView').classList.remove('view-visible');
-            document.getElementById('emailListView').classList.add('view-hidden');
-            document.getElementById('emailDetailView').classList.add('active');
+
+            // Star
+            const starContainer = document.getElementById('d-star-btn');
+            starContainer.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" class="${email.starred ? 'star-filled' : 'star-empty'}"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>`;
+
+            view.classList.add('active');
         }
 
-        function closeEmail() {
-            document.getElementById('emailDetailView').classList.remove('active');
-            document.getElementById('emailListView').classList.remove('view-hidden');
-            document.getElementById('emailListView').classList.add('view-visible');
+        function closeDetail() {
+            document.getElementById('detailView').classList.remove('active');
         }
-
-        document.getElementById('openProfile').onclick = (e) => {
-            e.stopPropagation();
-            document.getElementById('profileDropdown').classList.toggle('active');
-        };
-        
-        document.addEventListener('click', (e) => {
-            const dropdown = document.getElementById('profileDropdown');
-            if (!dropdown.contains(e.target) && !document.getElementById('openProfile').contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
-        });
-
-        document.getElementById('openMenu').onclick = () => { 
-            document.getElementById('sidebar').classList.add('open'); 
-            document.getElementById('overlay').classList.add('active'); 
-        };
-        
-        document.getElementById('overlay').onclick = () => { 
-            document.getElementById('sidebar').classList.remove('open'); 
-            document.getElementById('overlay').classList.remove('active'); 
-        };
-
-        const root = document.documentElement;
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.onclick = () => {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-
-                const view = item.getAttribute('data-view');
-                const color = item.getAttribute('data-color');
-                const bg = item.getAttribute('data-bg');
-                
-                if(color && bg) {
-                    root.style.setProperty('--primary-color', color);
-                    root.style.setProperty('--active-bg', bg);
-                }
-
-                const text = item.querySelector('.nav-text').textContent;
-                document.getElementById('categoryLabel').textContent = text;
-                
-                currentCategory = view;
-                
-                if (view === 'all-inboxes') {
-                    currentEmails = allEmails.filter(e => !emailDatabase.spam.includes(e));
-                } else if (view === 'primary') {
-                    currentEmails = emailDatabase.primary;
-                } else if (view === 'social') {
-                    currentEmails = emailDatabase.social;
-                } else if (view === 'promotions') {
-                    currentEmails = emailDatabase.promotions;
-                } else if (view === 'purchases') {
-                    currentEmails = emailDatabase.purchases;
-                } else if (view === 'starred') {
-                    currentEmails = allEmails.filter(e => e.starred);
-                } else if (view === 'spam') {
-                    currentEmails = emailDatabase.spam;
-                } else {
-                    currentEmails = [];
-                }
-                
-                renderEmails();
-
-                document.getElementById('sidebar').classList.remove('open');
-                document.getElementById('overlay').classList.remove('active');
-            };
-        });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            renderEmails(e.target.value);
-        });
-
-        updateBadges();
-        renderEmails();
     </script>
 </body>
 </html>
