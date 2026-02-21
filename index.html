@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOVE SICK! Guy writes 47-page paper on girlfriend</title>
-    <!-- Importing fonts for the NYP Look -->
+    <title>LOVE SICK! Guy writes massive paper on girlfriend</title>
+    <!-- Importing fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@500;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:ital,wght@0,500;0,700;1,700&family=Times+New+Roman&display=swap" rel="stylesheet">
     
     <style>
         /* GLOBAL RESET */
@@ -30,38 +30,53 @@
             min-height: 100vh;
         }
 
-        /* HEADER SECTION */
-        .nyp-header {
-            padding: 20px 20px 10px 20px;
+        /* EXACT HEADER RECREATION */
+        .nyp-header-bar {
+            background-color: #cc0000;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-bottom: 4px solid #000;
-            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .nyp-logo {
-            font-family: 'UnifrakturMaguntia', serif;
-            font-size: 72px;
-            color: #cc0000; /* NY Post Red */
+        .nyp-logo-text {
+            font-family: 'Oswald', sans-serif;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 65px;
+            color: #ffffff;
             line-height: 1;
-            margin-bottom: 5px;
+            text-transform: uppercase;
+            /* The NY Post Shadow Effect */
+            text-shadow: 
+                3px 3px 0px #000,
+                4px 4px 0px #000,
+                5px 5px 0px #000,
+                6px 6px 0px #000;
+            letter-spacing: -2px;
+            transform: scaleY(1.1); /* Slight vertical stretch */
+            margin-top: 5px;
         }
-        
-        .nyp-date {
+
+        .nyp-meta-bar {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
             font-family: 'Oswald', sans-serif;
             font-size: 13px;
             color: #333;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            padding: 8px 0;
-            margin-top: 15px;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
         }
 
         /* LAYOUT GRID */
         .nyp-content-grid {
             display: grid;
-            grid-template-columns: 2.5fr 1fr; /* Article vs Sidebar */
+            grid-template-columns: 2.5fr 1fr;
             gap: 40px;
             padding: 30px;
         }
@@ -71,23 +86,25 @@
             background: #cc0000;
             color: white;
             display: inline-block;
-            padding: 6px 10px;
+            padding: 4px 8px;
             font-family: 'Oswald', sans-serif;
             text-transform: uppercase;
             font-weight: 700;
             font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            transform: skew(-10deg);
         }
 
         .nyp-headline {
             font-family: 'Oswald', sans-serif;
-            font-size: 56px;
-            line-height: 1.05;
+            font-size: 62px;
+            line-height: 1.0;
             font-weight: 700;
+            font-style: italic;
             color: #000;
             margin-bottom: 20px;
             text-transform: uppercase;
-            letter-spacing: -1px;
+            letter-spacing: -1.5px;
         }
 
         .nyp-subhead {
@@ -96,7 +113,6 @@
             line-height: 1.3;
             color: #333;
             margin-bottom: 25px;
-            font-style: italic;
         }
 
         .nyp-byline {
@@ -129,20 +145,20 @@
             padding: 20px;
             font-family: 'Oswald', sans-serif;
             font-size: 24px;
+            font-style: italic;
             text-transform: uppercase;
             text-decoration: none;
             font-weight: 700;
             margin: 40px 0;
             cursor: pointer;
-            transition: background 0.2s;
             border: 4px solid #000;
-            box-shadow: 5px 5px 0px #000;
+            box-shadow: 6px 6px 0px #000;
+            transition: transform 0.1s;
         }
         
         .nyp-link-button:hover { 
-            background: #aa0000; 
             transform: translate(2px, 2px);
-            box-shadow: 3px 3px 0px #000;
+            box-shadow: 4px 4px 0px #000;
         }
 
         /* SIDEBAR */
@@ -155,6 +171,7 @@
             font-family: 'Oswald', sans-serif;
             font-size: 28px;
             font-weight: 700;
+            font-style: italic;
             border-bottom: 4px solid #000;
             margin-bottom: 20px;
             padding-bottom: 5px;
@@ -182,12 +199,12 @@
            ACADEMIC PAPER STYLES 
            ========================================= */
         .paper-wrapper {
-            background: #e0e0e0;
+            background: #e6e6e6;
             min-height: 100vh;
             padding-bottom: 50px;
         }
 
-        /* NAVIGATION BAR FOR PAPER */
+        /* NAV BAR */
         .paper-nav-bar {
             background: #cc0000;
             color: white;
@@ -201,7 +218,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            letter-spacing: 1px;
         }
         
         .paper-nav-bar:hover { background: #aa0000; }
@@ -209,46 +227,27 @@
         .paper-container {
             background: #ffffff;
             width: 100%;
-            max-width: 900px;
-            margin: 40px auto; /* Margin top to separate from nav bar */
-            padding: 60px 80px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 80px 90px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
             font-family: "Times New Roman", Times, serif;
         }
 
-        .paper-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #000;
-            padding-bottom: 20px;
-        }
-
-        .paper-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            line-height: 1.2;
-        }
-
-        .paper-authors {
-            font-size: 14px;
-            font-style: italic;
-            margin-bottom: 10px;
-        }
-
-        .paper-affil {
-            font-size: 12px;
-            color: #444;
-            margin-bottom: 20px;
-        }
-
+        /* ACADEMIC FORMATTING */
+        .paper-header { text-align: center; margin-bottom: 50px; border-bottom: 1px solid #000; padding-bottom: 20px; }
+        .paper-title { font-size: 32px; font-weight: bold; margin-bottom: 15px; line-height: 1.2; }
+        .paper-authors { font-size: 16px; font-style: italic; margin-bottom: 10px; }
+        .paper-affil { font-size: 13px; color: #444; margin-bottom: 20px; }
+        
         .paper-abstract-box {
-            background: #f9f9f9;
+            background: #fdfdfd;
             border: 1px solid #eee;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 25px;
+            margin-bottom: 40px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
+            text-align: justify;
         }
 
         .paper-columns {
@@ -260,10 +259,10 @@
         .paper-h1 {
             font-family: Arial, sans-serif;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 14px;
             text-transform: uppercase;
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin-top: 35px;
+            margin-bottom: 15px;
             border-bottom: 2px solid #000;
             padding-bottom: 5px;
             break-after: avoid;
@@ -272,52 +271,75 @@
         .paper-h2 {
             font-family: Arial, sans-serif;
             font-weight: bold;
-            font-size: 14px;
-            margin-top: 20px;
-            margin-bottom: 8px;
+            font-size: 13px;
+            margin-top: 25px;
+            margin-bottom: 10px;
             color: #333;
+            break-after: avoid;
         }
 
         .paper-p {
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.6;
             margin-bottom: 15px;
-            text-indent: 15px;
+            text-indent: 20px;
         }
         
         .paper-p.no-indent { text-indent: 0; }
 
-        .paper-figure {
-            background: #f4f4f4;
+        /* GRAPHS AND FIGURES */
+        .figure-box {
             border: 1px solid #ccc;
-            padding: 10px;
-            margin: 20px 0;
-            font-family: Arial, sans-serif;
-            font-size: 11px;
+            background: #f9f9f9;
+            padding: 15px;
+            margin: 30px 0;
             break-inside: avoid;
+            font-family: Arial, sans-serif;
         }
+
+        .fig-caption {
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+            border-top: 1px solid #ddd;
+            padding-top: 5px;
+        }
+
+        /* GRAPH STYLES */
+        .bar-chart-container {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
+            padding: 0 10px;
+            gap: 20px;
+        }
+
+        .bar {
+            width: 40px;
+            background: #444;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            color: white;
+            font-size: 10px;
+            padding-top: 5px;
+        }
+
+        .bar-label { font-size: 10px; text-align: center; margin-top: 5px; }
         
-        .paper-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11px;
-            font-family: Arial, sans-serif;
-            margin: 20px 0;
-            break-inside: avoid;
-        }
-        .paper-table th, .paper-table td {
-            border: 1px solid #ccc;
-            padding: 6px;
-            text-align: left;
-        }
-        .paper-table th { background: #eee; font-weight: bold; }
+        /* Line Chart SVG */
+        .line-chart-svg { width: 100%; height: 150px; background: white; border: 1px solid #eee; }
 
         @media (max-width: 768px) {
             .nyp-content-grid { grid-template-columns: 1fr; }
             .nyp-sidebar { border-left: none; border-top: 1px solid #eee; padding-top: 20px; padding-left: 0; }
             .paper-columns { column-count: 1; }
-            .paper-container { padding: 30px 20px; }
+            .paper-container { padding: 30px 20px; width: 95%; margin: 20px auto; }
             .nyp-headline { font-size: 40px; }
+            .nyp-logo-text { font-size: 40px; }
         }
     </style>
     <script>
@@ -344,20 +366,25 @@
          ======================================================= -->
     <div id="nyp-view" class="nyp-wrapper">
         
-        <div class="nyp-header">
-            <div class="nyp-logo">New York Post</div>
-            <div class="nyp-date">Wednesday, February 18, 2026 | As told to Niv</div>
+        <!-- RED HEADER BAR WITH LOGO -->
+        <div class="nyp-header-bar">
+            <div class="nyp-logo-text">NEW YORK POST</div>
+        </div>
+
+        <div class="nyp-meta-bar">
+            <span>Wednesday, February 18, 2026</span>
+            <span>Lifestyle / Romance</span>
         </div>
 
         <div class="nyp-content-grid">
             
             <!-- MAIN ARTICLE -->
             <div class="nyp-article">
-                <span class="nyp-tag">LIVING</span>
-                <h1 class="nyp-headline">LOVE SICK! This guy wrote a 47-page dissertation just to prove his girlfriend is ‘perfect’</h1>
+                <span class="nyp-tag">EXCLUSIVE</span>
+                <h1 class="nyp-headline">LOVE SICK! THIS GUY WROTE A 47-PAGE DISSERTATION JUST TO PROVE HIS GIRLFRIEND IS ‘PERFECT’</h1>
                 <h2 class="nyp-subhead">He tracked her Diet Coke habits, pasta preferences, and political views for 8 months. The conclusion? "She is poetry."</h2>
                 
-                <div class="nyp-byline">By Niv | February 18, 2026</div>
+                <div class="nyp-byline">By Niv | February 18, 2026 | 9:28am</div>
 
                 <div class="nyp-body">
                     <p><strong>Forget flowers. Forget chocolates. Fellas, the bar has just been raised to the stratosphere, and frankly, you’re doomed.</strong></p>
@@ -395,12 +422,12 @@
                     <p>Aaradhya, if you’re reading this: He analyzed 60% of his phone’s storage worth of voice notes for you. Marry him.</p>
 
                     <a onclick="toggleView()" class="nyp-link-button">
-                        READ THE 47-PAGE "STUDY" HERE
+                        CLICK TO READ THE FULL 47-PAGE "STUDY"
                     </a>
                 </div>
             </div>
 
-            <!-- SIDEBAR (Clean, No Ads) -->
+            <!-- SIDEBAR (Clean) -->
             <div class="nyp-sidebar">
                 <div class="nyp-sidebar-title">TRENDING NOW</div>
                 
@@ -432,7 +459,7 @@
          ======================================================= -->
     <div id="paper-view" class="paper-wrapper">
         
-        <!-- TOP NAV BAR (Replaces Floating Button) -->
+        <!-- TOP NAV BAR -->
         <div onclick="toggleView()" class="paper-nav-bar">
             ← Return to NY Post Article
         </div>
@@ -444,7 +471,7 @@
                 <div class="paper-authors">Niv<sup>1</sup> (corresponding author)</div>
                 <div class="paper-affil"><sup>1</sup>Department of Loving Her, University of Long Distance Studies, 2083km Campus</div>
                 <div style="font-size: 11px; margin-top: 10px; color: #555;">
-                    DOI: 10.1234/love.2026.aaradhya.47pages | Received: June 2025 | Accepted: February 2026
+                    DOI: 10.1234/love.2026.aaradhya.47pages | Received: June 2025 | Accepted: February 2026 | Vol 47. Issue 1
                 </div>
             </div>
 
@@ -460,7 +487,7 @@
                 <div class="paper-h1">1. Introduction</div>
                 <div class="paper-p">The quantification of love has long eluded the scientific community. While poets have attempted to describe it and biologists to dissect it, few have attempted to document it with the rigor of a 47-page longitudinal study. This paper seeks to fill that gap by analyzing the subject, Aaradhya, observed over a period of eight months from a distance of 2,083 kilometers.</div>
                 <div class="paper-p">The primary research question driving this study was simple yet profound: Is she as perfect as she seems? Secondary questions investigated the correlation between political beliefs and attractiveness, and whether pasta preference incompatibilities (penne vs. spaghetti) constitute a threat to long-term viability.</div>
-                <div class="paper-p"><strong>1.1 Limitations of the Researcher</strong><br>It must be noted at the outset: The researcher finds the subject hot. This finding, confirmed early in the data collection phase via FaceTime (n=1), has compromised researcher objectivity. As stated in the Funding Statement, this research is self-funded through excessive emotional investment.</div>
+                <div class="paper-p">Historical context suggests that long-distance relationships (LDRs) often suffer from a lack of observational data. However, this study posits that distance acts as a clarifying lens. Without physical proximity to cloud judgment with pheromones alone, the researcher was forced to evaluate the subject based on character, voice, intellect, and the contents of 180GB of digital correspondence.</div>
 
                 <div class="paper-h1">2. Methodology</div>
                 <div class="paper-p"><strong>2.1 Data Collection</strong><br>Data was collected from June 2025 to February 2026. Sources included:
@@ -470,66 +497,75 @@
                     <li><strong>Behavioral Observation:</strong> The subject was observed in various states (stressed, happy, studying biology).</li>
                 </ul>
                 </div>
-                <div class="paper-p"><strong>2.2 The Distance Variable</strong><br>The constant distance of 2,083km acted as a unique filter. Without the distraction of physical proximity, the researcher was forced to focus on the substance of the subject's character, intellect, and voice.</div>
+                <div class="paper-p"><strong>2.2 The Distance Variable</strong><br>The constant distance of 2,083km acted as a unique filter. Without the distraction of physical proximity, the researcher was forced to focus on the substance of the subject's character, intellect, and voice. The researcher admits that the sample size (n=1) is small, but argues that the subject is unique, rendering larger sample sizes irrelevant.</div>
+                <div class="paper-p"><strong>2.3 Limitations of the Researcher</strong><br>It must be noted at the outset: The researcher finds the subject hot. This finding, confirmed early in the data collection phase via FaceTime (n=1), has compromised researcher objectivity. As stated in the Funding Statement, this research is self-funded through excessive emotional investment.</div>
 
-                <div class="paper-h1">3. Results</div>
+                <div class="paper-h1">3. Results & Analysis</div>
                 
-                <div class="paper-h2">3.1 The Diet Coke Incident</div>
+                <div class="paper-h2">3.1 Longitudinal Analysis of Attractiveness</div>
+                <div class="paper-p">Throughout the 8-month observation period, the "Hotness" variable was tracked daily. Despite fluctuations in the subject's environment (stress, exams, mornings), the variable remained constant at maximum values.</div>
+                
+                <!-- FIGURE 1: LINE CHART -->
+                <div class="figure-box">
+                    <div style="font-weight:bold; margin-bottom:10px; text-align:center;">Attractiveness Over Time (8 Months)</div>
+                    <svg class="line-chart-svg" viewBox="0 0 300 100">
+                        <!-- Grid lines -->
+                        <line x1="30" y1="10" x2="300" y2="10" stroke="#eee" stroke-width="1" />
+                        <line x1="30" y1="50" x2="300" y2="50" stroke="#eee" stroke-width="1" />
+                        <line x1="30" y1="90" x2="300" y2="90" stroke="#eee" stroke-width="1" />
+                        <!-- Y Axis Labels -->
+                        <text x="5" y="15" font-size="10">Max</text>
+                        <text x="5" y="95" font-size="10">0</text>
+                        <!-- The Data Line (Straight across the top) -->
+                        <path d="M 30 10 L 290 10" stroke="blue" stroke-width="3" fill="none" />
+                        <!-- X Axis -->
+                        <line x1="30" y1="10" x2="30" y2="90" stroke="black" stroke-width="1" />
+                        <line x1="30" y1="90" x2="300" y2="90" stroke="black" stroke-width="1" />
+                    </svg>
+                    <div class="fig-caption">Figure 1: Subject attractiveness remained statistically maxed out regardless of temporal variables.</div>
+                </div>
+
+                <div class="paper-h2">3.2 The Diet Coke Incident</div>
                 <div class="paper-p">In the early stages of the study (Month 1), the researcher mentioned a preference for Diet Coke. The subject, who had no prior affinity for the beverage, voluntarily consumed one.</div>
                 <div class="paper-p"><strong>Finding:</strong> She now loves it.</div>
                 <div class="paper-p"><strong>Significance:</strong> This event serves as a primary behavioral marker. It demonstrates openness to experience and a willingness to engage with the researcher's preferences. It was a small gesture with large implications for compatibility. See Appendix C for the full timeline.</div>
+                <div class="paper-p">We hypothesize that the adoption of Diet Coke is not merely gustatory but symbolic. It represents the intake of the partner's world. This finding has a p-value of <0.001 regarding "Wife Material" indicators.</div>
 
-                <div class="paper-h2">3.2 Political Alignment Assessment</div>
-                <div class="paper-p">Analysis of conversations regarding current events reveals the subject holds Leftist political beliefs.</div>
-                <div class="paper-figure">
-                    <strong>Figure 2: Political Beliefs vs. Attractiveness</strong><br>
-                    [Chart showing a vertical line going straight up]<br>
-                    <em>Note: The correlation coefficient (r) between "Correct Political Beliefs" and "Researcher Attraction" is 1.0.</em>
-                </div>
-                <div class="paper-p">The researcher notes: "This is hot." The shared values create a resonance that superficial attraction cannot replicate.</div>
-
-                <div class="paper-h2">3.3 The Poetry Paradox</div>
-                <div class="paper-p">The subject is a known writer of poetry. However, extensive qualitative analysis suggests a dual phenomenon. The subject does not merely produce poetry; the subject <em>is</em> poetry.</div>
-                <div class="paper-p">This conclusion is supported by the rhythmic nature of her voice notes and the metaphorical richness of her existence. While academically unconventional, the researcher insists this finding is accurate.</div>
-
-                <div class="paper-h2">3.4 Dietary Compatibility Matrix</div>
-                <div class="paper-p">A potential area of friction was identified regarding pasta preferences.</div>
+                <div class="paper-h2">3.3 Political Alignment Assessment</div>
+                <div class="paper-p">Analysis of conversations regarding current events reveals the subject holds Leftist political beliefs. The researcher cross-referenced this with his own preferences.</div>
                 
-                <table class="paper-table">
-                    <tr>
-                        <th>Variable</th>
-                        <th>Subject (Aaradhya)</th>
-                        <th>Researcher (Niv)</th>
-                        <th>Compatibility Status</th>
-                    </tr>
-                    <tr>
-                        <td>Pasta Shape</td>
-                        <td>Penne</td>
-                        <td>Spaghetti</td>
-                        <td>Minor Divergence</td>
-                    </tr>
-                    <tr>
-                        <td>Sauce</td>
-                        <td>Pesto</td>
-                        <td>Marinara</td>
-                        <td>Manageable</td>
-                    </tr>
-                    <tr>
-                        <td>Beverage</td>
-                        <td>Diet Coke (Acquired)</td>
-                        <td>Diet Coke (Native)</td>
-                        <td>Perfect Match</td>
-                    </tr>
-                </table>
-                <div class="paper-p">Despite the Penne/Spaghetti divergence, the study finds that the relationship remains viable. The researcher is willing to consume pesto to maintain proximity to the subject.</div>
+                <!-- FIGURE 2: BAR CHART -->
+                <div class="figure-box">
+                    <div style="font-weight:bold; margin-bottom:10px; text-align:center;">Correlation: Politics vs. Attraction</div>
+                    <div class="bar-chart-container">
+                        <div style="display:flex; flex-direction:column; align-items:center;">
+                            <div class="bar" style="height: 120px; background: #cc0000;">100%</div>
+                            <div class="bar-label">Leftist</div>
+                        </div>
+                        <div style="display:flex; flex-direction:column; align-items:center;">
+                            <div class="bar" style="height: 5px; background: #999;">4%</div>
+                            <div class="bar-label">Other</div>
+                        </div>
+                    </div>
+                    <div class="fig-caption">Figure 2: The "Correct" political belief (Leftist) correlates perfectly with Researcher Attraction levels.</div>
+                </div>
 
-                <div class="paper-h2">3.5 Health Considerations</div>
-                <div class="paper-p">The subject possesses a documented allergy to oranges. Observations show she manages this limitation without complaint, further evidencing resilience. Future meal planning protocols have been adjusted to "Zero Oranges."</div>
+                <div class="paper-p">The researcher notes: "This is hot." The shared values create a resonance that superficial attraction cannot replicate. Political alignment serves as a proxy for shared moral frameworks, increasing the coefficient of long-term stability.</div>
+
+                <div class="paper-h2">3.4 The Poetry Paradox</div>
+                <div class="paper-p">The subject is a known writer of poetry. However, extensive qualitative analysis suggests a dual phenomenon. The subject does not merely produce poetry; the subject <em>is</em> poetry.</div>
+                <div class="paper-p">This conclusion is supported by the rhythmic nature of her voice notes and the metaphorical richness of her existence. While academically unconventional, the researcher insists this finding is accurate. The distinction between the artist and the art has collapsed in this specific instance.</div>
+
+                <div class="paper-h2">3.5 Dietary Compatibility Matrix</div>
+                <div class="paper-p">A potential area of friction was identified regarding pasta preferences. The subject prefers Penne (a tubular shape) with Pesto. The researcher prefers Spaghetti (a strand shape).</div>
+                <div class="paper-p">Mathematical modeling suggests that while the shapes are geometrically incompatible, the emotional compatibility remains high. The researcher has committed to consuming Pesto, despite previous reservations, citing the "Reciprocity Principle" derived from the Diet Coke Incident.</div>
+
+                <div class="paper-h2">3.6 Marvel Universe Proficiency</div>
+                <div class="paper-p">Standardized testing (pop quizzes over FaceTime) revealed a comprehensive knowledge of the Marvel Cinematic Universe (MCU). This shared cultural lexicon provides a high-bandwidth channel for communication and memes.</div>
 
                 <div class="paper-h1">4. Discussion</div>
                 <div class="paper-p"><strong>4.1 On Perfection</strong><br>The term "perfect" is rarely used in scientific literature due to the impossibility of absolute flawlessness. However, in this study, "perfect" is defined as "exactly as she should be." By this definition, the subject achieves the metric with p&lt;0.000001 significance.</div>
-                <div class="paper-p">The researcher asked the control question: "Would you change anything?" The answer, consistent across all 8 months, was "No."</div>
-
+                <div class="paper-p">The researcher asked the control question: "Would you change anything?" The answer, consistent across all 8 months, was "No." This includes the Orange Allergy, which creates a specific constraint on fruit purchasing but adds to the unique character profile of the subject.</div>
                 <div class="paper-p"><strong>4.2 Bias and Validity</strong><br>Critics may argue that the researcher is "completely compromised" or "obsessed." The researcher accepts these labels. The finding that the subject is hot affects all subsequent analysis, yet the data (Marvel knowledge, kindness, biology expertise) remains objective.</div>
 
                 <div class="paper-h1">5. Conclusion</div>
@@ -541,13 +577,14 @@
                     [1] Niv. (2025). Personal observation, Diet Coke incident. June 2025.<br>
                     [2] Niv. (2025). Field notes: "Subject is hot." Various dates.<br>
                     [3] Etcoff, N. (1999). Survival of the Prettiest.<br>
-                    [4] Niv. (2026). Analysis of 180GB of Voice Notes.
+                    [4] Niv. (2026). Analysis of 180GB of Voice Notes.<br>
+                    [5] Marvel Studios. (2008-2026). The Complete Saga.<br>
+                    [6] Department of Pasta Studies. (2024). Penne vs Spaghetti Compatibility Protocols.
                 </div>
 
                 <br><br>
-                <hr>
-                <div style="text-align: center; font-style: italic; margin-top: 20px;">
-                    End of Document. Pages 6-47 available upon request to the corresponding author.
+                <div style="background:#eee; padding:20px; text-align:center; font-style:italic; margin-top:50px;">
+                    [Pages 8 through 47 have been omitted for brevity in this web view. The full dataset, including the raw analysis of 10,000 text messages and the detailed "Orange Allergy Protocols," is available on file at the University of Long Distance Studies.]
                 </div>
             </div>
         </div>
