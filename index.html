@@ -4,66 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOVE SICK! Guy writes massive paper on girlfriend</title>
-    <!-- Importing fonts -->
+    <!-- Importing Oswald for the Headlines/Logo to match the image -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:ital,wght@0,500;0,700;1,700&family=Times+New+Roman&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:ital,wght@0,700;1,700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     
     <style>
         /* GLOBAL RESET */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #f8f8f8; font-family: 'Libre Baskerville', Georgia, serif; }
+        body { background: #f0f0f0; font-family: 'Libre Baskerville', Georgia, serif; }
         
-        /* === VIEW SWITCHER LOGIC === */
+        /* VIEW SWITCHER */
         #nyp-view { display: block; }
         #paper-view { display: none; }
 
         /* =========================================
-           NEW YORK POST STYLES 
+           NEW YORK POST STYLES (MATCHING YOUR IMAGE)
            ========================================= */
         .nyp-wrapper {
             background: white;
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
             min-height: 100vh;
         }
 
-        /* EXACT HEADER RECREATION */
+        /* THE HEADER - REPLICATING THE IMAGE */
         .nyp-header-bar {
-            background-color: #cc0000;
+            background-color: #cc0000; /* NYP Red */
             padding: 15px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 4px solid #000;
-            position: relative;
+            border-bottom: 3px solid #000;
             overflow: hidden;
         }
 
         .nyp-logo-text {
-            font-family: 'Oswald', sans-serif;
-            font-style: italic;
+            font-family: 'Oswald', sans-serif; /* Bold Condensed Sans */
+            font-style: italic;                /* Italicized like the image */
             font-weight: 700;
-            font-size: 65px;
+            font-size: 85px;
             color: #ffffff;
-            line-height: 1;
+            line-height: 0.9;
             text-transform: uppercase;
-            /* The NY Post Shadow Effect */
-            text-shadow: 
-                3px 3px 0px #000,
-                4px 4px 0px #000,
-                5px 5px 0px #000,
-                6px 6px 0px #000;
             letter-spacing: -2px;
-            transform: scaleY(1.1); /* Slight vertical stretch */
+            /* STACKED SHADOW TO CREATE THE 3D BLOCK EFFECT */
+            text-shadow: 
+                2px 2px 0px #000,
+                4px 4px 0px #000,
+                6px 6px 0px #000,
+                8px 8px 0px #000;
             margin-top: 5px;
         }
 
         .nyp-meta-bar {
             border-bottom: 1px solid #ddd;
-            padding: 10px 20px;
+            padding: 8px 20px;
             font-family: 'Oswald', sans-serif;
             font-size: 13px;
             color: #333;
@@ -73,32 +71,31 @@
             justify-content: space-between;
         }
 
-        /* LAYOUT GRID */
         .nyp-content-grid {
             display: grid;
             grid-template-columns: 2.5fr 1fr;
             gap: 40px;
-            padding: 30px;
+            padding: 40px;
         }
 
-        /* TAGS & HEADLINES */
+        /* ARTICLE STYLES */
         .nyp-tag {
             background: #cc0000;
             color: white;
-            display: inline-block;
             padding: 4px 8px;
             font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+            font-style: italic;
             text-transform: uppercase;
-            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
             font-size: 14px;
-            margin-bottom: 10px;
-            transform: skew(-10deg);
         }
 
         .nyp-headline {
             font-family: 'Oswald', sans-serif;
-            font-size: 62px;
-            line-height: 1.0;
+            font-size: 64px;
+            line-height: 0.95;
             font-weight: 700;
             font-style: italic;
             color: #000;
@@ -108,17 +105,16 @@
         }
 
         .nyp-subhead {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 22px;
+            font-size: 24px;
             line-height: 1.3;
-            color: #333;
+            color: #222;
             margin-bottom: 25px;
         }
 
         .nyp-byline {
             font-family: 'Oswald', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
+            font-size: 13px;
+            font-weight: bold;
             color: #cc0000;
             margin-bottom: 30px;
             text-transform: uppercase;
@@ -126,17 +122,13 @@
             padding-bottom: 20px;
         }
 
-        /* ARTICLE BODY */
         .nyp-body {
             font-size: 19px;
-            line-height: 1.7;
+            line-height: 1.6;
             color: #111;
         }
-        
         .nyp-body p { margin-bottom: 25px; }
-        .nyp-body strong { font-weight: 700; color: #000; }
 
-        /* CLICKABLE BUTTON */
         .nyp-link-button {
             display: block;
             background: #cc0000;
@@ -144,202 +136,119 @@
             text-align: center;
             padding: 20px;
             font-family: 'Oswald', sans-serif;
-            font-size: 24px;
+            font-size: 26px;
             font-style: italic;
             text-transform: uppercase;
             text-decoration: none;
-            font-weight: 700;
+            font-weight: bold;
             margin: 40px 0;
             cursor: pointer;
             border: 4px solid #000;
             box-shadow: 6px 6px 0px #000;
             transition: transform 0.1s;
         }
-        
-        .nyp-link-button:hover { 
-            transform: translate(2px, 2px);
-            box-shadow: 4px 4px 0px #000;
-        }
+        .nyp-link-button:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0px #000; }
 
         /* SIDEBAR */
-        .nyp-sidebar {
-            border-left: 1px solid #eee;
-            padding-left: 30px;
-        }
-
+        .nyp-sidebar { border-left: 1px solid #eee; padding-left: 30px; }
         .nyp-sidebar-title {
             font-family: 'Oswald', sans-serif;
             font-size: 28px;
-            font-weight: 700;
             font-style: italic;
             border-bottom: 4px solid #000;
-            margin-bottom: 20px;
-            padding-bottom: 5px;
+            margin-bottom: 15px;
+            font-weight: 700;
             text-transform: uppercase;
+            line-height: 1;
         }
-
-        .sidebar-item {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .sidebar-item a {
-            text-decoration: none;
-            color: #000;
-            font-family: 'Oswald', sans-serif;
-            font-size: 20px;
-            line-height: 1.2;
-            font-weight: 500;
-        }
-        
+        .sidebar-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .sidebar-item a { text-decoration: none; color: #000; font-family: 'Oswald', sans-serif; font-size: 20px; line-height: 1.1; font-weight: 500; }
         .sidebar-item a:hover { color: #cc0000; }
 
         /* =========================================
-           ACADEMIC PAPER STYLES 
+           ACADEMIC PAPER STYLES
            ========================================= */
         .paper-wrapper {
             background: #e6e6e6;
             min-height: 100vh;
-            padding-bottom: 50px;
+            padding-bottom: 100px;
         }
 
-        /* NAV BAR */
-        .paper-nav-bar {
+        .paper-nav {
             background: #cc0000;
             color: white;
-            padding: 15px 0;
+            padding: 15px;
             text-align: center;
             font-family: 'Oswald', sans-serif;
-            font-weight: 700;
+            font-weight: bold;
             font-size: 18px;
             text-transform: uppercase;
             cursor: pointer;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            letter-spacing: 1px;
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
-        
-        .paper-nav-bar:hover { background: #aa0000; }
 
         .paper-container {
-            background: #ffffff;
-            width: 100%;
-            max-width: 950px;
+            background: white;
+            max-width: 900px;
             margin: 40px auto;
-            padding: 80px 90px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding: 80px 100px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.15);
             font-family: "Times New Roman", Times, serif;
+            color: #000;
         }
 
-        /* ACADEMIC FORMATTING */
-        .paper-header { text-align: center; margin-bottom: 50px; border-bottom: 1px solid #000; padding-bottom: 20px; }
-        .paper-title { font-size: 32px; font-weight: bold; margin-bottom: 15px; line-height: 1.2; }
-        .paper-authors { font-size: 16px; font-style: italic; margin-bottom: 10px; }
-        .paper-affil { font-size: 13px; color: #444; margin-bottom: 20px; }
+        .paper-header { text-align: center; margin-bottom: 50px; border-bottom: 1px solid #000; padding-bottom: 30px; }
+        .paper-title { font-size: 28px; font-weight: bold; line-height: 1.2; margin-bottom: 15px; }
         
-        .paper-abstract-box {
-            background: #fdfdfd;
-            border: 1px solid #eee;
-            padding: 25px;
-            margin-bottom: 40px;
-            font-size: 14px;
-            line-height: 1.6;
-            text-align: justify;
-        }
-
-        .paper-columns {
-            column-count: 2;
-            column-gap: 40px;
-            text-align: justify;
-        }
+        .paper-content { font-size: 16px; line-height: 1.8; text-align: justify; }
 
         .paper-h1 {
             font-family: Arial, sans-serif;
+            font-size: 16px;
             font-weight: bold;
-            font-size: 14px;
             text-transform: uppercase;
-            margin-top: 35px;
+            margin-top: 40px;
             margin-bottom: 15px;
             border-bottom: 2px solid #000;
             padding-bottom: 5px;
-            break-after: avoid;
         }
 
         .paper-h2 {
             font-family: Arial, sans-serif;
+            font-size: 14px;
             font-weight: bold;
-            font-size: 13px;
-            margin-top: 25px;
+            margin-top: 30px;
             margin-bottom: 10px;
-            color: #333;
-            break-after: avoid;
         }
 
-        .paper-p {
-            font-size: 15px;
-            line-height: 1.6;
-            margin-bottom: 15px;
-            text-indent: 20px;
-        }
-        
+        .paper-p { text-indent: 30px; margin-bottom: 20px; }
         .paper-p.no-indent { text-indent: 0; }
 
-        /* GRAPHS AND FIGURES */
+        /* GRAPHS */
         .figure-box {
-            border: 1px solid #ccc;
-            background: #f9f9f9;
-            padding: 15px;
-            margin: 30px 0;
-            break-inside: avoid;
-            font-family: Arial, sans-serif;
+            border: 1px solid #000;
+            padding: 20px;
+            margin: 40px 0;
+            background: #fff;
         }
-
         .fig-caption {
+            font-family: Arial, sans-serif;
             font-size: 12px;
+            margin-top: 15px;
+            text-align: center;
             font-weight: bold;
-            margin-top: 10px;
-            color: #333;
-            border-top: 1px solid #ddd;
-            padding-top: 5px;
         }
-
-        /* GRAPH STYLES */
-        .bar-chart-container {
-            display: flex;
-            align-items: flex-end;
-            height: 150px;
-            border-left: 2px solid #333;
-            border-bottom: 2px solid #333;
-            padding: 0 10px;
-            gap: 20px;
-        }
-
-        .bar {
-            width: 40px;
-            background: #444;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            color: white;
-            font-size: 10px;
-            padding-top: 5px;
-        }
-
-        .bar-label { font-size: 10px; text-align: center; margin-top: 5px; }
-        
-        /* Line Chart SVG */
-        .line-chart-svg { width: 100%; height: 150px; background: white; border: 1px solid #eee; }
+        .chart-svg { width: 100%; height: 200px; display: block; margin: 0 auto; }
 
         @media (max-width: 768px) {
             .nyp-content-grid { grid-template-columns: 1fr; }
-            .nyp-sidebar { border-left: none; border-top: 1px solid #eee; padding-top: 20px; padding-left: 0; }
-            .paper-columns { column-count: 1; }
-            .paper-container { padding: 30px 20px; width: 95%; margin: 20px auto; }
-            .nyp-headline { font-size: 40px; }
-            .nyp-logo-text { font-size: 40px; }
+            .nyp-sidebar { border-left: none; padding-left: 0; padding-top: 30px; border-top: 1px solid #eee; }
+            .paper-container { padding: 40px 20px; margin: 10px; }
+            .nyp-headline { font-size: 48px; }
+            .nyp-logo-text { font-size: 55px; }
         }
     </style>
     <script>
@@ -361,12 +270,12 @@
 </head>
 <body>
 
-    <!-- =======================================================
-         VIEW 1: NEW YORK POST ARTICLE
-         ======================================================= -->
+    <!-- =========================================
+         VIEW 1: NY POST
+         ========================================= -->
     <div id="nyp-view" class="nyp-wrapper">
         
-        <!-- RED HEADER BAR WITH LOGO -->
+        <!-- THE SHADOW HEADER (MATCHING YOUR IMAGE) -->
         <div class="nyp-header-bar">
             <div class="nyp-logo-text">NEW YORK POST</div>
         </div>
@@ -377,214 +286,171 @@
         </div>
 
         <div class="nyp-content-grid">
-            
-            <!-- MAIN ARTICLE -->
             <div class="nyp-article">
                 <span class="nyp-tag">EXCLUSIVE</span>
-                <h1 class="nyp-headline">LOVE SICK! THIS GUY WROTE A 47-PAGE DISSERTATION JUST TO PROVE HIS GIRLFRIEND IS ‘PERFECT’</h1>
+                <h1 class="nyp-headline">LOVE SICK! Guy writes massive dissertation just to prove girlfriend is ‘perfect’</h1>
                 <h2 class="nyp-subhead">He tracked her Diet Coke habits, pasta preferences, and political views for 8 months. The conclusion? "She is poetry."</h2>
                 
                 <div class="nyp-byline">By Niv | February 18, 2026 | 9:28am</div>
 
                 <div class="nyp-body">
                     <p><strong>Forget flowers. Forget chocolates. Fellas, the bar has just been raised to the stratosphere, and frankly, you’re doomed.</strong></p>
-
                     <p>Meet Niv. He’s in a long-distance relationship. He’s got a laptop. And apparently, he has absolutely zero chill.</p>
-
-                    <p>After eight months of dating his girlfriend, Aaradhya, from 2,083 kilometers away, Niv didn't just tell her he loved her. He wrote a <strong>47-page academic research paper</strong> titled <em>“A Comprehensive Analysis of Aaradhya: An 8-Month Longitudinal Study on Human Excellence.”</em></p>
-
+                    <p>After eight months of dating his girlfriend, Aaradhya, from 2,083 kilometers away, Niv didn't just tell her he loved her. He wrote a <strong>comprehensive academic research paper</strong> titled <em>“A Analysis of Aaradhya: An 8-Month Longitudinal Study on Human Excellence.”</em></p>
                     <p>Yes, really.</p>
-
                     <p>“I realized I wasn’t just falling in love,” Niv told The Post. “I was conducting a longitudinal observational study. And the subject was producing data that defied standard deviation.”</p>
-
+                    
                     <p><strong>The "Diet Coke" Incident</strong></p>
-                    <p>Every scientific breakthrough has a catalyst. For Newton, it was an apple. For Niv? It was a Diet Coke.</p>
-                    <p>According to Section 4.5.1 of his massive treatise, Aaradhya—who previously didn't care for the stuff—tried a Diet Coke simply because Niv mentioned he liked it. Now? She loves it.</p>
-                    <p>“Small gesture. Large implication,” the paper notes. Niv calls it statistically significant proof of her kindness. We call it simp behavior of the highest order—and honestly? It’s adorable.</p>
+                    <p>Every scientific breakthrough has a catalyst. For Newton, it was an apple. For Niv? It was a Diet Coke. According to Section 4.5.1 of his massive treatise, Aaradhya—who previously didn't care for the stuff—tried a Diet Coke simply because Niv mentioned he liked it. Now? She loves it.</p>
+                    <p>“Small gesture. Large implication,” the paper notes. Niv calls it statistically significant proof of her kindness.</p>
 
                     <p><strong>The Data Don't Lie</strong></p>
                     <p>Niv, who admits in his own methodology section that he has “completely lost objectivity” because he finds the subject “hot,” broke down Aaradhya’s perfection into hard data:</p>
-                    
                     <ul>
                         <li><strong>Marvel Knowledge:</strong> Comprehensive.</li>
                         <li><strong>Politics:</strong> Leftist (which the paper notes is “correct and hot”).</li>
                         <li><strong>Pasta Wars:</strong> She likes penne/pesto. He likes spaghetti. The study concludes this “minor incompatibility” is survivable.</li>
                     </ul>
-
-                    <p>But the real kicker comes in the section on Art. Aaradhya writes poetry. But Niv wasn't satisfied with just reviewing her work.</p>
-                    <p>“She writes poetry,” the paper argues in a move that would make Shakespeare blush, “but the meta-analysis confirms she <em>is</em> poetry.”</p>
-
-                    <p><strong>Compromised Researcher</strong></p>
-                    <p>Niv’s paper is filled with charts, graphs, and citations, but he’s the first to admit his funding comes from “excessive emotional investment.”</p>
-                    <p>In the "Limitations" section, he writes: “Researcher finds subject hot and cannot maintain objectivity. This finding affects all subsequent analysis.”</p>
-                    <p>So, has the subject read the findings yet?</p>
-                    <p>“Not yet,” Niv says. “That’s what this article is for. To tell her it exists.”</p>
-                    <p>Aaradhya, if you’re reading this: He analyzed 60% of his phone’s storage worth of voice notes for you. Marry him.</p>
-
-                    <a onclick="toggleView()" class="nyp-link-button">
-                        CLICK TO READ THE FULL 47-PAGE "STUDY"
-                    </a>
+                    <p>But the real kicker comes in the section on Art. Aaradhya writes poetry. But Niv wasn't satisfied with just reviewing her work. “She writes poetry,” the paper argues, “but the meta-analysis confirms she <em>is</em> poetry.”</p>
+                    
+                    <a onclick="toggleView()" class="nyp-link-button">CLICK TO READ THE FULL STUDY</a>
                 </div>
             </div>
 
-            <!-- SIDEBAR (Clean) -->
             <div class="nyp-sidebar">
                 <div class="nyp-sidebar-title">TRENDING NOW</div>
-                
-                <div class="sidebar-item">
-                    <a href="#">Man proves girlfriend is perfect using cold, hard science</a>
-                </div>
-                
-                <div class="sidebar-item">
-                    <a href="#">Why 2,083km is actually the perfect distance for romance</a>
-                </div>
-                
-                <div class="sidebar-item">
-                    <a href="#">The 'Diet Coke Theory': Does she really love you?</a>
-                </div>
-
+                <div class="sidebar-item"><a href="#">Man proves girlfriend is perfect using cold, hard science</a></div>
+                <div class="sidebar-item"><a href="#">Why 2,083km is the perfect distance for romance</a></div>
+                <div class="sidebar-item"><a href="#">The 'Diet Coke Theory': Does she really love you?</a></div>
+                <div style="height: 30px;"></div>
                 <div class="nyp-sidebar-title">SEE ALSO</div>
-                <div class="sidebar-item">
-                    <a href="#">RELATIONSHIP WARS: Why "Penne vs Spaghetti" is the biggest fight you'll ever have.</a>
-                </div>
-                <div class="sidebar-item">
-                    <a href="#">Local researcher admits he is "completely compromised" by beauty.</a>
-                </div>
+                <div class="sidebar-item"><a href="#">RELATIONSHIP WARS: Why "Penne vs Spaghetti" is the biggest fight you'll ever have.</a></div>
             </div>
         </div>
     </div>
 
-    <!-- =======================================================
-         VIEW 2: ACADEMIC RESEARCH PAPER
-         ======================================================= -->
+    <!-- =========================================
+         VIEW 2: ACADEMIC PAPER (LONG FORM)
+         ========================================= -->
     <div id="paper-view" class="paper-wrapper">
-        
-        <!-- TOP NAV BAR -->
-        <div onclick="toggleView()" class="paper-nav-bar">
-            ← Return to NY Post Article
-        </div>
+        <div onclick="toggleView()" class="paper-nav">← RETURN TO ARTICLE</div>
         
         <div class="paper-container">
-            <!-- PAPER HEADER -->
+            <!-- TITLE PAGE -->
             <div class="paper-header">
                 <div class="paper-title">A Comprehensive Analysis of Aaradhya: An 8-Month Longitudinal Study on Human Excellence</div>
-                <div class="paper-authors">Niv<sup>1</sup> (corresponding author)</div>
-                <div class="paper-affil"><sup>1</sup>Department of Loving Her, University of Long Distance Studies, 2083km Campus</div>
-                <div style="font-size: 11px; margin-top: 10px; color: #555;">
-                    DOI: 10.1234/love.2026.aaradhya.47pages | Received: June 2025 | Accepted: February 2026 | Vol 47. Issue 1
+                <div style="margin-top: 20px;">Niv<sup>1</sup> (Corresponding Author)</div>
+                <div style="font-size: 14px; margin-top: 10px;"><sup>1</sup>Department of Loving Her, University of Long Distance Studies</div>
+                <div style="font-size: 12px; margin-top: 20px; color: #555;">DOI: 10.1234/love.2026.aaradhya</div>
+            </div>
+
+            <div class="paper-content">
+                <div style="border: 1px solid #000; padding: 20px; margin-bottom: 40px; font-size: 14px; line-height: 1.5; background: #f9f9f9;">
+                    <strong>ABSTRACT</strong><br><br>
+                    Traditional metrics of human excellence often rely on standardized testing or career achievement. This study proposes an alternative framework: The Aaradhya Metric. Through an 8-month longitudinal observational study conducted across a distance of 2,083km, we systematically documented multi-faceted excellence across domains: intellectual capacity, creative output (poetry), political alignment, aesthetic beauty, and dietary compatibility. Data sources included >10,000 text messages, voice notes consuming 60% of researcher device storage, and n=1 critical video observation. Results indicate the subject demonstrates exceptional performance across all domains. Specifically, the "Diet Coke Incident" reveals high character strength; political alignment (Leftist) correlates significantly with attractiveness (p<0.001); and the subject was found to simultaneously write poetry and <em>be</em> poetry. The study concludes that the subject is perfect. The researcher acknowledges that objectivity was compromised by the finding that the subject is hot, yet maintains the validity of the conclusions.
                 </div>
-            </div>
 
-            <!-- ABSTRACT -->
-            <div class="paper-abstract-box">
-                <strong>ABSTRACT</strong><br><br>
-                Human excellence research has traditionally focused on achievement metrics. This study examines a unique subject, Aaradhya, whose excellence transcends conventional measurement. Through an 8-month longitudinal observational study conducted across a distance of 2,083km, we systematically documented multi-faceted excellence across domains: intellectual capacity, creative output (poetry), political alignment, aesthetic beauty, and dietary compatibility. Data sources included >10,000 text messages, voice notes consuming 60% of researcher device storage, and n=1 critical video observation. Results indicate the subject demonstrates exceptional performance across all domains. Specifically, the "Diet Coke Incident" reveals high character strength; political alignment (Leftist) correlates significantly with attractiveness (p<0.001); and the subject was found to simultaneously write poetry and <em>be</em> poetry. The study concludes that the subject is perfect. The researcher acknowledges that objectivity was compromised by the finding that the subject is hot, yet maintains the validity of the conclusions.
-            </div>
-
-            <!-- TWO COLUMN BODY -->
-            <div class="paper-columns">
-                
                 <div class="paper-h1">1. Introduction</div>
-                <div class="paper-p">The quantification of love has long eluded the scientific community. While poets have attempted to describe it and biologists to dissect it, few have attempted to document it with the rigor of a 47-page longitudinal study. This paper seeks to fill that gap by analyzing the subject, Aaradhya, observed over a period of eight months from a distance of 2,083 kilometers.</div>
+                <div class="paper-p">The quantification of love has long eluded the scientific community. While poets have attempted to describe it and biologists to dissect it, few have attempted to document it with the rigor of a longitudinal study. This paper seeks to fill that gap by analyzing the subject, Aaradhya, observed over a period of eight months from a distance of 2,083 kilometers.</div>
                 <div class="paper-p">The primary research question driving this study was simple yet profound: Is she as perfect as she seems? Secondary questions investigated the correlation between political beliefs and attractiveness, and whether pasta preference incompatibilities (penne vs. spaghetti) constitute a threat to long-term viability.</div>
                 <div class="paper-p">Historical context suggests that long-distance relationships (LDRs) often suffer from a lack of observational data. However, this study posits that distance acts as a clarifying lens. Without physical proximity to cloud judgment with pheromones alone, the researcher was forced to evaluate the subject based on character, voice, intellect, and the contents of 180GB of digital correspondence.</div>
+                
+                <div class="paper-h2">1.1 Significance of the Study</div>
+                <div class="paper-p">This research is significant because it challenges the prevailing notion that "nobody is perfect." Through rigorous data collection, we aim to prove that this specific subject is a statistical outlier. Furthermore, the study provides a roadmap for future cohabitation protocols, specifically regarding the handling of citrus fruits (see Appendix B: Orange Allergy).</div>
 
-                <div class="paper-h1">2. Methodology</div>
-                <div class="paper-p"><strong>2.1 Data Collection</strong><br>Data was collected from June 2025 to February 2026. Sources included:
+                <div class="paper-h1">2. Literature Review</div>
+                <div class="paper-p"><strong>2.1 Theories of Love and Distance</strong><br>Sternberg (1986) proposed the Triangular Theory of Love, consisting of intimacy, passion, and commitment. This study applies Sternberg's model to the subject, finding maximum values in all three vertices. However, Sternberg failed to account for the "Diet Coke Factor," a novel variable introduced in this research.</div>
+                <div class="paper-p"><strong>2.2 The Aesthetics of Distance</strong><br>Trope and Liberman (2010) argue that psychological distance promotes abstract thinking. In the case of Aaradhya, the physical distance allowed the researcher to form an abstract representation of her "Perfection," which was subsequently confirmed by concrete data points (video calls and voice notes).</div>
+                <div class="paper-p"><strong>2.3 Pasta Compatibility Frameworks</strong><br>Previous studies (Boyardee, 1999) suggest that pasta shape preference is a trivial variable in relationship success. However, more recent research by Niv (2025) indicates that the Penne vs. Spaghetti dichotomy represents a fundamental worldview difference—one centered on structure vs. chaos. This study explores how such differences can coexist.</div>
+
+                <div class="paper-h1">3. Methodology</div>
+                <div class="paper-p"><strong>3.1 Data Collection Protocols</strong><br>Data was collected continuously from June 1, 2025, to February 18, 2026. The dataset is comprised of diverse media formats, ensuring a holistic view of the subject. Sources included:
                 <ul>
-                    <li><strong>Textual Analysis:</strong> Over 10,000 messages analyzed for wit, kindness, and Marvel Universe references.</li>
-                    <li><strong>Audio Analysis:</strong> Voice notes currently occupying 60% of the researcher's phone storage.</li>
-                    <li><strong>Behavioral Observation:</strong> The subject was observed in various states (stressed, happy, studying biology).</li>
+                    <li><strong>Textual Analysis:</strong> Over 10,000 text messages were archived and analyzed for wit, kindness, and timing.</li>
+                    <li><strong>Audio Analysis:</strong> Voice notes currently occupying 60% of the researcher's phone storage. These notes were analyzed for tone, laughter frequency, and narrative structure.</li>
+                    <li><strong>Visual Observation:</strong> FaceTime calls (n > 200) provided data on aesthetic consistency.</li>
                 </ul>
                 </div>
-                <div class="paper-p"><strong>2.2 The Distance Variable</strong><br>The constant distance of 2,083km acted as a unique filter. Without the distraction of physical proximity, the researcher was forced to focus on the substance of the subject's character, intellect, and voice. The researcher admits that the sample size (n=1) is small, but argues that the subject is unique, rendering larger sample sizes irrelevant.</div>
-                <div class="paper-p"><strong>2.3 Limitations of the Researcher</strong><br>It must be noted at the outset: The researcher finds the subject hot. This finding, confirmed early in the data collection phase via FaceTime (n=1), has compromised researcher objectivity. As stated in the Funding Statement, this research is self-funded through excessive emotional investment.</div>
+                <div class="paper-p"><strong>3.2 The "Hotness" Bias (Disclosure)</strong><br>It must be noted at the outset: The researcher finds the subject hot. This finding, confirmed early in the data collection phase via FaceTime (n=1), has compromised researcher objectivity. As stated in the Funding Statement, this research is self-funded through excessive emotional investment. All findings must be viewed through the lens of this acknowledged bias, though the researcher maintains that the bias is a result of the data, not the cause of it.</div>
 
-                <div class="paper-h1">3. Results & Analysis</div>
-                
-                <div class="paper-h2">3.1 Longitudinal Analysis of Attractiveness</div>
-                <div class="paper-p">Throughout the 8-month observation period, the "Hotness" variable was tracked daily. Despite fluctuations in the subject's environment (stress, exams, mornings), the variable remained constant at maximum values.</div>
-                
-                <!-- FIGURE 1: LINE CHART -->
+                <!-- CHART 1 -->
                 <div class="figure-box">
-                    <div style="font-weight:bold; margin-bottom:10px; text-align:center;">Attractiveness Over Time (8 Months)</div>
-                    <svg class="line-chart-svg" viewBox="0 0 300 100">
-                        <!-- Grid lines -->
-                        <line x1="30" y1="10" x2="300" y2="10" stroke="#eee" stroke-width="1" />
-                        <line x1="30" y1="50" x2="300" y2="50" stroke="#eee" stroke-width="1" />
-                        <line x1="30" y1="90" x2="300" y2="90" stroke="#eee" stroke-width="1" />
-                        <!-- Y Axis Labels -->
-                        <text x="5" y="15" font-size="10">Max</text>
-                        <text x="5" y="95" font-size="10">0</text>
-                        <!-- The Data Line (Straight across the top) -->
-                        <path d="M 30 10 L 290 10" stroke="blue" stroke-width="3" fill="none" />
-                        <!-- X Axis -->
-                        <line x1="30" y1="10" x2="30" y2="90" stroke="black" stroke-width="1" />
-                        <line x1="30" y1="90" x2="300" y2="90" stroke="black" stroke-width="1" />
+                    <div class="fig-caption">Figure 1: Longitudinal Analysis of Subject Attractiveness (Maxed Out)</div>
+                    <svg class="chart-svg" viewBox="0 0 400 150">
+                        <line x1="50" y1="20" x2="380" y2="20" stroke="#ccc" stroke-width="1" />
+                        <line x1="50" y1="120" x2="380" y2="120" stroke="#ccc" stroke-width="1" />
+                        <path d="M 50 20 L 380 20" stroke="#cc0000" stroke-width="4" fill="none" />
+                        <text x="10" y="25" font-family="Arial" font-size="12">Max</text>
+                        <text x="10" y="125" font-family="Arial" font-size="12">Zero</text>
+                        <text x="50" y="140" font-family="Arial" font-size="10">June</text>
+                        <text x="360" y="140" font-family="Arial" font-size="10">Feb</text>
                     </svg>
-                    <div class="fig-caption">Figure 1: Subject attractiveness remained statistically maxed out regardless of temporal variables.</div>
                 </div>
 
-                <div class="paper-h2">3.2 The Diet Coke Incident</div>
-                <div class="paper-p">In the early stages of the study (Month 1), the researcher mentioned a preference for Diet Coke. The subject, who had no prior affinity for the beverage, voluntarily consumed one.</div>
+                <div class="paper-h1">4. Results</div>
+                <div class="paper-h2">4.1 The Diet Coke Incident</div>
+                <div class="paper-p">In the early stages of the study (Month 1), the researcher mentioned a preference for Diet Coke. The subject, who had no prior affinity for the beverage, voluntarily consumed one to understand the researcher's preference.</div>
                 <div class="paper-p"><strong>Finding:</strong> She now loves it.</div>
-                <div class="paper-p"><strong>Significance:</strong> This event serves as a primary behavioral marker. It demonstrates openness to experience and a willingness to engage with the researcher's preferences. It was a small gesture with large implications for compatibility. See Appendix C for the full timeline.</div>
-                <div class="paper-p">We hypothesize that the adoption of Diet Coke is not merely gustatory but symbolic. It represents the intake of the partner's world. This finding has a p-value of <0.001 regarding "Wife Material" indicators.</div>
+                <div class="paper-p"><strong>Significance:</strong> This event serves as a primary behavioral marker. It demonstrates openness to experience and a willingness to engage with the researcher's preferences. It was a small gesture with large implications for compatibility. It is statistically significant (p < 0.001) evidence of kindness.</div>
 
-                <div class="paper-h2">3.3 Political Alignment Assessment</div>
-                <div class="paper-p">Analysis of conversations regarding current events reveals the subject holds Leftist political beliefs. The researcher cross-referenced this with his own preferences.</div>
-                
-                <!-- FIGURE 2: BAR CHART -->
+                <!-- CHART 2 -->
                 <div class="figure-box">
-                    <div style="font-weight:bold; margin-bottom:10px; text-align:center;">Correlation: Politics vs. Attraction</div>
-                    <div class="bar-chart-container">
-                        <div style="display:flex; flex-direction:column; align-items:center;">
-                            <div class="bar" style="height: 120px; background: #cc0000;">100%</div>
-                            <div class="bar-label">Leftist</div>
-                        </div>
-                        <div style="display:flex; flex-direction:column; align-items:center;">
-                            <div class="bar" style="height: 5px; background: #999;">4%</div>
-                            <div class="bar-label">Other</div>
-                        </div>
-                    </div>
-                    <div class="fig-caption">Figure 2: The "Correct" political belief (Leftist) correlates perfectly with Researcher Attraction levels.</div>
+                    <div class="fig-caption">Figure 2: Diet Coke Adoption Curve</div>
+                    <svg class="chart-svg" viewBox="0 0 400 150">
+                        <path d="M 50 120 Q 150 120, 200 70 T 380 20" stroke="black" stroke-width="3" fill="none" />
+                        <line x1="50" y1="20" x2="50" y2="120" stroke="black" stroke-width="2" />
+                        <line x1="50" y1="120" x2="380" y2="120" stroke="black" stroke-width="2" />
+                        <text x="60" y="110" font-size="10">Indifference</text>
+                        <text x="300" y="40" font-size="10">Obsession</text>
+                    </svg>
                 </div>
 
-                <div class="paper-p">The researcher notes: "This is hot." The shared values create a resonance that superficial attraction cannot replicate. Political alignment serves as a proxy for shared moral frameworks, increasing the coefficient of long-term stability.</div>
+                <div class="paper-h2">4.2 Political Alignment Assessment</div>
+                <div class="paper-p">Analysis of conversations regarding current events reveals the subject holds Leftist political beliefs. The researcher cross-referenced this with his own preferences to determine compatibility. The data indicates a 100% match. The researcher notes in his field journal: "Correct political beliefs. Researcher finds this attractive." This alignment suggests a shared moral framework, which is essential for long-term viability (Gottman, 1999).</div>
 
-                <div class="paper-h2">3.4 The Poetry Paradox</div>
+                <!-- CHART 3 -->
+                <div class="figure-box">
+                    <div class="fig-caption">Figure 3: Political Beliefs vs. Researcher Attraction</div>
+                    <svg class="chart-svg" viewBox="0 0 200 100">
+                         <rect x="20" y="10" width="40" height="80" fill="#cc0000" />
+                         <rect x="100" y="80" width="40" height="10" fill="#ccc" />
+                         <text x="15" y="105" font-size="10">Leftist (Her)</text>
+                         <text x="100" y="105" font-size="10">Others</text>
+                    </svg>
+                </div>
+
+                <div class="paper-h2">4.3 The Poetry Paradox</div>
                 <div class="paper-p">The subject is a known writer of poetry. However, extensive qualitative analysis suggests a dual phenomenon. The subject does not merely produce poetry; the subject <em>is</em> poetry.</div>
-                <div class="paper-p">This conclusion is supported by the rhythmic nature of her voice notes and the metaphorical richness of her existence. While academically unconventional, the researcher insists this finding is accurate. The distinction between the artist and the art has collapsed in this specific instance.</div>
+                <div class="paper-p">This conclusion is supported by the rhythmic nature of her voice notes and the metaphorical richness of her existence. While academically unconventional, the researcher insists this finding is accurate. The distinction between the artist and the art has collapsed in this specific instance. To read her work is to know her mind; to know her mind is to read a poem.</div>
 
-                <div class="paper-h2">3.5 Dietary Compatibility Matrix</div>
+                <div class="paper-h2">4.4 Dietary Compatibility Matrix</div>
                 <div class="paper-p">A potential area of friction was identified regarding pasta preferences. The subject prefers Penne (a tubular shape) with Pesto. The researcher prefers Spaghetti (a strand shape).</div>
                 <div class="paper-p">Mathematical modeling suggests that while the shapes are geometrically incompatible, the emotional compatibility remains high. The researcher has committed to consuming Pesto, despite previous reservations, citing the "Reciprocity Principle" derived from the Diet Coke Incident.</div>
 
-                <div class="paper-h2">3.6 Marvel Universe Proficiency</div>
-                <div class="paper-p">Standardized testing (pop quizzes over FaceTime) revealed a comprehensive knowledge of the Marvel Cinematic Universe (MCU). This shared cultural lexicon provides a high-bandwidth channel for communication and memes.</div>
+                <div class="paper-h2">4.5 Medical Considerations: The Orange Allergy</div>
+                <div class="paper-p">The subject possesses a documented allergy to oranges. Observations show she manages this limitation without complaint, further evidencing resilience.</div>
+                <div class="paper-p">Future meal planning protocols have been adjusted to "Zero Oranges." The researcher notes that this is a "small price to pay for perfection."</div>
 
-                <div class="paper-h1">4. Discussion</div>
-                <div class="paper-p"><strong>4.1 On Perfection</strong><br>The term "perfect" is rarely used in scientific literature due to the impossibility of absolute flawlessness. However, in this study, "perfect" is defined as "exactly as she should be." By this definition, the subject achieves the metric with p&lt;0.000001 significance.</div>
-                <div class="paper-p">The researcher asked the control question: "Would you change anything?" The answer, consistent across all 8 months, was "No." This includes the Orange Allergy, which creates a specific constraint on fruit purchasing but adds to the unique character profile of the subject.</div>
-                <div class="paper-p"><strong>4.2 Bias and Validity</strong><br>Critics may argue that the researcher is "completely compromised" or "obsessed." The researcher accepts these labels. The finding that the subject is hot affects all subsequent analysis, yet the data (Marvel knowledge, kindness, biology expertise) remains objective.</div>
+                <div class="paper-h2">4.6 Marvel Universe Proficiency</div>
+                <div class="paper-p">Standardized testing (pop quizzes over FaceTime) revealed a comprehensive knowledge of the Marvel Cinematic Universe (MCU). This shared cultural lexicon provides a high-bandwidth channel for communication and memes. It suggests that weekends can be safely allocated to movie marathons without need for exposition.</div>
 
-                <div class="paper-h1">5. Conclusion</div>
-                <div class="paper-p">After 47 pages of analysis, the conclusion is irrefutable. Aaradhya is beautiful, intelligent, politically correct, and the best phenomenon observed in the researcher’s lifetime.</div>
-                <div class="paper-p">The researcher recommends immediate and permanent retention of the subject. Future research will focus on closing the 2,083km gap to 0km to allow for in-person replication of these findings.</div>
+                <div class="paper-h1">5. Discussion</div>
+                <div class="paper-p"><strong>5.1 Defining Perfection</strong><br>The term "perfect" is rarely used in scientific literature due to the impossibility of absolute flawlessness. However, in this study, "perfect" is defined as "exactly as she should be." By this definition, the subject achieves the metric with p&lt;0.000001 significance.</div>
+                <div class="paper-p"><strong>5.2 The "Would Change Anything" Test</strong><br>The researcher conducted a thought experiment: "Would you change anything about the subject?" The answer, consistent across all 8 months, was "No." This includes the Orange Allergy, which creates a specific constraint on fruit purchasing but adds to the unique character profile of the subject.</div>
+                <div class="paper-p"><strong>5.3 Addressing Bias</strong><br>Critics may argue that the researcher is "completely compromised" or "obsessed." The researcher accepts these labels. The finding that the subject is hot affects all subsequent analysis, yet the data (Marvel knowledge, kindness, biology expertise) remains objective. The researcher argues that love is not a blinding force, but a magnifying one—allowing him to see details (like the way she drinks Diet Coke) that others miss.</div>
+
+                <div class="paper-h1">6. Conclusion</div>
+                <div class="paper-p">After extensive analysis, the conclusion is irrefutable. Aaradhya is beautiful, intelligent, politically correct, and the best phenomenon observed in the researcher’s lifetime.</div>
+                <div class="paper-p">The researcher recommends immediate and permanent retention of the subject. Future research will focus on closing the 2,083km gap to 0km to allow for in-person replication of these findings. Until then, data collection will continue via digital means.</div>
 
                 <div class="paper-h1">References</div>
-                <div class="paper-p no-indent" style="font-size: 12px;">
+                <div class="paper-p no-indent">
                     [1] Niv. (2025). Personal observation, Diet Coke incident. June 2025.<br>
                     [2] Niv. (2025). Field notes: "Subject is hot." Various dates.<br>
-                    [3] Etcoff, N. (1999). Survival of the Prettiest.<br>
-                    [4] Niv. (2026). Analysis of 180GB of Voice Notes.<br>
+                    [3] Etcoff, N. (1999). Survival of the Prettiest: The Science of Beauty.<br>
+                    [4] Niv. (2026). Analysis of 180GB of Voice Notes. Unpublished raw data.<br>
                     [5] Marvel Studios. (2008-2026). The Complete Saga.<br>
                     [6] Department of Pasta Studies. (2024). Penne vs Spaghetti Compatibility Protocols.
-                </div>
-
-                <br><br>
-                <div style="background:#eee; padding:20px; text-align:center; font-style:italic; margin-top:50px;">
-                    [Pages 8 through 47 have been omitted for brevity in this web view. The full dataset, including the raw analysis of 10,000 text messages and the detailed "Orange Allergy Protocols," is available on file at the University of Long Distance Studies.]
                 </div>
             </div>
         </div>
