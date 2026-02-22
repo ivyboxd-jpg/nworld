@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOVE SICK! Guy writes massive paper on girlfriend</title>
-    <!-- Importing Oswald for the Headlines/Logo to match the image -->
+    <title>LOVE SICK! Guy writes detailed paper on girlfriend</title>
+    <!-- Importing fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:ital,wght@0,700;1,700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:ital,wght@0,700;1,700&family=Roboto+Condensed:wght@700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     
     <style>
         /* GLOBAL RESET */
@@ -19,7 +19,7 @@
         #paper-view { display: none; }
 
         /* =========================================
-           NEW YORK POST STYLES (MATCHING YOUR IMAGE)
+           NEW YORK POST STYLES
            ========================================= */
         .nyp-wrapper {
             background: white;
@@ -30,9 +30,9 @@
             min-height: 100vh;
         }
 
-        /* THE HEADER - REPLICATING THE IMAGE */
+        /* HEADER - PRESERVED SHADOW STYLE */
         .nyp-header-bar {
-            background-color: #cc0000; /* NYP Red */
+            background-color: #cc0000;
             padding: 15px 0;
             display: flex;
             justify-content: center;
@@ -42,15 +42,15 @@
         }
 
         .nyp-logo-text {
-            font-family: 'Oswald', sans-serif; /* Bold Condensed Sans */
-            font-style: italic;                /* Italicized like the image */
+            font-family: 'Oswald', sans-serif;
+            font-style: italic;
             font-weight: 700;
             font-size: 85px;
             color: #ffffff;
             line-height: 0.9;
             text-transform: uppercase;
             letter-spacing: -2px;
-            /* STACKED SHADOW TO CREATE THE 3D BLOCK EFFECT */
+            /* 3D BLOCK SHADOW */
             text-shadow: 
                 2px 2px 0px #000,
                 4px 4px 0px #000,
@@ -63,7 +63,7 @@
             border-bottom: 1px solid #ddd;
             padding: 8px 20px;
             font-family: 'Oswald', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             color: #333;
             text-transform: uppercase;
             font-weight: bold;
@@ -78,91 +78,91 @@
             padding: 40px;
         }
 
-        /* ARTICLE STYLES */
+        /* ARTICLE STYLES - RESIZED */
         .nyp-tag {
             background: #cc0000;
             color: white;
-            padding: 4px 8px;
+            padding: 3px 6px;
             font-family: 'Oswald', sans-serif;
             font-weight: bold;
             font-style: italic;
             text-transform: uppercase;
             display: inline-block;
-            margin-bottom: 15px;
-            font-size: 14px;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
 
         .nyp-headline {
             font-family: 'Oswald', sans-serif;
-            font-size: 64px;
-            line-height: 0.95;
+            font-size: 48px; /* Reduced from 64px */
+            line-height: 1.0;
             font-weight: 700;
             font-style: italic;
             color: #000;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: -1.5px;
+            letter-spacing: -1px;
         }
 
         .nyp-subhead {
-            font-size: 24px;
+            font-size: 20px; /* Reduced from 24px */
             line-height: 1.3;
             color: #222;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .nyp-byline {
             font-family: 'Oswald', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: #cc0000;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-transform: uppercase;
             border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         .nyp-body {
-            font-size: 19px;
+            font-size: 17px; /* Reduced from 20px to standard reading size */
             line-height: 1.6;
             color: #111;
         }
-        .nyp-body p { margin-bottom: 25px; }
+        .nyp-body p { margin-bottom: 20px; }
 
         .nyp-link-button {
             display: block;
             background: #cc0000;
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             font-family: 'Oswald', sans-serif;
-            font-size: 26px;
+            font-size: 22px;
             font-style: italic;
             text-transform: uppercase;
             text-decoration: none;
             font-weight: bold;
-            margin: 40px 0;
+            margin: 30px 0;
             cursor: pointer;
-            border: 4px solid #000;
-            box-shadow: 6px 6px 0px #000;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
             transition: transform 0.1s;
         }
-        .nyp-link-button:hover { transform: translate(2px, 2px); box-shadow: 4px 4px 0px #000; }
+        .nyp-link-button:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0px #000; }
 
         /* SIDEBAR */
         .nyp-sidebar { border-left: 1px solid #eee; padding-left: 30px; }
         .nyp-sidebar-title {
             font-family: 'Oswald', sans-serif;
-            font-size: 28px;
+            font-size: 24px;
             font-style: italic;
-            border-bottom: 4px solid #000;
+            border-bottom: 3px solid #000;
             margin-bottom: 15px;
             font-weight: 700;
             text-transform: uppercase;
             line-height: 1;
         }
-        .sidebar-item { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-        .sidebar-item a { text-decoration: none; color: #000; font-family: 'Oswald', sans-serif; font-size: 20px; line-height: 1.1; font-weight: 500; }
+        .sidebar-item { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .sidebar-item a { text-decoration: none; color: #000; font-family: 'Oswald', sans-serif; font-size: 18px; line-height: 1.1; font-weight: 500; }
         .sidebar-item a:hover { color: #cc0000; }
 
         /* =========================================
@@ -171,7 +171,7 @@
         .paper-wrapper {
             background: #e6e6e6;
             min-height: 100vh;
-            padding-bottom: 100px;
+            padding-bottom: 50px;
         }
 
         .paper-nav {
@@ -181,73 +181,82 @@
             text-align: center;
             font-family: 'Oswald', sans-serif;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             text-transform: uppercase;
             cursor: pointer;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            /* STATIC POSITION (Fixed to top of flow, not floating) */
+            position: relative; 
+            margin-bottom: 30px;
+            box-shadow: 0 4px 5px rgba(0,0,0,0.1);
         }
+        
+        .paper-nav:hover { background: #aa0000; }
 
         .paper-container {
             background: white;
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 80px 100px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.15);
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 60px 80px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             font-family: "Times New Roman", Times, serif;
             color: #000;
         }
 
-        .paper-header { text-align: center; margin-bottom: 50px; border-bottom: 1px solid #000; padding-bottom: 30px; }
-        .paper-title { font-size: 28px; font-weight: bold; line-height: 1.2; margin-bottom: 15px; }
+        .paper-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid #000; padding-bottom: 20px; }
+        .paper-title { font-size: 24px; font-weight: bold; line-height: 1.2; margin-bottom: 10px; }
         
-        .paper-content { font-size: 16px; line-height: 1.8; text-align: justify; }
+        .paper-content { 
+            font-size: 15px; /* Reduced from 16px */
+            line-height: 1.5; /* Tightened from 1.8 */
+            text-align: justify; 
+        }
 
         .paper-h1 {
             font-family: Arial, sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
-            margin-top: 40px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #000;
-            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 3px;
         }
 
         .paper-h2 {
             font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            margin-top: 30px;
-            margin-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 5px;
         }
 
-        .paper-p { text-indent: 30px; margin-bottom: 20px; }
+        .paper-p { 
+            text-indent: 25px; 
+            margin-bottom: 12px; /* Reduced space between paragraphs */
+        }
         .paper-p.no-indent { text-indent: 0; }
 
         /* GRAPHS */
         .figure-box {
             border: 1px solid #000;
-            padding: 20px;
-            margin: 40px 0;
+            padding: 15px;
+            margin: 25px 0;
             background: #fff;
         }
         .fig-caption {
             font-family: Arial, sans-serif;
-            font-size: 12px;
-            margin-top: 15px;
+            font-size: 11px;
+            margin-top: 10px;
             text-align: center;
             font-weight: bold;
         }
-        .chart-svg { width: 100%; height: 200px; display: block; margin: 0 auto; }
+        .chart-svg { width: 100%; height: 180px; display: block; margin: 0 auto; }
 
         @media (max-width: 768px) {
             .nyp-content-grid { grid-template-columns: 1fr; }
             .nyp-sidebar { border-left: none; padding-left: 0; padding-top: 30px; border-top: 1px solid #eee; }
             .paper-container { padding: 40px 20px; margin: 10px; }
-            .nyp-headline { font-size: 48px; }
+            .nyp-headline { font-size: 40px; }
             .nyp-logo-text { font-size: 55px; }
         }
     </style>
@@ -275,7 +284,7 @@
          ========================================= -->
     <div id="nyp-view" class="nyp-wrapper">
         
-        <!-- THE SHADOW HEADER (MATCHING YOUR IMAGE) -->
+        <!-- HEADER -->
         <div class="nyp-header-bar">
             <div class="nyp-logo-text">NEW YORK POST</div>
         </div>
@@ -288,7 +297,7 @@
         <div class="nyp-content-grid">
             <div class="nyp-article">
                 <span class="nyp-tag">EXCLUSIVE</span>
-                <h1 class="nyp-headline">LOVE SICK! Guy writes massive dissertation just to prove girlfriend is ‘perfect’</h1>
+                <h1 class="nyp-headline">LOVE SICK! Guy writes academic dissertation just to prove girlfriend is ‘perfect’</h1>
                 <h2 class="nyp-subhead">He tracked her Diet Coke habits, pasta preferences, and political views for 8 months. The conclusion? "She is poetry."</h2>
                 
                 <div class="nyp-byline">By Niv | February 18, 2026 | 9:28am</div>
@@ -301,7 +310,7 @@
                     <p>“I realized I wasn’t just falling in love,” Niv told The Post. “I was conducting a longitudinal observational study. And the subject was producing data that defied standard deviation.”</p>
                     
                     <p><strong>The "Diet Coke" Incident</strong></p>
-                    <p>Every scientific breakthrough has a catalyst. For Newton, it was an apple. For Niv? It was a Diet Coke. According to Section 4.5.1 of his massive treatise, Aaradhya—who previously didn't care for the stuff—tried a Diet Coke simply because Niv mentioned he liked it. Now? She loves it.</p>
+                    <p>Every scientific breakthrough has a catalyst. For Newton, it was an apple. For Niv? It was a Diet Coke. According to Section 4.5.1 of his treatise, Aaradhya—who previously didn't care for the stuff—tried a Diet Coke simply because Niv mentioned he liked it. Now? She loves it.</p>
                     <p>“Small gesture. Large implication,” the paper notes. Niv calls it statistically significant proof of her kindness.</p>
 
                     <p><strong>The Data Don't Lie</strong></p>
@@ -313,6 +322,9 @@
                     </ul>
                     <p>But the real kicker comes in the section on Art. Aaradhya writes poetry. But Niv wasn't satisfied with just reviewing her work. “She writes poetry,” the paper argues, “but the meta-analysis confirms she <em>is</em> poetry.”</p>
                     
+                    <p><strong>Ongoing Research</strong></p>
+                    <p>Niv states that the paper is a living document. "This isn't a one-time assignment," he said. "This research will be going on for years. Decades, hopefully."</p>
+
                     <a onclick="toggleView()" class="nyp-link-button">CLICK TO READ THE FULL STUDY</a>
                 </div>
             </div>
@@ -333,6 +345,7 @@
          VIEW 2: ACADEMIC PAPER (LONG FORM)
          ========================================= -->
     <div id="paper-view" class="paper-wrapper">
+        <!-- STATIC NAV BAR (Fixed to top of flow) -->
         <div onclick="toggleView()" class="paper-nav">← RETURN TO ARTICLE</div>
         
         <div class="paper-container">
