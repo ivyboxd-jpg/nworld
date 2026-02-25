@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Thermodynamics of Us - The Atlantic</title>
+    <title>The Thermodynamics of Aaradhya - The Atlantic</title>
     <style>
         /* --- BRAND & TYPOGRAPHY --- */
         :root {
@@ -11,11 +11,12 @@
             --text-black: #121212;
             --meta-gray: #757575;
             --bg-white: #FEFEFE;
+            --bg-paper: #FAFAFA;
             --font-display: 'Georgia', 'Times New Roman', serif;
             --font-body: 'Georgia', serif;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             --apple-gray: #E9E9EB;
-            --apple-blue: #007AFF;
+            --border-color: #E5E5E5;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -27,6 +28,9 @@
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* --- HEADER DESIGN --- */
@@ -50,11 +54,10 @@
 
         .header-line {
             height: 1px;
-            background-color: #E5E5E5;
+            background-color: var(--border-color);
             flex-grow: 1;
         }
 
-        /* The "A" Mark - Flanked by lines */
         .brand-mark-a {
             color: var(--atlantic-red);
             font-family: 'Bodoni MT', 'Didot', 'Times New Roman', serif;
@@ -79,7 +82,8 @@
         article {
             max-width: 640px;
             margin: 0 auto;
-            padding: 0 20px 100px 20px;
+            padding: 0 20px 60px 20px;
+            flex: 1;
         }
 
         /* --- HEADLINES --- */
@@ -141,7 +145,7 @@
             font-weight: 700;
         }
 
-        /* --- APPLE MESSAGE STYLING (RECEIVED) --- */
+        /* --- APPLE MESSAGE STYLING --- */
         .imessage-container {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
@@ -162,78 +166,48 @@
             align-self: flex-start;
             position: relative;
         }
-
-        .msg:last-child {
-            border-bottom-left-radius: 5px;
-        }
+        
+        .msg:last-child { border-bottom-left-radius: 5px; }
         .msg:last-child::before {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: -10px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--apple-gray);
-            border-bottom-right-radius: 15px;
-            z-index: -1;
+            content: ""; position: absolute; bottom: 0; left: -10px; width: 20px; height: 20px;
+            background-color: var(--apple-gray); border-bottom-right-radius: 15px; z-index: -1;
         }
         .msg:last-child::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: -20px;
-            width: 20px;
-            height: 20px;
-            background-color: var(--bg-white);
-            border-bottom-right-radius: 10px;
-            z-index: 1;
+            content: ""; position: absolute; bottom: 0; left: -20px; width: 20px; height: 20px;
+            background-color: var(--bg-white); border-bottom-right-radius: 10px; z-index: 1;
         }
 
-        /* --- CHEMISTRY FIGURE STYLING --- */
+        /* --- FIGURES & CHEMISTRY DIAGRAMS --- */
         .figure-container {
             border: 1px solid #ddd;
-            padding: 30px 20px 20px 20px;
-            margin: 40px 0;
-            background: #FAFAFA;
+            padding: 25px;
+            margin: 45px 0;
+            background: var(--bg-paper);
         }
 
         .graph-area {
             position: relative;
             width: 100%;
             height: 250px;
-            border-left: 2px solid #333; /* Y Axis */
-            border-bottom: 2px solid #333; /* X Axis */
+            border-left: 2px solid #333;
+            border-bottom: 2px solid #333;
         }
 
         .axis-label {
             font-family: var(--font-sans);
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             position: absolute;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .y-label {
-            top: -25px;
-            left: -10px;
-        }
-        .x-label {
-            bottom: -30px;
-            right: 0;
-        }
+        .y-label { top: -25px; left: -10px; }
+        .x-label { bottom: -30px; right: 0; }
 
-        /* The Curve (Energy Profile) using SVG for smoothness */
-        .reaction-curve {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-        }
+        /* Figure 1 Elements */
+        .reaction-curve { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        path { fill: none; stroke: var(--atlantic-red); stroke-width: 3; }
         
-        path {
-            fill: none;
-            stroke: var(--atlantic-red);
-            stroke-width: 3;
-        }
-
         .label-point {
             position: absolute;
             font-family: var(--font-sans);
@@ -242,27 +216,53 @@
             padding: 2px 6px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
         }
-
         .label-start { top: 50px; left: 10px; }
         .label-end { top: 180px; right: 20px; }
         .label-delta { 
-            top: 120px; 
-            left: 50%; 
-            transform: translateX(-50%);
+            top: 100px; /* Moved up to avoid overlap */
+            left: 55%; 
             color: var(--atlantic-red);
             font-weight: bold;
             border: none;
-            background: transparent;
+            background: rgba(255,255,255,0.9); /* Masking background */
+            font-style: italic;
         }
+
+        /* Figure 2 Elements (Equation) */
+        .chem-equation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Times New Roman', serif;
+            font-size: 20px;
+            flex-wrap: wrap;
+            padding: 20px 0;
+        }
+        .molecule { font-weight: bold; }
+        .arrow { font-size: 24px; color: #555; position: relative; padding: 0 10px; }
+        .arrow span {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-sans);
+            font-size: 10px;
+            color: var(--atlantic-red);
+            white-space: nowrap;
+        }
+        .product { color: var(--atlantic-red); font-weight: bold; }
 
         .fig-caption {
             font-family: var(--font-sans);
             font-size: 13px;
             color: #666;
-            margin-top: 40px;
-            border-top: 1px solid #eee;
+            margin-top: 25px;
+            border-top: 1px solid #ddd;
             padding-top: 10px;
+            line-height: 1.4;
         }
 
         .separator {
@@ -273,11 +273,52 @@
             letter-spacing: 4px;
         }
 
+        /* --- FOOTER --- */
+        footer {
+            width: 100%;
+            background-color: #F6F6F6;
+            border-top: 1px solid #E5E5E5;
+            padding: 40px 20px 60px 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: 'Garamond', 'Georgia', serif;
+            font-style: italic;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #121212;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .copyright {
+            font-family: var(--font-sans);
+            font-size: 12px;
+            color: #888;
+        }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
             h1.headline { font-size: 34px; }
             h2.subhead { font-size: 19px; }
             .brand-mark-a { font-size: 42px; padding: 0 15px; }
+            .chem-equation { font-size: 16px; }
         }
     </style>
 </head>
@@ -294,8 +335,8 @@
 
     <article>
         <span class="section-label">Culture</span>
-        <h1 class="headline">The Thermodynamics of Us</h1>
-        <h2 class="subhead">A late-night text about cheese proved that even in the middle of exam season, the chemistry between us is the only thing that’s stable.</h2>
+        <h1 class="headline">The Thermodynamics of Aaradhya</h1>
+        <h2 class="subhead">A late-night text about cheese proved that even in the middle of exam season, the chemistry between us is the only thing that’s truly stable.</h2>
 
         <div class="meta">
             <span class="byline">By Niv</span>
@@ -305,7 +346,7 @@
         <div class="article-body">
             <p><span class="drop-cap">T</span>here is a specific hour in the study cycle, usually past midnight, when the brain ceases to be a catalog of facts and becomes something more porous. The hierarchy of information collapses. The periodic table holds no more weight than a grocery list. Everything is just data, floating in the exhaustion.</p>
 
-            <p>Two nights ago, she reached this point. She has been studying for a chemistry exam that is now forty-eight hours away. It is an important exam, the kind that feels like a heavy door opening or closing on a future. She sent a text in the dark.</p>
+            <p>Two nights ago, Aaradhya reached this point. She has been studying for a chemistry exam that is now forty-eight hours away. It is an important exam, the kind that feels like a heavy door opening or closing on a future. She sent a text in the dark.</p>
 
             <div class="imessage-container">
                 <div class="msg">Saccharomyces cerevisiae</div>
@@ -314,17 +355,16 @@
                 <div class="msg">pepperoni</div>
             </div>
 
-            <p>It was a small moment—a collision between the academic pressure she is under and the simple, human need for dinner. But reading it, I realized that I wasn't just looking at a tired student. I was looking at the person I love, whose brain was valiantly trying to bridge the gap between biology and comfort food.</p>
+            <p>It was a small moment—a collision between the academic pressure she is under and the simple, human need for dinner. But reading it, I realized that I wasn't just looking at a tired student. I was looking at Aaradhya, whose brain was valiantly trying to bridge the gap between biology and comfort food.</p>
 
             <p>I didn't want to reply with just words. Words feel cheap when you're staring down the barrel of organic chemistry. So, I decided to speak her language. I drew a diagram on my phone and sent it back. If we are doing chemistry, let’s do chemistry.</p>
 
-            <!-- CHEMISTRY FIGURE -->
+            <!-- FIGURE 1: Reaction Coordinate -->
             <div class="figure-container">
                 <div class="graph-area">
                     <div class="axis-label y-label">Enthalpy (H)</div>
                     <div class="axis-label x-label">Time &rarr;</div>
                     
-                    <!-- SVG Curve representing Exothermic Reaction -->
                     <svg class="reaction-curve" viewBox="0 0 300 200">
                         <path d="M 10 60 Q 100 0, 150 100 T 290 180" />
                     </svg>
@@ -340,11 +380,42 @@
 
             <p>I wanted her to smile, but I also wanted to remind her of a fundamental truth: We are a spontaneous reaction. In chemistry, a negative Delta G means a process happens naturally, without being forced. That is how I feel about her. No matter how much stress the exam applies to the system, the equilibrium of "us" doesn't shift.</p>
 
-            <p>The exam on February 28 is a snapshot. It measures what she knows about molecules on a specific Thursday morning. But Figure 1 measures something permanent. It measures the fact that she is the most stable element in my life.</p>
+            <p>But the chemistry doesn't stop at energy profiles. As I thought about her studying those mechanisms—nucleophilic attacks and leaving groups—I realized that she is actually the central component of my entire equation. So I sketched out one more figure, just to be sure the data was peer-reviewed.</p>
 
-            <p>She is going to be fine. She will walk into that exam hall, and she will write down what she knows. But even if she forgets the bond angles or the reaction rates, she has already mastered the most important chemistry there is. She is loved, she is appreciated, and—most importantly—she deserves that pizza.</p>
+            <!-- FIGURE 2: Reaction Equation -->
+            <div class="figure-container">
+                <div class="chem-equation">
+                    <span class="molecule">My Life</span>
+                    <span>+</span>
+                    <span class="molecule">Aaradhya</span>
+                    <div class="arrow">&rarr;<span>(heat)</span></div>
+                    <span class="product">Complete</span>
+                </div>
+                <div class="fig-caption">
+                    <strong>Figure 2.</strong> The Synthesis of Happiness. Aaradhya acts as both the reagent and the catalyst, lowering the activation energy required to have a perfect day.
+                </div>
+            </div>
+
+            <p>The exam on February 28 is a snapshot. It measures what she knows about molecules on a specific Thursday morning. But these figures measure something permanent. They measure the fact that she is the most stable element in my life.</p>
+
+            <p>Aaradhya is going to be fine. She will walk into that exam hall, and she will write down what she knows. But even if she forgets the bond angles or the reaction rates, she has already mastered the most important chemistry there is. She is loved, she is appreciated, and—most importantly—she deserves that pizza.</p>
         </div>
     </article>
+
+    <footer>
+        <div class="footer-logo">The Atlantic</div>
+        <div class="footer-links">
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="#">Subscription</a>
+            <a href="#">Help</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms</a>
+        </div>
+        <div class="copyright">
+            Copyright &copy; 2026 The Atlantic Monthly Group. All Rights Reserved.
+        </div>
+    </footer>
 
 </body>
 </html>
