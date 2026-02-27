@@ -3,419 +3,1213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Atlantic</title>
+    <title>Portfolio 2025 | Product Manager</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
     <style>
-        /* --- BRAND & TYPOGRAPHY --- */
+        /* --- VARIABLES & RESET --- */
         :root {
-            --atlantic-red: #E01F26;
-            --text-black: #121212;
-            --meta-gray: #757575;
-            --bg-white: #FEFEFE;
-            --bg-paper: #FAFAFA;
-            --font-display: 'Georgia', 'Times New Roman', serif;
-            --font-body: 'Georgia', serif;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            --apple-gray: #E9E9EB;
-            --border-color: #E5E5E5;
+            --cream: #EEE8DF;
+            --beige: #C4BCB0;
+            --ocean: #2C365A;
+            --dark-footer: #1e2640;
+            --white: #ffffff;
+            
+            --font-display: 'Cormorant Garamond', serif;
+            --font-body: 'Jost', sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-            background-color: var(--bg-white);
-            color: var(--text-black);
+            background-color: var(--cream);
+            color: var(--ocean);
             font-family: var(--font-body);
+            font-weight: 300;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
         }
 
-        /* --- HEADER DESIGN --- */
-        header {
-            width: 100%;
-            padding: 15px 20px;
-            margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header-top-row {
-            width: 100%;
-            max-width: 1000px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .header-line {
-            height: 1px;
-            background-color: var(--border-color);
-            flex-grow: 1;
-        }
-
-        .brand-mark-a {
-            color: var(--atlantic-red);
-            font-family: 'Bodoni MT', 'Didot', 'Times New Roman', serif;
-            font-size: 56px;
+        h1, h2, h3, h4, .display-text {
+            font-family: var(--font-display);
             font-style: italic;
             font-weight: 400;
-            line-height: 1;
-            padding: 0 25px;
-            position: relative;
-            top: -3px; 
         }
 
-        .logo-text {
-            font-family: 'Garamond', 'Georgia', serif;
-            font-style: italic;
-            font-size: 30px;
-            letter-spacing: -0.5px;
-            color: #000;
+        a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
         }
 
-        /* --- ARTICLE CONTAINER --- */
-        article {
-            max-width: 640px;
-            margin: 0 auto;
-            padding: 0 20px 60px 20px;
-            flex: 1;
+        ul {
+            list-style: none;
         }
 
-        /* --- HEADLINES --- */
-        .section-label {
-            font-family: var(--font-sans);
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            color: var(--atlantic-red);
-            margin-bottom: 18px;
+        img {
+            max-width: 100%;
             display: block;
         }
 
-        h1.headline {
-            font-family: var(--font-display);
-            font-size: 40px;
-            line-height: 1.15;
-            font-weight: 500;
-            color: #121212;
-            margin-bottom: 14px;
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        h2.subhead {
+        .eyebrow {
             font-family: var(--font-body);
-            font-size: 21px;
-            line-height: 1.45;
-            color: #555;
-            font-weight: 400;
-            margin-bottom: 24px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            color: var(--ocean);
+            opacity: 0.7;
+            margin-bottom: 1rem;
+            display: block;
         }
 
-        .meta {
-            font-family: var(--font-sans);
-            font-size: 13px;
-            color: var(--meta-gray);
-            margin-bottom: 45px;
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+        .btn-filled {
+            background-color: var(--ocean);
+            color: var(--cream);
+        }
+
+        .btn-filled:hover {
+            background-color: transparent;
+            border-color: var(--ocean);
+            color: var(--ocean);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--ocean);
+            border-bottom: 1px solid var(--ocean);
+            padding: 12px 0;
+        }
+
+        .btn-outline:hover {
+            opacity: 0.6;
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(238, 232, 223, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(196, 188, 176, 0.3);
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--ocean);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--ocean);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            height: 100vh;
             display: flex;
             align-items: center;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        .byline { color: #000; font-weight: 700; margin-right: 10px; }
-
-        /* --- BODY TEXT --- */
-        .article-body p {
-            font-size: 20px;
-            line-height: 1.65;
-            margin-bottom: 28px;
-            color: #222;
+            position: relative;
+            overflow: hidden;
         }
 
-        .drop-cap {
-            float: left;
-            font-size: 84px;
-            line-height: 0.75;
-            padding-top: 6px;
-            padding-right: 12px;
-            font-weight: 700;
+        #hero::before {
+            content: 'P';
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-display);
+            font-size: 40rem;
+            font-style: italic;
+            color: var(--beige);
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        /* --- APPLE MESSAGE STYLING --- */
-        .imessage-container {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-heading {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--ocean);
+        }
+
+        .hero-desc {
+            max-width: 450px;
+            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            color: var(--ocean);
+        }
+
+        .hero-actions {
             display: flex;
-            flex-direction: column;
-            gap: 2px;
-            margin: 30px 0 40px 10px;
-            max-width: 100%;
+            gap: 1.5rem;
+            align-items: center;
         }
 
-        .msg {
-            background-color: var(--apple-gray);
-            color: #000;
-            padding: 10px 16px;
-            border-radius: 20px;
-            font-size: 17px;
-            line-height: 1.4;
-            max-width: 75%;
-            align-self: flex-start;
+        /* --- ABOUT SECTION --- */
+        #about {
+            padding: 8rem 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image-wrapper {
             position: relative;
-        }
-        
-        .msg:last-child { border-bottom-left-radius: 5px; }
-        .msg:last-child::before {
-            content: ""; position: absolute; bottom: 0; left: -10px; width: 20px; height: 20px;
-            background-color: var(--apple-gray); border-bottom-right-radius: 15px; z-index: -1;
-        }
-        .msg:last-child::after {
-            content: ""; position: absolute; bottom: 0; left: -20px; width: 20px; height: 20px;
-            background-color: var(--bg-white); border-bottom-right-radius: 10px; z-index: 1;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            border-radius: 50%;
+            overflow: hidden;
+            /* Minimal border */
+            border: 1px solid var(--beige); 
         }
 
-        /* --- FIGURES & CHEMISTRY DIAGRAMS --- */
-        .figure-container {
-            border: 1px solid #ddd;
-            padding: 25px;
-            margin: 45px 0;
-            background: var(--bg-paper);
-        }
-
-        .graph-area {
-            position: relative;
+        .profile-photo {
             width: 100%;
-            height: 250px;
-            border-left: 2px solid #333;
-            border-bottom: 2px solid #333;
+            height: 100%;
+            object-fit: cover;
+            /* Placeholder background */
+            background-color: var(--beige); 
+            transition: transform 0.5s ease;
         }
 
-        .axis-label {
-            font-family: var(--font-sans);
-            font-size: 11px;
-            font-weight: bold;
-            position: absolute;
+        .about-image-wrapper:hover .profile-photo {
+            transform: scale(1.05);
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--beige);
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .skills-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            border: 1px solid var(--ocean);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s;
         }
-        .y-label { top: -25px; left: -10px; }
-        .x-label { bottom: -30px; right: 0; }
 
-        /* Figure 1 Elements */
-        .reaction-curve { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        path { fill: none; stroke: var(--atlantic-red); stroke-width: 3; }
-        
-        .label-point {
-            position: absolute;
-            font-family: var(--font-sans);
-            font-size: 14px;
-            background: #fff;
-            padding: 2px 6px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+        .skill-tag:hover {
+            background-color: var(--ocean);
+            color: var(--cream);
         }
-        .label-start { top: 50px; left: 10px; }
-        .label-end { top: 180px; right: 20px; }
-        .label-delta { 
-            top: 100px; /* Moved up to avoid overlap */
-            left: 55%; 
-            color: var(--atlantic-red);
-            font-weight: bold;
-            border: none;
-            background: rgba(255,255,255,0.9); /* Masking background */
+
+        /* --- PROJECTS SECTION --- */
+        #projects {
+            padding: 6rem 0 8rem;
+            background-color: var(--cream);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background-color: #fff;
+            border: 1px solid rgba(196, 188, 176, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            background: transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(44, 54, 90, 0.1);
+        }
+
+        .project-card:nth-child(1) {
+            grid-column: span 2;
+        }
+
+        .card-thumb {
+            background-color: var(--ocean);
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .project-card:nth-child(1) .card-thumb {
+            height: 400px;
+        }
+
+        .card-thumb-num {
+            font-family: var(--font-display);
+            font-size: 8rem;
+            color: var(--cream);
+            opacity: 0.05;
             font-style: italic;
         }
 
-        /* Figure 2 Elements (Equation) */
-        .chem-equation {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-family: 'Times New Roman', serif;
-            font-size: 20px;
-            flex-wrap: wrap;
-            padding: 20px 0;
-        }
-        .molecule { font-weight: bold; }
-        .arrow { font-size: 24px; color: #555; position: relative; padding: 0 10px; }
-        .arrow span {
+        .card-category {
             position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-sans);
-            font-size: 10px;
-            color: var(--atlantic-red);
-            white-space: nowrap;
+            top: 20px;
+            left: 20px;
+            background: rgba(238, 232, 223, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--cream);
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        .product { color: var(--atlantic-red); font-weight: bold; }
 
-        .fig-caption {
-            font-family: var(--font-sans);
-            font-size: 13px;
+        .card-info {
+            padding: 2rem 1rem 1rem 0;
+        }
+
+        .card-meta-num {
+            font-size: 0.75rem;
+            color: var(--beige);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            color: var(--ocean);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
             color: #666;
-            margin-top: 25px;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            max-width: 90%;
         }
 
-        .separator {
+        .card-btn {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--ocean);
+            padding-bottom: 2px;
+            transition: opacity 0.3s;
+        }
+
+        /* --- MODAL --- */
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(44, 54, 90, 0.4);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        #modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #modal-content {
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            position: relative;
+            overflow-y: auto;
+            transform: translateY(40px);
+            transition: transform 0.4s ease;
+        }
+
+        #modal-overlay.active #modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            color: var(--ocean);
+            cursor: pointer;
+            z-index: 1010;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-hero {
+            height: 40vh;
+            background-color: var(--ocean);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .modal-bg-num {
+            font-family: var(--font-display);
+            font-size: 15rem;
+            color: var(--white);
+            opacity: 0.05;
+            font-style: italic;
+        }
+
+        .modal-body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+        }
+
+        .modal-header {
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--beige);
+            padding-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 3.5rem;
+            color: var(--ocean);
+            margin-bottom: 1rem;
+        }
+
+        .modal-meta-row {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #666;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .modal-overview h3, .modal-sidebar h3, .process-section h3, .results-section h3 {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            color: var(--ocean);
+            font-weight: 500;
+        }
+
+        .modal-text p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .sidebar-item {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: var(--beige);
+            margin-bottom: 0.25rem;
+        }
+
+        .sidebar-value {
+            font-size: 1rem;
+            color: var(--ocean);
+        }
+
+        .process-steps {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .step-card {
+            flex: 1;
+            padding: 1.5rem;
+            border: 1px solid var(--beige);
+            background: rgba(255,255,255,0.3);
+        }
+
+        .step-num {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.5rem;
+            color: var(--beige);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-head {
+            font-family: var(--font-body);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .results-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            border-top: 1px solid var(--beige);
+            padding-top: 2rem;
+        }
+
+        .stat-item {
             text-align: center;
-            font-size: 24px;
-            color: #ccc;
-            margin: 40px 0;
-            letter-spacing: 4px;
+            flex: 1;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-style: italic;
+            color: var(--ocean);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        .modal-footer {
+            margin-top: 5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- CONTACT SECTION --- */
+        #contact {
+            background-color: var(--ocean);
+            color: var(--cream);
+            padding: 6rem 0;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--cream);
+        }
+
+        .contact-tagline {
+            font-size: 1.1rem;
+            color: var(--beige);
+            margin-bottom: 2rem;
+        }
+
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--cream);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 10px 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .linkedin-link svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--cream);
+            transition: fill 0.3s;
+        }
+
+        .linkedin-link:hover {
+            color: var(--beige);
+            border-bottom-color: var(--beige);
+        }
+
+        .linkedin-link:hover svg {
+            fill: var(--beige);
+        }
+
+        /* Contact Form */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(238, 232, 223, 0.3);
+            padding: 1rem 0;
+            color: var(--cream);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--beige);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            background: var(--cream);
+            color: var(--ocean);
+            border: none;
+            padding: 12px 30px;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--beige);
         }
 
         /* --- FOOTER --- */
         footer {
-            width: 100%;
-            background-color: #F6F6F6;
-            border-top: 1px solid #E5E5E5;
-            padding: 40px 20px 60px 20px;
-            margin-top: 60px;
-            text-align: center;
+            background-color: var(--dark-footer);
+            color: rgba(255,255,255,0.6);
+            padding: 3rem 0;
+            font-size: 0.85rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .footer-logo {
-            font-family: 'Garamond', 'Georgia', serif;
+            font-family: var(--font-display);
             font-style: italic;
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 1.2rem;
+            color: var(--white);
         }
 
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 30px;
+        .footer-nav a {
+            margin-left: 1.5rem;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
         }
 
-        .footer-links a {
-            text-decoration: none;
-            color: #121212;
-            font-family: var(--font-sans);
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .copyright {
-            font-family: var(--font-sans);
-            font-size: 12px;
-            color: #888;
+        .footer-nav a:hover {
+            color: var(--white);
         }
 
         /* --- RESPONSIVE --- */
-        @media (max-width: 600px) {
-            h1.headline { font-size: 34px; }
-            h2.subhead { font-size: 19px; }
-            .brand-mark-a { font-size: 42px; padding: 0 15px; }
-            .chem-equation { font-size: 16px; }
+        @media (max-width: 900px) {
+            #hero {
+                align-items: center;
+            }
+            #hero::before {
+                font-size: 20rem;
+                right: -10%;
+                opacity: 0.1;
+            }
+
+            .hero-heading {
+                font-size: 3rem;
+            }
+            
+            .about-grid, .projects-grid, .modal-grid, .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .project-card:nth-child(1) {
+                grid-column: span 1;
+            }
+
+            .about-image-wrapper {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 2rem;
+            }
+            
+            /* Center alignment for mobile about */
+            .about-content {
+                text-align: center;
+            }
+            .skills-row {
+                justify-content: center;
+            }
+            .divider {
+                margin: 2rem auto;
+            }
+
+            .process-steps, .results-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .modal-footer {
+                flex-direction: column-reverse;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .footer-nav a {
+                margin: 0 0.75rem;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
-        <div class="header-top-row">
-            <div class="header-line"></div>
-            <div class="brand-mark-a">A</div>
-            <div class="header-line"></div>
-        </div>
-        <div class="logo-text">The Atlantic</div>
+        <a href="#" class="logo">Alex Morgan</a>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <article>
-        <span class="section-label">Culture</span>
-        <h1 class="headline">Love in the Time of Stoichiometry</h1>
-        <h2 class="subhead">A late-night text about cheese proved that even in the middle of exam season, the chemistry between us is the only thing that’s truly stable.</h2>
-
-        <div class="meta">
-            <span class="byline">By Niv</span>
-            <span>&nbsp;|&nbsp; February 25, 2026</span>
-        </div>
-
-        <div class="article-body">
-            <p><span class="drop-cap">T</span>here is a specific hour in the study cycle, usually past midnight, when the brain ceases to be a catalog of facts and becomes something more porous. The hierarchy of information collapses. The periodic table holds no more weight than a grocery list. Everything is just data, floating in the exhaustion.</p>
-
-            <p>On a Monday night Aaradhya reached this point. She has been studying for a chemistry exam that is just two days away. It is an important exam that feels like a heavy door opening or closing on a future. She sent me a text.</p>
-
-            <div class="imessage-container">
-                <div class="msg">saccharomyces cerevisiae</div>
-                <div class="msg">fungi</div>
-                <div class="msg">microsoft</div>
-                <div class="msg">pizza</div>
+    <!-- Hero -->
+    <section id="hero">
+        <div class="container hero-content reveal">
+            <span class="eyebrow">Portfolio — 2025</span>
+            <h1 class="hero-heading">Hello, I’m <i>Alex</i>.<br>Building products that matter.</h1>
+            <p class="hero-desc">An Associate Product Manager bridging user needs and business goals with data-driven strategy and intuitive design.</p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-filled">View Work</a>
+                <a href="#about" class="btn btn-outline">More About Me</a>
             </div>
+        </div>
+    </section>
 
-            <p>It was a small moment—a collision between the academic pressure she is under and the simple, human need for food.</p>
+    <!-- About -->
+    <section id="about" class="reveal">
+        <div class="container">
+            <div class="about-grid">
+                <!-- Left: Photo (Minimal) -->
+                <div class="about-image-wrapper">
+                    <!-- Replace with your actual photo URL -->
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Alex Morgan" class="profile-photo">
+                </div>
 
-            <p>I didn't want to reply with just words. Words feel cheap when you're staring down the barrel of organic chemistry. So, I decided to speak her language. I listened and I admired her rambles, I also drew a diagram on my phone and decided to attach it to her favorite article. If we are doing chemistry, let’s do chemistry.</p>
-
-            <!-- FIGURE 1: Reaction Coordinate -->
-            <div class="figure-container">
-                <div class="graph-area">
-                    <div class="axis-label y-label">Enthalpy (H)</div>
-                    <div class="axis-label x-label">Time &rarr;</div>
+                <!-- Right: Content -->
+                <div class="about-content">
+                    <span class="eyebrow">About Me</span>
+                    <h2>Orchestrating <i>Chaos</i> into Clarity.</h2>
+                    <p>I thrive in the messy middle of product development. My background in data analysis allows me to uncover insights, while my design intuition ensures the solution delights users.</p>
+                    <br>
+                    <p>Currently focused on SaaS retention strategies and mobile accessibility.</p>
                     
-                    <svg class="reaction-curve" viewBox="0 0 300 200">
-                        <path d="M 10 60 Q 100 0, 150 100 T 290 180" />
-                    </svg>
-
-                    <div class="label-point label-start">Me (Unstable)</div>
-                    <div class="label-point label-end">Us (Stable State)</div>
-                    <div class="label-point label-delta">&Delta;G < 0</div>
-                </div>
-                <div class="fig-caption">
-                    <strong>Figure 1.</strong> The Reaction Coordinate of Us. Note that the process is spontaneous (Gibbs Free Energy is negative) and the final state is significantly more stable than the reactants.
-                </div>
-            </div>
-
-            <p>I wanted her to smile, but I also wanted to remind her of a fundamental truth: We are a spontaneous reaction. In chemistry, a negative Delta G means a process happens naturally, without being forced. That is how I feel about her. No matter how much stress the exam applies to the system, the equilibrium of "us" doesn't shift.</p>
-
-            <p>But the chemistry doesn't stop at energy profiles. As I thought about her studying those mechanisms—nucleophilic attacks and leaving groups—I realized that she is actually the central component of my entire equation. So I sketched out one more figure, just to be sure the data was peer-reviewed.</p>
-
-            <!-- FIGURE 2: Reaction Equation -->
-            <div class="figure-container">
-                <div class="chem-equation">
-                    <span class="molecule">My Life</span>
-                    <span>+</span>
-                    <span class="molecule">Aaradhya</span>
-                    <div class="arrow">&rarr;<span>(heat)</span></div>
-                    <span class="product">Complete</span>
-                </div>
-                <div class="fig-caption">
-                    <strong>Figure 2.</strong> The Synthesis of Happiness. Aaradhya acts as both the reagent and the catalyst, lowering the activation energy required to have a perfect day.
+                    <div class="divider"></div>
+                    
+                    <div class="skills-row">
+                        <span class="skill-tag">Product Strategy</span>
+                        <span class="skill-tag">User Research</span>
+                        <span class="skill-tag">SQL & Data Analysis</span>
+                        <span class="skill-tag">Agile / Scrum</span>
+                        <span class="skill-tag">Wireframing</span>
+                        <span class="skill-tag">Stakeholder Mgmt</span>
+                        <span class="skill-tag">A/B Testing</span>
+                    </div>
                 </div>
             </div>
-
-            <p>The exam on 28th is a snapshot. It measures what she knows about molecules on a specific Saturday morning. But these figures measure something permanent. They measure the fact that she is the most stable element in my life.</p>
-
-            <p>She is going to be fine. She will walk into exam hall, and she will write down what she knows. But even if she forgets the bond angles or the reaction rates, she has already mastered the most important chemistry there is. She is loved, she is appreciated, and—most importantly—she deserves that pizza.</p>
         </div>
-    </article>
+    </section>
 
+    <!-- Projects -->
+    <section id="projects">
+        <div class="container">
+            <span class="eyebrow">Selected Works</span>
+            <h2 class="display-text" style="font-size: 3rem; color: var(--ocean);">Case Studies</h2>
+            
+            <div class="projects-grid">
+                <!-- Card 1 (Spans 2) -->
+                <div class="project-card reveal" onclick="openModal(0)">
+                    <div class="card-thumb">
+                        <div class="card-category">Growth</div>
+                        <span class="card-thumb-num">01</span>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-meta-num">01 — 2024</span>
+                        <h3 class="card-title">FinTech Mobile Launch</h3>
+                        <p class="card-desc">Leading the 0-to-1 launch of a budget tracking feature for Gen Z users.</p>
+                        <span class="card-btn">View Case Study</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="project-card reveal" onclick="openModal(1)">
+                    <div class="card-thumb">
+                        <div class="card-category">B2B SaaS</div>
+                        <span class="card-thumb-num">02</span>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-meta-num">02 — 2023</span>
+                        <h3 class="card-title">Analytics Dashboard</h3>
+                        <p class="card-desc">Redesigning enterprise reporting tools to reduce churn.</p>
+                        <span class="card-btn">View Case Study</span>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="project-card reveal" onclick="openModal(2)">
+                    <div class="card-thumb">
+                        <div class="card-category">E-Commerce</div>
+                        <span class="card-thumb-num">03</span>
+                    </div>
+                    <div class="card-info">
+                        <span class="card-meta-num">03 — 2023</span>
+                        <h3 class="card-title">Checkout Optimization</h3>
+                        <p class="card-desc">Streamlining the payment flow to boost conversion by 15%.</p>
+                        <span class="card-btn">View Case Study</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Overlay -->
+    <div id="modal-overlay">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div id="modal-content">
+            <!-- Dynamic Content Injected Here -->
+            <div class="modal-hero">
+                <span class="modal-bg-num" id="m-bg-num">01</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-header">
+                    <span class="skill-tag" id="m-tag" style="margin-bottom: 1rem; display:inline-block;">Category</span>
+                    <h1 class="modal-title" id="m-title">Project Title</h1>
+                    <div class="modal-meta-row" id="m-meta">Role / Year / Type</div>
+                </div>
+
+                <div class="modal-grid">
+                    <!-- Left: Overview -->
+                    <div class="modal-overview">
+                        <h3>Overview</h3>
+                        <div class="modal-text" id="m-overview">
+                            <!-- Text injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Details Sidebar -->
+                    <div class="modal-sidebar">
+                        <h3>Details</h3>
+                        <div class="sidebar-item">
+                            <span class="sidebar-label">Client / Company</span>
+                            <span class="sidebar-value" id="m-client">Name</span>
+                        </div>
+                        <div class="sidebar-item">
+                            <span class="sidebar-label">Timeline</span>
+                            <span class="sidebar-value" id="m-timeline">3 Months</span>
+                        </div>
+                        <div class="sidebar-item">
+                            <span class="sidebar-label">Tools Used</span>
+                            <span class="sidebar-value" id="m-tools">Figma, Jira</span>
+                        </div>
+                        <div class="sidebar-item">
+                            <span class="sidebar-label">Deliverables</span>
+                            <span class="sidebar-value" id="m-deliverables">PRD, Roadmap</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Process -->
+                <div class="process-section">
+                    <h3>Process</h3>
+                    <div class="process-steps" id="m-steps">
+                        <!-- Steps injected here -->
+                    </div>
+                </div>
+
+                <!-- Results -->
+                <div class="results-section" style="margin-top: 4rem;">
+                    <h3>Results</h3>
+                    <div class="results-row" id="m-stats">
+                        <!-- Stats injected here -->
+                    </div>
+                </div>
+
+                <!-- Modal CTA -->
+                <div class="modal-footer">
+                    <button class="btn btn-outline" onclick="closeModal()">← Back to Projects</button>
+                    <a href="#" class="btn btn-filled">Live Project →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="contact-container reveal">
+            <!-- Left Info -->
+            <div class="contact-info">
+                <span class="eyebrow" style="color: var(--beige);">Get In Touch</span>
+                <h2>Let's build <i>Next.</i></h2>
+                <p class="contact-tagline">Open for opportunities in Product Management. Fill out the form or connect on LinkedIn.</p>
+                
+                <!-- Minimal LinkedIn Link -->
+                <a href="https://linkedin.com" target="_blank" class="linkedin-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    <span>Connect on LinkedIn</span>
+                </a>
+            </div>
+
+            <!-- Right Form -->
+            <div class="contact-form-wrapper">
+                <form action="https://formsubmit.co/your@email.com" method="POST" id="contactForm">
+                    <!-- FormSubmit Config -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="">
+                    
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn" id="sendBtn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <div class="footer-logo">The Atlantic</div>
-        <div class="footer-links">
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-            <a href="#"></a>
-        </div>
-        <div class="copyright">
-            Copyright &copy; 2026 The Atlantic Monthly Group. All Rights Reserved.
+        <div class="container footer-content">
+            <div class="footer-logo">Alex Morgan</div>
+            <div class="copyright">© 2025 All Rights Reserved.</div>
+            <div class="footer-nav">
+                <a href="#about">About</a>
+                <a href="#projects">Work</a>
+                <a href="#contact">Contact</a>
+            </div>
         </div>
     </footer>
 
+    <!-- JavaScript -->
+    <script>
+        /* --- DATA --- */
+        const projects = [
+            {
+                id: "01",
+                title: "FinTech Mobile Launch",
+                category: "Growth",
+                role: "Associate PM",
+                year: "2024",
+                type: "Mobile App",
+                overview: [
+                    "Identified a gap in our current offering for Gen Z users who found existing budgeting tools too complex. I led the discovery and delivery of 'Lite Mode' — a simplified tracking feature.",
+                    "Collaborated with engineering to define the MVP scope and worked closely with design to ensure a gamified, engaging user interface."
+                ],
+                client: "NeoBank Inc.",
+                timeline: "4 Months",
+                tools: "Figma, Jira, Mixpanel",
+                deliverables: "User Stories, MVP Launch",
+                steps: [
+                    { num: "01", head: "Discovery", desc: "Conducted 15 user interviews to identify pain points in current wealth management tools." },
+                    { num: "02", head: "Strategy", desc: "Defined KPIs focusing on Daily Active Users (DAU) and retention week-over-week." },
+                    { num: "03", head: "Execution", desc: "Managed 3 sprints with a team of 4 devs, launching on time with zero critical bugs." }
+                ],
+                stats: [
+                    { val: "+40%", label: "User Engagement" },
+                    { val: "25k", label: "Signups in Wk 1" },
+                    { val: "4.8", label: "App Store Rating" }
+                ]
+            },
+            {
+                id: "02",
+                title: "Analytics Dashboard",
+                category: "B2B SaaS",
+                role: "Product Owner",
+                year: "2023",
+                type: "Web Platform",
+                overview: [
+                    "Our enterprise clients were churning due to slow load times and confusing data visualization. I spearheaded the overhaul of the main reporting dashboard.",
+                    "This involved complex stakeholder management, balancing requests from Sales for 'flashy' features vs. Engineering's need for technical debt reduction."
+                ],
+                client: "DataFlow Corp",
+                timeline: "6 Months",
+                tools: "Tableau, SQL, Linear",
+                deliverables: "Roadmap, Spec Docs",
+                steps: [
+                    { num: "01", head: "Audit", desc: "Analyzed usage logs to deprecate 30% of unused widgets, improving performance." },
+                    { num: "02", head: "Design", desc: "Iterative prototyping with key account holders to validate new data visualizations." },
+                    { num: "03", head: "Rollout", desc: "Phased rollout to 500+ enterprise seats with comprehensive training materials." }
+                ],
+                stats: [
+                    { val: "-15%", label: "Churn Rate" },
+                    { val: "2x", label: "Faster Load Time" },
+                    { val: "90%", label: "Positive Feedback" }
+                ]
+            },
+            {
+                id: "03",
+                title: "Checkout Optimization",
+                category: "E-Commerce",
+                role: "Junior PM",
+                year: "2023",
+                type: "Optimization",
+                overview: [
+                    "Cart abandonment was at an all-time high of 70%. My task was to analyze the funnel and implement high-impact experiments to recover revenue.",
+                    "Implemented a guest checkout flow and simplified address validation, resulting in immediate lift in conversion."
+                ],
+                client: "ShopStream",
+                timeline: "8 Weeks",
+                tools: "Google Analytics, Optimizely",
+                deliverables: "A/B Test Plan",
+                steps: [
+                    { num: "01", head: "Hypothesis", desc: "Hypothesized that forced account creation was the primary friction point." },
+                    { num: "02", head: "Testing", desc: "Ran A/B tests on Guest Checkout vs. Social Login vs. Standard Email." },
+                    { num: "03", head: "Synthesis", desc: "Guest checkout won by a landslide. Implemented permanently across all regions." }
+                ],
+                stats: [
+                    { val: "+12%", label: "Conversion Rate" },
+                    { val: "$200k", label: "Recovered / Mo" },
+                    { val: "3", label: "Fewer Clicks" }
+                ]
+            }
+        ];
+
+        /* --- MODAL LOGIC --- */
+        const modal = document.getElementById('modal-overlay');
+        
+        function openModal(index) {
+            const data = projects[index];
+            
+            // Populate basic fields
+            document.getElementById('m-bg-num').textContent = data.id;
+            document.getElementById('m-tag').textContent = data.category;
+            document.getElementById('m-title').textContent = data.title;
+            document.getElementById('m-meta').textContent = `${data.role} / ${data.year} / ${data.type}`;
+            
+            // Populate Overview
+            const overviewContainer = document.getElementById('m-overview');
+            overviewContainer.innerHTML = '';
+            data.overview.forEach(pText => {
+                const p = document.createElement('p');
+                p.textContent = pText;
+                overviewContainer.appendChild(p);
+            });
+
+            // Populate Sidebar
+            document.getElementById('m-client').textContent = data.client;
+            document.getElementById('m-timeline').textContent = data.timeline;
+            document.getElementById('m-tools').textContent = data.tools;
+            document.getElementById('m-deliverables').textContent = data.deliverables;
+
+            // Populate Steps
+            const stepsContainer = document.getElementById('m-steps');
+            stepsContainer.innerHTML = '';
+            data.steps.forEach(step => {
+                const div = document.createElement('div');
+                div.className = 'step-card';
+                div.innerHTML = `
+                    <div class="step-num">${step.num}</div>
+                    <div class="step-head">${step.head}</div>
+                    <div class="step-desc">${step.desc}</div>
+                `;
+                stepsContainer.appendChild(div);
+            });
+
+            // Populate Stats
+            const statsContainer = document.getElementById('m-stats');
+            statsContainer.innerHTML = '';
+            data.stats.forEach(stat => {
+                const div = document.createElement('div');
+                div.className = 'stat-item';
+                div.innerHTML = `
+                    <span class="stat-value">${stat.val}</span>
+                    <span class="stat-label">${stat.label}</span>
+                `;
+                statsContainer.appendChild(div);
+            });
+
+            // Show Modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Lock scroll
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Unlock scroll
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        /* --- SCROLL REVEAL ANIMATION --- */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('active');
+                    }, index * 100); 
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        /* --- CONTACT FORM --- */
+        const form = document.getElementById('contactForm');
+        const sendBtn = document.getElementById('sendBtn');
+
+        form.addEventListener('submit', (e) => {
+           // Simple UI feedback before redirect:
+           sendBtn.textContent = "Sent ✓";
+           sendBtn.style.backgroundColor = "var(--beige)";
+        });
+
+    </script>
 </body>
 </html>
