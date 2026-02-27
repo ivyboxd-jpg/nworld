@@ -19,7 +19,7 @@
             --ocean-light: #404b70;
             --line-color: #C4BCB0; 
             
-            /* Readable Dark Text */
+            /* Text Colors */
             --text-body: #4A443A;    
             --text-label: #5C554B;   
             
@@ -63,6 +63,12 @@
             color: var(--text-body); 
             margin-bottom: 1.5rem;
             max-width: 650px;
+        }
+
+        li {
+            font-size: 1rem;
+            color: var(--text-body);
+            margin-bottom: 0.5rem;
         }
 
         a {
@@ -109,7 +115,7 @@
             transform: translateY(0);
         }
 
-        /* --- HEADER (Fixed with Background) --- */
+        /* --- HEADER --- */
         header {
             position: fixed;
             top: 0;
@@ -120,7 +126,6 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            /* Added Background & Border */
             background-color: rgba(238, 232, 223, 0.95);
             backdrop-filter: blur(8px);
             border-bottom: 1px solid rgba(196, 188, 176, 0.5);
@@ -183,7 +188,6 @@
         }
 
         .nav-overlay.open { opacity: 1; visibility: visible; }
-
         .nav-links { list-style: none; text-align: center; }
         .nav-links li { margin: 1.5rem 0; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
 
@@ -200,14 +204,15 @@
         .nav-overlay.open .nav-links li:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
         .nav-overlay.open .nav-links li:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
 
-        /* --- HERO --- */
+        /* --- HERO (LEFT ALIGNED) --- */
         #hero {
             min-height: 90vh;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
             padding-top: 6rem;
+            /* Changed from center to left alignment */
+            justify-content: flex-start; 
+            text-align: left;
         }
 
         .hero-small {
@@ -231,7 +236,7 @@
             padding-bottom: 10px;
         }
 
-        /* Hand-drawn SVG Underline */
+        /* Humane Underline */
         .hero-name::after {
             content: "";
             position: absolute;
@@ -249,8 +254,8 @@
             font-family: var(--font-body);
             font-size: 1.1rem;
             color: var(--text-body);
-            margin: 2rem auto;
-            max-width: 500px;
+            margin: 2rem 0; /* Left aligned margins */
+            max-width: 550px;
             line-height: 1.7;
         }
 
@@ -302,7 +307,7 @@
         }
 
         /* --- EXPERIENCE ROADMAP --- */
-        #experience { max-width: 700px; margin: 0 auto; }
+        #experience { max-width: 750px; margin: 0 auto; }
 
         .timeline-wrapper {
             position: relative;
@@ -359,8 +364,40 @@
             color: var(--text-label); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             display: block;
+        }
+
+        /* Certificate Links */
+        .cert-link {
+            display: inline-block;
+            border: 1px solid var(--line-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: var(--ocean);
+            margin-left: 10px;
+            transition: all 0.3s;
+            text-transform: none;
+            letter-spacing: 0;
+            vertical-align: middle;
+        }
+
+        .cert-link:hover {
+            background-color: var(--line-color);
+            text-decoration: none;
+        }
+
+        /* Bullet Points */
+        .exp-bullets {
+            list-style-type: disc;
+            padding-left: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .exp-bullets li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
         }
 
         /* --- PROJECTS LIST --- */
@@ -392,7 +429,7 @@
             color: var(--text-label);
         }
 
-        /* --- MODAL (CASE STUDY) --- */
+        /* --- MODAL --- */
         #modal {
             position: fixed;
             top: 0;
@@ -499,7 +536,6 @@
             padding-left: 1rem;
         }
 
-        /* --- METRICS GRID --- */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -543,11 +579,12 @@
 
         #contact p, #contact .label { color: #dcd6cb; }
 
-        /* Mobile Friendly Form Width */
+        /* FIXED: Contact Container padding for mobile */
         .contact-container { 
             max-width: 500px; 
             margin: 0 auto; 
             width: 100%;
+            padding: 0 1rem; /* Ensure padding prevents edge touching */
         }
 
         .form-group { margin-bottom: 2rem; text-align: left; }
@@ -565,7 +602,7 @@
 
         input, textarea {
             width: 100%;
-            padding: 12px 10px;
+            padding: 15px 12px; /* Bigger touch target */
             background: transparent;
             border: none;
             border-bottom: 1px solid #666;
@@ -579,7 +616,7 @@
 
         .submit-btn {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: var(--cream);
             color: var(--ocean);
             border: none;
@@ -610,6 +647,7 @@
         @media (max-width: 768px) {
             header { padding: 1.5rem; }
             .hero-name { font-size: 3.5rem; }
+            .hero-sub { text-align: left; }
             
             /* Nav font on mobile */
             .nav-links a { font-size: 1.8rem; }
@@ -617,18 +655,17 @@
             .project-item { grid-template-columns: 1fr; gap: 0.5rem; }
             .p-cat { text-align: left; margin-top: 0.2rem; }
             
-            /* Modal adjustments */
             .modal-header-top { gap: 1rem; }
             .m-title { font-size: 1.8rem; }
             
-            /* Metrics grid on mobile */
             .metrics-grid { grid-template-columns: 1fr; }
             
-            /* Ensure container has padding */
             .container { padding: 0 1.5rem; }
             
-            /* Contact Form Padding Fix */
-            .contact-container { padding: 0 0.5rem; }
+            /* Ensure bullets have space on mobile */
+            .exp-card { padding-left: 1rem; border-left: 2px solid var(--line-color); margin-left: 0; }
+            .timeline-wrapper { border: none; padding-left: 0; }
+            .exp-dot, .timeline-line-active { display: none; } /* Simplified timeline for mobile */
         }
     </style>
 </head>
@@ -655,7 +692,7 @@
         </ul>
     </div>
 
-    <!-- HERO -->
+    <!-- HERO (Left Aligned) -->
     <section id="hero">
         <div class="container reveal">
             <h1 class="hero-heading">
@@ -699,20 +736,35 @@
             <div class="timeline-wrapper" id="timeline">
                 <div class="timeline-line-active"></div>
 
-                <!-- Item 1: Education -->
+                <!-- Role 1: Associate PM -->
                 <div class="exp-card">
                     <div class="exp-dot"></div>
-                    <h3 class="role-title">University Student</h3>
-                    <span class="role-meta">Bachelor's Degree • 2022 - Present</span>
-                    <p>Focusing on Business & Technology. Leading student projects and participating in product hackathons.</p>
+                    <h3 class="role-title">Associate Project Manager Intern</h3>
+                    <span class="role-meta">
+                        Dec 2025 - Jan 2026 
+                        <a href="#" class="cert-link">View Certificate</a>
+                        <a href="#" class="cert-link">View LOR</a>
+                    </span>
+                    <ul class="exp-bullets">
+                        <li>Led a cross-functional global team to deliver two concurrent projects with 100% on-time completion.</li>
+                        <li>Managed complex workflows via Jira, ensuring zero missed deadlines during critical team shortages.</li>
+                        <li>Redesigned onboarding processes to cut setup time by 80% (12h to 2h) and reduce support queries.</li>
+                    </ul>
                 </div>
 
-                <!-- Item 2: Intern/Project -->
+                <!-- Role 2: Trainee -->
                 <div class="exp-card">
                     <div class="exp-dot"></div>
-                    <h3 class="role-title">Product Intern</h3>
-                    <span class="role-meta">Project / Company • Summer 2024</span>
-                    <p>Assisted in user research and competitive analysis. Helped define requirements for a new feature launch.</p>
+                    <h3 class="role-title">Project Manager Trainee</h3>
+                    <span class="role-meta">
+                        Excelerate • Nov 2025 - Dec 2025
+                        <a href="#" class="cert-link">View Certificate</a>
+                    </span>
+                    <ul class="exp-bullets">
+                        <li>Orchestrated a 30-task virtual masterclass plan, achieving 100% milestone delivery despite scheduling conflicts.</li>
+                        <li>Optimized project schedules using Gantt charts and strategic buffers, significantly mitigating timeline risks.</li>
+                        <li>Implemented a RACI matrix that reduced decision-making time by ~25% and doubled team participation.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -780,7 +832,6 @@
 
             <!-- Google Drive Placeholder -->
             <a href="#" class="drive-link" target="_blank" id="m-link">
-                <!-- Simple Folder Icon -->
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>
