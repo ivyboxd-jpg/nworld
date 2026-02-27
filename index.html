@@ -19,7 +19,7 @@
             --ocean-light: #404b70;
             --line-color: #C4BCB0; 
             
-            /* UPDATED: Darker colors for better readability */
+            /* Readable Dark Text */
             --text-body: #4A443A;    
             --text-label: #5C554B;   
             
@@ -50,12 +50,12 @@
         }
 
         /* --- TYPOGRAPHY --- */
-        h1, h2, h3 {
+        h1, h2, h3, h4 {
             font-family: var(--font-display);
             font-weight: 600;
             font-style: italic;
             color: var(--ocean);
-            line-height: 1.1;
+            line-height: 1.2;
         }
 
         p {
@@ -76,7 +76,6 @@
             opacity: 0.7;
         }
 
-        /* Improved Label Visibility: Darker and slightly bolder */
         .label {
             font-family: var(--font-body);
             font-size: 0.8rem;
@@ -110,17 +109,21 @@
             transform: translateY(0);
         }
 
-        /* --- HEADER & NAVIGATION --- */
+        /* --- HEADER (Fixed with Background) --- */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 2rem 3rem;
+            padding: 1.5rem 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
+            /* Added Background & Border */
+            background-color: rgba(238, 232, 223, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(196, 188, 176, 0.5);
         }
 
         .logo {
@@ -162,7 +165,7 @@
         .hamburger.active span:nth-child(2) { opacity: 0; left: -60px; }
         .hamburger.active span:nth-child(3) { top: 9px; transform: rotate(-135deg); }
 
-        /* Full Screen Nav Overlay */
+        /* Nav Overlay */
         .nav-overlay {
             position: fixed;
             top: 0;
@@ -184,10 +187,9 @@
         .nav-links { list-style: none; text-align: center; }
         .nav-links li { margin: 1.5rem 0; opacity: 0; transform: translateY(15px); transition: all 0.4s ease; }
 
-        /* Updated: More refined, smaller font size for menu */
         .nav-links a {
             font-family: var(--font-display);
-            font-size: 2.2rem; /* Reduced size */
+            font-size: 2.2rem;
             font-weight: 500;
             font-style: italic;
             color: var(--ocean);
@@ -205,7 +207,7 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding-top: 4rem;
+            padding-top: 6rem;
         }
 
         .hero-small {
@@ -229,7 +231,7 @@
             padding-bottom: 10px;
         }
 
-        /* UPDATED: Humane / Curved SVG Underline */
+        /* Hand-drawn SVG Underline */
         .hero-name::after {
             content: "";
             position: absolute;
@@ -239,7 +241,6 @@
             height: 15px;
             background-repeat: no-repeat;
             background-size: 100% 100%;
-            /* Hand-drawn curve SVG */
             background-image: url("data:image/svg+xml,%3Csvg width='100' height='15' viewBox='0 0 100 15' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2,8 C20,12 50,14 98,2' stroke='%232C365A' stroke-width='3' fill='none' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
             opacity: 0.8;
         }
@@ -273,7 +274,7 @@
             height: 120px;
             border-radius: 50%;
             margin: 0 auto 2rem;
-            background-color: #dcd6cb; /* Slightly darker cream */
+            background-color: #dcd6cb; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -354,7 +355,7 @@
         .role-meta {
             font-family: var(--font-body);
             font-size: 0.85rem;
-            font-weight: 700; /* Bolder */
+            font-weight: 700; 
             color: var(--text-label); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -365,8 +366,8 @@
         /* --- PROJECTS LIST --- */
         .project-item {
             display: grid;
-            grid-template-columns: 3fr 1fr; /* Removed numbering column for cleaner look */
-            align-items: baseline;
+            grid-template-columns: 3fr 1fr;
+            align-items: center;
             padding: 2.5rem 0;
             border-bottom: 1px solid var(--line-color);
             cursor: pointer;
@@ -376,7 +377,6 @@
         .project-item:first-of-type { border-top: 1px solid var(--line-color); }
         .project-item:hover { transform: translateX(8px); }
 
-        /* Updated: Not too big */
         .p-title { 
             font-size: 1.5rem; 
             font-weight: 500;
@@ -392,7 +392,7 @@
             color: var(--text-label);
         }
 
-        /* --- MODAL --- */
+        /* --- MODAL (CASE STUDY) --- */
         #modal {
             position: fixed;
             top: 0;
@@ -415,7 +415,7 @@
             top: 2rem;
             right: 2rem;
             font-size: 0.9rem;
-            background: none;
+            background: rgba(238, 232, 223, 0.9);
             border: 1px solid var(--ocean);
             border-radius: 50px;
             padding: 8px 16px;
@@ -430,7 +430,7 @@
         
         .modal-close-btn:hover { background: var(--ocean); color: var(--cream); }
 
-        .modal-body { max-width: 700px; margin: 6rem auto; padding: 0 2rem; }
+        .modal-body { max-width: 800px; margin: 7rem auto 4rem; padding: 0 2rem; }
 
         .modal-header-top {
             display: flex;
@@ -443,7 +443,7 @@
             width: 56px;
             height: 56px;
             background: #dcd6cb;
-            border-radius: 12px; /* Humane rounded corners */
+            border-radius: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -464,10 +464,8 @@
             display: block;
         }
 
-        /* Updated: Humane size for modal title */
-        .m-title { font-size: 2rem; line-height: 1.2; }
+        .m-title { font-size: 2.2rem; line-height: 1.2; }
 
-        /* Google Drive Link Style */
         .drive-link {
             display: inline-flex;
             align-items: center;
@@ -479,14 +477,14 @@
             color: var(--ocean);
             border: 1px solid var(--line-color);
             padding: 12px 24px;
-            border-radius: 8px; /* Humane radius */
+            border-radius: 8px;
             background: rgba(255,255,255,0.4);
             transition: all 0.3s;
         }
         
         .drive-link:hover { background: var(--white); border-color: var(--ocean); }
 
-        .m-section { margin-bottom: 3rem; }
+        .m-section { margin-bottom: 4rem; }
 
         .m-section h3 {
             font-family: var(--font-body);
@@ -497,6 +495,43 @@
             margin-bottom: 1rem;
             color: var(--ocean);
             font-style: normal;
+            border-left: 3px solid var(--ocean);
+            padding-left: 1rem;
+        }
+
+        /* --- METRICS GRID --- */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: rgba(255,255,255,0.5);
+            border: 1px solid var(--line-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-val {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--ocean);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-lbl {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-label);
         }
 
         /* --- CONTACT --- */
@@ -508,7 +543,12 @@
 
         #contact p, #contact .label { color: #dcd6cb; }
 
-        .contact-container { max-width: 500px; margin: 0 auto; }
+        /* Mobile Friendly Form Width */
+        .contact-container { 
+            max-width: 500px; 
+            margin: 0 auto; 
+            width: 100%;
+        }
 
         .form-group { margin-bottom: 2rem; text-align: left; }
 
@@ -525,7 +565,7 @@
 
         input, textarea {
             width: 100%;
-            padding: 12px 0;
+            padding: 12px 10px;
             background: transparent;
             border: none;
             border-bottom: 1px solid #666;
@@ -543,7 +583,7 @@
             background: var(--cream);
             color: var(--ocean);
             border: none;
-            border-radius: 8px; /* Humane radius */
+            border-radius: 8px;
             font-family: var(--font-body);
             font-weight: 600;
             font-size: 0.9rem;
@@ -577,10 +617,18 @@
             .project-item { grid-template-columns: 1fr; gap: 0.5rem; }
             .p-cat { text-align: left; margin-top: 0.2rem; }
             
+            /* Modal adjustments */
             .modal-header-top { gap: 1rem; }
             .m-title { font-size: 1.8rem; }
             
+            /* Metrics grid on mobile */
+            .metrics-grid { grid-template-columns: 1fr; }
+            
+            /* Ensure container has padding */
             .container { padding: 0 1.5rem; }
+            
+            /* Contact Form Padding Fix */
+            .contact-container { padding: 0 0.5rem; }
         }
     </style>
 </head>
@@ -736,7 +784,7 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
                 </svg>
-                View Presentation (PDF)
+                View Presentation (Google Drive)
             </a>
 
             <div class="m-section">
@@ -747,6 +795,13 @@
             <div class="m-section">
                 <h3>The Solution</h3>
                 <p id="m-solution">How did you solve it?</p>
+            </div>
+
+            <div class="m-section">
+                <h3>Expected Success Metrics</h3>
+                <div class="metrics-grid" id="m-metrics">
+                    <!-- Metrics injected via JS -->
+                </div>
             </div>
 
             <div class="m-section">
@@ -774,7 +829,12 @@
                 icon: "BB",
                 problem: "Bambrew faced high cart abandonment rates on their D2C platform due to a complex navigation structure and lack of trust signals during checkout.",
                 solution: "Proposed a simplified navigation hierarchy and integrated social proof elements at key decision points. Designed a streamlined checkout flow that reduced steps by 40%.",
-                learning: "Learned how to balance sustainable messaging with conversion optimization. Small friction points in checkout can cause significant revenue loss."
+                learning: "Learned how to balance sustainable messaging with conversion optimization. Small friction points in checkout can cause significant revenue loss.",
+                metrics: [
+                    { val: "+15%", lbl: "Conversion Rate" },
+                    { val: "-20%", lbl: "Cart Abandonment" },
+                    { val: "3.5x", lbl: "ROI on Ads" }
+                ]
             },
             {
                 title: "VerifyWise’s Onboarding, Rebuilt",
@@ -782,7 +842,12 @@
                 icon: "VW",
                 problem: "New users were dropping off during the KYC verification process because the instructions were unclear and the document upload feature was buggy.",
                 solution: "Redesigned the onboarding flow with a progressive stepper, added clear visual examples for document uploads, and implemented real-time validation feedback.",
-                learning: "The importance of 'Happy Path' vs 'Edge Cases'. Handling errors gracefully (like failed uploads) is just as important as the success state."
+                learning: "The importance of 'Happy Path' vs 'Edge Cases'. Handling errors gracefully (like failed uploads) is just as important as the success state.",
+                metrics: [
+                    { val: "+30%", lbl: "Completion Rate" },
+                    { val: "-50%", lbl: "Support Tickets" },
+                    { val: "2min", lbl: "Time Saved" }
+                ]
             }
         ];
 
@@ -793,13 +858,24 @@
             const p = projects[index];
             document.getElementById('m-title').innerText = p.title;
             document.getElementById('m-cat').innerText = p.category;
-            document.getElementById('m-icon').innerText = p.icon; // Sets Initials
+            document.getElementById('m-icon').innerText = p.icon;
             
             document.getElementById('m-problem').innerText = p.problem;
             document.getElementById('m-solution').innerText = p.solution;
             document.getElementById('m-learning').innerText = p.learning;
             
-            // Set link (placeholder for now)
+            // Populate Metrics
+            const mGrid = document.getElementById('m-metrics');
+            mGrid.innerHTML = ''; // Clear old data
+            p.metrics.forEach(metric => {
+                mGrid.innerHTML += `
+                    <div class="metric-card">
+                        <span class="metric-val">${metric.val}</span>
+                        <span class="metric-lbl">${metric.lbl}</span>
+                    </div>
+                `;
+            });
+
             document.getElementById('m-link').href = "#"; 
 
             modal.classList.add('active');
