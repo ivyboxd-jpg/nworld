@@ -68,7 +68,8 @@
         li {
             font-size: 1rem;
             color: var(--text-body);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.5;
         }
 
         a {
@@ -210,7 +211,6 @@
             display: flex;
             align-items: center;
             padding-top: 6rem;
-            /* Changed from center to left alignment */
             justify-content: flex-start; 
             text-align: left;
         }
@@ -364,40 +364,51 @@
             color: var(--text-label); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             display: block;
         }
 
-        /* Certificate Links */
+        /* Certificate Pills */
+        .cert-container {
+            display: inline-flex;
+            gap: 0.5rem;
+            margin-left: 0;
+            vertical-align: middle;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            display: block; /* New line on mobile */
+        }
+        
+        @media(min-width: 768px) {
+            .cert-container { display: inline; margin-left: 10px; margin-top: 0; }
+        }
+
         .cert-link {
-            display: inline-block;
-            border: 1px solid var(--line-color);
-            padding: 4px 10px;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid var(--ocean);
+            padding: 4px 12px;
+            border-radius: 50px;
             font-size: 0.7rem;
+            font-weight: 600;
             color: var(--ocean);
-            margin-left: 10px;
-            transition: all 0.3s;
             text-transform: none;
             letter-spacing: 0;
-            vertical-align: middle;
+            transition: all 0.3s;
+            background: transparent;
         }
 
         .cert-link:hover {
-            background-color: var(--line-color);
+            background-color: var(--ocean);
+            color: var(--cream);
             text-decoration: none;
         }
 
-        /* Bullet Points */
+        /* Humane One-Liner Bullets */
         .exp-bullets {
             list-style-type: disc;
             padding-left: 1.2rem;
             margin-top: 1rem;
-        }
-
-        .exp-bullets li {
-            margin-bottom: 0.8rem;
-            line-height: 1.5;
         }
 
         /* --- PROJECTS LIST --- */
@@ -447,27 +458,34 @@
 
         #modal.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
 
+        /* Fixed X Close Button */
         .modal-close-btn {
             position: fixed;
             top: 2rem;
             right: 2rem;
-            font-size: 0.9rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             background: rgba(238, 232, 223, 0.9);
             border: 1px solid var(--ocean);
-            border-radius: 50px;
-            padding: 8px 16px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
             color: var(--ocean);
+            cursor: pointer;
             z-index: 2010;
-            font-family: var(--font-body);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
             transition: all 0.3s;
         }
         
-        .modal-close-btn:hover { background: var(--ocean); color: var(--cream); }
+        .modal-close-btn:hover { background: var(--ocean); color: var(--cream); transform: rotate(90deg); }
 
-        .modal-body { max-width: 800px; margin: 7rem auto 4rem; padding: 0 2rem; }
+        /* Added Extra Bottom Padding so content isn't hidden */
+        .modal-body { 
+            max-width: 800px; 
+            margin: 7rem auto 0; 
+            padding: 0 2rem 6rem 2rem; 
+        }
 
         .modal-header-top {
             display: flex;
@@ -579,12 +597,11 @@
 
         #contact p, #contact .label { color: #dcd6cb; }
 
-        /* FIXED: Contact Container padding for mobile */
         .contact-container { 
             max-width: 500px; 
             margin: 0 auto; 
             width: 100%;
-            padding: 0 1rem; /* Ensure padding prevents edge touching */
+            padding: 0 1rem;
         }
 
         .form-group { margin-bottom: 2rem; text-align: left; }
@@ -602,7 +619,7 @@
 
         input, textarea {
             width: 100%;
-            padding: 15px 12px; /* Bigger touch target */
+            padding: 15px 12px;
             background: transparent;
             border: none;
             border-bottom: 1px solid #666;
@@ -649,7 +666,6 @@
             .hero-name { font-size: 3.5rem; }
             .hero-sub { text-align: left; }
             
-            /* Nav font on mobile */
             .nav-links a { font-size: 1.8rem; }
             
             .project-item { grid-template-columns: 1fr; gap: 0.5rem; }
@@ -662,10 +678,9 @@
             
             .container { padding: 0 1.5rem; }
             
-            /* Ensure bullets have space on mobile */
             .exp-card { padding-left: 1rem; border-left: 2px solid var(--line-color); margin-left: 0; }
             .timeline-wrapper { border: none; padding-left: 0; }
-            .exp-dot, .timeline-line-active { display: none; } /* Simplified timeline for mobile */
+            .exp-dot, .timeline-line-active { display: none; }
         }
     </style>
 </head>
@@ -742,13 +757,15 @@
                     <h3 class="role-title">Associate Project Manager Intern</h3>
                     <span class="role-meta">
                         Dec 2025 - Jan 2026 
-                        <a href="#" class="cert-link">View Certificate</a>
-                        <a href="#" class="cert-link">View LOR</a>
+                        <span class="cert-container">
+                            <a href="#" class="cert-link">View Certificate</a>
+                            <a href="#" class="cert-link">View LOR</a>
+                        </span>
                     </span>
                     <ul class="exp-bullets">
-                        <li>Led a cross-functional global team to deliver two concurrent projects with 100% on-time completion.</li>
-                        <li>Managed complex workflows via Jira, ensuring zero missed deadlines during critical team shortages.</li>
-                        <li>Redesigned onboarding processes to cut setup time by 80% (12h to 2h) and reduce support queries.</li>
+                        <li>Led a global team to deliver two projects on time, bridging time zones to hit every deadline.</li>
+                        <li>Managed 20+ outreach touchpoints in Jira, keeping the project moving when resources were tight.</li>
+                        <li>Cut onboarding time from 12 hours to 2 by simplifying workflows, earning a perfect review.</li>
                     </ul>
                 </div>
 
@@ -758,12 +775,14 @@
                     <h3 class="role-title">Project Manager Trainee</h3>
                     <span class="role-meta">
                         Excelerate • Nov 2025 - Dec 2025
-                        <a href="#" class="cert-link">View Certificate</a>
+                        <span class="cert-container">
+                            <a href="#" class="cert-link">View Certificate</a>
+                        </span>
                     </span>
                     <ul class="exp-bullets">
-                        <li>Orchestrated a 30-task virtual masterclass plan, achieving 100% milestone delivery despite scheduling conflicts.</li>
-                        <li>Optimized project schedules using Gantt charts and strategic buffers, significantly mitigating timeline risks.</li>
-                        <li>Implemented a RACI matrix that reduced decision-making time by ~25% and doubled team participation.</li>
+                        <li>Built a 30-task masterclass plan that hit 100% of milestones despite schedule conflicts.</li>
+                        <li>Used Gantt charts and strategic buffers to predict risks before they became delays.</li>
+                        <li>Clarified team roles with a RACI matrix, cutting decision time by 25%.</li>
                     </ul>
                 </div>
             </div>
@@ -819,7 +838,7 @@
 
     <!-- MODAL -->
     <div id="modal">
-        <button class="modal-close-btn" onclick="closeModal()">Close</button>
+        <button class="modal-close-btn" onclick="closeModal()">✕</button>
         <div class="modal-body">
             
             <div class="modal-header-top">
@@ -891,8 +910,8 @@
                 title: "VerifyWise’s Onboarding, Rebuilt",
                 category: "UX Optimization",
                 icon: "VW",
-                problem: "New users were dropping off during the KYC verification process because the instructions were unclear and the document upload feature was buggy.",
-                solution: "Redesigned the onboarding flow with a progressive stepper, added clear visual examples for document uploads, and implemented real-time validation feedback.",
+                problem: "Most users—like CISOs or Legal heads—lack time to be power users. Getting an executive summary required too many clicks, trend analysis was manual, and non-tech stakeholders couldn't easily explore governance data to present to the board.",
+                solution: "Designed a 'Governance Dashboard' with one-click executive summaries, automated trend visualization, and natural language query support for non-technical stakeholders.",
                 learning: "The importance of 'Happy Path' vs 'Edge Cases'. Handling errors gracefully (like failed uploads) is just as important as the success state.",
                 metrics: [
                     { val: "+30%", lbl: "Completion Rate" },
