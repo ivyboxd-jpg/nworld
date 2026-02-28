@@ -205,7 +205,7 @@
         .nav-overlay.open .nav-links li:nth-child(3) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
         .nav-overlay.open .nav-links li:nth-child(4) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
 
-        /* --- HERO (LEFT ALIGNED) --- */
+        /* --- HERO --- */
         #hero {
             min-height: 90vh;
             display: flex;
@@ -254,7 +254,7 @@
             font-family: var(--font-body);
             font-size: 1.1rem;
             color: var(--text-body);
-            margin: 2rem 0; /* Left aligned margins */
+            margin: 2rem 0;
             max-width: 550px;
             line-height: 1.7;
         }
@@ -292,18 +292,25 @@
 
         .about-content { max-width: 650px; margin: 0 auto; }
 
+        /* Updated Skills Styling to look "Proper" */
         .skills-row {
             margin-top: 2rem;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
-            color: var(--ocean); 
+            gap: 0.8rem; /* Tighter gap */
+        }
+
+        .skill-tag {
             font-family: var(--font-body);
-            font-size: 0.9rem;
-            font-weight: 600; 
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--ocean);
+            border: 1px solid var(--line-color);
+            padding: 8px 16px;
+            border-radius: 50px; /* Pill shape */
+            background-color: rgba(255, 255, 255, 0.4);
+            white-space: nowrap;
         }
 
         /* --- EXPERIENCE ROADMAP --- */
@@ -364,38 +371,31 @@
             color: var(--text-label); 
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem; /* Spacing before buttons */
             display: block;
         }
 
-        /* Certificate Pills */
-        .cert-container {
-            display: inline-flex;
-            gap: 0.5rem;
-            margin-left: 0;
-            vertical-align: middle;
+        /* Better Certificate Buttons Layout */
+        .cert-row {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.2rem;
             flex-wrap: wrap;
-            margin-top: 5px;
-            display: block; /* New line on mobile */
-        }
-        
-        @media(min-width: 768px) {
-            .cert-container { display: inline; margin-left: 10px; margin-top: 0; }
         }
 
         .cert-link {
             display: inline-flex;
             align-items: center;
             border: 1px solid var(--ocean);
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
+            padding: 6px 14px;
+            border-radius: 6px; /* Soft rounded rect */
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--ocean);
             text-transform: none;
             letter-spacing: 0;
             transition: all 0.3s;
-            background: transparent;
+            background: rgba(255,255,255,0.3);
         }
 
         .cert-link:hover {
@@ -404,11 +404,10 @@
             text-decoration: none;
         }
 
-        /* Humane One-Liner Bullets */
+        /* One Liner Bullets */
         .exp-bullets {
             list-style-type: disc;
             padding-left: 1.2rem;
-            margin-top: 1rem;
         }
 
         /* --- PROJECTS LIST --- */
@@ -475,12 +474,12 @@
             color: var(--ocean);
             cursor: pointer;
             z-index: 2010;
+            font-family: var(--font-body);
             transition: all 0.3s;
         }
         
         .modal-close-btn:hover { background: var(--ocean); color: var(--cream); transform: rotate(90deg); }
 
-        /* Added Extra Bottom Padding so content isn't hidden */
         .modal-body { 
             max-width: 800px; 
             margin: 7rem auto 0; 
@@ -732,13 +731,10 @@
             </p>
 
             <div class="skills-row">
-                <span>Product Thinking</span>
-                <span>•</span>
-                <span>User Research</span>
-                <span>•</span>
-                <span>Wireframing</span>
-                <span>•</span>
-                <span>Data Analysis</span>
+                <span class="skill-tag">Product Management</span>
+                <span class="skill-tag">User Research</span>
+                <span class="skill-tag">Project Management</span>
+                <span class="skill-tag">Agile Methodologies</span>
             </div>
         </div>
     </section>
@@ -757,11 +753,13 @@
                     <h3 class="role-title">Associate Project Manager Intern</h3>
                     <span class="role-meta">
                         Dec 2025 - Jan 2026 
-                        <span class="cert-container">
-                            <a href="#" class="cert-link">View Certificate</a>
-                            <a href="#" class="cert-link">View LOR</a>
-                        </span>
                     </span>
+                    <!-- Buttons placed nicely below -->
+                    <div class="cert-row">
+                        <a href="#" class="cert-link">View Certificate</a>
+                        <a href="#" class="cert-link">View LOR</a>
+                    </div>
+                    
                     <ul class="exp-bullets">
                         <li>Led a global team to deliver two projects on time, bridging time zones to hit every deadline.</li>
                         <li>Managed 20+ outreach touchpoints in Jira, keeping the project moving when resources were tight.</li>
@@ -775,10 +773,12 @@
                     <h3 class="role-title">Project Manager Trainee</h3>
                     <span class="role-meta">
                         Excelerate • Nov 2025 - Dec 2025
-                        <span class="cert-container">
-                            <a href="#" class="cert-link">View Certificate</a>
-                        </span>
                     </span>
+                    <!-- Buttons placed nicely below -->
+                    <div class="cert-row">
+                        <a href="#" class="cert-link">View Certificate</a>
+                    </div>
+                    
                     <ul class="exp-bullets">
                         <li>Built a 30-task masterclass plan that hit 100% of milestones despite schedule conflicts.</li>
                         <li>Used Gantt charts and strategic buffers to predict risks before they became delays.</li>
@@ -897,7 +897,7 @@
                 title: "Bambrew’s D2C, Reimagined",
                 category: "Growth Strategy",
                 icon: "BB",
-                problem: "Bambrew faced high cart abandonment rates on their D2C platform due to a complex navigation structure and lack of trust signals during checkout.",
+                problem: "Visitors couldn't immediately grasp that Bambrew sells eco-friendly paper bags directly to consumers (D2C), leading to confusion and high bounce rates on the landing page.",
                 solution: "Proposed a simplified navigation hierarchy and integrated social proof elements at key decision points. Designed a streamlined checkout flow that reduced steps by 40%.",
                 learning: "Learned how to balance sustainable messaging with conversion optimization. Small friction points in checkout can cause significant revenue loss.",
                 metrics: [
@@ -910,7 +910,7 @@
                 title: "VerifyWise’s Onboarding, Rebuilt",
                 category: "UX Optimization",
                 icon: "VW",
-                problem: "Most users—like CISOs or Legal heads—lack time to be power users. Getting an executive summary required too many clicks, trend analysis was manual, and non-tech stakeholders couldn't easily explore governance data to present to the board.",
+                problem: "Most users don’t have time to become power users of every feature — getting a quick executive summary requires clicking through multiple screens, trend analysis is manual and tedious, and non-technical stakeholders can’t easily explore governance data. So the people who actually need to present AI compliance to a board — a CISO, a legal head — still struggle to get what they need quickly.",
                 solution: "Designed a 'Governance Dashboard' with one-click executive summaries, automated trend visualization, and natural language query support for non-technical stakeholders.",
                 learning: "The importance of 'Happy Path' vs 'Edge Cases'. Handling errors gracefully (like failed uploads) is just as important as the success state.",
                 metrics: [
