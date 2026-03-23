@@ -215,14 +215,6 @@
         .road-item { position: relative; margin-bottom: 60px; opacity: 0; transform: translateY(20px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .road-item:last-child { margin-bottom: 0; }
         
-        /* 
-           Marker Math:
-           .timeline padding-left is 40px. 
-           Line is at left: 0 (center is 1px).
-           .road-item starts at 40px.
-           Marker width: 14px (Radius 7px).
-           To perfectly center on the 2px line: left = -(40px) - 7px + 1px = -46px.
-        */
         .road-marker {
             position: absolute; left: -46px; top: 8px; width: 14px; height: 14px;
             background: var(--bg); border: 2px solid var(--border);
@@ -414,14 +406,8 @@
             .close-modal { top: 20px; right: 20px; }
             .metric-row { grid-template-columns: 1fr; }
             
-            /* Mobile Timeline Marker Math Fix:
-               padding-left: 24px;
-               Line is at left: 0 (center is 1px).
-               Marker width: 14px (Radius 7px).
-               To center: left = -(24px) - 7px + 1px = -30px.
-            */
-            .timeline { padding-left: 24px; }
-            .road-marker { left: -30px; width: 14px; height: 14px; top: 10px; }
+            .timeline { padding-left: 20px; }
+            .road-marker { left: -26px; width: 14px; height: 14px; top: 10px; }
             
             .work-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px 0;}
             .work-meta { text-align: left; width: 100%; justify-content: space-between;}
@@ -465,7 +451,7 @@
                 that <span class="highlight">solve problems.</span>
             </h1>
             <p class="hero-desc">
-                Product Manager bridging data, design, and engineering. Currently leading 0-to-1 product strategy at an early-stage startup.
+                I bridge data, design, and engineering. Currently leading 0-to-1 product strategy at an early stage student startup.
             </p>
             <a href="#work" class="cta-btn">View Shipped Features</a>
         </section>
@@ -477,7 +463,7 @@
                     <span class="pm-label">Document: PRD-01</span>
                     <h2>Customer-obsessed, <br>Data-informed.</h2>
                     <p>
-                        I may be early in my career, but I'm already getting my hands dirty building 0-to-1 products. Currently, I'm heading product at a community startup, relying on user research and fast iteration loops to ship features people actually want. I am always open to connecting with fellow builders and product leaders.
+                        I may be early in my career, but I'm already building 0-to-1 products. Currently, I'm heading product at a community startup, relying on user research and fast iteration loops to ship features people actually want. I am always open to connecting with fellow builders and product leaders.
                     </p>
                     <div>
                         <span class="skill-pill skill-pm">Product Management</span>
@@ -511,9 +497,9 @@
                             <a href="#" class="company-link" target="_blank">Community Startup</a> • Feb 2026 - Present
                         </div>
                         <ul class="road-bullets">
-                            <li>Leading the 0-to-1 product strategy and execution for a fast-growing community platform.</li>
+                            <li>Leading the 0-to-1 product strategy and execution for a developer community platform.</li>
                             <li>Establishing core feedback loops to prioritize roadmap features based on actual user needs.</li>
-                            <li>Collaborating closely with engineering and founders to sprint, ship, and iterate rapidly.</li>
+                            <li>Collaborating closely with engineering and founder to sprint, ship, and iterate rapidly.</li>
                         </ul>
                     </div>
                 </div>
@@ -527,7 +513,7 @@
                             <span class="ticket-status">Done</span>
                         </div>
                         <div class="road-meta">
-                            Dec 2025 - Jan 2026
+                            <a href="https://excelerate.com" class="company-link" target="_blank">Excelerate</a> • Dec 2025 - Jan 2026
                             <span style="color: #E6E3DC;">|</span>
                             <a href="#" class="cert-btn">Cert</a>
                             <a href="#" class="cert-btn">LOR</a>
@@ -602,7 +588,7 @@
     <footer id="contact" class="footer reveal">
         <div class="contact-wrapper">
             <h2>Let's talk product.</h2>
-            <p>Always happy to connect with fellow builders, designers, and tech enthusiasts.</p>
+            <p>Always happy to connect.</p>
             
             <form action="https://formsubmit.co/your@email.com" method="POST" id="contactForm">
                 <div class="form-group">
@@ -622,7 +608,7 @@
                 <a href="https://linkedin.com" target="_blank" class="social-icon">
                     <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
-                <!-- Medium (Correct) -->
+                <!-- Medium -->
                 <a href="https://medium.com" target="_blank" class="social-icon">
                     <svg viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.82 24 12z"/></svg>
                 </a>
