@@ -20,12 +20,15 @@
             --accent-soft: #FFF0EB;
             --border: #E6E3DC;
             
-            /* Status Green */
             --green-text: #008035;
             --green-bg: #E6F6E9;
             
+            --orange-text: #B23700;
+            --orange-bg: #FFE8DE;
+            
             --font-head: 'Outfit', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,7 +43,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* --- TYPOGRAPHY --- */
         h1, h2, h3, h4 {
             font-family: var(--font-head);
             font-weight: 800;
@@ -62,28 +64,27 @@
             border-radius: 4px;
         }
 
-        /* --- HEADER (Fixed Top) --- */
+        /* --- HEADER (ABSOLUTE - Scrolls away) --- */
         header {
-            position: fixed;
+            position: absolute; 
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1.5rem 2rem;
+            padding: 2rem;
             display: flex;
             justify-content: center;
-            pointer-events: none; /* Allows clicking through empty space */
+            pointer-events: none;
         }
 
         .header-pill {
             pointer-events: auto;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            padding: 10px 12px 10px 24px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 12px 8px 24px;
             border-radius: 100px;
             border: 1px solid var(--border);
             display: flex; align-items: center; gap: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
 
         .brand-logo {
@@ -102,10 +103,10 @@
         .menu-btn:hover { transform: scale(1.05); background: var(--accent); }
         .line { width: 18px; height: 2px; background: white; border-radius: 2px; }
 
-        /* Nav Overlay */
+        /* Nav Overlay (Fixed) */
         .nav-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: var(--accent); z-index: 999;
+            background: var(--accent); z-index: 2000; 
             display: flex; justify-content: center; align-items: center;
             flex-direction: column; clip-path: circle(0% at 50% 0%);
             transition: clip-path 0.6s cubic-bezier(0.85, 0, 0.15, 1);
@@ -119,15 +120,22 @@
         }
         .nav-link:hover { color: #FFE0D1; transform: scale(1.05); }
         .nav-overlay.active .nav-link { opacity: 1; transform: translateY(0); }
+        
         .nav-overlay.active .nav-link:nth-child(1) { transition-delay: 0.1s; }
         .nav-overlay.active .nav-link:nth-child(2) { transition-delay: 0.2s; }
         .nav-overlay.active .nav-link:nth-child(3) { transition-delay: 0.3s; }
         .nav-overlay.active .nav-link:nth-child(4) { transition-delay: 0.4s; }
 
+        .nav-close {
+            position: absolute; top: 30px; right: 30px;
+            background: white; color: var(--accent);
+            width: 50px; height: 50px; border-radius: 50%; border: none;
+            font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+
         /* --- CONTAINER --- */
         .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
 
-        /* --- SCROLL REVEAL --- */
         .reveal {
             opacity: 0; transform: translateY(40px);
             transition: all 0.8s ease-out;
@@ -139,19 +147,14 @@
 
         .status {
             display: inline-flex; align-items: center; gap: 8px;
-            padding: 8px 16px; background: var(--green-bg);
-            color: var(--green-text); border-radius: 100px;
+            padding: 8px 16px; background: #F0F0F0;
+            color: var(--text-dim); border-radius: 100px;
             font-size: 0.85rem; font-weight: 700; margin-bottom: 24px;
-            font-family: var(--font-head); border: 1px solid rgba(0,128,53,0.1);
+            font-family: var(--font-head); border: 1px solid rgba(0,0,0,0.05);
         }
         .status-dot { 
-            width: 8px; height: 8px; background: var(--green-text); 
-            border-radius: 50%; animation: pulse-green 2s infinite;
-        }
-        @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(0,128,53, 0.4); }
-            70% { box-shadow: 0 0 0 8px rgba(0,128,53, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0,128,53, 0); }
+            width: 8px; height: 8px; background: var(--text-dim); 
+            border-radius: 50%;
         }
 
         h1 { font-size: clamp(3.5rem, 7vw, 6rem); margin-bottom: 24px; color: var(--text); }
@@ -170,141 +173,153 @@
         }
         .cta-btn:hover { background: var(--accent); transform: translateY(-3px); }
 
-        /* --- ABOUT (NO BOX) --- */
+        /* --- PRD: ABOUT ME --- */
         #about { padding: 80px 0; }
+        .about-layout { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; }
         
-        .about-layout {
-            display: grid; grid-template-columns: 1fr 200px;
-            gap: 40px; align-items: start;
+        .pm-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem; color: var(--text-dim);
+            text-transform: uppercase; letter-spacing: 0.05em;
+            margin-bottom: 10px; display: block;
         }
 
         .about-text h2 { font-size: 2.5rem; margin-bottom: 1.5rem; }
-        .about-text p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2rem; }
+        .about-text p { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 1.5rem; max-width: 750px; }
 
-        .profile-placeholder {
-            width: 180px; height: 180px;
-            border-radius: 50%; 
-            background: #F4F2ED;
-            border: 1px solid var(--border);
-            display: flex; align-items: center; justify-content: center;
-            font-family: var(--font-head); font-weight: 800; font-size: 3rem;
-            color: #D6D3CD;
-            box-shadow: 20px 20px 0px rgba(0,0,0,0.03); 
-        }
-
+        /* PM Style Skill Tags */
         .skill-pill {
-            display: inline-block; padding: 8px 16px;
-            border: 1px solid var(--border); border-radius: 100px;
-            font-size: 0.85rem; font-weight: 600; margin: 0 6px 10px 0;
-            background: white; color: var(--text);
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border: 1px solid var(--border); 
+            border-radius: 6px; font-size: 0.85rem; font-weight: 600; 
+            margin: 0 8px 10px 0; background: white; color: var(--text);
+            font-family: var(--font-body);
         }
+        .skill-pill::before {
+            content: ''; display: block; width: 8px; height: 8px; border-radius: 2px;
+        }
+        .skill-pm::before { background: #0052CC; } /* Jira Blue */
+        .skill-ur::before { background: #FF8B00; } /* Jira Orange */
+        .skill-pjm::before { background: #00875A; } /* Jira Green */
+        .skill-ag::before { background: #6554C0; } /* Jira Purple */
 
-        /* --- ROADMAP --- */
+        /* --- PM ROADMAP (Unboxed Editorial) --- */
         #experience { padding: 100px 0; max-width: 800px; margin: 0 auto; }
-        .section-title { font-size: 2.5rem; margin-bottom: 60px; }
+        .section-title { font-size: 2.5rem; margin-bottom: 10px; }
+        .section-subtitle { font-family: var(--font-mono); color: var(--text-dim); font-size: 0.9rem; margin-bottom: 60px; display: block; }
 
         .timeline { position: relative; padding-left: 40px; }
-        
-        /* Line */
-        .line-bg {
-            position: absolute; left: 0; top: 0;
-            width: 2px; height: 100%; background: #E6E3DC;
-        }
-        .line-fill {
-            position: absolute; left: 0; top: 0;
-            width: 2px; height: 0%; background: var(--accent);
-            transition: height 1.5s ease-in-out;
-        }
+        .line-bg { position: absolute; left: 0; top: 10px; width: 2px; height: 100%; background: #E6E3DC; }
+        .line-fill { position: absolute; left: 0; top: 10px; width: 2px; height: 0%; background: var(--accent); transition: height 2s ease-in-out; }
 
-        .road-item { position: relative; margin-bottom: 80px; }
+        .road-item { position: relative; margin-bottom: 60px; opacity: 0; transform: translateY(20px); transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .road-item:last-child { margin-bottom: 0; }
-
+        
+        /* 
+           Marker Math:
+           .timeline padding-left is 40px. 
+           Line is at left: 0 (center is 1px).
+           .road-item starts at 40px.
+           Marker width: 14px (Radius 7px).
+           To perfectly center on the 2px line: left = -(40px) - 7px + 1px = -46px.
+        */
         .road-marker {
-            position: absolute; left: -49px; top: 5px;
-            width: 20px; height: 20px;
-            background: var(--bg); border: 4px solid var(--accent);
-            border-radius: 50%; z-index: 2;
-            opacity: 0; transform: scale(0); transition: 0.4s;
+            position: absolute; left: -46px; top: 8px; width: 14px; height: 14px;
+            background: var(--bg); border: 2px solid var(--border);
+            border-radius: 50%; z-index: 2; transition: all 0.4s;
         }
 
-        .road-content {
-            opacity: 0; transform: translateX(20px); transition: 0.6s;
+        .road-header {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 4px; flex-wrap: wrap;
+        }
+        
+        .road-role { font-size: 1.5rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+        
+        .ticket-status { 
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase; 
+            background: var(--green-bg); color: var(--green-text); 
+            padding: 4px 10px; border-radius: 100px; letter-spacing: 0.05em;
+        }
+        .ticket-status.active-status { background: var(--orange-bg); color: var(--orange-text); }
+
+        .road-meta { 
+            font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim); 
+            margin-bottom: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; 
         }
 
-        .road-role { font-size: 1.5rem; font-weight: 700; margin-bottom: 5px; color: var(--text); }
-        .road-meta { font-size: 0.9rem; font-weight: 600; color: var(--accent); text-transform: uppercase; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .company-link {
+            color: var(--text);
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 4px;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .company-link:hover {
+            color: var(--accent);
+            text-decoration-color: var(--accent);
+        }
 
         .cert-btn {
-            font-size: 0.7rem; text-decoration: none;
-            color: var(--text); border: 1px solid var(--border);
-            padding: 4px 12px; border-radius: 50px;
+            font-size: 0.75rem; text-decoration: none; font-family: var(--font-body);
+            color: var(--text); border: 1px solid var(--border); font-weight: 600;
+            padding: 4px 12px; border-radius: 6px; text-transform: none; letter-spacing: 0;
             transition: 0.2s; background: white;
         }
-        .cert-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .cert-btn:hover { border-color: var(--text); background: var(--text); color: white; }
 
-        .road-bullets { list-style: none; margin-top: 15px; }
+        .road-bullets { list-style: none; margin-top: 10px; }
         .road-bullets li {
             position: relative; padding-left: 20px;
-            margin-bottom: 10px; font-size: 1rem; color: var(--text-dim);
+            margin-bottom: 10px; font-size: 1.05rem; color: var(--text-dim);
+            line-height: 1.6;
         }
         .road-bullets li::before {
             content: ''; position: absolute; left: 0; top: 10px;
-            width: 5px; height: 5px; background: var(--text-dim);
-            border-radius: 1px;
+            width: 6px; height: 6px; background: var(--accent); border-radius: 50%;
         }
 
-        /* Active Timeline */
+        /* Timeline Active Animations */
         .timeline.active .line-fill { height: 100%; }
         
-        .timeline.active .road-item .road-marker { opacity: 1; transform: scale(1); }
-        .timeline.active .road-item .road-content { opacity: 1; transform: translateX(0); }
+        .timeline.active .road-item .road-marker { 
+            border-color: var(--accent); background: var(--accent); 
+            box-shadow: 0 0 0 4px var(--accent-soft); 
+        }
+        .timeline.active .road-item { opacity: 1; transform: translateY(0); }
         
-        /* Staggered Delays */
-        .timeline.active .road-item:nth-child(3) .road-marker, 
-        .timeline.active .road-item:nth-child(3) .road-content { transition-delay: 0.2s; }
-        
-        .timeline.active .road-item:nth-child(4) .road-marker,
-        .timeline.active .road-item:nth-child(4) .road-content { transition-delay: 0.8s; }
+        /* Staggered delays */
+        .timeline.active .road-item:nth-child(3) { transition-delay: 0.2s; }
+        .timeline.active .road-item:nth-child(4) { transition-delay: 0.5s; }
+        .timeline.active .road-item:nth-child(5) { transition-delay: 0.8s; }
 
-
-        /* --- WORK (List Style - No Images) --- */
+        /* --- SHIPPED FEATURES (WORK) --- */
         #work { padding-bottom: 100px; }
         
-        .work-list {
-            display: flex; flex-direction: column; gap: 20px;
-        }
+        .work-list { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
 
         .work-row {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            background: white;
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 0; border-bottom: 1px solid var(--border);
+            cursor: pointer; transition: all 0.3s ease;
         }
 
-        .work-row:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
+        .work-row:hover { padding-left: 20px; background-color: rgba(255, 79, 0, 0.02); border-bottom-color: var(--accent); }
 
-        .work-title { font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; color: var(--text); }
-        .work-cat { 
-            font-size: 0.85rem; font-weight: 600; text-transform: uppercase; 
-            color: var(--text-dim); letter-spacing: 0.05em;
+        .work-title { font-size: 1.8rem; font-weight: 800; color: var(--text); margin-bottom: 5px; transition: color 0.3s; }
+        .work-row:hover .work-title { color: var(--accent); }
+
+        .work-meta { text-align: right; display: flex; align-items: center; gap: 20px; }
+        .work-impact {
+            background: #F4F2ED; color: var(--text-dim); font-family: var(--font-mono);
+            font-size: 0.8rem; padding: 6px 12px; border-radius: 6px;
         }
         
         .work-arrow {
-            width: 40px; height: 40px;
-            border-radius: 50%; background: #F4F2ED;
-            display: flex; align-items: center; justify-content: center;
-            transition: 0.3s;
+            font-size: 1.5rem; color: var(--border); transition: 0.3s;
+            transform: translateX(0); display: inline-block;
         }
-        .work-row:hover .work-arrow { background: var(--accent); color: white; }
+        .work-row:hover .work-arrow { color: var(--accent); transform: translateX(10px); }
 
         /* --- CONTACT --- */
         .footer {
@@ -312,12 +327,10 @@
             padding: 80px 20px; text-align: center;
             border-radius: 32px 32px 0 0;
         }
-
         .footer h2 { font-size: 2.5rem; margin-bottom: 10px; }
         .footer p { color: rgba(255,255,255,0.6); margin: 0 auto 40px; }
 
         .contact-wrapper { max-width: 500px; margin: 0 auto; }
-
         .form-group { margin-bottom: 15px; text-align: left; }
 
         input, textarea {
@@ -351,7 +364,7 @@
         #modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255,255,255,0.95); backdrop-filter: blur(5px);
-            z-index: 2000; opacity: 0; pointer-events: none;
+            z-index: 3000; opacity: 0; pointer-events: none;
             transition: opacity 0.3s; overflow-y: auto;
         }
         #modal.active { opacity: 1; pointer-events: auto; }
@@ -369,9 +382,9 @@
             position: absolute; top: 30px; right: 30px;
             width: 44px; height: 44px;
             border-radius: 50%; border: 1px solid var(--border);
-            background: white; cursor: pointer;
+            background: white; color: var(--text); cursor: pointer;
             font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
-            transition: 0.2s;
+            transition: 0.2s; z-index: 10;
         }
         .close-modal:hover { background: var(--text); color: white; border-color: var(--text); }
 
@@ -396,26 +409,29 @@
         @media(max-width: 768px) {
             h1 { font-size: 3rem; }
             .about-layout { grid-template-columns: 1fr; gap: 30px; }
-            .profile-placeholder { width: 120px; height: 120px; margin: 0 auto; order: -1; }
             
-            /* Modal Mobile Fix */
             .modal-card { margin: 0; min-height: 100vh; border-radius: 0; padding: 80px 20px 40px; }
             .close-modal { top: 20px; right: 20px; }
             .metric-row { grid-template-columns: 1fr; }
             
-            .roadmap-container { padding-left: 20px; margin-left: 0; border: none; }
-            .line-bg, .line-fill { display: none; }
-            .road-marker { display: none; }
-            .road-item { border-left: 2px solid var(--accent); padding-left: 20px; }
+            /* Mobile Timeline Marker Math Fix:
+               padding-left: 24px;
+               Line is at left: 0 (center is 1px).
+               Marker width: 14px (Radius 7px).
+               To center: left = -(24px) - 7px + 1px = -30px.
+            */
+            .timeline { padding-left: 24px; }
+            .road-marker { left: -30px; width: 14px; height: 14px; top: 10px; }
             
-            .work-row { grid-template-columns: 1fr; gap: 10px; }
+            .work-row { flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px 0;}
+            .work-meta { text-align: left; width: 100%; justify-content: space-between;}
             .work-arrow { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Header (Absolute/Scrolls Away) -->
     <header>
         <div class="header-pill">
             <a href="#" class="brand-logo">niv<span>.</span></a>
@@ -427,10 +443,12 @@
         </div>
     </header>
 
+    <!-- Menu Overlay -->
     <div class="nav-overlay" id="navOverlay">
-        <a href="#about" class="nav-link" onclick="toggleMenu()">About</a>
-        <a href="#experience" class="nav-link" onclick="toggleMenu()">Journey</a>
-        <a href="#work" class="nav-link" onclick="toggleMenu()">Work</a>
+        <button class="nav-close" onclick="toggleMenu()">✕</button>
+        <a href="#about" class="nav-link" onclick="toggleMenu()">Specs</a>
+        <a href="#experience" class="nav-link" onclick="toggleMenu()">Roadmap</a>
+        <a href="#work" class="nav-link" onclick="toggleMenu()">Shipped</a>
         <a href="#contact" class="nav-link" onclick="toggleMenu()">Contact</a>
     </div>
 
@@ -440,56 +458,79 @@
         <section class="hero reveal">
             <div class="status">
                 <div class="status-dot"></div>
-                Open to Internships
+                Building Mode
             </div>
             <h1>
                 Building products <br>
-                that are <span class="highlight">fun to use.</span>
+                that <span class="highlight">solve problems.</span>
             </h1>
             <p class="hero-desc">
-                Product Manager bridging data & design. I turn messy problems into clean, usable solutions.
+                Product Manager bridging data, design, and engineering. Currently leading 0-to-1 product strategy at an early-stage startup.
             </p>
-            <a href="#work" class="cta-btn">See Selected Work</a>
+            <a href="#work" class="cta-btn">View Shipped Features</a>
         </section>
 
-        <!-- ABOUT -->
+        <!-- PRD: ABOUT -->
         <section id="about" class="reveal">
             <div class="about-layout">
                 <div class="about-text">
-                    <h2>Curiosity meets Strategy.</h2>
+                    <span class="pm-label">Document: PRD-01</span>
+                    <h2>Customer-obsessed, <br>Data-informed.</h2>
                     <p>
-                        I don't have decades of experience, but I have a data-driven mindset and a hunger to learn. I'm actively looking for internship opportunities where I can contribute to real-world products.
+                        I may be early in my career, but I'm already getting my hands dirty building 0-to-1 products. Currently, I'm heading product at a community startup, relying on user research and fast iteration loops to ship features people actually want. I am always open to connecting with fellow builders and product leaders.
                     </p>
                     <div>
-                        <span class="skill-pill">Product Management</span>
-                        <span class="skill-pill">User Research</span>
-                        <span class="skill-pill">Project Management</span>
-                        <span class="skill-pill">Agile Methodologies</span>
+                        <span class="skill-pill skill-pm">Product Management</span>
+                        <span class="skill-pill skill-ur">User Research</span>
+                        <span class="skill-pill skill-pjm">Project Management</span>
+                        <span class="skill-pill skill-ag">Agile Methodologies</span>
                     </div>
                 </div>
-                <!-- Profile Placeholder -->
-                <div class="profile-placeholder">NC</div>
             </div>
         </section>
 
-        <!-- EXPERIENCE -->
+        <!-- PM ROADMAP -->
         <section id="experience" class="reveal">
-            <h2 class="section-title">My Journey</h2>
+            <h2 class="section-title">Product Roadmap</h2>
+            <span class="section-subtitle">Query: assignee = currentUser() ORDER BY date DESC</span>
             
             <div class="timeline" id="timeline">
                 <div class="line-bg"></div>
                 <div class="line-fill"></div>
                 <div style="height: 10px;"></div>
 
-                <!-- Item 1 -->
+                <!-- Item 1: NEW ROLE -->
                 <div class="road-item">
                     <div class="road-marker"></div>
                     <div class="road-content">
-                        <div class="road-role">Associate Project Manager Intern</div>
+                        <div class="road-header">
+                            <h3 class="road-role">Head of Product</h3>
+                            <span class="ticket-status active-status">In Progress</span>
+                        </div>
+                        <div class="road-meta">
+                            <a href="#" class="company-link" target="_blank">Community Startup</a> • Feb 2026 - Present
+                        </div>
+                        <ul class="road-bullets">
+                            <li>Leading the 0-to-1 product strategy and execution for a fast-growing community platform.</li>
+                            <li>Establishing core feedback loops to prioritize roadmap features based on actual user needs.</li>
+                            <li>Collaborating closely with engineering and founders to sprint, ship, and iterate rapidly.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="road-item">
+                    <div class="road-marker"></div>
+                    <div class="road-content">
+                        <div class="road-header">
+                            <h3 class="road-role">Associate Project Manager Intern</h3>
+                            <span class="ticket-status">Done</span>
+                        </div>
                         <div class="road-meta">
                             Dec 2025 - Jan 2026
-                            <a href="#" class="cert-btn">View Certificate</a>
-                            <a href="#" class="cert-btn">View LOR</a>
+                            <span style="color: #E6E3DC;">|</span>
+                            <a href="#" class="cert-btn">Cert</a>
+                            <a href="#" class="cert-btn">LOR</a>
                         </div>
                         <ul class="road-bullets">
                             <li>Led a global team to deliver two projects on time, bridging time zones to hit every deadline.</li>
@@ -499,14 +540,18 @@
                     </div>
                 </div>
 
-                <!-- Item 2 -->
+                <!-- Item 3 -->
                 <div class="road-item">
                     <div class="road-marker"></div>
                     <div class="road-content">
-                        <div class="road-role">Project Manager Trainee</div>
+                        <div class="road-header">
+                            <h3 class="road-role">Project Manager Trainee</h3>
+                            <span class="ticket-status">Done</span>
+                        </div>
                         <div class="road-meta">
-                            Excelerate • Nov 2025 - Dec 2025
-                            <a href="#" class="cert-btn">View Certificate</a>
+                            <a href="https://excelerate.com" class="company-link" target="_blank">Excelerate</a> • Nov 2025 - Dec 2025
+                            <span style="color: #E6E3DC;">|</span>
+                            <a href="#" class="cert-btn">Cert</a>
                         </div>
                         <ul class="road-bullets">
                             <li>Built a 30-task masterclass plan that hit 100% of milestones despite schedule conflicts.</li>
@@ -519,9 +564,10 @@
             </div>
         </section>
 
-        <!-- WORK (NO IMAGES) -->
+        <!-- SHIPPED FEATURES (WORK) -->
         <section id="work" class="reveal">
-            <h2 class="section-title">Selected Work</h2>
+            <h2 class="section-title">Shipped Features</h2>
+            <span class="section-subtitle">Releases & Case Studies</span>
             
             <div class="work-list">
                 
@@ -529,18 +575,22 @@
                 <div class="work-row" onclick="openModal(0)">
                     <div>
                         <h3 class="work-title">Bambrew’s D2C Reimagined</h3>
-                        <span class="work-cat">Growth Strategy</span>
                     </div>
-                    <div class="work-arrow">→</div>
+                    <div class="work-meta">
+                        <span class="work-impact">Growth Strategy</span>
+                        <span class="work-arrow">→</span>
+                    </div>
                 </div>
 
                 <!-- Case 2 -->
                 <div class="work-row" onclick="openModal(1)">
                     <div>
                         <h3 class="work-title">VerifyWise Onboarding</h3>
-                        <span class="work-cat">UX Optimization</span>
                     </div>
-                    <div class="work-arrow">→</div>
+                    <div class="work-meta">
+                        <span class="work-impact">UX Optimization</span>
+                        <span class="work-arrow">→</span>
+                    </div>
                 </div>
 
             </div>
@@ -551,8 +601,8 @@
     <!-- FOOTER -->
     <footer id="contact" class="footer reveal">
         <div class="contact-wrapper">
-            <h2>Let's build cool stuff.</h2>
-            <p>Available for 2026 Opportunities</p>
+            <h2>Let's talk product.</h2>
+            <p>Always happy to connect with fellow builders, designers, and tech enthusiasts.</p>
             
             <form action="https://formsubmit.co/your@email.com" method="POST" id="contactForm">
                 <div class="form-group">
@@ -562,7 +612,7 @@
                     <input type="email" name="email" placeholder="Email" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="message" rows="3" placeholder="Message" required></textarea>
+                    <textarea name="message" rows="3" placeholder="What are you building?" required></textarea>
                 </div>
                 <button type="submit" class="submit-btn" id="sendBtn">Send Message</button>
             </form>
@@ -587,10 +637,10 @@
             
             <div class="m-header">
                 <h2 id="m-title" style="font-size: 2.5rem; margin-bottom: 10px;">Title</h2>
-                <div id="m-cat" style="color: var(--text-dim); font-weight: 600; text-transform: uppercase; font-size: 0.9rem;">Category</div>
+                <div id="m-cat" style="color: var(--text-dim); font-family: var(--font-mono); font-size: 0.85rem; text-transform: uppercase;">Category</div>
                 
                 <a href="#" class="drive-btn" id="m-link" target="_blank">
-                    <span>📄 View Presentation</span>
+                    <span>📄 View PRD / Presentation</span>
                 </a>
             </div>
 
@@ -605,14 +655,14 @@
             </div>
 
             <div class="m-section">
-                <h3>Success Metrics</h3>
+                <h3>Expected Impact Metrics</h3>
                 <div class="metric-row" id="m-metrics">
                     <!-- JS Metrics -->
                 </div>
             </div>
 
             <div class="m-section">
-                <h3>Learnings</h3>
+                <h3>Key Learnings</h3>
                 <p id="m-learning">Learnings...</p>
             </div>
         </div>
@@ -623,17 +673,17 @@
             document.getElementById('navOverlay').classList.toggle('active');
         }
 
-        const projects = [
+        const projects =[
             {
                 title: "Bambrew’s D2C Reimagined",
                 category: "Growth Strategy",
                 problem: "Visitors couldn't immediately grasp that Bambrew sells eco-friendly paper bags directly to consumers (D2C), leading to confusion and high bounce rates on the landing page.",
                 solution: "Proposed a simplified navigation hierarchy and integrated social proof elements at key decision points. Designed a streamlined checkout flow that reduced steps by 40%.",
                 learning: "Learned how to balance sustainable messaging with conversion optimization. Small friction points in checkout can cause significant revenue loss.",
-                metrics: [
-                    { val: "+15%", lbl: "Conversion" },
-                    { val: "-20%", lbl: "Abandonment" },
-                    { val: "3.5x", lbl: "Ad ROI" }
+                metrics:[
+                    { val: "+15%", lbl: "Conversion Lift" },
+                    { val: "-20%", lbl: "Abandonment Drop" },
+                    { val: "3.5x", lbl: "Est. Ad ROI" }
                 ]
             },
             {
@@ -642,10 +692,10 @@
                 problem: "Most users—like CISOs or Legal heads—lack time to be power users. Getting an executive summary required too many clicks, trend analysis was manual, and non-tech stakeholders couldn't easily explore governance data.",
                 solution: "Designed a 'Governance Dashboard' with one-click executive summaries, automated trend visualization, and natural language query support for non-technical stakeholders.",
                 learning: "The importance of 'Happy Path' vs 'Edge Cases'. Handling errors gracefully (like failed uploads) is just as important as the success state.",
-                metrics: [
-                    { val: "+30%", lbl: "Completion" },
-                    { val: "-50%", lbl: "Tickets" },
-                    { val: "2min", lbl: "Time Saved" }
+                metrics:[
+                    { val: "+30%", lbl: "Completion Rate" },
+                    { val: "-50%", lbl: "Support Tickets" },
+                    { val: "2min", lbl: "Avg Time Saved" }
                 ]
             }
         ];
@@ -655,7 +705,7 @@
         function openModal(index) {
             const p = projects[index];
             document.getElementById('m-title').innerText = p.title;
-            document.getElementById('m-cat').innerText = p.category;
+            document.getElementById('m-cat').innerText = "Epic: " + p.category;
             document.getElementById('m-problem').innerText = p.problem;
             document.getElementById('m-solution').innerText = p.solution;
             document.getElementById('m-learning').innerText = p.learning;
@@ -681,7 +731,7 @@
             document.body.style.overflow = '';
         }
 
-        // Timeline Animation
+        /* --- ANIMATIONS --- */
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -691,11 +741,19 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        observer.observe(document.getElementById('timeline'));
+        
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.getElementById('timeline').classList.add('active');
+                }
+            });
+        }, { threshold: 0.15 });
+        timelineObserver.observe(document.getElementById('experience'));
 
-        document.getElementById('contactForm').addEventListener('submit', function() {
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
             const btn = document.getElementById('sendBtn');
-            btn.innerText = "Sent!";
+            btn.innerText = "Sent ✓";
             btn.style.background = "#4CAF50";
             btn.style.color = "white";
         });
