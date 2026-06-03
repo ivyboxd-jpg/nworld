@@ -1,1155 +1,1091 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>verified.work | Interactive Prototype</title>
+    <title>verified.work — Prototype Console</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <!-- Material Icons (Weights configured for minimalist styling) -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@300,0..1" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS with custom theme configurations matching your brand tokens -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
-            darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#0f5238",
-                        "primary-hover": "#0c402c",
-                        "primary-fixed-dim": "#95d4b3",
-                        "on-tertiary": "#ffffff",
-                        "accent-tint": "#D8F3DC",
-                        "surface-tint": "#2c694e",
-                        "on-primary-fixed-variant": "#0e5138",
-                        "tertiary-fixed-dim": "#ffb3b3",
-                        "on-primary-container": "#a8e7c5",
-                        "tertiary": "#713638",
-                        "on-tertiary-container": "#ffcfce",
-                        "line": "#E2E8F0",
-                        "on-surface-variant": "#475569",
-                        "error": "#ba1a1a",
-                        "inverse-surface": "#0f172a",
-                        "ink": "#0f172a",
-                        "success": "#15803d",
-                        "surface-container-lowest": "#ffffff",
-                        "surface-variant": "#f1f5f9",
-                        "secondary-container": "#bbf7d0",
-                        "on-error": "#ffffff",
-                        "secondary-fixed-dim": "#86d7ad",
-                        "surface-2": "#F8FAFC",
-                        "grey": "#64748B",
-                        "on-primary": "#ffffff",
-                        "surface-container-low": "#f8fafc",
-                        "background": "#F4F6F3",
-                        "primary-container": "#166534",
-                        "outline": "#94a3b8",
-                        "on-error-container": "#93000a",
-                        "surface-container-high": "#e2e8f0",
-                        "tertiary-fixed": "#ffdad9",
-                        "on-secondary": "#ffffff",
-                        "on-secondary-fixed-variant": "#005236",
-                        "surface-container-highest": "#cbd5e1",
-                        "on-tertiary-fixed": "#390b0e",
-                        "surface-container": "#f1f5f9",
-                        "on-background": "#0f172a",
-                        "warning": "#b45309",
-                        "surface-bright": "#FAFBF9",
-                        "secondary": "#15803d",
-                        "primary-fixed": "#b1f0ce",
-                        "danger": "#b91c1c",
-                        "outline-variant": "#cbd5e1",
-                        "surface-dim": "#e2e8f0",
-                        "on-secondary-fixed": "#002113",
-                        "on-secondary-container": "#14532d",
-                        "ink-2": "#334155",
-                        "on-surface": "#0f172a",
-                        "surface-3": "#f1f5f9",
-                        "error-container": "#ffdad6",
-                        "surface": "#ffffff",
-                        "secondary-fixed": "#bbf7d0",
-                        "inverse-on-surface": "#f8fafc",
-                        "on-primary-fixed": "#002114",
-                        "tertiary-container": "#8d4d4e",
-                        "on-tertiary-fixed-variant": "#6f3537",
-                        "inverse-primary": "#95d4b3"
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.375rem",
-                        "lg": "0.75rem",
-                        "xl": "1rem",
-                        "2xl": "1.5rem",
-                        "full": "9999px"
-                    },
-                    spacing: {
-                        "gutter": "20px",
-                        "grid-unit": "8px",
-                        "margin-mobile": "16px",
-                        "margin-desktop": "32px"
+                        brand: {
+                            green: "#2D6A4F",
+                            "green-hover": "#1B4D36",
+                            ink: "#1A1A1A",
+                            bg: "#F7F4EF",
+                            white: "#FFFFFF",
+                            grey: "#4A5568",
+                            border: "#E2DDD6",
+                            "success-bg": "#D1FAE5",
+                            error: "#991B1B",
+                            amber: "#F59E0B"
+                        }
                     },
                     fontFamily: {
-                        "sans": ["Inter", "sans-serif"],
-                        "mono": ["JetBrains Mono", "monospace"]
+                        sans: ["Inter", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
                     }
                 }
             }
         }
     </script>
+    
     <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            display: inline-block;
-            vertical-align: middle;
-        }
         body {
-            background-color: #FAFBF9;
-            color: #0f172a;
+            background-color: #F7F4EF;
+            color: #1A1A1A;
+            font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
         }
-        /* Glassmorphism details */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
+        
+        /* Thin minimalist border style */
+        .brand-border {
+            border: 1px solid #E2DDD6;
         }
-        /* Modern subtle shadows */
-        .modern-shadow {
-            box-shadow: 0 4px 20px -2px rgba(15, 82, 56, 0.04), 0 2px 8px -1px rgba(0, 0, 0, 0.02);
+        
+        .brand-shadow-sm {
+            box-shadow: 0 1px 2px 0 rgba(26, 26, 26, 0.02);
         }
-        .active-ring {
-            box-shadow: 0 0 0 3px rgba(15, 82, 56, 0.15);
-        }
-        /* Custom transitions */
-        .page-transition {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+        /* Material Icons setup */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased text-on-background bg-[#F6F8F5]">
+<body class="min-h-screen flex flex-col selection:bg-brand-success-bg">
 
-    <!-- PROTOTYPE CONTROL PANEL -->
-    <div class="bg-primary text-on-primary border-b border-[#0d402b] sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs md:text-sm">
+    <!-- FLOATING PROTOTYPE BAR -->
+    <div class="bg-brand-ink text-brand-bg border-b border-brand-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-2 flex flex-col md:flex-row items-center justify-between gap-2.5 text-xs">
             <div class="flex items-center gap-2">
-                <span class="bg-[#186846] px-2 py-0.5 rounded font-bold uppercase text-[10px] tracking-wider text-accent-tint">Interactive Prototype</span>
-                <span class="text-white/80 hidden sm:inline">| Switch steps instantly to test:</span>
+                <span class="bg-brand-green text-white font-mono text-[9px] px-1.5 py-0.5 rounded tracking-widest font-bold">STATE ENGINE</span>
+                <span class="font-medium text-slate-300">Quickly toggle view states:</span>
             </div>
-            <div class="flex flex-wrap items-center gap-1.5" id="prototype-router">
-                <button onclick="router('landing')" id="btn-route-landing" class="bg-white/10 hover:bg-white/25 px-2.5 py-1 rounded transition font-medium flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">login</span> Login
-                </button>
-                <button onclick="router('dashboard')" id="btn-route-dashboard" class="bg-white/10 hover:bg-white/25 px-2.5 py-1 rounded transition font-medium flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">dashboard</span> Dashboard
-                </button>
-                <button onclick="router('new-project-step1')" id="btn-route-add" class="bg-white/10 hover:bg-white/25 px-2.5 py-1 rounded transition font-medium flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">add_circle</span> Add Project
-                </button>
-                <button onclick="router('validator-step1')" id="btn-route-validator" class="bg-white/10 hover:bg-white/25 px-2.5 py-1 rounded transition font-medium flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">verified_user</span> Simulate Verifier <span class="bg-warning/80 text-white text-[9px] px-1 rounded-full font-black animate-pulse" id="simulation-badge">!</span>
-                </button>
-                <button onclick="router('profile')" id="btn-route-profile" class="bg-white/10 hover:bg-white/25 px-2.5 py-1 rounded transition font-medium flex items-center gap-1">
-                    <span class="material-symbols-outlined text-sm">person</span> Public Profile
-                </button>
+            <div class="flex flex-wrap items-center justify-center gap-1 font-mono">
+                <button onclick="switchScreen('design-system')" id="tab-design-system" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">Block 0: Design System</button>
+                <button onclick="switchScreen('login')" id="tab-login" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">Block 1: Login</button>
+                <button onclick="switchScreen('onboarding')" id="tab-onboarding" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">Onboarding</button>
+                <button onclick="switchScreen('dashboard')" id="tab-dashboard" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">Block 2: Dashboard</button>
+                <button onclick="switchScreen('validator-1')" id="tab-validator" class="px-2.5 py-1 rounded bg-brand-green hover:bg-brand-green-hover text-white font-bold transition-colors flex items-center gap-1 animate-pulse">Simulate Verifier <span class="bg-brand-amber text-brand-ink text-[9px] px-1.5 rounded-full" id="pending-badge">1</span></button>
+                <button onclick="switchScreen('profile')" id="tab-profile" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">Block 4: Public Profile</button>
+                <button onclick="switchScreen('system-states')" id="tab-system-states" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors">System States</button>
             </div>
         </div>
     </div>
 
-    <!-- MAIN BRAND HEADER -->
-    <header class="bg-white border-b border-line sticky top-[45px] z-40 modern-shadow">
-        <div class="flex justify-between items-center w-full px-4 md:px-margin-desktop max-w-7xl mx-auto h-16">
-            <div class="flex items-center gap-3 cursor-pointer" onclick="router('dashboard')">
-                <span class="font-bold text-xl tracking-tight text-primary flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">verified</span>
-                    verified.work
-                </span>
+    <!-- MAIN NAV HEADER -->
+    <header class="bg-white border-b border-brand-border sticky top-[37px] md:top-[33px] z-40 brand-shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-1.5 cursor-pointer" onclick="switchScreen('dashboard')">
+                <span class="material-symbols-outlined text-brand-green text-2xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+                <span class="font-bold text-lg tracking-tight text-brand-ink">verified.work</span>
             </div>
-            <nav class="hidden md:flex gap-8 items-center">
-                <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#" onclick="alert('Solutions detail page simulated')">Solutions</a>
-                <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#" onclick="alert('Trust Index dashboard simulated')">Trust Index</a>
-                <a class="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors" href="#" onclick="alert('Company info page simulated')">Company</a>
-                <span class="h-4 w-px bg-slate-200"></span>
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-xs font-bold text-ink" id="header-user-name">Shraddha</p>
-                        <span class="text-[10px] font-mono text-success uppercase font-semibold">Gold Member</span>
-                    </div>
-                    <img alt="User Avatar" class="w-9 h-9 rounded-full object-cover ring-2 ring-primary/20" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"/>
-                </div>
-            </nav>
-            <div class="md:hidden flex items-center gap-3">
-                <img alt="User Avatar" class="w-8 h-8 rounded-full object-cover" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"/>
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-mono text-brand-grey hidden sm:inline" id="user-display">User: Shraddha</span>
+                <button onclick="switchScreen('profile')" class="text-xs font-mono text-brand-green hover:underline flex items-center gap-1 font-bold">
+                    <span class="material-symbols-outlined text-sm">public</span> Public Profile
+                </button>
             </div>
         </div>
     </header>
 
     <!-- CONTENT WRAPPER -->
-    <main class="flex-grow flex flex-col justify-stretch">
+    <main class="flex-grow flex flex-col justify-stretch py-8 px-4 max-w-4xl w-full mx-auto">
 
-        <!-- SCREEN 0: LANDING / LOGIN -->
-        <div id="screen-landing" class="hidden flex-grow flex items-stretch">
-            <div class="hidden lg:flex w-1/2 bg-[#EFF2EE] p-16 flex-col justify-center items-center relative overflow-hidden border-r border-line">
-                <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#0f5238 1px, transparent 1px); background-size: 24px 24px;"></div>
-                <div class="z-10 w-full max-w-lg">
-                    <div class="mb-12">
-                        <div class="inline-flex items-center justify-center p-3 rounded-2xl bg-white modern-shadow mb-8 border border-line">
-                            <span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings: 'FILL' 1;">security</span>
-                        </div>
-                        <h1 class="font-extrabold text-4xl text-primary leading-tight tracking-tight">Prove what you actually built.</h1>
-                        <p class="mt-4 text-on-surface-variant text-base leading-relaxed">
-                            The definitive infrastructure for verifying professional accomplishments and code authorship in the era of AI and bloated resumes.
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white border border-line p-6 rounded-xl modern-shadow">
-                            <span class="material-symbols-outlined text-primary mb-2 text-3xl" style="font-variation-settings: 'FILL' 1;">verified_user</span>
-                            <h3 class="font-bold text-sm text-primary uppercase tracking-wider">Verified Work</h3>
-                            <p class="text-xs text-on-surface-variant mt-1.5">Cryptographically signed proof of contribution.</p>
-                        </div>
-                        <div class="bg-white border border-line p-6 rounded-xl modern-shadow">
-                            <span class="material-symbols-outlined text-primary mb-2 text-3xl" style="font-variation-settings: 'FILL' 1;">account_tree</span>
-                            <h3 class="font-bold text-sm text-primary uppercase tracking-wider">Trust Index</h3>
-                            <p class="text-xs text-on-surface-variant mt-1.5">Real-time reputation scoring for engineering teams.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-16 bg-white">
-                <div class="w-full max-w-md space-y-8">
-                    <div>
-                        <h2 class="text-3xl font-extrabold text-ink tracking-tight">Welcome back</h2>
-                        <p class="text-on-surface-variant text-sm mt-2">Enter your work email to access your institutional ledger.</p>
-                    </div>
-                    <form class="space-y-5" onsubmit="event.preventDefault(); handleLogin();">
-                        <div>
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink mb-2" for="email">Work Email</label>
-                            <input class="w-full h-12 px-4 rounded-xl border border-line bg-surface-2 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm outline-none" id="email" placeholder="your@email.com" type="email" value="shraddha@dtcbrand.co" required/>
-                        </div>
-                        <button type="submit" id="btn-login" class="w-full h-12 bg-primary text-on-primary rounded-xl text-sm font-bold hover:bg-primary-hover active:scale-[0.99] transition-all flex items-center justify-center gap-2 modern-shadow">
-                            Send magic link
-                            <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
-                        </button>
-                        <div class="relative flex items-center py-2">
-                            <div class="flex-grow border-t border-line"></div>
-                            <span class="flex-shrink mx-4 text-xs font-bold tracking-wider text-grey">OR</span>
-                            <div class="flex-grow border-t border-line"></div>
-                        </div>
-                        <button type="button" onclick="handleLogin()" class="w-full h-12 bg-white border border-line text-ink rounded-xl text-sm font-semibold hover:bg-slate-50 active:scale-[0.99] transition-all flex items-center justify-center gap-3 modern-shadow">
-                            <svg class="w-5 h-5" viewbox="0 0 24 24">
-                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
-                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
-                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
-                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"></path>
-                            </svg>
-                            Continue with Google
-                        </button>
-                    </form>
-                    <p class="mt-8 text-center text-xs text-on-surface-variant">
-                        Don't have an account? <a class="text-primary font-bold hover:underline" href="#">Request access</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- SCREEN 1: APPLICANT DASHBOARD -->
-        <div id="screen-dashboard" class="hidden flex-grow max-w-7xl mx-auto w-full px-4 md:px-margin-desktop py-8">
-            <div class="flex flex-col gap-8">
-                <!-- Header Card -->
-                <section class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 bg-white p-6 md:p-8 rounded-2xl border border-line modern-shadow">
-                    <div>
-                        <span class="bg-[#EFF7F2] text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/10 inline-block mb-3">Enterprise Talent Ledger</span>
-                        <h1 class="text-3xl font-extrabold text-on-surface tracking-tight">Verified Projects</h1>
-                        <p class="text-sm text-on-surface-variant mt-1">Manage and audit your proof-of-work certificates.</p>
-                    </div>
-                    <div class="flex items-center gap-3 w-full md:w-auto">
-                        <button onclick="router('new-project-step1')" class="w-full md:w-auto bg-primary text-on-primary px-5 py-3 rounded-xl font-bold hover:bg-primary-hover active:scale-95 transition-all flex items-center justify-center gap-2 modern-shadow">
-                            <span class="material-symbols-outlined text-[20px]">add_circle</span>
-                            Document New Work
-                        </button>
-                    </div>
-                </section>
-
-                <!-- Dynamic Bento Stats Grid -->
-                <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-primary text-on-primary p-6 rounded-2xl flex flex-col justify-between min-h-[140px] modern-shadow">
-                        <div class="flex justify-between items-center opacity-90">
-                            <span class="text-xs font-bold uppercase tracking-wider">Total Claims</span>
-                            <span class="material-symbols-outlined">folder</span>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-extrabold" id="stat-total-claims">3</div>
-                            <p class="text-[10px] text-white/75 mt-1">Cross-referenced items</p>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-line p-6 rounded-2xl flex flex-col justify-between min-h-[140px] modern-shadow">
-                        <div class="flex justify-between items-center text-grey">
-                            <span class="text-xs font-bold uppercase tracking-wider">Verified Score</span>
-                            <span class="material-symbols-outlined text-primary">analytics</span>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-extrabold text-primary" id="stat-verified-score">100%</div>
-                            <p class="text-[10px] text-grey mt-1">Institutional acceptance</p>
-                        </div>
-                    </div>
-                    <div class="bg-white border border-line p-6 rounded-2xl flex flex-col justify-between min-h-[140px] modern-shadow">
-                        <div class="flex justify-between items-center text-grey">
-                            <span class="text-xs font-bold uppercase tracking-wider">Pending Review</span>
-                            <span class="material-symbols-outlined text-warning" style="font-variation-settings: 'FILL' 1;">hourglass_empty</span>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-extrabold text-warning" id="stat-pending-claims">0</div>
-                            <p class="text-[10px] text-grey mt-1">Awaiting verifier response</p>
-                        </div>
-                    </div>
-                    <div class="bg-[#EFF7F2] border border-primary/10 p-6 rounded-2xl flex flex-col justify-between min-h-[140px] modern-shadow">
-                        <div class="flex justify-between items-center text-primary">
-                            <span class="text-xs font-bold uppercase tracking-wider">Trust Level</span>
-                            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-extrabold text-primary flex items-center gap-1.5">Gold Tier</div>
-                            <p class="text-[10px] text-primary/80 mt-1">High Credibility Network</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Project List Section -->
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-bold text-on-surface">Institutional Registry</h3>
-                        <span class="text-xs font-mono text-grey" id="ledger-count">3 entries registered</span>
-                    </div>
-                    <div class="grid grid-cols-1 gap-3" id="dashboard-project-list">
-                        <!-- Dynamic items injected here -->
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SCREEN 2: ADD PROJECT - STEP 1 (Identity & Impact) -->
-        <div id="screen-new-project-step1" class="hidden flex-grow max-w-4xl mx-auto w-full px-4 py-8">
-            <div class="mb-6">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-bold text-primary uppercase tracking-widest">Step 1 of 2: Details & Metrics</span>
-                    <span class="text-xs font-mono text-grey">50% Complete</span>
-                </div>
-                <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                    <div class="h-full bg-primary w-1/2 transition-all duration-500 ease-out"></div>
-                </div>
+        <!-- BLOCK 0: DESIGN SYSTEM SHEET -->
+        <div id="screen-design-system" class="hidden space-y-8 page-transition">
+            <div class="border-b border-brand-border pb-4">
+                <span class="text-xs font-mono text-brand-green font-bold tracking-widest uppercase">Block 0</span>
+                <h1 class="text-3xl font-extrabold text-brand-ink tracking-tight mt-1">Design System Reference Sheet</h1>
+                <p class="text-sm text-brand-grey mt-1">Institutional trust components constructed strictly with product design system tokens.</p>
             </div>
 
-            <div class="bg-white border border-line rounded-2xl modern-shadow overflow-hidden">
-                <div class="p-6 md:p-10 space-y-8">
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-ink tracking-tight">Document New Achievement</h1>
-                        <p class="text-sm text-on-surface-variant mt-1">Specify your role, outcomes, and impact metric. Keep it precise.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Color Swatches & Specs -->
+                <div class="bg-white brand-border rounded-xl p-6 space-y-4">
+                    <span class="text-[11px] font-mono text-brand-grey block">0.1 COLOR PALETTE TOKENS</span>
+                    <div class="grid grid-cols-2 gap-3 font-mono text-xs">
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#2D6A4F]"></div><span>Primary: #2D6A4F</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#1A1A1A] border"></div><span>Ink: #1A1A1A</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#F7F4EF] border"></div><span>Bg: #F7F4EF</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#FFFFFF] border"></div><span>White: #FFFFFF</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#4A5568]"></div><span>Grey: #4A5568</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#E2DDD6] border"></div><span>Border: #E2DDD6</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#D1FAE5]"></div><span>Success: #D1FAE5</span></div>
+                        <div class="flex items-center gap-2"><div class="w-6 h-6 rounded bg-[#F59E0B]"></div><span>Amber: #F59E0B</span></div>
                     </div>
+                </div>
 
-                    <!-- Project Metadata Fields -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">Role / Title</label>
-                            <input id="input-role" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none" placeholder="e.g. Lead Interface Engineer" type="text" value="Senior Product Designer"/>
+                <!-- Badge selectors -->
+                <div class="bg-white brand-border rounded-xl p-6 space-y-4">
+                    <span class="text-[11px] font-mono text-brand-grey block">0.2 BADGE SELECTOR PILL</span>
+                    <div class="flex flex-col gap-3">
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">DEFAULT STATE:</span>
+                            <button class="min-h-[44px] px-5 bg-white brand-border text-brand-ink rounded-full text-xs font-mono uppercase tracking-wider">Freelance</button>
                         </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">Company Name</label>
-                            <input id="input-company" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none" placeholder="e.g. DTC Brand" type="text" value="DTC Brand"/>
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">SELECTED STATE:</span>
+                            <button class="min-h-[44px] px-5 bg-[#2D6A4F] text-white rounded-full text-xs font-mono uppercase tracking-wider">Full-time</button>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Work Type Selection -->
+                <!-- Input fields -->
+                <div class="bg-white brand-border rounded-xl p-6 space-y-4">
+                    <span class="text-[11px] font-mono text-brand-grey block">0.3 INPUT TARGETS (48PX HEIGHT)</span>
                     <div class="space-y-3">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">Work Type</label>
-                        <div class="flex flex-wrap gap-2.5" id="worktype-pill-selector">
-                            <button onclick="setWorkType('Full-time')" id="wt-Full-time" class="wt-pill px-5 py-2.5 rounded-full border border-primary bg-accent-tint text-primary font-semibold text-xs hover:bg-slate-100 transition-all flex items-center gap-1.5 active-ring">
-                                <span class="material-symbols-outlined text-[16px]">business_center</span> Full-time
-                            </button>
-                            <button onclick="setWorkType('Internship')" id="wt-Internship" class="wt-pill px-5 py-2.5 rounded-full border border-line bg-white text-on-surface-variant font-medium text-xs hover:bg-slate-100 transition-all flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px]">school</span> Internship
-                            </button>
-                            <button onclick="setWorkType('Freelance')" id="wt-Freelance" class="wt-pill px-5 py-2.5 rounded-full border border-line bg-white text-on-surface-variant font-medium text-xs hover:bg-slate-100 transition-all flex items-center gap-1.5">
-                                <span class="material-symbols-outlined text-[16px]">draw</span> Freelance
-                            </button>
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">DEFAULT:</span>
+                            <input class="w-full h-12 px-4 bg-white brand-border rounded-lg text-sm outline-none placeholder:text-brand-grey/40" placeholder="your@email.com"/>
                         </div>
-                    </div>
-
-                    <!-- Timeline Details -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">Start Date</label>
-                            <input id="input-start-date" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-xs focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none font-mono" type="date" value="2024-02-15"/>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">End Date (or 'Present')</label>
-                            <input id="input-end-date" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-xs focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none font-mono" type="text" placeholder="Present" value="Present"/>
-                        </div>
-                    </div>
-
-                    <!-- Impact details -->
-                    <div class="space-y-5 pt-4 border-t border-slate-100">
-                        <div class="space-y-2">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-ink-2">The Achievement Description</label>
-                            <textarea id="input-impact" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none" placeholder="Explain what you built or solved..." rows="3">Designed and deployed a friction-less single-page checkout configuration that reduced cart abandonment significantly across mobile platforms.</textarea>
-                        </div>
-
-                        <!-- Modern interactive Metric builder -->
-                        <div class="bg-slate-50 border border-line rounded-xl p-5">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-primary">Core Verified Outcome Metric</h3>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div class="space-y-1.5">
-                                    <label class="text-[10px] font-bold uppercase tracking-widest text-grey">Select Metric Type</label>
-                                    <select id="input-metric-label" class="w-full border-line rounded-xl bg-white text-xs py-2 focus:ring-primary focus:border-primary outline-none">
-                                        <option value="Conversion Uplift">Conversion Uplift (%)</option>
-                                        <option value="System Speed">System Speedup (x)</option>
-                                        <option value="Revenue Driven">Revenue Generated ($)</option>
-                                        <option value="Cost Saved">Infrastructure Savings ($)</option>
-                                    </select>
-                                </div>
-                                <div class="space-y-1.5">
-                                    <label class="text-[10px] font-bold uppercase tracking-widest text-grey">Result Value</label>
-                                    <input id="input-metric-value" class="w-full bg-white border border-line rounded-xl px-3 py-2 text-xs font-bold focus:ring-primary focus:border-primary outline-none text-primary" placeholder="e.g. +14%" type="text" value="+14% conversion"/>
-                                </div>
-                            </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">FOCUS STATE (GREEN BORDER ACTIVE):</span>
+                            <input class="w-full h-12 px-4 bg-white border-2 border-brand-green rounded-lg text-sm outline-none" value="focused-input-state"/>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-slate-50 p-6 flex items-center justify-between border-t border-line">
-                    <button onclick="router('dashboard')" class="text-xs font-bold text-on-surface-variant hover:text-ink px-4 py-2 transition-colors">
-                        Discard
-                    </button>
-                    <button onclick="submitProjectStep1()" class="bg-primary hover:bg-primary-hover text-on-primary px-6 py-3 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all modern-shadow">
-                        Continue to Verifier setup
-                        <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                    </button>
+                <!-- Buttons -->
+                <div class="bg-white brand-border rounded-xl p-6 space-y-4">
+                    <span class="text-[11px] font-mono text-brand-grey block">0.4 ACTIONS</span>
+                    <div class="space-y-3">
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">PRIMARY:</span>
+                            <button class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-colors">Send magic link</button>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-mono text-brand-grey block mb-1">SECONDARY:</span>
+                            <button class="h-12 w-full bg-white brand-border text-brand-ink text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors">Continue with Google</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Pills -->
+                <div class="bg-white brand-border rounded-xl p-6 space-y-4 md:col-span-2">
+                    <span class="text-[11px] font-mono text-brand-grey block">0.5 STATUS PILLS</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1 bg-slate-100 text-brand-grey text-xs font-mono uppercase tracking-wider rounded">Draft</span>
+                        <span class="px-3 py-1 bg-amber-50 text-brand-amber border border-brand-amber/30 text-xs font-mono uppercase tracking-wider rounded">Pending</span>
+                        <span class="px-3 py-1 bg-brand-success-bg text-brand-green text-xs font-mono uppercase tracking-wider rounded">Verified</span>
+                        <span class="px-3 py-1 bg-red-50 text-brand-error border border-brand-error/30 text-xs font-mono uppercase tracking-wider rounded">Expired</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 3: ADD PROJECT - STEP 2 (Select Verifier) -->
-        <div id="screen-new-project-step2" class="hidden flex-grow max-w-xl mx-auto w-full px-4 py-8">
-            <div class="mb-6">
-                <div class="flex justify-between items-end mb-2">
-                    <span class="text-xs font-bold text-primary uppercase tracking-widest">Step 2 of 2: Verifier Setup</span>
-                    <span class="text-xs font-mono text-grey">95% Complete</span>
-                </div>
-                <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-                    <div class="h-full bg-primary w-full transition-all duration-500 ease-out"></div>
-                </div>
+        <!-- BLOCK 1: SCREEN 1 - LOGIN -->
+        <div id="screen-login" class="hidden max-w-md w-full mx-auto space-y-8 page-transition py-12">
+            <div class="text-center">
+                <span class="font-mono text-xs text-brand-green font-bold tracking-widest block uppercase mb-4">verified.work</span>
+                <h1 class="text-3xl font-extrabold text-brand-ink tracking-tight leading-tight">Prove what you actually built.</h1>
             </div>
 
-            <div class="bg-white border border-line rounded-2xl p-6 md:p-8 space-y-6 modern-shadow">
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <div class="space-y-1.5">
+                    <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Work Email</label>
+                    <input id="login-email" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="your@email.com" value="shraddha@dtcbrand.co" type="email"/>
+                </div>
+
+                <button onclick="handleLoginSubmit()" class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-all flex items-center justify-center gap-2">
+                    Send magic link <span class="material-symbols-outlined text-sm">magic_exchange</span>
+                </button>
+
+                <div class="relative flex items-center justify-center py-2 text-xs font-mono text-brand-grey">
+                    <div class="absolute w-full border-t border-brand-border"></div>
+                    <span class="relative bg-white px-3 font-semibold uppercase tracking-wider">or</span>
+                </div>
+
+                <button onclick="handleLoginSubmit()" class="h-12 w-full bg-white brand-border text-brand-ink text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 12-4.53z" fill="#EA4335"/></svg>
+                    Continue with Google
+                </button>
+            </div>
+
+            <p class="text-center text-xs font-mono text-brand-grey">No password needed.</p>
+        </div>
+
+        <!-- BLOCK 1: SCREEN 2 - ONBOARDING -->
+        <div id="screen-onboarding" class="hidden max-w-md w-full mx-auto space-y-8 page-transition py-12">
+            <div class="space-y-2">
+                <h1 class="text-3xl font-extrabold text-brand-ink tracking-tight">Welcome. Let's set up.</h1>
+                <p class="text-sm text-brand-grey">Establish your verifiable profile identity.</p>
+            </div>
+
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <!-- Avatar Setup -->
+                <div class="flex flex-col items-center justify-center space-y-3 pb-4 border-b border-brand-border">
+                    <div class="w-20 h-20 rounded-full bg-[#E2DDD6] flex items-center justify-center overflow-hidden border-2 border-brand-green/20 relative group">
+                        <img id="onboarding-avatar-preview" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover"/>
+                        <div class="absolute inset-0 bg-brand-ink/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                            <span class="material-symbols-outlined text-white text-xl">upload</span>
+                        </div>
+                    </div>
+                    <span class="text-xs font-mono text-brand-grey">Add a photo (recommended)</span>
+                </div>
+
+                <!-- Inputs -->
+                <div class="space-y-4">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Your Name</label>
+                        <input id="onboarding-name" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" value="Shraddha"/>
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Your Profile Link</label>
+                        <div class="h-12 w-full px-4 bg-brand-bg brand-border rounded-lg flex items-center justify-between text-xs font-mono text-brand-grey">
+                            <span>verified.work/shraddha-x7k2</span>
+                            <span class="material-symbols-outlined text-sm text-brand-grey">lock</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="handleOnboardingSubmit()" class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-colors">
+                    Continue to Dashboard
+                </button>
+            </div>
+        </div>
+
+        <!-- BLOCK 2: SCREEN 1 - DASHBOARD -->
+        <div id="screen-dashboard" class="hidden space-y-8 page-transition">
+            <div class="flex items-center justify-between border-b border-brand-border pb-4">
                 <div>
-                    <h1 class="text-xl font-extrabold text-ink tracking-tight">Who can verify this work?</h1>
-                    <p class="text-xs text-grey mt-1">Provide contact details of a manager, colleague, or client who signed off on the project.</p>
+                    <h1 class="text-3xl font-extrabold text-brand-ink tracking-tight">Your work</h1>
+                    <p class="text-xs font-mono text-brand-grey mt-1">Institutional credibility records on ledger</p>
+                </div>
+                <button onclick="switchScreen('new-entry')" class="h-10 px-4 bg-brand-green text-white text-xs font-mono uppercase tracking-wider font-bold rounded-lg hover:bg-brand-green-hover transition-all flex items-center gap-1">
+                    <span class="material-symbols-outlined text-sm">add</span> New
+                </button>
+            </div>
+
+            <!-- Dashboard List -->
+            <div id="dashboard-list" class="space-y-4">
+                <!-- Dynamically generated list cards loaded from global storage state -->
+            </div>
+
+            <!-- Footer actions -->
+            <div class="pt-4 flex justify-center">
+                <button onclick="switchScreen('profile')" class="h-12 px-6 bg-white brand-border text-brand-ink text-sm font-medium rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-base">public</span> View my public profile
+                </button>
+            </div>
+        </div>
+
+        <!-- BLOCK 2: SCREEN 2 - NEW ENTRY FORM -->
+        <div id="screen-new-entry" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="flex items-center gap-2 text-brand-grey">
+                <button onclick="switchScreen('dashboard')" class="flex items-center gap-1 hover:text-brand-ink font-mono text-xs">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> back
+                </button>
+                <span class="text-xs font-mono">• Add work</span>
+            </div>
+
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <div class="space-y-1">
+                    <h2 class="text-xl font-bold text-brand-ink">Add Work Entry</h2>
+                    <p class="text-xs text-brand-grey">Fill in what you designed, built, or shipped.</p>
                 </div>
 
                 <div class="space-y-4">
                     <div class="space-y-1.5">
-                        <label class="text-xs font-bold uppercase tracking-wider text-ink-2" for="verifier-name">Their Name</label>
-                        <input id="input-vname" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Ravi Mehra" type="text" value="Ravi Mehra"/>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Role / Title</label>
+                        <input id="form-role" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="e.g. Lead Engineer" value="Checkout redesign"/>
                     </div>
+
                     <div class="space-y-1.5">
-                        <label class="text-xs font-bold uppercase tracking-wider text-ink-2" for="verifier-email">Their Work Email</label>
-                        <input id="input-vemail" class="w-full bg-surface-2 border border-line rounded-xl px-4 py-3 text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="ravi@dtcbrand.co" type="email" value="ravi@dtcbrand.co"/>
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey block">Work Type</label>
+                        <div class="flex gap-2">
+                            <button onclick="selectWorkTypePill('Full-time')" id="wt-Full-time" class="wt-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold">Full-time</button>
+                            <button onclick="selectWorkTypePill('Internship')" id="wt-Internship" class="wt-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Internship</button>
+                            <button onclick="selectWorkTypePill('Freelance')" id="wt-Freelance" class="wt-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Freelance</button>
+                        </div>
                     </div>
 
-                    <!-- Relationship Pill Selectors -->
-                    <div class="space-y-2 pt-2">
-                        <label class="text-xs font-bold uppercase tracking-wider text-ink-2 block">Relationship</label>
-                        <div class="flex gap-2" id="verifier-relationship-selector">
-                            <button onclick="setRelationship('Manager')" id="rel-Manager" class="rel-pill flex items-center gap-1.5 px-4 py-2 rounded-full border border-primary bg-accent-tint text-primary text-xs font-semibold hover:border-primary transition-all active-ring">
-                                <span class="material-symbols-outlined text-[16px]">badge</span> Manager
-                            </button>
-                            <button onclick="setRelationship('Peer')" id="rel-Peer" class="rel-pill flex items-center gap-1.5 px-4 py-2 rounded-full border border-line bg-white text-on-surface-variant text-xs font-medium hover:border-primary transition-all">
-                                <span class="material-symbols-outlined text-[16px]">groups</span> Peer
-                            </button>
-                            <button onclick="setRelationship('Client')" id="rel-Client" class="rel-pill flex items-center gap-1.5 px-4 py-2 rounded-full border border-line bg-white text-on-surface-variant text-xs font-medium hover:border-primary transition-all">
-                                <span class="material-symbols-outlined text-[16px]">handshake</span> Client
-                            </button>
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Company or Project</label>
+                            <div class="flex items-center gap-1.5">
+                                <input type="checkbox" id="form-defunct-company" class="rounded border-brand-border text-brand-green focus:ring-brand-green"/>
+                                <span class="text-[10px] font-mono text-brand-grey uppercase">No longer exists</span>
+                            </div>
+                        </div>
+                        <input id="form-company" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="e.g. DTC Brand" value="DTC Brand"/>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Start Month / Year</label>
+                            <input id="form-start" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-xs font-mono outline-none" type="text" placeholder="e.g. Jan 2024" value="Jan 2024"/>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">End Month / Year</label>
+                            <input id="form-end" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-xs font-mono outline-none" type="text" placeholder="e.g. Mar 2024" value="Mar 2024"/>
+                        </div>
+                    </div>
+
+                    <!-- Narrative descriptions block -->
+                    <div class="p-6 bg-slate-50 brand-border rounded-xl space-y-4">
+                        <span class="text-[10px] font-mono text-brand-grey uppercase tracking-widest block">Detailed Outcomes</span>
+                        
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Problem You Solved</label>
+                            <input id="form-problem" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="Describe the challenge..." value="DTC checkout interface had highly elevated bounce rates on mobile."/>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">What You Did</label>
+                            <input id="form-did" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="Explain your direct involvement..." value="Redesigned checkout pipeline into a seamless single-page modular form architecture."/>
+                        </div>
+
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Metrics (Optional)</label>
+                            <input id="form-metric" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="e.g. Reduced mobile abandon by 23%" value="Reduced drop-off by 23% within 6 weeks"/>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Artifact Link (Optional)</label>
+                            <div class="flex items-center gap-1.5">
+                                <input type="checkbox" id="form-nda" class="rounded border-brand-border text-brand-green focus:ring-brand-green" checked/>
+                                <span class="text-[10px] font-mono text-brand-grey uppercase">NDA Restricted</span>
+                            </div>
+                        </div>
+                        <input id="form-link" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none transition-all" placeholder="https://..." value="https://figma.com/file/checkout-proof"/>
+                    </div>
+                </div>
+
+                <button onclick="handleNewEntrySubmit()" class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-colors">
+                    Continue to Verifier Step
+                </button>
+            </div>
+        </div>
+
+        <!-- BLOCK 2: SCREEN 3 - SEND FOR VERIFICATION -->
+        <div id="screen-send-verification" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="flex items-center gap-2 text-brand-grey">
+                <button onclick="switchScreen('new-entry')" class="flex items-center gap-1 hover:text-brand-ink font-mono text-xs">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span> back
+                </button>
+                <span class="text-xs font-mono">• Send verification</span>
+            </div>
+
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <div class="space-y-1.5">
+                    <h2 class="text-xl font-bold text-brand-ink">Who can verify this?</h2>
+                    <p class="text-xs text-brand-grey">Someone who was there — a manager, client, professor, or senior colleague.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Their Name</label>
+                        <input id="verifier-name" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none" placeholder="Ravi Mehra" value="Ravi Mehra"/>
+                    </div>
+                    
+                    <div class="space-y-1.5">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Their Email</label>
+                        <input id="verifier-email" class="w-full h-12 px-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none" placeholder="ravi@dtcbrand.com" value="ravi@dtcbrand.co"/>
+                    </div>
+
+                    <!-- Relationship selection badge pills -->
+                    <div class="space-y-2">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Your Relationship</label>
+                        <div class="flex flex-wrap gap-2" id="relationship-pills-container">
+                            <button onclick="selectRelationshipPill('Manager')" id="rep-Manager" class="rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold">Manager</button>
+                            <button onclick="selectRelationshipPill('Client')" id="rep-Client" class="rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Client</button>
+                            <button onclick="selectRelationshipPill('Co-founder')" id="rep-Co-founder" class="rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Co-founder</button>
+                            <button onclick="selectRelationshipPill('Senior colleague')" id="rep-Senior-colleague" class="rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Senior colleague</button>
+                            <button onclick="selectRelationshipPill('Peer')" id="rep-Peer" class="rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Peer</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="p-4 bg-[#EFF7F2] rounded-xl border border-primary/10 flex items-start gap-3">
-                    <span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">info</span>
-                    <p class="text-xs text-primary leading-relaxed">
-                        An anonymous access key link will be generated for them. They won't need to create an account to verify.
+                <!-- Callout tip -->
+                <div class="bg-brand-success-bg p-4 rounded-lg brand-border border-brand-green/10 flex items-start gap-3">
+                    <span class="material-symbols-outlined text-brand-green mt-0.5">lightbulb</span>
+                    <p class="text-xs text-brand-green leading-relaxed">
+                        <strong class="font-bold">Tip:</strong> send them a quick personal message first so they know it's coming. It doubles the response rate.
                     </p>
                 </div>
 
-                <div class="pt-4 border-t border-slate-100 flex gap-3">
-                    <button onclick="router('new-project-step1')" class="flex-1 border border-line text-xs font-bold text-on-surface-variant py-3.5 rounded-xl hover:bg-slate-50 transition-colors">
-                        Back
+                <button onclick="triggerVerificationSend()" class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-colors flex items-center justify-center gap-1.5">
+                    Send verification <span class="material-symbols-outlined text-sm">send</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- BLOCK 3: VALIDATOR GUIDED FLOW (4 STAGES) -->
+        <!-- SCREEN 3.1: CONFIRM RELATIONSHIP -->
+        <div id="screen-validator-1" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="text-center space-y-2">
+                <p class="text-xs font-mono uppercase tracking-widest text-brand-grey font-bold flex items-center justify-center gap-1.5">
+                    <span class="text-brand-green">●</span> <span>○</span> <span>○</span> <span>○</span>
+                    <span class="ml-1 text-brand-ink">1 of 4</span>
+                </p>
+                <span class="text-xs font-mono text-brand-green font-bold tracking-widest block uppercase mb-4">VERIFIER GATEWAY</span>
+            </div>
+
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <h2 class="text-2xl font-semibold text-brand-ink leading-snug">
+                    Shraddha says you worked together on the <span class="font-extrabold text-brand-green" id="vld-project-title">checkout redesign</span> at <span class="font-extrabold text-brand-green" id="vld-project-company">DTC Brand</span>. Is that right?
+                </h2>
+
+                <div class="flex flex-col gap-3 pt-4">
+                    <button onclick="validatorSelectState('rel', 'Yes', 'validator-2')" class="min-h-[44px] w-full px-5 py-3 text-left bg-white brand-border hover:border-brand-green text-brand-ink rounded-lg text-sm font-mono uppercase tracking-wider transition-colors flex justify-between items-center group">
+                        <span>Yes, I can speak to her work</span>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100 transition-opacity">check_circle</span>
                     </button>
-                    <button onclick="submitNewProjectFull()" class="flex-1 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold py-3.5 rounded-xl flex items-center justify-center gap-1.5 transition-all modern-shadow">
-                        Generate Verification Key
-                        <span class="material-symbols-outlined text-sm">vpn_key</span>
+                    <button onclick="validatorSelectState('rel', 'Peers', 'validator-2')" class="min-h-[44px] w-full px-5 py-3 text-left bg-white brand-border hover:border-brand-green text-brand-ink rounded-lg text-sm font-mono uppercase tracking-wider transition-colors flex justify-between items-center group">
+                        <span>We were peers</span>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100 transition-opacity">check_circle</span>
+                    </button>
+                    <button onclick="alert('Declining feedback stored locally'); switchScreen('dashboard')" class="min-h-[44px] w-full px-5 py-3 text-left bg-white brand-border hover:border-brand-error text-brand-error rounded-lg text-sm font-mono uppercase tracking-wider transition-colors">
+                        <span>I'm not the right person</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 4: VALIDATOR FLOW - STEP 1 (Acceptance) -->
-        <div id="screen-validator-step1" class="hidden flex-grow max-w-xl mx-auto w-full px-4 py-8">
-            <div class="w-full flex flex-col items-center mb-8">
-                <div class="flex items-center gap-1.5 mb-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
-                </div>
-                <div class="text-xs font-mono text-grey">Verifier step 1 of 3</div>
+        <!-- SCREEN 3.2: CONTRIBUTION LEVEL -->
+        <div id="screen-validator-2" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="text-center space-y-2">
+                <p class="text-xs font-mono uppercase tracking-widest text-brand-grey font-bold flex items-center justify-center gap-1.5">
+                    <span class="text-brand-green">●</span> <span class="text-brand-green">●</span> <span>○</span> <span>○</span>
+                    <span class="ml-1 text-brand-ink">2 of 4</span>
+                </p>
+                <span class="text-xs font-mono text-brand-green font-bold tracking-widest block uppercase mb-4">VERIFIER GATEWAY</span>
             </div>
 
-            <div class="bg-white border border-line rounded-2xl overflow-hidden modern-shadow">
-                <div class="p-6 md:p-8 border-b border-slate-100 text-center flex flex-col items-center">
-                    <div class="w-16 h-16 rounded-full overflow-hidden mb-4 ring-4 ring-[#E8F5E9] border-2 border-primary/20">
-                        <img alt="Shraddha Profile" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"/>
-                    </div>
-                    <span class="text-[10px] font-bold text-primary bg-accent-tint px-3 py-1 rounded-full mb-3 tracking-widest uppercase inline-block">Verification Request</span>
-                    <h1 class="text-xl font-extrabold text-ink leading-snug tracking-tight">
-                        Did Shraddha work on "<span id="val-claim-title" class="text-primary font-black">Checkout redesign</span>" at <span id="val-claim-company" class="font-black">DTC Brand</span>?
-                    </h1>
-                    <p class="text-xs text-grey mt-2">
-                        You have been selected to endorse this accomplishment based on your professional tenure.
-                    </p>
-                </div>
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <h2 class="text-2xl font-semibold text-brand-ink leading-snug">
+                    What was Shraddha's involvement?
+                </h2>
 
-                <div class="p-6 md:p-8 space-y-3">
-                    <button onclick="validatorAdvanceToStep2()" class="w-full bg-primary hover:bg-primary-hover text-on-primary font-bold py-3.5 rounded-xl flex justify-center items-center gap-2 transition-all active:scale-[0.99] shadow-sm">
-                        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                        Yes, I can confirm
+                <div class="flex flex-col gap-4 pt-2">
+                    <button onclick="validatorSelectState('depth', 'Owner', 'validator-3')" class="w-full p-5 text-left bg-white brand-border hover:border-brand-green rounded-xl transition-all group flex justify-between items-center">
+                        <div>
+                            <span class="text-sm font-mono font-bold uppercase tracking-wider text-brand-ink block mb-0.5">Owner</span>
+                            <span class="text-xs text-brand-grey">End-to-end ownership</span>
+                        </div>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100">check_circle</span>
                     </button>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button onclick="alert('Declined verification feedback registered')" class="bg-slate-50 border border-line hover:bg-slate-100 text-on-surface text-xs font-semibold py-3 rounded-xl flex justify-center items-center gap-1.5 transition-colors">
-                            <span class="material-symbols-outlined text-[16px]">person_off</span>
-                            Not right person
-                        </button>
-                        <button onclick="alert('Information inquiry sent to Applicant')" class="bg-slate-50 border border-line hover:bg-slate-100 text-on-surface text-xs font-semibold py-3 rounded-xl flex justify-center items-center gap-1.5 transition-colors">
-                            <span class="material-symbols-outlined text-[16px]">info</span>
-                            Request info
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-50 p-4 text-center border-t border-line flex items-center justify-center gap-1.5">
-                    <span class="material-symbols-outlined text-xs text-grey">lock</span>
-                    <p class="text-[10px] text-grey font-semibold tracking-wider uppercase">Your inputs are cryptographically secure</p>
+                    
+                    <button onclick="validatorSelectState('depth', 'Executor', 'validator-3')" class="w-full p-5 text-left bg-white brand-border hover:border-brand-green rounded-xl transition-all group flex justify-between items-center">
+                        <div>
+                            <span class="text-sm font-mono font-bold uppercase tracking-wider text-brand-ink block mb-0.5">Executor</span>
+                            <span class="text-xs text-brand-grey">Tasks under someone's leadership</span>
+                        </div>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100">check_circle</span>
+                    </button>
+                    
+                    <button onclick="validatorSelectState('depth', 'Partner', 'validator-3')" class="w-full p-5 text-left bg-white brand-border hover:border-brand-green rounded-xl transition-all group flex justify-between items-center">
+                        <div>
+                            <span class="text-sm font-mono font-bold uppercase tracking-wider text-[#2D6A4F] block mb-0.5">Partner</span>
+                            <span class="text-xs text-brand-grey">Owned a specific area in a cross-functional project</span>
+                        </div>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100">check_circle</span>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 5: VALIDATOR FLOW - STEP 2 (Details Check) -->
-        <div id="screen-validator-step2" class="hidden flex-grow max-w-xl mx-auto w-full px-4 py-8">
-            <div class="w-full flex flex-col items-center mb-8">
-                <div class="flex items-center gap-1.5 mb-2">
-                    <span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings: 'FILL' 1;">circle</span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-200"></span>
-                </div>
-                <div class="text-xs font-mono text-grey">Verifier step 2 of 3</div>
+        <!-- SCREEN 3.3: OUTCOME ACCURACY -->
+        <div id="screen-validator-3" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="text-center space-y-2">
+                <p class="text-xs font-mono uppercase tracking-widest text-brand-grey font-bold flex items-center justify-center gap-1.5">
+                    <span class="text-brand-green">●</span> <span class="text-brand-green">●</span> <span class="text-brand-green">●</span> <span>○</span>
+                    <span class="ml-1 text-brand-ink">3 of 4</span>
+                </p>
+                <span class="text-xs font-mono text-brand-green font-bold tracking-widest block uppercase mb-4">VERIFIER GATEWAY</span>
             </div>
 
-            <div class="bg-white border border-line rounded-2xl overflow-hidden p-6 md:p-8 space-y-6 modern-shadow">
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
                 <div>
-                    <h2 class="text-lg font-bold text-ink">Confirm Involvement & Metrics</h2>
-                    <p class="text-xs text-grey mt-0.5">Please specify their precise engineering depth.</p>
-                </div>
-
-                <!-- Q1 Selection Grid -->
-                <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-ink block">1. What was their architectural role?</label>
-                    <div class="grid grid-cols-3 gap-2.5">
-                        <button onclick="setValInvolvement('Owner')" id="val-inv-Owner" class="val-inv-btn flex flex-col items-center text-center p-4 border border-line rounded-xl bg-slate-50 hover:border-primary transition-all">
-                            <span class="material-symbols-outlined text-xl text-grey" id="val-icon-Owner">account_balance</span>
-                            <span class="text-xs font-bold mt-1 text-ink">Owner</span>
-                        </button>
-                        <button onclick="setValInvolvement('Executor')" id="val-inv-Executor" class="val-inv-btn flex flex-col items-center text-center p-4 border border-primary bg-accent-tint text-primary rounded-xl transition-all">
-                            <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;" id="val-icon-Executor">handyman</span>
-                            <span class="text-xs font-bold mt-1">Executor</span>
-                        </button>
-                        <button onclick="setValInvolvement('Partner')" id="val-inv-Partner" class="val-inv-btn flex flex-col items-center text-center p-4 border border-line rounded-xl bg-slate-50 hover:border-primary transition-all">
-                            <span class="material-symbols-outlined text-xl text-grey" id="val-icon-Partner">handshake</span>
-                            <span class="text-xs font-bold mt-1 text-ink">Partner</span>
-                        </button>
+                    <span class="text-[10px] font-mono text-brand-grey uppercase tracking-widest block mb-2">Shraddha described the outcome as:</span>
+                    <div class="p-4 bg-slate-50 brand-border border-dashed rounded-lg">
+                        <p class="text-sm italic font-medium text-brand-ink" id="vld-metric-text">"Reduced drop-off by 23% within 6 weeks"</p>
                     </div>
                 </div>
 
-                <!-- Q2 Radios -->
-                <div class="space-y-3 pt-3 border-t border-slate-100">
-                    <div class="bg-slate-50 p-4 rounded-xl border border-line">
-                        <span class="text-[10px] font-bold text-primary uppercase tracking-widest block mb-1">Declared Metric Outcome</span>
-                        <p class="text-base font-bold italic text-primary" id="val-claim-metric">"Increased efficiency by 24%"</p>
-                    </div>
-                    <label class="text-xs font-bold uppercase tracking-wider text-ink block">2. Is this metric precise?</label>
-                    <div class="flex flex-col gap-2">
-                        <label class="flex items-center gap-3 p-3.5 border border-line rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                            <input checked class="w-4 h-4 text-primary focus:ring-primary border-line" name="val-metric-radio" type="radio" value="yes"/>
-                            <span class="text-xs font-medium text-ink">Yes, this matches our logs</span>
-                        </label>
-                        <label class="flex items-center gap-3 p-3.5 border border-line rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                            <input class="w-4 h-4 text-primary focus:ring-primary border-line" name="val-metric-radio" type="radio" value="rough"/>
-                            <span class="text-xs font-medium text-ink">Slightly off, but roughly accurate</span>
-                        </label>
-                        <label class="flex items-center gap-3 p-3.5 border border-line rounded-xl cursor-pointer hover:bg-slate-50 transition-colors">
-                            <input class="w-4 h-4 text-primary focus:ring-primary border-line" name="val-metric-radio" type="radio" value="unknown"/>
-                            <span class="text-xs font-medium text-ink">I am unable to verify the exact number</span>
-                        </label>
-                    </div>
-                </div>
+                <h2 class="text-xl font-bold text-brand-ink mt-4">Does this reflect what you saw?</h2>
 
-                <div class="pt-4 border-t border-slate-100 flex gap-3">
-                    <button onclick="router('validator-step1')" class="flex-1 border border-line text-xs font-bold text-on-surface-variant py-3.5 rounded-xl hover:bg-slate-50 transition-colors">
-                        Back
+                <div class="flex flex-col gap-3 pt-2">
+                    <button onclick="validatorSelectState('metric', 'accurate', 'validator-4')" class="min-h-[44px] w-full px-5 py-3.5 text-left bg-white brand-border hover:border-brand-green text-brand-ink rounded-lg text-sm font-mono uppercase tracking-wider transition-colors flex justify-between items-center group">
+                        <span>Yes, that's accurate</span>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100">check_circle</span>
                     </button>
-                    <button onclick="validatorAdvanceToStep3()" class="flex-1 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold py-3.5 rounded-xl flex items-center justify-center gap-1.5 transition-all modern-shadow">
-                        Continue
-                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    <button onclick="validatorSelectState('metric', 'rough', 'validator-4')" class="min-h-[44px] w-full px-5 py-3.5 text-left bg-white brand-border hover:border-brand-green text-brand-ink rounded-lg text-sm font-mono uppercase tracking-wider transition-colors flex justify-between items-center group">
+                        <span>Roughly right</span>
+                        <span class="material-symbols-outlined text-brand-green opacity-0 group-hover:opacity-100">check_circle</span>
+                    </button>
+                    <button onclick="validatorSelectState('metric', 'unconfirmed', 'validator-4')" class="min-h-[44px] w-full px-5 py-3.5 text-left bg-white brand-border hover:border-brand-green text-brand-ink rounded-lg text-sm font-mono uppercase tracking-wider transition-colors flex justify-between items-center group">
+                        <span>Can't confirm this</span>
+                        <span class="material-symbols-outlined text-brand-grey opacity-0 group-hover:opacity-100">help</span>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 6: VALIDATOR FLOW - STEP 3 (Comment & Submit) -->
-        <div id="screen-validator-step3" class="hidden flex-grow max-w-xl mx-auto w-full px-4 py-8">
-            <div class="w-full flex flex-col items-center mb-8">
-                <div class="flex items-center gap-1.5 mb-2">
-                    <span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings: 'FILL' 1;">circle</span>
-                    <span class="material-symbols-outlined text-primary text-xs" style="font-variation-settings: 'FILL' 1;">circle</span>
-                    <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
-                </div>
-                <div class="text-xs font-mono text-grey">Verifier step 3 of 3</div>
+        <!-- SCREEN 3.4: TESTIMONIAL COMMENT -->
+        <div id="screen-validator-4" class="hidden max-w-xl w-full mx-auto space-y-6 page-transition">
+            <div class="text-center space-y-2">
+                <p class="text-xs font-mono uppercase tracking-widest text-brand-grey font-bold flex items-center justify-center gap-1.5">
+                    <span class="text-brand-green">●</span> <span class="text-brand-green">●</span> <span class="text-brand-green">●</span> <span class="text-brand-green">●</span>
+                    <span class="ml-1 text-brand-ink">4 of 4</span>
+                </p>
+                <span class="text-xs font-mono text-brand-green font-bold tracking-widest block uppercase mb-4">VERIFIER GATEWAY</span>
             </div>
 
-            <div class="bg-white border border-line rounded-2xl overflow-hidden p-6 md:p-8 space-y-6 modern-shadow">
-                <div>
-                    <h2 class="text-lg font-bold text-ink">Testimonial Ledger Sign-off</h2>
-                    <p class="text-xs text-grey mt-0.5">Your input will generate a cryptographic receipt.</p>
-                </div>
+            <div class="bg-white brand-border rounded-xl p-8 space-y-6 brand-shadow-sm">
+                <h2 class="text-2xl font-semibold text-brand-ink leading-snug">
+                    In your own words — what would you want someone hiring Shraddha to know?
+                </h2>
 
-                <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-ink-2" for="comment">What would you want someone hiring Shraddha to know?</label>
-                    <textarea id="val-input-comment" class="w-full bg-surface-2 border border-line rounded-xl p-4 text-sm focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-grey/40" placeholder="e.g. Shraddha has rare technical execution capacity and solved complex database edge cases elegantly..." rows="5">Shraddha executed the checkout layout excellently, hitting all milestone goals perfectly under tight deadlines. Incredible designer.</textarea>
-                </div>
+                <div class="space-y-4">
+                    <div class="space-y-1.5">
+                        <textarea id="verifier-comment-input" class="w-full p-4 bg-white brand-border focus:border-brand-green focus:ring-0 rounded-lg text-sm outline-none placeholder:text-brand-grey/40" rows="4" placeholder="e.g. Shraddha had an unusually strong grasp of user psychology...">Shraddha had an unusually strong grasp of user psychology — every decision was grounded in why users behave the way they do.</textarea>
+                        <span class="text-xs font-mono text-brand-grey block">Just one sentence is enough.</span>
+                    </div>
 
-                <!-- Work Again Choice Pills -->
-                <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-ink-2 block">Would you work with her again?</label>
-                    <div class="flex gap-2">
-                        <button onclick="setValWorkAgain('Yes')" id="vwa-Yes" class="vwa-btn flex items-center gap-1.5 px-4 py-2 rounded-full border border-primary bg-accent-tint text-primary text-xs font-semibold hover:bg-slate-50 transition-all active-ring">
-                            <span class="material-symbols-outlined text-success text-[16px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> Yes
-                        </button>
-                        <button onclick="setValWorkAgain('Depends')" id="vwa-Depends" class="vwa-btn flex items-center gap-1.5 px-4 py-2 rounded-full border border-line bg-white text-on-surface-variant text-xs font-medium hover:bg-slate-50 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">help</span> Depends
-                        </button>
-                        <button onclick="setValWorkAgain('No')" id="vwa-No" class="vwa-btn flex items-center gap-1.5 px-4 py-2 rounded-full border border-line bg-white text-on-surface-variant text-xs font-medium hover:bg-slate-50 transition-all">
-                            <span class="material-symbols-outlined text-[16px]">cancel</span> No
-                        </button>
+                    <div class="space-y-2 pt-2 border-t border-slate-100">
+                        <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Would you work with her again?</label>
+                        <div class="flex gap-2">
+                            <button onclick="selectWorkAgainChoice('Yes')" id="vwa-Yes" class="vwa-choices min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold">Yes</button>
+                            <button onclick="selectWorkAgainChoice('Depends')" id="vwa-Depends" class="vwa-choices min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">Depends</button>
+                            <button onclick="selectWorkAgainChoice('No')" id="vwa-No" class="vwa-choices min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50">No</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-100 flex gap-3">
-                    <button onclick="router('validator-step2')" class="flex-1 border border-line text-xs font-bold text-on-surface-variant py-3.5 rounded-xl hover:bg-slate-50 transition-colors">
-                        Back
-                    </button>
-                    <button onclick="submitTestimonialFinal()" id="btn-submit-verification" class="flex-1 bg-primary hover:bg-primary-hover text-on-primary text-xs font-bold py-3.5 rounded-xl flex items-center justify-center gap-1.5 transition-all modern-shadow">
-                        <span id="btn-submit-text">Sign & Submit</span>
-                        <span class="material-symbols-outlined text-sm">verified</span>
-                    </button>
+                <button onclick="submitVerifierTestimonial()" id="btn-verifier-submit" class="h-12 w-full bg-brand-green text-white text-sm font-medium rounded-lg hover:bg-brand-green-hover transition-colors flex items-center justify-center gap-2">
+                    Submit Endorsement <span class="material-symbols-outlined text-sm">workspace_premium</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- BLOCK 4: SCREEN 1 - PUBLIC PORTFOLIO -->
+        <div id="screen-profile" class="hidden space-y-8 page-transition">
+            <!-- Profile header card -->
+            <div class="bg-white brand-border rounded-xl p-8 flex flex-col md:flex-row items-center md:items-start gap-6 brand-shadow-sm relative overflow-hidden">
+                <div class="w-24 h-24 rounded-full overflow-hidden brand-border border-brand-green/20 shrink-0">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200" class="w-full h-full object-cover"/>
+                </div>
+                <div class="flex-grow text-center md:text-left space-y-2">
+                    <div class="flex flex-col md:flex-row items-center gap-2.5">
+                        <h1 class="text-3xl font-extrabold text-brand-ink tracking-tight" id="profile-user-name">Shraddha</h1>
+                        <span class="px-2.5 py-0.5 bg-brand-success-bg text-brand-green text-[10px] font-mono tracking-widest uppercase rounded border border-brand-green/10">LEDGER SYNC: 100% Verified</span>
+                    </div>
+                    <p class="text-sm text-brand-grey max-w-xl">Product & GTM specialist focusing on highly quantitative product improvements and conversion loops.</p>
+                    <span class="text-xs font-mono text-brand-grey block">verified.work/shraddha-x7k2</span>
+                </div>
+                <div class="absolute right-0 top-0 w-24 h-24 bg-brand-success-bg/10 rounded-bl-full pointer-events-none"></div>
+            </div>
+
+            <!-- Experience list showcase container -->
+            <div class="space-y-6">
+                <div class="border-b border-brand-border pb-2 flex items-center justify-between">
+                    <span class="text-xs font-mono text-brand-grey tracking-widest uppercase font-bold">VERIFIED WORK RECORD</span>
+                    <span class="text-xs font-mono text-brand-green" id="profile-verified-count">2 Entries</span>
+                </div>
+                
+                <div class="space-y-4" id="profile-work-list">
+                    <!-- Dynamically generated list cards loaded from global storage state -->
                 </div>
             </div>
         </div>
 
-        <!-- SCREEN 7: PUBLIC PROFILE (Verified Ledger Showcase) -->
-        <div id="screen-profile" class="hidden flex-grow max-w-7xl mx-auto w-full px-4 md:px-margin-desktop py-8">
-            <!-- Header Grid Profile Card -->
-            <section class="flex flex-col lg:flex-row items-center lg:items-end gap-6 bg-white p-6 md:p-8 rounded-2xl border border-line modern-shadow mb-8 relative overflow-hidden">
-                <div class="relative">
-                    <div class="w-32 h-32 md:w-36 md:h-36 rounded-2xl overflow-hidden ring-4 ring-[#E8F5E9] border border-line modern-shadow">
-                        <img alt="Shraddha Profile" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200"/>
-                    </div>
-                    <div class="absolute -bottom-2 -right-2 bg-primary text-on-primary p-1.5 rounded-full border-4 border-white modern-shadow">
-                        <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">verified</span>
-                    </div>
-                </div>
-                <div class="flex-1 text-center lg:text-left space-y-2">
-                    <div class="flex flex-col lg:flex-row items-center gap-2.5">
-                        <h1 class="text-3xl font-extrabold text-ink tracking-tight">Shraddha</h1>
-                        <span class="bg-[#EFF7F2] text-primary text-[10px] font-mono font-bold tracking-wider uppercase px-2.5 py-1 rounded border border-primary/10">Ledger Verified Portfolio</span>
-                    </div>
-                    <p class="text-sm text-on-surface-variant max-w-xl leading-relaxed">
-                        Product Designer specialized in high-conversion checkout flows, systemic UX, and intent-based transactional interactions. 
-                    </p>
-                    <div class="flex flex-wrap justify-center lg:justify-start gap-2 pt-2 text-xs text-grey font-medium">
-                        <span class="bg-slate-50 border border-line px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[16px] text-primary">location_on</span> San Francisco, CA
-                        </span>
-                        <span class="bg-slate-50 border border-line px-3 py-1.5 rounded-lg flex items-center gap-1.5">
-                            <span class="material-symbols-outlined text-[16px] text-primary">link</span> verified.work/shraddha
-                        </span>
-                    </div>
-                </div>
-                <div class="absolute -bottom-16 -right-16 w-48 h-48 bg-[#EFF7F2] rounded-full blur-3xl pointer-events-none"></div>
-            </section>
+        <!-- BLOCK 4: SYSTEM STATES PREVIEW SECTION -->
+        <div id="screen-system-states" class="hidden space-y-8 page-transition">
+            <div class="border-b border-brand-border pb-4">
+                <span class="text-xs font-mono text-brand-grey font-bold tracking-widest uppercase">Block 4</span>
+                <h1 class="text-2xl font-extrabold text-brand-ink tracking-tight">System States Showcase</h1>
+                <p class="text-sm text-brand-grey mt-1">Simulated fallback states and exception scenarios.</p>
+            </div>
 
-            <!-- Grid Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Main Portfolio Columns -->
-                <div class="lg:col-span-8 space-y-6">
-                    <h3 class="text-lg font-bold text-ink">Verified Experience Logs</h3>
-                    <div class="space-y-4" id="profile-verified-list">
-                        <!-- Rendered elements from storage -->
-                    </div>
+            <div class="space-y-6">
+                <!-- State selector controls -->
+                <div class="flex flex-wrap gap-2.5">
+                    <button onclick="toggleSubState('loading')" class="px-3.5 py-2 rounded-lg bg-white brand-border text-brand-ink font-mono text-xs font-semibold hover:bg-slate-50">1. Loading Skeleton</button>
+                    <button onclick="toggleSubState('empty')" class="px-3.5 py-2 rounded-lg bg-white brand-border text-brand-ink font-mono text-xs font-semibold hover:bg-slate-50">2. Empty Dashboard</button>
+                    <button onclick="toggleSubState('invalid-err')" class="px-3.5 py-2 rounded-lg bg-white brand-border text-brand-ink font-mono text-xs font-semibold hover:bg-slate-50">3. Inline Input Error</button>
+                    <button onclick="toggleSubState('link-used')" class="px-3.5 py-2 rounded-lg bg-white brand-border text-brand-ink font-mono text-xs font-semibold hover:bg-slate-50">4. Key Link Already Used</button>
+                    <button onclick="toggleSubState('sys-error')" class="px-3.5 py-2 rounded-lg bg-white brand-border text-brand-ink font-mono text-xs font-semibold hover:bg-slate-50">5. Global System Failure</button>
                 </div>
 
-                <!-- Stats and Metadata Ledger Details -->
-                <div class="lg:col-span-4 space-y-6">
-                    <div class="bg-white border border-line rounded-2xl p-6 space-y-5 modern-shadow">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-grey">Trust Metrics Index</h4>
-                        <div class="space-y-3 font-mono text-xs">
-                            <div class="flex justify-between items-center py-2 border-b border-slate-100">
-                                <span class="text-grey">Total Vouched Claims</span>
-                                <span class="font-bold text-primary" id="profile-stat-total">3</span>
-                            </div>
-                            <div class="flex justify-between items-center py-2 border-b border-slate-100">
-                                <span class="text-grey">Network Turnaround</span>
-                                <span class="font-bold text-primary">2.4 Days</span>
-                            </div>
-                            <div class="flex justify-between items-center py-2">
-                                <span class="text-grey">Ledger Sync Rating</span>
-                                <span class="font-bold text-success">98th Percentile</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#EFF7F2] border border-primary/10 rounded-2xl p-6 space-y-3.5 modern-shadow">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-primary">Signature Ledger Details</h4>
-                        <p class="text-xs text-primary/80 leading-relaxed">
-                            Every verified outcome in this profile is anchored by human tenure verifications. Discrepancies generate auto-alerts to background checkers.
-                        </p>
-                        <div class="h-2 bg-primary/10 rounded-full overflow-hidden">
-                            <div class="h-full bg-primary w-4/5"></div>
-                        </div>
-                    </div>
+                <!-- Live Sub-State Container Canvas -->
+                <div class="p-8 bg-white brand-border rounded-xl" id="substate-canvas">
+                    <div class="text-center text-brand-grey font-mono text-xs py-12">Click any system state module above to inspect the rendering...</div>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- FLOATING NOTIFICATION BANNER (TOAST) -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-10 opacity-0 pointer-events-none transition-all duration-300 max-w-sm w-full bg-slate-900 text-white rounded-xl p-4 modern-shadow border border-slate-800 flex items-start gap-3">
-        <span class="material-symbols-outlined text-success mt-0.5" id="toast-icon">check_circle</span>
-        <div class="flex-1">
-            <h5 class="text-xs font-bold" id="toast-title">Notification</h5>
-            <p class="text-[11px] text-slate-300 mt-1" id="toast-msg">Success detail</p>
+    <!-- SUCCESS TESTIMONIAL NOTIFICATION ALERTER -->
+    <div id="alert-overlay" class="fixed inset-0 bg-brand-ink/40 flex items-center justify-center z-50 p-4 hidden">
+        <div class="bg-white brand-border rounded-xl p-6 max-w-sm w-full space-y-4 brand-shadow-sm text-center">
+            <div class="w-12 h-12 bg-brand-success-bg rounded-full flex items-center justify-center text-brand-green mx-auto">
+                <span class="material-symbols-outlined text-2xl">vpn_key</span>
+            </div>
+            <div class="space-y-1">
+                <h4 class="text-base font-bold text-brand-ink" id="alert-title">Request Generated!</h4>
+                <p class="text-xs text-brand-grey" id="alert-msg">Your project verification access token is compiled. Simulated verifiers can sign credentials.</p>
+            </div>
+            <div class="flex flex-col gap-2 pt-2">
+                <button id="alert-primary-btn" class="h-10 w-full bg-brand-green hover:bg-brand-green-hover text-white text-xs font-mono uppercase tracking-wider font-bold rounded-lg">Simulate Verifier Link</button>
+                <button onclick="toggleAlertModal(false)" class="h-10 w-full bg-white brand-border text-brand-ink text-xs font-mono uppercase tracking-wider rounded-lg">Go to Dashboard</button>
+            </div>
         </div>
-        <button onclick="dismissToast()" class="text-slate-400 hover:text-white transition-colors">
-            <span class="material-symbols-outlined text-sm">close</span>
-        </button>
     </div>
 
-    <!-- MAIN INTERACTIVE SCRIPTS -->
+    <!-- TOAST CONFIRMATION NOTIFICATION -->
+    <div id="toast-notif" class="fixed bottom-6 right-6 z-50 p-4 bg-brand-ink text-brand-bg rounded-lg border border-brand-border/20 shadow-xl flex items-center gap-3 transition-transform translate-y-24 opacity-0 max-w-xs">
+        <span class="material-symbols-outlined text-brand-success-bg" id="toast-icon">check_circle</span>
+        <div>
+            <p class="text-xs font-bold" id="toast-title">Success</p>
+            <p class="text-[10px] text-brand-border mt-0.5" id="toast-desc">Transaction recorded to local storage state.</p>
+        </div>
+    </div>
+
+    <!-- MAIN STATE MACHINE LOGIC -->
     <script>
-        // CLIENT STATE DATABASE
-        let DB = {
-            currentScreen: 'dashboard',
+        // Reactive database registry keeping absolute truth of active workflow data
+        const DB = {
+            activeScreen: 'design-system',
             user: {
-                name: 'Shraddha',
-                email: 'shraddha@dtcbrand.co',
-                tier: 'Gold Tier',
-                score: '98%'
+                name: 'Shraddha'
             },
-            draftProject: {
-                role: 'Senior Product Designer',
-                company: 'DTC Brand',
+            draftEntry: {
+                role: 'Checkout redesign',
                 workType: 'Full-time',
-                startDate: '2024-02-15',
-                endDate: 'Present',
-                impact: 'Designed and deployed a friction-less single-page checkout configuration that reduced cart abandonment significantly across mobile platforms.',
-                metricLabel: 'Conversion Uplift',
-                metricValue: '+14% checkout conversion',
-                vname: 'Ravi Mehra',
-                vemail: 'ravi@dtcbrand.co',
-                vrelationship: 'Manager'
+                company: 'DTC Brand',
+                defunct: false,
+                start: 'Jan 2024',
+                end: 'Mar 2024',
+                problem: 'DTC checkout interface had highly elevated bounce rates on mobile.',
+                did: 'Redesigned checkout pipeline into a seamless single-page modular form architecture.',
+                metric: 'Reduced drop-off by 23% within 6 weeks',
+                nda: true,
+                link: 'https://figma.com/file/checkout-proof',
+                verifierName: 'Ravi Mehra',
+                verifierEmail: 'ravi@dtcbrand.co',
+                verifierRelationship: 'Manager'
             },
-            validatorDraft: {
-                involvement: 'Executor',
-                workAgain: 'Yes',
-                comment: 'Shraddha executed the checkout layout excellently, hitting all milestone goals perfectly under tight deadlines. Incredible designer.'
+            verifierInput: {
+                relationship: 'Yes',
+                involvement: 'Partner',
+                accuracy: 'accurate',
+                testimonial: 'Shraddha had an unusually strong grasp of user psychology — every decision was grounded in why users behave the way they do.',
+                workAgain: 'Yes'
             },
-            // Pre-populated verified entries
-            projects: [
+            entries: [
                 {
                     id: 1,
-                    role: 'Lead Infrastructure Engineer',
-                    company: 'Stellar Systems Inc.',
+                    role: 'Backend migration',
+                    company: 'Acme (closed)',
                     workType: 'Full-time',
-                    startDate: '2023-01-04',
-                    endDate: '2023-10-24',
-                    impact: 'Architected and orchestrated complete infrastructure migration to Docker, simplifying continuous delivery pipelines.',
-                    metricLabel: 'System Speed',
-                    metricValue: '1.8x faster builds',
-                    status: 'Verified',
+                    problem: 'Database query bottlenecks on legacy relational schemas.',
+                    did: 'Decoupled relational nodes and moved catalog indexing to key-value cache layer.',
+                    metric: 'Latency halved within 2 months',
+                    status: 'Pending verification',
+                    statusType: 'pending',
                     vname: 'John Doe',
-                    vemail: 'john@stellarsys.com',
+                    vemail: 'john@acme.com',
                     vrelationship: 'Manager',
-                    vcomment: 'Excellent execution. The CI pipeline performance increased exactly as stated in the project logs.',
-                    hash: '0x8f2c...e391'
+                    hash: null,
+                    comment: null
                 },
                 {
                     id: 2,
-                    role: 'Systems Analyst',
-                    company: 'CloudScale Labs',
-                    workType: 'Full-time',
-                    startDate: '2022-03-12',
-                    endDate: '2022-09-12',
-                    impact: 'Implemented complex database migrations, reducing general lookup queries latency',
-                    metricLabel: 'Efficiency',
-                    metricValue: '40% latency reduction',
-                    status: 'Verified',
-                    vname: 'Sarah Jenkins',
-                    vemail: 'sarah@cloudscale.com',
-                    vrelationship: 'Peer',
-                    vcomment: 'Highly precise database refactoring. Clean transaction logs throughout.',
-                    hash: '0x4d1b...a2f4'
+                    role: 'Landing page build',
+                    company: 'Webflow Studio',
+                    workType: 'Freelance',
+                    problem: 'Low initial traffic pipeline validation.',
+                    did: 'Integrated localized micro-copy, SEO hooks and customized vector visuals.',
+                    metric: 'Conversion lift of 14%',
+                    status: 'Expired — resend',
+                    statusType: 'expired',
+                    vname: 'David King',
+                    vemail: 'david@webflow.io',
+                    vrelationship: 'Client',
+                    hash: null,
+                    comment: null
                 }
             ]
         };
 
-        // ROUTER / NAVIGATION SYSTEM
-        function router(screenName) {
-            // Hide all screen wrappers
-            ['landing', 'dashboard', 'new-project-step1', 'new-project-step2', 'validator-step1', 'validator-step2', 'validator-step3', 'profile'].forEach(name => {
-                document.getElementById(`screen-${name}`).classList.add('hidden');
-                document.getElementById(`btn-route-${name === 'new-project-step1' || name === 'new-project-step2' ? 'add' : name}`)?.classList.remove('bg-white/25');
+        // Screen toggles state navigation router
+        function switchScreen(screenId) {
+            const screens = [
+                'design-system', 'login', 'onboarding', 'dashboard', 
+                'new-entry', 'send-verification', 
+                'validator-1', 'validator-2', 'validator-3', 'validator-4',
+                'profile', 'system-states'
+            ];
+            
+            screens.forEach(id => {
+                document.getElementById(`screen-${id}`).classList.add('hidden');
+                document.getElementById(`tab-${id}`)?.classList.remove('bg-brand-green', 'text-white');
+                document.getElementById(`tab-${id}`)?.classList.add('bg-white/10', 'text-brand-bg');
             });
 
-            // Show selected screen
-            document.getElementById(`screen-${screenName}`).classList.remove('hidden');
-            document.getElementById(`btn-route-${screenName === 'new-project-step1' || screenName === 'new-project-step2' ? 'add' : screenName}`)?.classList.add('bg-white/25');
-
-            DB.currentScreen = screenName;
+            document.getElementById(`screen-${screenId}`).classList.remove('hidden');
             
-            // Perform logic on transition
-            if (screenName === 'dashboard') {
-                renderDashboard();
-            } else if (screenName === 'profile') {
-                renderPublicProfile();
-            } else if (screenName === 'validator-step1') {
-                document.getElementById('val-claim-title').innerText = DB.draftProject.role;
-                document.getElementById('val-claim-company').innerText = DB.draftProject.company;
-            } else if (screenName === 'validator-step2') {
-                document.getElementById('val-claim-metric').innerText = `"${DB.draftProject.metricValue}"`;
+            // Highlight current button in prototype bar
+            const tabId = screenId.startsWith('validator-') ? 'validator' : screenId;
+            const tabBtn = document.getElementById(`tab-${tabId}`);
+            if (tabBtn) {
+                tabBtn.classList.remove('bg-white/10', 'text-brand-bg');
+                tabBtn.classList.add('bg-brand-green', 'text-white');
             }
 
-            // Sync simulation alert badge
-            const pendingProj = DB.projects.find(p => p.status === 'Pending');
-            const alertBadge = document.getElementById('simulation-badge');
+            DB.activeScreen = screenId;
+
+            // Trigger conditional rendering
+            if (screenId === 'dashboard') {
+                renderDashboard();
+            } else if (screenId === 'profile') {
+                renderProfile();
+            } else if (screenId === 'validator-1') {
+                document.getElementById('vld-project-title').innerText = DB.draftEntry.role;
+                document.getElementById('vld-project-company').innerText = DB.draftEntry.company;
+            } else if (screenId === 'validator-3') {
+                document.getElementById('vld-metric-text').innerText = `"${DB.draftEntry.metric || 'Achieved outcomes successfully'}"`;
+            }
+            
+            // Sync verifier simulation alert notification badge
+            const pendingProj = DB.entries.find(e => e.statusType === 'pending');
+            const alertBadge = document.getElementById('pending-badge');
             if (pendingProj) {
+                alertBadge.innerText = '1';
                 alertBadge.classList.remove('hidden');
-                alertBadge.innerText = "1";
             } else {
                 alertBadge.classList.add('hidden');
             }
         }
 
-        // DRAFT EVENT HANDLERS (STEP 1 & STEP 2 APPLICANT)
-        function setWorkType(type) {
-            DB.draftProject.workType = type;
-            document.querySelectorAll('.wt-pill').forEach(el => {
-                el.classList.remove('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-                el.classList.add('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            });
-            const selected = document.getElementById(`wt-${type}`);
-            selected.classList.remove('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            selected.classList.add('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-        }
-
-        function setRelationship(relationship) {
-            DB.draftProject.vrelationship = relationship;
-            document.querySelectorAll('.rel-pill').forEach(el => {
-                el.classList.remove('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-                el.classList.add('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            });
-            const selected = document.getElementById(`rel-${relationship}`);
-            selected.classList.remove('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            selected.classList.add('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-        }
-
-        function submitProjectStep1() {
-            DB.draftProject.role = document.getElementById('input-role').value;
-            DB.draftProject.company = document.getElementById('input-company').value;
-            DB.draftProject.startDate = document.getElementById('input-start-date').value;
-            DB.draftProject.endDate = document.getElementById('input-end-date').value;
-            DB.draftProject.impact = document.getElementById('input-impact').value;
-            DB.draftProject.metricLabel = document.getElementById('input-metric-label').value;
-            DB.draftProject.metricValue = document.getElementById('input-metric-value').value;
-
-            triggerToast('Progress Saved', 'Achievement logged! Setting up verifier connection next.', 'info');
-            router('new-project-step2');
-        }
-
-        function submitNewProjectFull() {
-            DB.draftProject.vname = document.getElementById('input-vname').value;
-            DB.draftProject.vemail = document.getElementById('input-vemail').value;
-
-            // Save project to simulation database as PENDING
-            const newId = DB.projects.length + 1;
-            const newClaim = {
-                id: newId,
-                role: DB.draftProject.role,
-                company: DB.draftProject.company,
-                workType: DB.draftProject.workType,
-                startDate: DB.draftProject.startDate,
-                endDate: DB.draftProject.endDate,
-                impact: DB.draftProject.impact,
-                metricLabel: DB.draftProject.metricLabel,
-                metricValue: DB.draftProject.metricValue,
-                status: 'Pending',
-                vname: DB.draftProject.vname,
-                vemail: DB.draftProject.vemail,
-                vrelationship: DB.draftProject.vrelationship,
-                vcomment: '',
-                hash: ''
-            };
-
-            // Remove previous pending entries so simulation stays streamlined
-            DB.projects = DB.projects.filter(p => p.status !== 'Pending');
-            DB.projects.push(newClaim);
-
-            triggerToast('Key Generated', `Request initialized for ${newClaim.vname}. Switch to simulation mode.`, 'success');
-            router('dashboard');
-        }
-
-        // SIMULATION VERIFIER FLOW EVENT HANDLERS
-        function validatorAdvanceToStep2() {
-            triggerToast('Confirmation Logged', 'Tenure confirmed. Advancing to metric evaluation.', 'info');
-            router('validator-step2');
-        }
-
-        function setValInvolvement(invType) {
-            DB.validatorDraft.involvement = invType;
-            document.querySelectorAll('.val-inv-btn').forEach(btn => {
-                btn.classList.remove('border-primary', 'bg-accent-tint', 'text-primary');
-                btn.classList.add('border-line', 'bg-slate-50', 'text-ink');
-            });
-            const activeBtn = document.getElementById(`val-inv-${invType}`);
-            activeBtn.classList.remove('border-line', 'bg-slate-50', 'text-ink');
-            activeBtn.classList.add('border-primary', 'bg-accent-tint', 'text-primary');
-        }
-
-        function validatorAdvanceToStep3() {
-            router('validator-step3');
-        }
-
-        function setValWorkAgain(choice) {
-            DB.validatorDraft.workAgain = choice;
-            document.querySelectorAll('.vwa-btn').forEach(btn => {
-                btn.classList.remove('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-                btn.classList.add('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            });
-            const selected = document.getElementById(`vwa-${choice}`);
-            selected.classList.remove('border-line', 'bg-white', 'text-on-surface-variant', 'font-medium');
-            selected.classList.add('border-primary', 'bg-accent-tint', 'text-primary', 'font-semibold', 'active-ring');
-        }
-
-        function submitTestimonialFinal() {
-            const btn = document.getElementById('btn-submit-verification');
-            const txt = document.getElementById('btn-submit-text');
-            
-            txt.innerText = "Signing Ledger Transaction...";
-            btn.classList.add('opacity-80', 'cursor-not-allowed');
-
-            setTimeout(() => {
-                // Update simulation database status to verified
-                const pendingIndex = DB.projects.findIndex(p => p.status === 'Pending');
-                if (pendingIndex !== -1) {
-                    DB.projects[pendingIndex].status = 'Verified';
-                    DB.projects[pendingIndex].vcomment = document.getElementById('val-input-comment').value;
-                    DB.projects[pendingIndex].hash = '0x' + Math.random().toString(16).substring(2, 6) + '...' + Math.random().toString(16).substring(2, 6);
-                }
-
-                txt.innerText = "Sign & Submit";
-                btn.classList.remove('opacity-80', 'cursor-not-allowed');
-
-                triggerToast('Verification Recorded', 'Testimonial successfully cryptographically signed and archived!', 'success');
-                router('dashboard');
-            }, 1200);
-        }
-
-        function handleLogin() {
-            triggerToast('Verified Login', 'Magic link authorized. Synchronizing local ledger...', 'success');
-            setTimeout(() => {
-                router('dashboard');
-            }, 600);
-        }
-
-        // LEDGER RENDER ENGINE
+        // Dashboard renderer
         function renderDashboard() {
-            const container = document.getElementById('dashboard-project-list');
+            const container = document.getElementById('dashboard-list');
             container.innerHTML = '';
 
-            let totalClaims = DB.projects.length;
-            let verifiedClaims = DB.projects.filter(p => p.status === 'Verified').length;
-            let pendingClaims = DB.projects.filter(p => p.status === 'Pending').length;
+            DB.entries.forEach(entry => {
+                let statusClass = 'bg-slate-100 text-brand-grey';
+                if (entry.statusType === 'pending') statusClass = 'bg-amber-50 border border-brand-amber/30 text-brand-amber';
+                if (entry.statusType === 'verified') statusClass = 'bg-brand-success-bg text-brand-green';
+                if (entry.statusType === 'expired') statusClass = 'bg-red-50 border border-brand-error/30 text-brand-error';
 
-            document.getElementById('stat-total-claims').innerText = totalClaims;
-            document.getElementById('stat-pending-claims').innerText = pendingClaims;
-            document.getElementById('stat-verified-score').innerText = totalClaims > 0 ? Math.round((verifiedClaims / totalClaims) * 100) + '%' : '100%';
-            document.getElementById('ledger-count').innerText = `${totalClaims} entries registered`;
-
-            DB.projects.forEach(proj => {
-                let statusBadge = '';
-                if (proj.status === 'Verified') {
-                    statusBadge = `
-                        <span class="bg-[#EFF7F2] text-primary px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-primary/10">
-                            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
-                            Verified
-                        </span>
-                    `;
-                } else {
-                    statusBadge = `
-                        <span class="bg-amber-50 text-warning px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border border-warning/10 animate-pulse">
-                            <span class="material-symbols-outlined text-sm">pending</span>
-                            Pending
-                        </span>
-                    `;
-                }
-
-                const cardHtml = `
-                    <div class="bg-white border border-line rounded-xl p-5 hover:border-primary/20 transition-all duration-200 group flex flex-col md:flex-row md:items-center justify-between gap-4 modern-shadow">
-                        <div class="flex items-start gap-4">
-                            <div class="w-10 h-10 rounded-lg bg-accent-tint/40 flex items-center justify-center text-primary mt-1">
-                                <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">terminal</span>
-                            </div>
+                const card = `
+                    <div class="bg-white brand-border rounded-xl p-6 space-y-4 brand-shadow-sm hover:border-brand-green/30 transition-colors duration-200">
+                        <div class="flex items-start justify-between gap-4">
                             <div>
-                                <h4 class="font-bold text-base text-ink group-hover:text-primary transition-colors">${proj.role}</h4>
-                                <p class="text-xs text-grey font-semibold tracking-wide uppercase mt-0.5">${proj.company} • ${proj.workType}</p>
-                                <p class="text-xs text-on-surface-variant mt-2 max-w-xl leading-relaxed">${proj.impact}</p>
+                                <h3 class="font-bold text-base text-brand-ink leading-tight">${entry.role}</h3>
+                                <p class="text-xs text-brand-grey font-mono uppercase tracking-wider mt-1">${entry.company} • ${entry.workType}</p>
                             </div>
+                            <span class="px-3 py-1 rounded text-[10px] font-mono uppercase tracking-wider ${statusClass}">${entry.status}</span>
                         </div>
-                        <div class="flex items-center gap-4 self-end md:self-center">
-                            <div class="text-right hidden sm:block">
-                                <span class="text-[10px] font-bold text-grey uppercase tracking-widest block">Metric Verified</span>
-                                <span class="text-xs font-mono font-bold text-primary">${proj.metricValue}</span>
+                        <p class="text-xs text-brand-grey font-mono">${entry.did}</p>
+                        ${entry.comment ? `
+                            <div class="p-4 bg-slate-50 rounded-lg brand-border border-dashed space-y-2 mt-2">
+                                <span class="text-[9px] font-mono uppercase tracking-widest text-brand-grey">Verifier Testimonial:</span>
+                                <p class="text-xs italic text-brand-ink">"${entry.comment}"</p>
+                                <span class="text-[10px] font-mono text-brand-green block">— Signed by ${entry.vname}, ${entry.vrelationship} (Hash: ${entry.hash})</span>
                             </div>
-                            ${statusBadge}
-                        </div>
+                        ` : ''}
                     </div>
                 `;
-                container.innerHTML += cardHtml;
+                container.innerHTML += card;
             });
         }
 
-        function renderPublicProfile() {
-            const container = document.getElementById('profile-verified-list');
+        // Public Profile Renderer
+        function renderProfile() {
+            const container = document.getElementById('profile-work-list');
             container.innerHTML = '';
 
-            const verifiedList = DB.projects.filter(p => p.status === 'Verified');
-            document.getElementById('profile-stat-total').innerText = verifiedList.length;
+            const verifiedList = DB.entries.filter(e => e.statusType === 'verified');
+            document.getElementById('profile-verified-count').innerText = `${verifiedList.length} Entries`;
 
             if (verifiedList.length === 0) {
                 container.innerHTML = `
-                    <div class="bg-white border border-line rounded-xl p-8 text-center modern-shadow">
-                        <span class="material-symbols-outlined text-4xl text-grey mb-2">work_off</span>
-                        <p class="text-sm font-bold text-ink">No Verified Logs Available</p>
-                        <p class="text-xs text-grey mt-1">Complete verification steps to showcase credentials here.</p>
+                    <div class="text-center py-12 bg-white brand-border rounded-xl">
+                        <span class="material-symbols-outlined text-4xl text-brand-grey">cloud_sync</span>
+                        <p class="text-sm font-bold text-brand-ink mt-2">No Verified Entries</p>
+                        <p class="text-xs text-brand-grey">Create a project and simulate the verifier workflow to generate entries.</p>
                     </div>
                 `;
                 return;
             }
 
-            verifiedList.forEach(proj => {
-                const itemHtml = `
-                    <div class="bg-white border border-line rounded-2xl p-6 md:p-8 space-y-6 modern-shadow relative overflow-hidden group hover:border-primary/30 transition-all duration-300">
-                        <div class="flex justify-between items-start flex-wrap gap-2">
-                            <div class="flex items-center gap-3">
-                                <div class="w-12 h-12 bg-accent-tint/30 rounded-xl flex items-center justify-center border border-primary/10">
-                                    <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings: 'FILL' 1;">developer_board</span>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold text-lg text-ink">${proj.role}</h3>
-                                    <p class="text-xs text-grey font-semibold tracking-wide uppercase mt-0.5">${proj.company} • ${proj.workType}</p>
-                                </div>
+            verifiedList.forEach(entry => {
+                const verifiedCard = `
+                    <div class="bg-white brand-border rounded-xl p-8 space-y-5 brand-shadow-sm hover:border-brand-green/30 transition-all duration-300">
+                        <div class="flex items-start justify-between gap-4 flex-wrap">
+                            <div>
+                                <h3 class="font-bold text-lg text-brand-ink leading-tight">${entry.role}</h3>
+                                <p class="text-xs text-brand-grey font-mono uppercase tracking-wider mt-0.5">${entry.company} • ${entry.workType}</p>
                             </div>
-                            <span class="bg-[#EFF7F2] text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/10 flex items-center gap-1">
+                            <span class="px-3 py-1 bg-brand-success-bg text-brand-green text-xs font-mono uppercase tracking-wider rounded flex items-center gap-1.5 border border-brand-green/10">
                                 <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
-                                Institutional Record
+                                Partner
                             </span>
                         </div>
 
-                        <div class="py-4 border-y border-slate-100 space-y-4">
-                            <p class="text-sm italic text-on-surface leading-relaxed font-medium">
-                                "${proj.vcomment || 'Detailed outcome metrics confirmed and authorized by structural supervisor.'}"
+                        <div class="py-4 border-y border-brand-border space-y-4">
+                            <span class="text-[10px] font-mono text-brand-grey uppercase tracking-widest block">SUPERVISOR ATTESTATION:</span>
+                            <p class="text-sm italic text-brand-ink font-medium leading-relaxed">
+                                "${entry.comment || 'Contribution verified on the ledger successfully.'}"
                             </p>
-                            <div class="flex items-center gap-3">
-                                <div class="w-9 h-9 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-xs text-primary font-mono">
-                                    ${proj.vname.split(' ').map(n=>n[0]).join('')}
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center font-bold text-xs text-brand-green font-mono">
+                                    ${entry.vname[0]}
                                 </div>
-                                <div>
-                                    <p class="text-xs font-bold text-ink">${proj.vname}</p>
-                                    <p class="text-[10px] text-grey font-semibold">${proj.vrelationship} Sign-off • ${proj.vemail}</p>
+                                <div class="text-[11px] leading-tight">
+                                    <p class="font-bold text-brand-ink">${entry.vname}</p>
+                                    <p class="text-brand-grey font-mono">${entry.vrelationship} Sign-off</p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between flex-wrap gap-2 pt-2 text-xs">
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-grey font-semibold uppercase tracking-wider text-[10px]">Outcome Metric:</span>
-                                <span class="bg-[#EFF7F2] text-primary text-xs font-mono font-bold px-2.5 py-0.5 rounded border border-primary/10">${proj.metricValue}</span>
-                            </div>
-                            <div class="flex items-center gap-1 text-[10px] font-mono text-success bg-[#EFF7F2] px-2.5 py-1 rounded">
-                                <span class="material-symbols-outlined text-sm">lock</span>
-                                Hash: ${proj.hash || '0x43b2...ef12'}
-                            </div>
+                        <div class="flex justify-between items-center text-[11px] font-mono text-brand-grey flex-wrap gap-2">
+                            <span>Outcome: <strong class="text-brand-green font-bold uppercase">${entry.metric || 'Confirmed'}</strong></span>
+                            <span class="text-brand-green flex items-center gap-1">
+                                <span class="material-symbols-outlined text-xs">lock</span> 
+                                Hash: ${entry.hash || '0x4f...a2e1'}
+                            </span>
                         </div>
                     </div>
                 `;
-                container.innerHTML += itemHtml;
+                container.innerHTML += verifiedCard;
             });
         }
 
-        // MODERN NOTIFICATION ENGINE (TOAST)
-        let toastTimeout = null;
-        function triggerToast(title, message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const tIcon = document.getElementById('toast-icon');
-            const tTitle = document.getElementById('toast-title');
-            const tMsg = document.getElementById('toast-msg');
+        // Onboarding / Logins submissions handlers
+        function handleLoginSubmit() {
+            const email = document.getElementById('login-email').value || 'shraddha@dtcbrand.co';
+            DB.draftEntry.verifierEmail = email;
+            triggerToast('Authorized', 'Institutional link activated.');
+            switchScreen('onboarding');
+        }
 
-            tTitle.innerText = title;
-            tMsg.innerText = message;
+        function handleOnboardingSubmit() {
+            const name = document.getElementById('onboarding-name').value || 'Shraddha';
+            DB.user.name = name;
+            document.getElementById('user-display').innerText = `User: ${name}`;
+            document.getElementById('profile-user-name').innerText = name;
+            
+            triggerToast('Sync Complete', 'Verification environment synchronized.');
+            switchScreen('dashboard');
+        }
 
-            if (type === 'success') {
-                tIcon.innerText = 'check_circle';
-                tIcon.className = 'material-symbols-outlined text-success mt-0.5';
-            } else if (type === 'info') {
-                tIcon.innerText = 'info';
-                tIcon.className = 'material-symbols-outlined text-primary mt-0.5';
+        // Entry workflow selections and saves
+        function selectWorkTypePill(type) {
+            DB.draftEntry.workType = type;
+            document.querySelectorAll('.wt-pills').forEach(btn => {
+                btn.className = "wt-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50";
+            });
+            document.getElementById(`wt-${type}`).className = "wt-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold";
+        }
+
+        function selectRelationshipPill(relationship) {
+            DB.draftEntry.verifierRelationship = relationship;
+            document.querySelectorAll('.rep-pills').forEach(btn => {
+                btn.className = "rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50";
+            });
+            document.getElementById(`rep-${relationship.replace(' ', '-')}`).className = "rep-pills min-h-[44px] px-4 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold";
+        }
+
+        function handleNewEntrySubmit() {
+            DB.draftEntry.role = document.getElementById('form-role').value;
+            DB.draftEntry.company = document.getElementById('form-company').value;
+            DB.draftEntry.start = document.getElementById('form-start').value;
+            DB.draftEntry.end = document.getElementById('form-end').value;
+            DB.draftEntry.problem = document.getElementById('form-problem').value;
+            DB.draftEntry.did = document.getElementById('form-did').value;
+            DB.draftEntry.metric = document.getElementById('form-metric').value;
+            DB.draftEntry.link = document.getElementById('form-link').value;
+            DB.draftEntry.defunct = document.getElementById('form-defunct-company').checked;
+            DB.draftEntry.nda = document.getElementById('form-nda').checked;
+
+            switchScreen('send-verification');
+        }
+
+        function triggerVerificationSend() {
+            DB.draftEntry.verifierName = document.getElementById('verifier-name').value;
+            DB.draftEntry.verifierEmail = document.getElementById('verifier-email').value;
+
+            // Remove previous pending entries to keep the prototype clean and simple
+            DB.entries = DB.entries.filter(e => e.statusType !== 'pending');
+
+            // Inject the new record as pending
+            DB.entries.push({
+                id: DB.entries.length + 1,
+                role: DB.draftEntry.role,
+                company: DB.draftEntry.company,
+                workType: DB.draftEntry.workType,
+                problem: DB.draftEntry.problem,
+                did: DB.draftEntry.did,
+                metric: DB.draftEntry.metric,
+                status: 'Pending verification',
+                statusType: 'pending',
+                vname: DB.draftEntry.verifierName,
+                vemail: DB.draftEntry.verifierEmail,
+                vrelationship: DB.draftEntry.verifierRelationship,
+                hash: null,
+                comment: null
+            });
+
+            // Set validator prompt details
+            document.getElementById('vld-project-title').innerText = DB.draftEntry.role;
+            document.getElementById('vld-project-company').innerText = DB.draftEntry.company;
+
+            // Open popup to let user instantly simulate the verifier action path
+            toggleAlertModal(true);
+        }
+
+        function toggleAlertModal(show) {
+            const el = document.getElementById('alert-overlay');
+            if (show) {
+                el.classList.remove('hidden');
+                document.getElementById('alert-primary-btn').onclick = () => {
+                    toggleAlertModal(false);
+                    switchScreen('validator-1');
+                };
             } else {
-                tIcon.innerText = 'warning';
-                tIcon.className = 'material-symbols-outlined text-warning mt-0.5';
+                el.classList.add('hidden');
             }
+        }
 
-            toast.classList.remove('translate-y-10', 'opacity-0', 'pointer-events-none');
+        // Validator Flow steps controllers
+        function validatorSelectState(field, value, nextScreenId) {
+            DB.verifierInput[field] = value;
+            switchScreen(nextScreenId);
+        }
+
+        function selectWorkAgainChoice(choice) {
+            DB.verifierInput.workAgain = choice;
+            document.querySelectorAll('.vwa-choices').forEach(btn => {
+                btn.className = "vwa-choices min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider bg-white brand-border text-brand-ink hover:bg-slate-50";
+            });
+            document.getElementById(`vwa-${choice}`).className = "vwa-choices min-h-[44px] px-5 rounded-full text-xs font-mono uppercase tracking-wider bg-brand-green text-white font-bold";
+        }
+
+        function submitVerifierTestimonial() {
+            const btn = document.getElementById('btn-verifier-submit');
+            btn.innerText = "Signing Ledger Signature...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Find and update our local pending project state
+                const idx = DB.entries.findIndex(e => e.statusType === 'pending');
+                if (idx !== -1) {
+                    DB.entries[idx].status = 'Verified';
+                    DB.entries[idx].statusType = 'verified';
+                    DB.entries[idx].comment = document.getElementById('verifier-comment-input').value;
+                    DB.entries[idx].hash = '0x' + Math.random().toString(16).substring(2, 6).toUpperCase() + '...' + Math.random().toString(16).substring(2, 6).toUpperCase();
+                }
+
+                btn.innerText = "Submit Endorsement";
+                btn.disabled = false;
+
+                triggerToast('Verification Recorded', 'Cryptographic testimonial anchored to profile ledger.', 'success');
+                switchScreen('dashboard');
+            }, 1000);
+        }
+
+        // Global System States rendering switches
+        function toggleSubState(stateId) {
+            const canvas = document.getElementById('substate-canvas');
+            canvas.innerHTML = '';
+
+            if (stateId === 'loading') {
+                canvas.innerHTML = `
+                    <div class="space-y-4 py-6">
+                        <span class="text-[10px] font-mono text-brand-grey block uppercase mb-2">1. Loading Skeleton Screen</span>
+                        <div class="animate-pulse space-y-4">
+                            <div class="h-6 bg-slate-200 rounded w-1/4"></div>
+                            <div class="h-24 bg-slate-200 rounded-xl w-full"></div>
+                            <div class="h-24 bg-slate-200 rounded-xl w-full"></div>
+                        </div>
+                    </div>
+                `;
+            } else if (stateId === 'empty') {
+                canvas.innerHTML = `
+                    <div class="text-center py-12 space-y-4">
+                        <span class="text-[10px] font-mono text-brand-grey block uppercase">2. Empty State</span>
+                        <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-brand-grey">
+                            <span class="material-symbols-outlined text-3xl">post_add</span>
+                        </div>
+                        <h4 class="text-base font-bold text-brand-ink">Add your first piece of work</h4>
+                        <button onclick="switchScreen('new-entry')" class="h-10 px-6 bg-brand-green text-white text-xs font-mono uppercase tracking-wider rounded-lg">Get Started</button>
+                    </div>
+                `;
+            } else if (stateId === 'invalid-err') {
+                canvas.innerHTML = `
+                    <div class="space-y-4 max-w-sm mx-auto">
+                        <span class="text-[10px] font-mono text-brand-grey block uppercase text-center">3. Input Validation Failure</span>
+                        <div class="space-y-1.5">
+                            <label class="block text-xs font-mono uppercase tracking-wider text-brand-grey">Their Email</label>
+                            <input class="w-full h-12 px-4 bg-white border border-brand-error focus:ring-0 rounded-lg text-sm text-brand-error outline-none" value="invalid-email-string"/>
+                            <span class="text-[11px] font-mono text-brand-error uppercase tracking-wider font-semibold block">Enter a valid email</span>
+                        </div>
+                    </div>
+                `;
+            } else if (stateId === 'link-used') {
+                canvas.innerHTML = `
+                    <div class="text-center py-12 space-y-3 max-w-sm mx-auto">
+                        <span class="text-[10px] font-mono text-brand-grey block uppercase">4. Used/Expired Token Link</span>
+                        <span class="material-symbols-outlined text-4xl text-brand-grey">link_off</span>
+                        <h3 class="text-lg font-bold text-brand-ink">This verification link has already been used.</h3>
+                        <p class="text-xs text-brand-grey leading-relaxed">Verification hashes can only generate signed ledger credentials once. Contact applicant to reissue.</p>
+                    </div>
+                `;
+            } else if (stateId === 'sys-error') {
+                canvas.innerHTML = `
+                    <div class="text-center py-12 space-y-4 max-w-sm mx-auto">
+                        <span class="text-[10px] font-mono text-brand-grey block uppercase">5. System Exceptions Fallback</span>
+                        <span class="material-symbols-outlined text-4xl text-brand-error">gpp_maybe</span>
+                        <h3 class="text-lg font-bold text-brand-ink">Something went wrong on our end.</h3>
+                        <p class="text-xs text-brand-grey leading-relaxed">No stack traces are exposed here to maintain maximum credential infrastructure security. Please retry.</p>
+                        <button onclick="toggleSubState('sys-error')" class="h-10 px-6 bg-white brand-border text-brand-ink text-xs font-mono uppercase tracking-wider rounded-lg">Retry Connection</button>
+                    </div>
+                `;
+            }
+        }
+
+        // High fidelity toast alerts feedback emitter
+        let toastTimeout = null;
+        function triggerToast(title, message) {
+            const toast = document.getElementById('toast-notif');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-desc').innerText = message;
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
             toast.classList.add('translate-y-0', 'opacity-100');
 
             if (toastTimeout) clearTimeout(toastTimeout);
             toastTimeout = setTimeout(() => {
-                dismissToast();
-            }, 4000);
+                toast.classList.add('translate-y-24', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 3500);
         }
 
-        function dismissToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.add('translate-y-10', 'opacity-0', 'pointer-events-none');
-            toast.classList.remove('translate-y-0', 'opacity-100');
-        }
-
-        // INIT LOAD
+        // Initialize state view defaults
         window.onload = () => {
-            router('dashboard');
+            switchScreen('design-system');
         };
     </script>
 </body>
