@@ -5,68 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DYPS | Dunes Youth Parliament Summit</title>
     <style>
-        :root { --accent: #000; --bg: #fff; }
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--accent); line-height: 1.2; }
+        :root { --bg: #ffffff; --text: #000000; --accent: #0047AB; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.1; padding: 2rem; }
+
+        /* Navigation */
+        header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8rem; }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -2px; }
+        nav a { margin-left: 2rem; text-decoration: none; color: var(--text); font-size: 0.8rem; text-transform: uppercase; font-weight: 600; }
+
+        /* Hero */
+        .hero { margin-bottom: 8rem; }
+        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -4px; max-width: 900px; }
+
+        /* Sections */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; margin-bottom: 8rem; }
+        .label { font-size: 0.6rem; text-transform: uppercase; margin-bottom: 1rem; display: block; letter-spacing: 0.1em; opacity: 0.5; }
         
-        /* Layout */
-        nav { padding: 40px; display: flex; justify-content: space-between; font-weight: 800; text-transform: uppercase; letter-spacing: -1px; }
-        main { padding: 0 40px; max-width: 900px; }
-        h1 { font-size: 4rem; margin: 60px 0; max-width: 700px; }
-        .section-label { font-size: 0.7rem; text-transform: uppercase; margin-bottom: 20px; display: block; opacity: 0.6; }
-        
-        /* Components */
-        .dropdown { margin-bottom: 40px; border-top: 1px solid #000; padding-top: 20px; }
-        .form-compact { display: flex; flex-direction: column; gap: 15px; width: 300px; margin-top: 20px; }
-        input, textarea { border: 1px solid #000; padding: 10px; font-family: inherit; }
-        button { background: #000; color: #fff; border: none; padding: 10px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
-        
-        footer { margin-top: 100px; padding: 40px; border-top: 1px solid #000; display: flex; justify-content: space-between; align-items: center; }
-        .socials { display: flex; gap: 20px; }
-        .socials a { color: #000; text-decoration: none; font-size: 0.8rem; font-weight: bold; }
+        /* Ambassador Form */
+        .form-wrap { border: 2px solid var(--text); padding: 2rem; max-width: 400px; }
+        input { width: 100%; border: none; border-bottom: 1px solid var(--text); padding: 0.5rem 0; margin-bottom: 1rem; font-size: 1rem; outline: none; }
+        button { background: var(--text); color: #fff; border: none; padding: 1rem 2rem; cursor: pointer; text-transform: uppercase; font-weight: 700; width: 100%; }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--text); padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.7rem; }
+        .socials { display: flex; gap: 1rem; }
     </style>
 </head>
 <body>
 
-<nav>
-    <div>DYPS '26</div>
-    <div>Menu ↓</div>
-</nav>
+    <header>
+        <div class="logo">DYPS '26</div>
+        <nav>
+            <a href="#">Events</a>
+            <a href="#">Team</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
 
-<main>
-    <h1>Bridging student discourse and global policy.</h1>
+    <main>
+        <section class="hero">
+            <h1>We turn student discourse into global policy.</h1>
+        </section>
 
-    <!-- Events Section -->
-    <section>
-        <span class="section-label">Events & Agendas</span>
-        <div class="dropdown">
-            <strong>Upcoming: Summit 2026</strong>
-            <p>Registration Open. <a href="#">Apply Now</a></p>
+        <section class="grid">
+            <div>
+                <span class="label">Upcoming Events</span>
+                <h2 style="font-size: 2rem;">Summit 2026</h2>
+                <p style="margin: 1rem 0;">The annual assembly of young leaders. Register by August.</p>
+            </div>
+            
+            <div class="form-wrap">
+                <span class="label">Campus Ambassador</span>
+                <form>
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <button type="submit">Join the Movement</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div>© 2026 DUNES KUTCH</div>
+        <div class="socials">
+            <a href="#">LINKEDIN</a>
+            <a href="#">INSTAGRAM</a>
         </div>
-        <div class="dropdown">
-            <strong>Past: MUN 2025</strong>
-            <p style="font-size: 0.9rem;">Agenda: Global Economic Reset · UN Security Council Reform</p>
-        </div>
-    </section>
-
-    <!-- Ambassador Form -->
-    <section style="margin-top: 60px;">
-        <span class="section-label">Ambassador Program</span>
-        <p>Drive impact on campus. Join our outreach team.</p>
-        <form class="form-compact">
-            <input type="text" placeholder="Name" required>
-            <input type="email" placeholder="Institutional Email" required>
-            <button type="submit">Submit Application</button>
-        </form>
-    </section>
-</main>
-
-<footer>
-    <div>© 2026 DUNES KUTCH</div>
-    <div class="socials">
-        <a href="#">LINKEDIN</a>
-        <a href="#">INSTAGRAM</a>
-    </div>
-</footer>
+    </footer>
 
 </body>
 </html>
