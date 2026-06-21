@@ -3,76 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DYPS | Dunes Youth Parliament Summit</title>
+    <title>DYPS | Dunes Youth Parliament</title>
     <style>
-        :root { --bg: #ffffff; --text: #000000; --accent: #0047AB; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.1; padding: 2rem; }
+        :root { --bg: #ffffff; --text: #000000; --accent: #000000; }
+        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 5vh 5vw; }
 
         /* Navigation */
-        header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8rem; }
-        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -2px; }
-        nav a { margin-left: 2rem; text-decoration: none; color: var(--text); font-size: 0.8rem; text-transform: uppercase; font-weight: 600; }
+        nav { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 80px; }
+        .nav-links { display: flex; gap: 40px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
+        .nav-links span:hover { opacity: 0.5; }
 
-        /* Hero */
-        .hero { margin-bottom: 8rem; }
-        .hero h1 { font-size: clamp(3rem, 10vw, 6rem); letter-spacing: -4px; max-width: 900px; }
-
-        /* Sections */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; margin-bottom: 8rem; }
-        .label { font-size: 0.6rem; text-transform: uppercase; margin-bottom: 1rem; display: block; letter-spacing: 0.1em; opacity: 0.5; }
+        /* Content Sections */
+        .page { display: none; }
+        .page.active { display: block; }
+        h1 { font-size: clamp(3rem, 8vw, 6rem); letter-spacing: -3px; line-height: 0.9; margin-bottom: 40px; }
         
-        /* Ambassador Form */
-        .form-wrap { border: 2px solid var(--text); padding: 2rem; max-width: 400px; }
-        input { width: 100%; border: none; border-bottom: 1px solid var(--text); padding: 0.5rem 0; margin-bottom: 1rem; font-size: 1rem; outline: none; }
-        button { background: var(--text); color: #fff; border: none; padding: 1rem 2rem; cursor: pointer; text-transform: uppercase; font-weight: 700; width: 100%; }
+        /* Interactive Elements */
+        .card { border: 1px solid #000; padding: 30px; margin-bottom: 20px; cursor: pointer; }
+        .card:hover { background: #000; color: #fff; }
+        
+        /* Form Styling */
+        form { display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin-top: 20px; }
+        input { border: 2px solid #000; padding: 15px; font-size: 1rem; outline: none; }
+        button { background: #000; color: #fff; border: none; padding: 15px; cursor: pointer; font-weight: 800; }
+        button:hover { background: #333; }
 
-        /* Footer */
-        footer { border-top: 1px solid var(--text); padding-top: 2rem; display: flex; justify-content: space-between; font-size: 0.7rem; }
-        .socials { display: flex; gap: 1rem; }
+        footer { margin-top: 100px; display: flex; justify-content: space-between; font-size: 0.7rem; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">DYPS '26</div>
-        <nav>
-            <a href="#">Events</a>
-            <a href="#">Team</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
+    <nav>
+        <div style="font-weight: 900; letter-spacing: -1px;">DYPS '26</div>
+        <div class="nav-links">
+            <span onclick="showPage('home')">Home</span>
+            <span onclick="showPage('events')">Events</span>
+            <span onclick="showPage('apply')">Ambassador</span>
+        </div>
+    </nav>
 
-    <main>
-        <section class="hero">
-            <h1>We turn student discourse into global policy.</h1>
-        </section>
+    <div id="home" class="page active">
+        <h1>We turn student discourse into global policy.</h1>
+        <p style="max-width: 500px; font-size: 1.2rem;">The premier MUN community in Kutch. Join the movement.</p>
+    </div>
 
-        <section class="grid">
-            <div>
-                <span class="label">Upcoming Events</span>
-                <h2 style="font-size: 2rem;">Summit 2026</h2>
-                <p style="margin: 1rem 0;">The annual assembly of young leaders. Register by August.</p>
-            </div>
-            
-            <div class="form-wrap">
-                <span class="label">Campus Ambassador</span>
-                <form>
-                    <input type="text" placeholder="Full Name" required>
-                    <input type="email" placeholder="Email Address" required>
-                    <button type="submit">Join the Movement</button>
-                </form>
-            </div>
-        </section>
-    </main>
+    <div id="events" class="page">
+        <h1>Events.</h1>
+        <div class="card" onclick="this.innerHTML='Agenda: Climate Finance & Nuclear Proliferation'">Upcoming: Summit 2026 (Click for Agenda)</div>
+        <div class="card" onclick="this.innerHTML='Agenda: Global Trade Security'">Past: MUN 2025 (Click for Agenda)</div>
+    </div>
+
+    <div id="apply" class="page">
+        <h1>Become an Ambassador.</h1>
+        <form id="contactForm" onsubmit="event.preventDefault(); alert('Application Received.');">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Institutional Email" required>
+            <button type="submit">Send Application</button>
+        </form>
+    </div>
 
     <footer>
-        <div>© 2026 DUNES KUTCH</div>
-        <div class="socials">
-            <a href="#">LINKEDIN</a>
-            <a href="#">INSTAGRAM</a>
+        <div>© 2026 Dunes Kutch</div>
+        <div style="display: flex; gap: 20px;">
+            <a href="#" style="color: black;">LINKEDIN</a>
+            <a href="#" style="color: black;">INSTAGRAM</a>
         </div>
     </footer>
 
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
 </body>
 </html>
