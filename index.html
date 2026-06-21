@@ -3,79 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DYPS | Dunes Youth Parliament</title>
+    <title>DYPS | Dunes Youth Parliament Summit</title>
     <style>
-        :root { --bg: #ffffff; --text: #000000; --accent: #000000; }
-        * { box-sizing: border-box; margin: 0; padding: 0; transition: all 0.3s ease; }
-        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 5vh 5vw; }
+        :root { --navy: #0A192F; --blue: #0066FF; --bg: #F8F9FA; --text: #111; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.4; padding: 2rem; }
+
+        /* Branding */
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--navy); margin-bottom: 3rem; }
 
         /* Navigation */
-        nav { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 20px; margin-bottom: 80px; }
-        .nav-links { display: flex; gap: 40px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; }
-        .nav-links span:hover { opacity: 0.5; }
+        nav { display: flex; gap: 2rem; margin-bottom: 5rem; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; }
+        nav a { text-decoration: none; color: var(--text); padding-bottom: 5px; border-bottom: 2px solid transparent; }
+        nav a:hover { border-bottom: 2px solid var(--blue); }
 
-        /* Content Sections */
-        .page { display: none; }
-        .page.active { display: block; }
-        h1 { font-size: clamp(3rem, 8vw, 6rem); letter-spacing: -3px; line-height: 0.9; margin-bottom: 40px; }
-        
-        /* Interactive Elements */
-        .card { border: 1px solid #000; padding: 30px; margin-bottom: 20px; cursor: pointer; }
-        .card:hover { background: #000; color: #fff; }
-        
-        /* Form Styling */
-        form { display: flex; flex-direction: column; gap: 15px; max-width: 400px; margin-top: 20px; }
-        input { border: 2px solid #000; padding: 15px; font-size: 1rem; outline: none; }
-        button { background: #000; color: #fff; border: none; padding: 15px; cursor: pointer; font-weight: 800; }
-        button:hover { background: #333; }
+        /* Hero */
+        h1 { font-size: clamp(3rem, 7vw, 5rem); line-height: 0.9; letter-spacing: -2px; margin-bottom: 3rem; }
+        .hero-sub { color: var(--blue); font-size: 1.2rem; margin-bottom: 5rem; }
 
-        footer { margin-top: 100px; display: flex; justify-content: space-between; font-size: 0.7rem; text-transform: uppercase; }
+        /* Sections */
+        section { margin-bottom: 8rem; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .card { padding: 2rem; background: #fff; border: 1px solid #eee; }
+        
+        /* Ambassador Form Styling */
+        .form-box { background: var(--navy); color: #fff; padding: 3rem; border-radius: 8px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 2rem; }
+        input { width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid #333; color: white; }
+        button { background: var(--blue); color: white; border: none; padding: 15px; cursor: pointer; font-weight: 700; text-transform: uppercase; margin-top: 1rem; }
+
+        /* Footer */
+        footer { border-top: 1px solid #ddd; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .icons { display: flex; gap: 15px; }
     </style>
 </head>
 <body>
 
+    <div class="logo">DYPS</div>
+
     <nav>
-        <div style="font-weight: 900; letter-spacing: -1px;">DYPS '26</div>
-        <div class="nav-links">
-            <span onclick="showPage('home')">Home</span>
-            <span onclick="showPage('events')">Events</span>
-            <span onclick="showPage('apply')">Ambassador</span>
-        </div>
+        <a href="#home">Home</a>
+        <a href="#team">Team</a>
+        <a href="#events">Events</a>
+        <a href="#ambassador">Ambassador</a>
     </nav>
 
-    <div id="home" class="page active">
-        <h1>We turn student discourse into global policy.</h1>
-        <p style="max-width: 500px; font-size: 1.2rem;">The premier MUN community in Kutch. Join the movement.</p>
-    </div>
+    <section id="home">
+        <h1>Simulating Policy. <br>Shaping Leaders.</h1>
+        <p class="hero-sub">The official Dunes Youth Parliament Summit community.</p>
+    </section>
 
-    <div id="events" class="page">
-        <h1>Events.</h1>
-        <div class="card" onclick="this.innerHTML='Agenda: Climate Finance & Nuclear Proliferation'">Upcoming: Summit 2026 (Click for Agenda)</div>
-        <div class="card" onclick="this.innerHTML='Agenda: Global Trade Security'">Past: MUN 2025 (Click for Agenda)</div>
-    </div>
+    <section id="team">
+        <h2 style="margin-bottom: 2rem;">Internal Team</h2>
+        <div class="grid-3">
+            <div class="card"><strong>Aryan Mehta</strong><br>Secretary General</div>
+            <div class="card"><strong>Sara Khan</strong><br>Director of Logistics</div>
+            <div class="card"><strong>Rahul Verma</strong><br>Outreach Lead</div>
+        </div>
+    </section>
 
-    <div id="apply" class="page">
-        <h1>Become an Ambassador.</h1>
-        <form id="contactForm" onsubmit="event.preventDefault(); alert('Application Received.');">
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Institutional Email" required>
-            <button type="submit">Send Application</button>
-        </form>
-    </div>
+    <section id="ambassador">
+        <div class="form-box">
+            <h2>Campus Ambassador Program</h2>
+            <p>Represent DYPS on your campus. Gain certificates and full refunds.</p>
+            <form class="form-grid">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Contact No" required>
+                <input type="text" placeholder="School/College Name" required>
+                <button type="submit" style="grid-column: span 2;">Join the Movement</button>
+            </form>
+        </div>
+    </section>
 
     <footer>
-        <div>© 2026 Dunes Kutch</div>
-        <div style="display: flex; gap: 20px;">
-            <a href="#" style="color: black;">LINKEDIN</a>
-            <a href="#" style="color: black;">INSTAGRAM</a>
+        <div>© 2026 DYPS Kutch</div>
+        <div class="icons">
+            <a href="#">LinkedIn</a> | <a href="#">Instagram</a>
         </div>
     </footer>
 
-    <script>
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-    </script>
 </body>
 </html>
