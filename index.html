@@ -3,45 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DYPS | Dunes Youth Parliament Summit</title>
+    <title>DYPS | Dunes Youth Parliament</title>
     <style>
         :root {
-            --navy: #0F172A;
-            --blue: #3B82F6;
+            --navy: #0A192F;
+            --blue: #2563EB;
             --white: #FFFFFF;
-            --gray: #F1F5F9;
+            --light: #F8FAFC;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        body { background: var(--white); color: var(--navy); line-height: 1.5; }
 
         /* Navigation */
-        header { padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; text-transform: uppercase; }
-        nav ul { display: flex; list-style: none; gap: 30px; }
-        nav a { text-decoration: none; color: var(--navy); font-weight: 600; font-size: 0.9rem; cursor: pointer; }
+        header { padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; }
+        .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; text-transform: uppercase; color: var(--navy); }
+        nav { display: flex; gap: 2rem; }
+        nav a { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; cursor: pointer; color: var(--navy); text-decoration: none; }
         nav a:hover { color: var(--blue); }
 
-        /* Main Container */
-        main { padding: 0 80px 100px 80px; min-height: 70vh; }
-        .page { display: none; opacity: 0; animation: fadeIn 0.6s forwards; }
-        .page.active { display: block; opacity: 1; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Page Management */
+        .page { display: none; padding: 4rem 5vw; animation: fadeIn 0.5s ease-in-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        h1 { font-size: 5rem; line-height: 0.9; margin-bottom: 30px; letter-spacing: -3px; }
-
-        /* Team & Events Grid */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 40px; }
-        .card { padding: 30px; background: var(--gray); border-left: 4px solid var(--blue); }
-
-        /* Form */
-        .form-container { background: var(--navy); color: white; padding: 40px; border-radius: 4px; max-width: 500px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        input { padding: 12px; border: none; outline: none; background: #1e293b; color: white; }
-        button { grid-column: span 2; background: var(--blue); color: white; padding: 15px; border: none; font-weight: 700; cursor: pointer; }
+        /* Layouts */
+        h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); line-height: 0.9; margin-bottom: 2rem; letter-spacing: -2px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem; }
+        .card { padding: 2rem; background: var(--light); border-left: 4px solid var(--blue); }
         
-        footer { padding: 40px 80px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; }
-        .socials { display: flex; gap: 20px; font-weight: 700; }
+        /* Form */
+        .form-box { background: var(--navy); color: white; padding: 3rem; border-radius: 12px; max-width: 600px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+        input { width: 100%; padding: 12px; border: 1px solid #334155; background: #1E293B; color: white; border-radius: 4px; }
+        button { grid-column: span 2; padding: 15px; background: var(--blue); color: white; border: none; font-weight: 800; text-transform: uppercase; cursor: pointer; }
+
+        footer { padding: 3rem 5vw; border-top: 1px solid #E2E8F0; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+        .icons { display: flex; gap: 1.5rem; font-weight: 800; }
     </style>
 </head>
 <body>
@@ -49,46 +47,44 @@
     <header>
         <div class="logo">DYPS '26</div>
         <nav>
-            <ul>
-                <li><a onclick="show('home')">Home</a></li>
-                <li><a onclick="show('team')">Team</a></li>
-                <li><a onclick="show('events')">Events</a></li>
-                <li><a onclick="show('apply')">Ambassador</a></li>
-            </ul>
+            <a onclick="show('home')">Home</a>
+            <a onclick="show('team')">Team</a>
+            <a onclick="show('events')">Events</a>
+            <a onclick="show('apply')">Ambassador</a>
         </nav>
     </header>
 
     <main>
         <section id="home" class="page active">
-            <h1>Simulating diplomacy. <br>Building tomorrow.</h1>
-            <p style="font-size: 1.5rem; color: #64748b;">The official Dunes Youth Parliament Summit community.</p>
+            <h1>Simulating Diplomacy.</h1>
+            <p style="font-size: 1.25rem; max-width: 600px;">The Dunes Youth Parliament Summit empowers students to lead, debate, and shape the future of policy in Kutch.</p>
         </section>
 
         <section id="team" class="page">
-            <h1>Our Team</h1>
+            <h1>Our Secretariat</h1>
             <div class="grid">
-                <div class="card"><h3>Aryan M.</h3><p>Secretary General</p></div>
-                <div class="card"><h3>Sara K.</h3><p>Director of Logistics</p></div>
-                <div class="card"><h3>Rahul V.</h3><p>Outreach Lead</p></div>
+                <div class="card"><h3>Aryan Mehta</h3><p>Secretary General</p></div>
+                <div class="card"><h3>Sara Khan</h3><p>Director of Logistics</p></div>
+                <div class="card"><h3>Rahul Verma</h3><p>Outreach Lead</p></div>
             </div>
         </section>
 
         <section id="events" class="page">
-            <h1>Upcoming Events</h1>
+            <h1>Agenda & History</h1>
             <div class="grid">
-                <div class="card"><h3>Summit 2026</h3><p>Register for the flagship conference.</p></div>
-                <div class="card"><h3>Past: MUN '25</h3><p>Agenda: Security Council Reform.</p></div>
+                <div class="card"><h3>Summit 2026</h3><p>Upcoming flagship conference. Register now.</p></div>
+                <div class="card"><h3>MUN 2025</h3><p>Agenda: Global Economic Reset & Security.</p></div>
             </div>
         </section>
 
         <section id="apply" class="page">
-            <h1>Join as Ambassador.</h1>
-            <div class="form-container">
-                <form class="form-grid">
-                    <input type="text" placeholder="Name">
-                    <input type="email" placeholder="Email">
-                    <input type="tel" placeholder="Contact No">
-                    <input type="text" placeholder="School Name">
+            <h1>Join as Ambassador</h1>
+            <div class="form-box">
+                <form class="form-grid" onsubmit="alert('Application Sent!'); return false;">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="tel" placeholder="Contact Number" required>
+                    <input type="text" placeholder="School/College Name" required>
                     <button type="submit">Submit Application</button>
                 </form>
             </div>
@@ -96,10 +92,10 @@
     </main>
 
     <footer>
-        <div>© 2026 DYPS Kutch</div>
-        <div class="socials">
-            <a href="#">LINKEDIN</a>
-            <a href="#">INSTAGRAM</a>
+        <div>© 2026 DYPS KUTCH</div>
+        <div class="icons">
+            <a>LINKEDIN</a>
+            <a>INSTAGRAM</a>
         </div>
     </footer>
 
